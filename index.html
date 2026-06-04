@@ -1,1 +1,833 @@
-<h1>Peakly Official Site</h1>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Peakly | ADHD 복약 · 루틴 기록 앱</title>
+  <meta
+    name="description"
+    content="Peakly는 복약 시간, 약효 흐름, 루틴, 할 일, 컨디션 기록을 함께 정리하는 ADHD 기록 앱입니다."
+  >
+  <meta name="theme-color" content="#f8fafc">
+  <link rel="canonical" href="https://hyperfocuslab.cloud/">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+  <meta property="og:title" content="Peakly | ADHD 복약 · 루틴 기록 앱">
+  <meta
+    property="og:description"
+    content="복약 흐름과 하루 리듬을 함께 기록하고 되짚어보는 Peakly 공식 홈페이지"
+  >
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://hyperfocuslab.cloud/">
+  <meta property="og:image" content="https://hyperfocuslab.cloud/assets/peakly-logo.png">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface-soft: #f1f5f9;
+      --ink: #101318;
+      --ink-soft: #303843;
+      --muted: #667085;
+      --line: #d9e0e8;
+      --blue: #0a84ff;
+      --blue-dark: #075bb5;
+      --green: #1b8a62;
+      --orange: #d06a1f;
+      --red: #c24152;
+      --shadow: 0 20px 55px rgba(15, 23, 42, 0.13);
+      --max: 1080px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      word-break: keep-all;
+      text-rendering: optimizeLegibility;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .container {
+      width: min(calc(100% - 36px), var(--max));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      background: rgba(248, 250, 252, 0.92);
+      border-bottom: 1px solid rgba(16, 19, 24, 0.08);
+      backdrop-filter: blur(14px);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 0;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      flex: 0 0 auto;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .brand-mark img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .brand-name {
+      display: block;
+      font-size: 0.98rem;
+      font-weight: 800;
+      line-height: 1.15;
+    }
+
+    .brand-sub {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 0.76rem;
+      font-weight: 650;
+      line-height: 1.15;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: var(--ink-soft);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .nav a {
+      text-decoration: none;
+    }
+
+    .nav a:not(.nav-cta) {
+      display: none;
+    }
+
+    .nav-cta,
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 800;
+    }
+
+    .nav-cta {
+      min-height: 40px;
+      padding: 0 14px;
+      background: var(--ink);
+      color: #fff;
+    }
+
+    .section {
+      padding: 64px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero {
+      padding: 34px 0 56px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      color: var(--blue-dark);
+      font-size: 0.86rem;
+      font-weight: 800;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--blue);
+      box-shadow: 0 0 0 5px rgba(10, 132, 255, 0.12);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 720px;
+      margin-bottom: 18px;
+      font-size: clamp(2.35rem, 9.5vw, 4.4rem);
+      line-height: 1.14;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      margin-bottom: 14px;
+      font-size: clamp(1.78rem, 7vw, 3.1rem);
+      line-height: 1.22;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin-bottom: 8px;
+      font-size: 1.08rem;
+      line-height: 1.42;
+      letter-spacing: 0;
+    }
+
+    .lead,
+    .section-lead {
+      color: var(--ink-soft);
+      line-height: 1.75;
+    }
+
+    .lead {
+      max-width: 670px;
+      margin-bottom: 0;
+      font-size: 1.06rem;
+      font-weight: 620;
+    }
+
+    .section-lead {
+      max-width: 620px;
+      margin-bottom: 28px;
+      font-size: 1rem;
+    }
+
+    .hero-actions {
+      display: grid;
+      gap: 10px;
+      margin-top: 26px;
+    }
+
+    .btn {
+      min-height: 52px;
+      padding: 0 18px;
+      font-size: 0.98rem;
+    }
+
+    .btn-primary {
+      border: 1px solid var(--blue);
+      background: var(--blue);
+      color: #fff;
+      box-shadow: 0 13px 24px rgba(10, 132, 255, 0.22);
+    }
+
+    .btn-secondary {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+    }
+
+    .hero-visual {
+      margin-top: 34px;
+    }
+
+    .phone-frame {
+      width: min(100%, 315px);
+      margin: 0 auto;
+      overflow: hidden;
+      border: 9px solid #161a20;
+      border-radius: 34px;
+      background: #161a20;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-visual .phone-frame {
+      max-height: 560px;
+    }
+
+    .phone-frame img {
+      width: 100%;
+      border-radius: 25px;
+    }
+
+    .quick-grid,
+    .feature-grid,
+    .workflow-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .quick-item,
+    .feature-card,
+    .workflow-step,
+    .support-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+    }
+
+    .quick-item {
+      padding: 20px;
+    }
+
+    .quick-item span {
+      display: block;
+      margin-bottom: 9px;
+      color: var(--blue-dark);
+      font-size: 0.8rem;
+      font-weight: 850;
+    }
+
+    .quick-item p,
+    .feature-card p,
+    .workflow-step p,
+    .support-card p,
+    .notice {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.72;
+    }
+
+    .content-pair {
+      display: grid;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .medication-pair > div:not(.screen-wrap) {
+      order: 1;
+    }
+
+    .medication-pair .screen-wrap {
+      order: 2;
+    }
+
+    .screen-wrap {
+      width: min(100%, 340px);
+      margin: 0 auto;
+    }
+
+    .screen-wrap.is-wide {
+      width: min(100%, 380px);
+    }
+
+    .screen-note {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      text-align: center;
+    }
+
+    .text-block {
+      display: grid;
+      gap: 18px;
+    }
+
+    .text-row {
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+    }
+
+    .text-row strong {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--ink);
+      font-size: 1.02rem;
+      line-height: 1.45;
+    }
+
+    .text-row p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.72;
+    }
+
+    .feature-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .feature-card {
+      padding: 20px;
+    }
+
+    .feature-card::before {
+      content: "";
+      display: block;
+      width: 28px;
+      height: 3px;
+      margin-bottom: 18px;
+      border-radius: 999px;
+      background: var(--blue);
+    }
+
+    .feature-card:nth-child(2)::before,
+    .feature-card:nth-child(5)::before {
+      background: var(--green);
+    }
+
+    .feature-card:nth-child(3)::before,
+    .feature-card:nth-child(6)::before {
+      background: var(--orange);
+    }
+
+    .workflow-step {
+      padding: 20px;
+    }
+
+    .step-number {
+      display: block;
+      margin-bottom: 18px;
+      color: var(--blue-dark);
+      font-size: 0.82rem;
+      font-weight: 850;
+    }
+
+    .support-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .support-card {
+      padding: 20px;
+    }
+
+    .support-list {
+      display: grid;
+      gap: 0;
+      margin: 18px 0 0;
+      padding: 0;
+      list-style: none;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .support-list li {
+      display: grid;
+      gap: 5px;
+      padding: 15px 16px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.55;
+    }
+
+    .support-list li + li {
+      border-top: 1px solid var(--line);
+    }
+
+    .support-list strong {
+      color: var(--ink);
+      font-size: 0.9rem;
+    }
+
+    .text-link {
+      color: var(--blue-dark);
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .notice {
+      margin-top: 18px;
+      padding: 16px;
+      border-left: 3px solid var(--red);
+      background: var(--surface-soft);
+    }
+
+    .site-footer {
+      padding: 28px 0 42px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .site-footer-inner {
+      display: grid;
+      gap: 14px;
+    }
+
+    .site-footer nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .site-footer a {
+      text-decoration: none;
+    }
+
+    @media (min-width: 760px) {
+      .container {
+        width: min(calc(100% - 56px), var(--max));
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 40;
+      }
+
+      .nav a:not(.nav-cta) {
+        display: inline;
+      }
+
+      .hero {
+        padding: 58px 0 72px;
+      }
+
+      .hero-layout,
+      .content-pair,
+      .support-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(320px, 0.86fr);
+        gap: 54px;
+        align-items: center;
+      }
+
+      .medication-pair > div,
+      .medication-pair .screen-wrap {
+        order: initial;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        min-width: 180px;
+      }
+
+      .hero-visual {
+        margin-top: 0;
+      }
+
+      .quick-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        margin-top: 34px;
+      }
+
+      .feature-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .workflow-list {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .site-footer-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+
+    @media (min-width: 1020px) {
+      .section {
+        padding: 86px 0;
+      }
+
+      .hero {
+        padding-top: 74px;
+      }
+
+      .phone-frame {
+        width: min(100%, 350px);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.001ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="https://hyperfocuslab.cloud/" aria-label="Peakly 홈">
+        <span class="brand-mark" aria-hidden="true">
+          <img src="assets/peakly-logo.png" alt="">
+        </span>
+        <span>
+          <span class="brand-name">Peakly</span>
+          <span class="brand-sub">ADHD 기록 파트너</span>
+        </span>
+      </a>
+      <nav class="nav" aria-label="빠른 링크">
+        <a href="#medication">복약</a>
+        <a href="#condition">컨디션</a>
+        <a href="#features">기능</a>
+        <a class="nav-cta" href="https://apps.apple.com/app/id6757836001" target="_blank" rel="noreferrer">앱 받기</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-layout">
+          <div>
+            <div class="eyebrow">피클리 공식 홈페이지</div>
+            <h1>복약 흐름을 하루 리듬으로 정리하세요.</h1>
+            <p class="lead">
+              Peakly는 복용 시간, 약효 변화, 할 일, 컨디션 기록을 따로 흩어두지 않고
+              하루의 흐름 안에서 다시 볼 수 있게 돕는 앱입니다.
+            </p>
+            <div class="hero-actions" aria-label="앱 다운로드 링크">
+              <a class="btn btn-primary" href="https://apps.apple.com/app/id6757836001" target="_blank" rel="noreferrer">
+                App Store에서 보기
+              </a>
+              <a class="btn btn-secondary" href="https://play.google.com/store/apps/details?id=com.peakly.android" target="_blank" rel="noreferrer">
+                Google Play에서 보기
+              </a>
+            </div>
+          </div>
+
+          <div class="hero-visual" aria-label="Peakly 앱 복약 화면">
+            <div class="phone-frame">
+              <img src="assets/peakly-hero-medication.png" alt="Peakly 복약 흐름 화면">
+            </div>
+          </div>
+        </div>
+
+        <div class="quick-grid" aria-label="Peakly 핵심 흐름">
+          <div class="quick-item">
+            <span>기록</span>
+            <h3>복용 시간과 용량을 남깁니다</h3>
+            <p>오늘의 복약 기록을 기준으로 약효 흐름을 확인합니다.</p>
+          </div>
+          <div class="quick-item">
+            <span>연결</span>
+            <h3>할 일과 루틴을 붙입니다</h3>
+            <p>집중이 필요한 일정과 반복 루틴을 같은 맥락에 둡니다.</p>
+          </div>
+          <div class="quick-item">
+            <span>회고</span>
+            <h3>컨디션 변화를 되짚습니다</h3>
+            <p>수면, 심박수, 움직임을 함께 보며 하루 패턴을 살핍니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="medication">
+      <div class="container content-pair medication-pair">
+        <div class="screen-wrap">
+          <div class="phone-frame">
+            <img src="assets/peakly-hero-medication.png" alt="Peakly 약효 흐름 그래프 화면">
+          </div>
+          <p class="screen-note">복용 후 농도, 심박수, 움직임 흐름을 한 화면에서 봅니다.</p>
+        </div>
+
+        <div>
+          <div class="eyebrow">Medication</div>
+          <h2>복용 기록부터 약효 흐름까지 한 번에.</h2>
+          <p class="section-lead">
+            피클리는 복용 시간만 저장하는 앱이 아닙니다. 기록을 남긴 뒤 그 시간이 하루 안에서
+            어떤 흐름을 만드는지 다시 볼 수 있게 구성했습니다.
+          </p>
+          <div class="text-block">
+            <div class="text-row">
+              <strong>복용 시간과 용량을 기준으로 정리</strong>
+              <p>언제 복용했는지, 현재 어느 구간에 있는지 빠르게 확인합니다.</p>
+            </div>
+            <div class="text-row">
+              <strong>예상 피크와 실제 체감을 함께 확인</strong>
+              <p>집중이 잘 되는 시간대와 컨디션 변화를 같은 화면에서 비교합니다.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="condition">
+      <div class="container content-pair">
+        <div>
+          <div class="eyebrow">Condition</div>
+          <h2>컨디션 기록은 복약 기록과 분리하지 않습니다.</h2>
+          <p class="section-lead">
+            수면, 걸음 수, 심박수 같은 건강 데이터는 복약 흐름을 이해하는 데 중요한 단서가 됩니다.
+            피클리는 하루 컨디션을 복약 기록 옆에 놓고 볼 수 있게 합니다.
+          </p>
+          <div class="text-block">
+            <div class="text-row">
+              <strong>수면과 활동량을 함께 보기</strong>
+              <p>잠, 움직임, 심박수의 변화를 하루 기록 안에서 확인합니다.</p>
+            </div>
+            <div class="text-row">
+              <strong>기록이 없는 날도 상태를 파악</strong>
+              <p>비어 있는 데이터와 연결된 행동을 명확하게 안내합니다.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="screen-wrap is-wide">
+          <div class="phone-frame">
+            <img src="assets/peakly-hero-condition.png" alt="Peakly 컨디션 요약 화면">
+          </div>
+          <p class="screen-note">컨디션 요약에서 수면, 활동량, 심박수 흐름을 확인합니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="container">
+        <div class="eyebrow">Features</div>
+        <h2>기록을 오래 이어가기 위한 기능.</h2>
+        <p class="section-lead">
+          기능을 많이 보여주는 것보다, 매일 쓰는 흐름이 끊기지 않는 데 집중했습니다.
+        </p>
+
+        <div class="feature-grid">
+          <article class="feature-card">
+            <h3>약효 흐름 시각화</h3>
+            <p>복용 후 변화, 예상 구간, 실제 피크를 시간축 위에서 정리합니다.</p>
+          </article>
+          <article class="feature-card">
+            <h3>날짜별 분석과 리포트</h3>
+            <p>하루와 주 단위 기록을 다시 보며 반복되는 패턴을 비교합니다.</p>
+          </article>
+          <article class="feature-card">
+            <h3>루틴과 할 일 관리</h3>
+            <p>반복 루틴과 단기 할 일을 나누고 실제 하루 흐름에 맞춰 봅니다.</p>
+          </article>
+          <article class="feature-card">
+            <h3>건강 데이터 연동</h3>
+            <p>수면, 심박수, 걸음 수 같은 지표를 컨디션 변화와 함께 확인합니다.</p>
+          </article>
+          <article class="feature-card">
+            <h3>위젯과 실시간 현황</h3>
+            <p>홈 화면, 잠금 화면, 실시간 현황에서 현재 상태와 남은 시간을 봅니다.</p>
+          </article>
+          <article class="feature-card">
+            <h3>백업과 복원</h3>
+            <p>기기 변경이나 재설치 상황에서도 기록을 이어갈 수 있도록 돕습니다.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="workflow">
+      <div class="container">
+        <div class="eyebrow">Daily Flow</div>
+        <h2>하루 사용 흐름은 짧게 유지합니다.</h2>
+        <p class="section-lead">
+          기록 자체가 부담이 되면 오래 쓰기 어렵습니다. 피클리는 복용, 실행, 회고의 짧은 흐름으로
+          하루를 남기도록 설계했습니다.
+        </p>
+
+        <div class="workflow-list">
+          <article class="workflow-step">
+            <span class="step-number">01</span>
+            <h3>복용 기록</h3>
+            <p>오늘 복용한 시간과 용량을 남기고 현재 상태를 확인합니다.</p>
+          </article>
+          <article class="workflow-step">
+            <span class="step-number">02</span>
+            <h3>루틴 실행</h3>
+            <p>집중이 필요한 할 일과 반복 루틴을 컨디션 흐름에 맞춥니다.</p>
+          </article>
+          <article class="workflow-step">
+            <span class="step-number">03</span>
+            <h3>하루 회고</h3>
+            <p>컨디션, 활동량, 복약 흐름을 함께 보며 다음 날을 조정합니다.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="support">
+      <div class="container support-grid">
+        <div>
+          <div class="eyebrow">Support</div>
+          <h2>HyperfocusLab이 만들고 운영합니다.</h2>
+          <p class="section-lead">
+            Peakly는 ADHD 사용자가 기록을 덜 흩뜨리고, 하루를 더 현실적으로 운영할 수 있도록 만든 제품입니다.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="mailto:hyperfocuslab3813@gmail.com">이메일 문의</a>
+            <a class="btn btn-secondary" href="https://hyperfocuslab.cloud/privacy.html">개인정보처리방침</a>
+          </div>
+        </div>
+
+        <div class="support-card">
+          <h3>서비스 정보</h3>
+          <p>앱 다운로드, 문의, 정책 문서는 아래에서 확인할 수 있습니다.</p>
+          <ul class="support-list">
+            <li>
+              <strong>문의</strong>
+              <a class="text-link" href="mailto:hyperfocuslab3813@gmail.com">hyperfocuslab3813@gmail.com</a>
+            </li>
+            <li>
+              <strong>플랫폼</strong>
+              <span>iOS / Android</span>
+            </li>
+            <li>
+              <strong>문서</strong>
+              <span>
+                <a class="text-link" href="https://hyperfocuslab.cloud/privacy.html">개인정보처리방침</a>
+                ·
+                <a class="text-link" href="https://hyperfocuslab.cloud/terms.html">이용약관</a>
+              </span>
+            </li>
+          </ul>
+          <div class="notice">
+            Peakly가 제공하는 약물 관련 정보와 시각화는 이해를 돕기 위한 참고 자료이며,
+            의학적 진단, 치료, 처방을 대신하지 않습니다. 약물 조정은 반드시 전문가와 상담해주세요.
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer-inner">
+      <div>© 2026 HyperfocusLab. All rights reserved.</div>
+      <nav aria-label="푸터 링크">
+        <a href="https://hyperfocuslab.cloud/privacy.html">개인정보처리방침</a>
+        <a href="https://hyperfocuslab.cloud/terms.html">서비스 이용약관</a>
+        <a href="mailto:hyperfocuslab3813@gmail.com">문의하기</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
