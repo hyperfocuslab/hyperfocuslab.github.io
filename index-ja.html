@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ピークリー | ADHDの服薬・ルーティン記録</title>
+  <meta
+    name="description"
+    content="ピークリーは、ADHDの服薬記録、薬の作用の予測、ルーティン、タスク、体調をまとめて管理するアプリです。"
+  >
+  <meta name="theme-color" content="#0a0e17">
+  <link rel="canonical" href="https://hyperfocuslab.cloud/index-ja.html">
+  <link rel="alternate" hreflang="ko" href="https://hyperfocuslab.cloud/">
+  <link rel="alternate" hreflang="en" href="https://hyperfocuslab.cloud/index-en.html">
+  <link rel="alternate" hreflang="ja" href="https://hyperfocuslab.cloud/index-ja.html">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <meta property="og:title" content="ピークリー | ADHDの服薬・ルーティン記録">
+  <meta
+    property="og:description"
+    content="服薬の流れと毎日のリズムを記録し、振り返るピークリーの公式サイト。"
+  >
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://hyperfocuslab.cloud/index-ja.html">
+  <meta property="og:image" content="https://hyperfocuslab.cloud/assets/peakly-logo.png">
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+  <!-- Background Effects -->
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-glow-1" aria-hidden="true"></div>
+  <div class="bg-glow-2" aria-hidden="true"></div>
+
+  <!-- ═══════════════════════════════════════════════
+       TOP NAVIGATION
+  ═══════════════════════════════════════════════ -->
+  <header class="topbar" id="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="https://hyperfocuslab.cloud/index-ja.html" aria-label="Peakly ホーム">
+        <span class="brand-mark" aria-hidden="true">
+          <img src="assets/peakly-logo.png" alt="">
+        </span>
+        <span class="brand-text">
+          <span class="brand-name">Peakly</span>
+          <span class="brand-sub">ADHDの記録パートナー</span>
+        </span>
+      </a>
+      <div class="header-actions">
+      <nav class="nav" aria-label="クイックリンク">
+        <a class="nav-link" href="#medication">服薬</a>
+        <a class="nav-link" href="#condition">体調</a>
+        <a class="nav-link" href="#features">機能</a>
+        <a class="nav-cta" href="https://apps.apple.com/app/id6757836001" target="_blank" rel="noreferrer" id="nav-cta-btn">
+          ダウンロード
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l9.2-9.2M7 7h10v10"/></svg>
+        </a>
+      </nav>
+        <nav class="language-switcher" aria-label="言語を選択"><a href="index.html" lang="ko" hreflang="ko">한국어</a><a href="index-en.html" lang="en" hreflang="en">English</a><a href="index-ja.html" lang="ja" hreflang="ja" aria-current="page">日本語</a></nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ═══════════════════════════════════════════════
+         HERO
+    ═══════════════════════════════════════════════ -->
+    <section class="hero" id="hero">
+      <div class="container">
+        <div class="hero-content reveal">
+          <h1>服薬と毎日の<br><span class="gradient-text">リズムを見える化。</span></h1>
+          <p class="lead">
+            ADHDの薬を飲んだ時刻を記録すると、薬の作用の流れを予測グラフで確認できます。<br>
+            自分の記録を振り返り、毎日の予定づくりに役立てましょう。
+          </p>
+          <div class="store-badges">
+            <a href="https://apps.apple.com/app/id6757836001" target="_blank" rel="noreferrer" class="store-badge" id="hero-cta-ios">
+              <img src="assets/app-store-badge-ja.svg" alt="App Storeでダウンロード">
+            </a>
+            <a href="https://play.google.com/store/apps/details?id=com.peakly.android" target="_blank" rel="noreferrer" class="store-badge play-store" id="hero-cta-android">
+              <img src="assets/google-play-badge-ja.png" alt="Google Playで手に入れよう">
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         VALUE PROPS
+    ═══════════════════════════════════════════════ -->
+    <section class="value-props" aria-label="ピークリーの主な機能">
+      <div class="container">
+        <div class="value-grid">
+          <div class="value-card reveal">
+            <div class="value-icon icon-record">💊</div>
+            <span class="value-label">薬の作用の予測グラフ</span>
+            <h3>コンサータ・メディキネットに対応</h3>
+            <p>服用時刻を入力すると、薬ごとの濃度の予測グラフを表示します。</p>
+          </div>
+          <div class="value-card reveal reveal-delay-1">
+            <div class="value-icon icon-connect">❤️</div>
+            <span class="value-label">心拍数の分析</span>
+            <h3>服薬・活動と心拍数の変化を確認</h3>
+            <p>心拍数の急な変化を検出し、記録に基づく分類を確認できます。</p>
+          </div>
+          <div class="value-card reveal reveal-delay-2">
+            <div class="value-icon icon-review">📱</div>
+            <span class="value-label">ウィジェット</span>
+            <h3>アプリを開かずに現在の状態を確認</h3>
+            <p>ホーム画面のウィジェットやDynamic Islandですぐに確認できます。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         MEDICATION SECTION
+    ═══════════════════════════════════════════════ -->
+    <section class="section" id="medication">
+      <div class="container content-pair medication-pair">
+        <div class="section-visual reveal">
+          <div class="screen-wrap">
+            <div class="phone-frame">
+              <img src="assets/peakly-hero-medication-ja.png" alt="ピークリーの薬の作用予測グラフ" loading="lazy">
+            </div>
+            <p class="screen-note">コンサータの濃度予測グラフと心拍数・動きをまとめて表示します。</p>
+          </div>
+        </div>
+        <div class="section-text reveal reveal-delay-1">
+          <div class="badge">服薬記録</div>
+          <h2>服用時刻を記録して、<br><span class="gradient-text">薬の作用の流れを確認。</span></h2>
+          <p class="section-lead">
+            コンサータとメディキネットそれぞれの薬物動態モデルを使い、時間に沿った濃度の予測グラフを表示します。
+          </p>
+          <div class="text-block">
+            <div class="text-row">
+              <strong>現在の予測区間をリアルタイムに表示</strong>
+              <p>上昇中、ピーク、下降中、作用終了など、予測される現在の区間を確認できます。</p>
+            </div>
+            <div class="text-row">
+              <strong>AIの予測ピークと実感したピーク</strong>
+              <p>予測されたピークと、自分で記録した実感上のピークを同じグラフで比較できます。</p>
+            </div>
+            <div class="text-row">
+              <strong>心拍数を重ねて表示</strong>
+              <p>薬の作用の予測グラフと、記録された心拍数の変化を重ねて確認できます。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         CONDITION SECTION
+    ═══════════════════════════════════════════════ -->
+    <section class="section" id="condition">
+      <div class="container content-pair">
+        <div class="section-text reveal">
+          <div class="badge">体調</div>
+          <h2>Appleヘルスケアのデータを<br><span class="gradient-text">自動で取り込み。</span></h2>
+          <p class="section-lead">
+            HealthKitから睡眠、心拍数、歩数、活動エネルギー、ワークアウトを取り込み、服薬記録と並べて表示します。
+          </p>
+          <div class="text-block">
+            <div class="text-row">
+              <strong>睡眠ステージの分析</strong>
+              <p>コア睡眠、深い睡眠、レム睡眠を分けて確認できます。</p>
+            </div>
+            <div class="text-row">
+              <strong>心拍数の急変を分類</strong>
+              <p>心拍数の急変を、薬に関連する変化・活動に関連する変化・複合的な変化として分類表示します。</p>
+            </div>
+            <div class="text-row">
+              <strong>歩数・活動エネルギー・運動</strong>
+              <p>毎日の歩数目標、活動量、ワークアウト記録をまとめて確認できます。</p>
+            </div>
+          </div>
+        </div>
+        <div class="section-visual reveal reveal-delay-1">
+          <div class="screen-wrap is-wide">
+            <div class="phone-frame">
+              <img src="assets/peakly-hero-condition-ja.png" alt="ピークリーの体調サマリー画面" loading="lazy">
+            </div>
+            <p class="screen-note">睡眠ステージ、心拍数、歩数、ワークアウト記録をひとつの画面で。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         FEATURES
+    ═══════════════════════════════════════════════ -->
+    <section class="features" id="features">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="badge">主な機能</div>
+          <h2>毎日の記録を、<br><span class="gradient-text">もっと手軽に。</span></h2>
+          <p>少ない入力で、一日の流れを見渡せるようにしました。</p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card reveal">
+            <div class="feature-icon fi-purple">📊</div>
+            <h3>薬ごとの濃度予測グラフ</h3>
+            <p>コンサータの段階的放出モデル、メディキネットの2コンパートメントモデルに基づく予測グラフを表示します。</p>
+          </article>
+          <article class="feature-card reveal reveal-delay-1">
+            <div class="feature-icon fi-cyan">💓</div>
+            <h3>心拍数の急変を分析</h3>
+            <p>普段より10bpm以上上昇した区間を検出し、薬・活動・複合的な変化として分類表示します。</p>
+          </article>
+          <article class="feature-card reveal reveal-delay-2">
+            <div class="feature-icon fi-orange">✅</div>
+            <h3>ルーティン・タスク・目標</h3>
+            <p>繰り返しのルーティン、今日のタスク、目標までのカウントダウンをひとつに。</p>
+          </article>
+          <article class="feature-card reveal reveal-delay-1">
+            <div class="feature-icon fi-green">😴</div>
+            <h3>睡眠ステージの分析</h3>
+            <p>コア・深い・レム睡眠に加え、睡眠中の呼吸数の安定度も確認できます。</p>
+          </article>
+          <article class="feature-card reveal reveal-delay-2">
+            <div class="feature-icon fi-purple">📱</div>
+            <h3>19種類のウィジェットとライブアクティビティ</h3>
+            <p>服薬の状態、体調、ルーティン、目標までの日数をホーム画面・ロック画面・Dynamic Islandで確認できます。</p>
+          </article>
+          <article class="feature-card reveal reveal-delay-3">
+            <div class="feature-icon fi-green">📋</div>
+            <h3>服薬の統計</h3>
+            <p>7日・30日・全期間の服用日数、総服用回数、1日平均、薬ごとの頻度をまとめて確認できます。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         DAILY FLOW / WORKFLOW
+    ═══════════════════════════════════════════════ -->
+    <section class="workflow" id="workflow">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="badge">毎日の流れ</div>
+          <h2>一日3分から、<br><span class="gradient-text">続けやすい記録を。</span></h2>
+          <p>記録の負担を減らすため、毎日はこの3ステップで。</p>
+        </div>
+
+        <div class="workflow-list">
+          <article class="workflow-step reveal">
+            <span class="step-number">01</span>
+            <h3>服用を記録</h3>
+            <p>薬を飲んだ時刻をワンタップで記録します。</p>
+          </article>
+          <article class="workflow-step reveal reveal-delay-1">
+            <span class="step-number">02</span>
+            <h3>ルーティンを実行</h3>
+            <p>今日のタスクやルーティンをチェックしていきます。</p>
+          </article>
+          <article class="workflow-step reveal reveal-delay-2">
+            <span class="step-number">03</span>
+            <h3>一日を振り返る</h3>
+            <p>服薬の流れと健康データをまとめて振り返ります。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════
+         CTA BANNER
+    ═══════════════════════════════════════════════ -->
+    <section class="cta-banner">
+      <div class="container">
+        <div class="cta-box reveal">
+          <h2>今日から、<br><span class="gradient-text">記録を始めよう。</span></h2>
+          <p>服薬と毎日の体調を、一緒に記録する習慣を。<br>ピークリーで始めましょう。</p>
+          <div class="store-badges">
+            <a href="https://apps.apple.com/app/id6757836001" target="_blank" rel="noreferrer" class="store-badge" id="cta-ios">
+              <img src="assets/app-store-badge-ja.svg" alt="App Storeでダウンロード">
+            </a>
+            <a href="https://play.google.com/store/apps/details?id=com.peakly.android" target="_blank" rel="noreferrer" class="store-badge play-store" id="cta-android">
+              <img src="assets/google-play-badge-ja.png" alt="Google Playで手に入れよう">
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+  </main>
+
+  <!-- ═══════════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════════ -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-copy">© 2026 HyperfocusLab. All rights reserved.</div>
+      <nav class="footer-links" aria-label="フッターリンク">
+        <a href="https://hyperfocuslab.cloud/privacy-ja.html">プライバシーポリシー</a>
+        <a href="https://hyperfocuslab.cloud/terms-ja.html">利用規約</a>
+        <a href="https://hyperfocuslab.cloud/support-ja.html">サポート</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════════
+       SCRIPTS
+  ═══════════════════════════════════════════════ -->
+  <script src="assets/site.js" defer></script>
+</body>
+</html>
