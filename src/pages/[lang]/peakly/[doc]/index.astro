@@ -1,0 +1,11 @@
+---
+import Doc from '../../../../components/Doc.astro';
+
+export function getStaticPaths() {
+  return ['en', 'ja'].flatMap((lang) => ['privacy', 'terms', 'support'].map((doc) => ({ params: { lang, doc } })));
+}
+const lang = Astro.params.lang as 'en' | 'ja';
+const doc = Astro.params.doc as 'privacy' | 'terms' | 'support';
+---
+
+<Doc doc={doc} lang={lang} />

@@ -1,0 +1,8 @@
+---
+interface Props {
+  lines: readonly string[];
+}
+const { lines } = Astro.props;
+---
+
+{lines.map((line, i) => <>{i > 0 && <br />}{line}</>)}

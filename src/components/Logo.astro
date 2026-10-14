@@ -1,0 +1,21 @@
+---
+// Company mark: brackets (software) around a cursor (the one place you are focused on).
+// The cursor blinks on the site; everywhere static it stays on.
+interface Props {
+  size?: number | string;
+  blink?: boolean;
+  class?: string;
+}
+const { size = 24, blink = false, class: className } = Astro.props;
+---
+
+<svg
+  class:list={['logo', className, { 'logo-blink': blink }]}
+  viewBox="0 0 100 100"
+  width={size}
+  height={size}
+  aria-hidden="true"
+>
+  <path d="M32 12H12v76h20M68 12h20v76H68" fill="none" stroke="currentColor" stroke-width="10"></path>
+  <rect class="logo-cursor" x="42" y="28" width="16" height="44" fill="currentColor"></rect>
+</svg>

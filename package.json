@@ -1,0 +1,17 @@
+{
+  "name": "hyperfocuslab-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "extract": "node scripts/extract-legacy.mjs"
+  },
+  "dependencies": {
+    "astro": "^7.3.8"
+  },
+  "devDependencies": {
+    "cheerio": "^1.0.0"
+  }
+}

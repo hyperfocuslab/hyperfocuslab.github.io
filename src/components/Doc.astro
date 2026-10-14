@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+import { ui, type Lang } from '../i18n';
+
+interface Props {
+  doc: 'privacy' | 'terms' | 'support';
+  lang: Lang;
+}
+const { doc, lang } = Astro.props;
+
+// Body HTML is the Peakly policy text, imported verbatim from the previous site.
+const bodies = import.meta.glob<string>('../data/docs/*.html', { query: '?raw', import: 'default', eager: true });
+const metas = import.meta.glob<{ title: string; description: string; heading: string }>('../data/docs/*.json', {
+  import: 'default',
+  eager: true,
+});
+const body = bodies[`../data/docs/${doc}.${lang}.html`];
+const meta = metas[`../data/docs/${doc}.${lang}.json`];
+---
+
+<Base lang={lang} page={doc} title={meta.title} description={meta.description}>
+  <article class="wrap doc">
+    <header class="doc-head">
+      <p class="label">Peakly · {ui[lang].docs[doc]}</p>
+      <h1>{meta.heading}</h1>
+    </header>
+    <div class="prose" set:html={body} />
+  </article>
+</Base>

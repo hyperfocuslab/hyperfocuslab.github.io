@@ -1,0 +1,11 @@
+---
+import { STORE } from '../i18n';
+
+// Plain text buttons in the site's own style. Brand logos are left out on purpose:
+// Apple only permits its logo inside the official App Store badge.
+---
+
+<div class="actions store">
+  <a class="btn" href={STORE.appStore} target="_blank" rel="noreferrer">App Store ↗</a>
+  <a class="btn btn-ghost" href={STORE.googlePlay} target="_blank" rel="noreferrer">Google Play ↗</a>
+</div>

@@ -1,0 +1,18 @@
+---
+// A real capture of the app (iOS Simulator, dark mode, demo data) inside an iPhone frame.
+// Captures are 1320×2868 px (402×874 pt), downscaled to 660 px wide in public/assets/peakly/.
+interface Props {
+  src: string;
+  alt: string;
+}
+const { src, alt } = Astro.props;
+---
+
+<div class="device">
+  <span class="btn-side l1" aria-hidden="true"></span>
+  <span class="btn-side l2" aria-hidden="true"></span>
+  <span class="btn-side r1" aria-hidden="true"></span>
+  <div class="screen">
+    <img class="shot" src={src} alt={alt} width="660" height="1434" loading="lazy" decoding="async" />
+  </div>
+</div>

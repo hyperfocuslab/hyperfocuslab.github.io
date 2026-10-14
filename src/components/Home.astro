@@ -1,0 +1,135 @@
+---
+import { existsSync } from 'node:fs';
+import Base from '../layouts/Base.astro';
+import Logo from './Logo.astro';
+import AppShot from './AppShot.astro';
+import StoreBadges from './StoreBadges.astro';
+import { EMAIL, href, ui, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = ui[lang].home;
+const docs = ui[lang].docs;
+// Each feature row shows one capture: public/assets/peakly/{lang}-{shot}.webp.
+// Rows alternate sides across the whole page, not per section.
+// A row is shown only when its capture exists, so a missing screenshot never ships as a broken image.
+const hasShot = (shot: string) => existsSync(`public/assets/peakly/${lang}-${shot}.webp`);
+const sections = t.peakly.sections
+  .map((section) => ({ ...section, rows: section.rows.filter((row) => hasShot(row.shot)) }))
+  .filter((section) => section.rows.length > 0);
+const rows = sections.flatMap((section) => section.rows);
+---
+
+<Base lang={lang} page="home" title={t.title} description={t.description}>
+  <section class="wrap hero">
+    <div class="hero-copy">
+      <p class="label">{t.eyebrow}</p>
+      <h1 class="display">Hyperfocus Lab</h1>
+      <p class="lead">{t.lead}</p>
+    </div>
+    <div class="hero-mark">
+      <Logo size="320" blink />
+    </div>
+  </section>
+
+  <!-- Visitors scroll rather than click, so the product is introduced here in full. -->
+  <section class="section" id="products">
+    <div class="wrap">
+      <p class="label">01 · {t.products.title}</p>
+      <div class="p-intro">
+        <div class="product-name">
+          <img class="app-icon" src="/assets/peakly-logo.png" alt="" width="72" height="72" />
+          <div>
+            <h2 class="h2">Peakly</h2>
+            <p class="muted">{t.peakly.tagline}</p>
+          </div>
+        </div>
+        <p class="lead">{t.peakly.lead}</p>
+        <StoreBadges lang={lang} />
+      </div>
+
+      <div class="rows-feature">
+        {
+          sections.map((section) => (
+            <div class="feature-group">
+              <header class="group-head">
+                <p class="label">{String(sections.indexOf(section) + 1).padStart(2, '0')}</p>
+                <h3 class="group-title">{section.tab}</h3>
+                <p class="lead">{section.intro}</p>
+              </header>
+              {section.rows.map((row) => {
+                const index = rows.findIndex((r) => r.shot === row.shot);
+                return (
+                  <div class:list={['feature-row', { flip: index % 2 === 1 }]}>
+                    <div class="feature-copy">
+                      <p class="label">{row.label}</p>
+                      <h3 class="h2">{row.title}</h3>
+                      <p class="lead">{row.body}</p>
+                    </div>
+                    <div class="feature-visual">
+                      <AppShot src={`/assets/peakly/${lang}-${row.shot}.webp`} alt={row.alt} />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          ))
+        }
+      </div>
+
+      <!-- Privacy gets its own block: people logging medication want to know where it goes. -->
+      <div class="data-block">
+        <div class="data-head">
+          <p class="label">{t.peakly.data.label}</p>
+          <h3 class="h2">{t.peakly.data.title}</h3>
+        </div>
+        <ul class="data-list">
+          {
+            t.peakly.data.items.map((it) => (
+              <li>
+                <h4 class="h3">{it.title}</h4>
+                <p>{it.body}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <h3 class="label p-sub">{t.peakly.featuresTitle}</h3>
+      <ul class="feature-cards">
+        {
+          t.peakly.features.map((f) => (
+            <li>
+              <h4 class="h3">{f.title}</h4>
+              <p class="tags">{f.platforms.map((pl) => <span class="only">{pl}</span>)}</p>
+              <p>{f.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+
+      <ul class="notes">
+        {t.peakly.notes.map((n) => <li>{n}</li>)}
+      </ul>
+
+      <nav class="link-list" aria-label="Peakly">
+        <a href={href('support', lang)}>Peakly · {docs.support}</a>
+        <a href={href('privacy', lang)}>{docs.privacy}</a>
+        <a href={href('terms', lang)}>{docs.terms}</a>
+      </nav>
+    </div>
+  </section>
+
+  <section class="section" id="contact">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="label">02</p>
+        <h2 class="h2">{t.contact.title}</h2>
+        <p class="lead">{t.contact.body}</p>
+      </div>
+      <a class="email" href={`mailto:${EMAIL}`}>{EMAIL}</a>
+    </div>
+  </section>
+</Base>
