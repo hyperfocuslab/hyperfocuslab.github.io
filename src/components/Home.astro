@@ -47,6 +47,7 @@ const rows = sections.flatMap((section) => section.rows);
           </div>
         </div>
         <p class="lead">{t.peakly.lead}</p>
+        <p class="p-privacy">{t.peakly.privacy}</p>
         <StoreBadges lang={lang} />
       </div>
 
@@ -68,8 +69,11 @@ const rows = sections.flatMap((section) => section.rows);
                       <h3 class="h2">{row.title}</h3>
                       <p class="lead">{row.body}</p>
                     </div>
-                    <div class="feature-visual">
+                    <div class:list={['feature-visual', { 'with-page': row.pdf }]}>
                       <AppShot src={`/assets/peakly/${lang}-${row.shot}.webp`} alt={row.alt} />
+                      {row.pdf && existsSync(`public/assets/peakly/${lang}-report-pdf-p1.webp`) && (
+                        <img class="report-page" src={`/assets/peakly/${lang}-report-pdf-p1.webp`} alt="" width="1014" height="1434" loading="lazy" decoding="async" />
+                      )}
                     </div>
                   </div>
                 );
