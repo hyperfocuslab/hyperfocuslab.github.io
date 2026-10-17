@@ -1065,7 +1065,7 @@ main > .section:first-child {
   transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
-.reveal-on :is(.p-intro, .feature-copy, .feature-visual, .feature-cards li, .section-head, .facts, .email, .doc-head).in {
+.reveal-on :is(.p-intro, .feature-copy, .feature-visual, .data-head, .data-list li, .feature-cards li, .section-head, .facts, .email, .doc-head).in {
   opacity: 1;
   transform: none;
 }

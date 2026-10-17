@@ -120,6 +120,8 @@ export const ui = {
           { title: '단계별 알림', platforms: ['iOS', 'Android'], body: '약효가 오르기 시작할 때, 피크에 들어설 때, 줄어들기 시작할 때 알려줍니다. 항목별로 켜고 끌 수 있습니다.' },
           { title: '심박수 반응', platforms: ['iOS'], body: '복용 후 심박수를 평소와 비교하고, 심박수가 오른 이유가 약효인지 활동 영향인지 추정합니다.' },
           { title: '직접 추가하는 약', platforms: ['iOS', 'Android'], body: '지원 목록에 없는 약 종류와 사진도 직접 추가하여 기록을 남길 수 있습니다.' },
+          { title: '제어 센터에서 복용 기록', platforms: ['iOS'], body: '앱을 열지 않고 제어 센터나 잠금 화면 버튼으로 바로 복용을 기록합니다.' },
+          { title: 'iPad 지원', platforms: ['iPadOS'], body: 'iPad에서도 쓸 수 있고, 같은 Apple 계정의 iPhone과 기록이 동기화됩니다.' },
         ],
         notes: [
           '예상 곡선은 참고용이며 의학적 판단을 대신하지 않습니다.',
@@ -210,6 +212,8 @@ export const ui = {
           { title: 'Phase notifications', platforms: ['iOS', 'Android'], body: 'Get notified when the effect starts rising, when it reaches its peak, and when it starts wearing off. Turn each one on or off.' },
           { title: 'Heart-rate response', platforms: ['iOS'], body: 'Compares your heart rate after a dose with your usual, and estimates whether a rise reflects the medication\'s effect or the effect of activity.' },
           { title: 'Your own medications', platforms: ['iOS', 'Android'], body: 'Add medications that aren\'t on the supported list, with your own photo, and keep logging them.' },
+          { title: 'Log from Control Center', platforms: ['iOS'], body: 'Log a dose from Control Center or a Lock Screen button without opening the app.' },
+          { title: 'iPad support', platforms: ['iPadOS'], body: 'Use Peakly on iPad too. Records sync with your iPhone on the same Apple Account.' },
         ],
         notes: [
           'Curves are estimates for reference and do not replace medical advice.',
@@ -300,6 +304,8 @@ export const ui = {
           { title: '段階ごとの通知', platforms: ['iOS', 'Android'], body: '作用が上がりはじめたとき、ピークに入ったとき、弱まりはじめたときにお知らせします。項目ごとにオン・オフできます。' },
           { title: '心拍数の反応', platforms: ['iOS'], body: '服薬後の心拍数をふだんと比べ、心拍数の上昇が薬の作用か活動の影響かを推定します。' },
           { title: '自分で追加する薬', platforms: ['iOS', 'Android'], body: '対応リストにない薬も、種類と写真を自分で追加して記録できます。' },
+          { title: 'コントロールセンターから記録', platforms: ['iOS'], body: 'アプリを開かずに、コントロールセンターやロック画面のボタンから服用を記録できます。' },
+          { title: 'iPad対応', platforms: ['iPadOS'], body: 'iPadでも使えます。同じApple AccountのiPhoneと記録が同期されます。' },
         ],
         notes: [
           '予測グラフは参考値であり、医療上の判断に代わるものではありません。',
