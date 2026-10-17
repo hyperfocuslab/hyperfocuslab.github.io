@@ -1026,7 +1026,8 @@ main > .section:first-child {
 /* ── Other features as cards ──────────────────────────────── */
 .feature-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  /* Four cards: two columns keep the rows even (auto-fill left one card alone). */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
   margin-top: 20px;
 }
@@ -1067,4 +1068,10 @@ main > .section:first-child {
 .reveal-on :is(.p-intro, .feature-copy, .feature-visual, .feature-cards li, .section-head, .facts, .email, .doc-head).in {
   opacity: 1;
   transform: none;
+}
+
+@media (max-width: 640px) {
+  .feature-cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
