@@ -932,7 +932,8 @@ main > .section:first-child {
   position: relative;
   width: min(100%, 320px);
   aspect-ratio: 402 / 874;
-  padding: 1.6%;
+  /* Thin metal edge in fixed px: a % padding follows the parent's width, not the phone's. */
+  padding: 3px;
   border-radius: 15.5% / 7.2%;
   background: linear-gradient(145deg, #4a4b50, #1d1e21 40%, #3a3b40);
   box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(255, 255, 255, 0.12);
@@ -966,7 +967,8 @@ main > .section:first-child {
 .screen {
   position: relative;
   height: 100%;
-  border-radius: 14.4% / 6.6%;
+  border: 5px solid #000; /* the black bezel around the display */
+  border-radius: 14.8% / 6.8%;
   overflow: hidden;
   background: #000;
 }
