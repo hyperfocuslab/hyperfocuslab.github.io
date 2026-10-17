@@ -59,6 +59,7 @@ export const ui = {
             intro: '약을 먹은 시간 하나로 약효의 흐름을 봅니다.',
             rows: [
               { shot: 'chart', label: '예상 약효 곡선', title: '지금 약효가 어디쯤인지.', body: '콘서타와 메디키넷의 참고 곡선으로 시간대별 예상 약효를 그립니다. 오르는 중인지, 피크인지, 끝나가는지 바로 보이고, 피크 구간은 내 몸에 맞게 직접 옮길 수 있습니다. 곡선 아래에는 Apple Watch가 잰 심박수와 움직임이 같은 시간축으로 붙습니다.', alt: '콘서타 예상 약효 곡선과 그 아래 심박수, 움직임 그래프가 있는 Peakly 복약 화면' },
+              { shot: 'mood', label: '기분 체크인', title: '기분은 한 번 탭으로, 메모는 그 옆에.', body: '복약 탭에서 다섯 가지 표정 중 하나를 누르면 그 시각의 기분이 기록됩니다. 하루에 몇 번이든 남길 수 있고, 약효 곡선 아래 띠에는 그날 남긴 기분이 시간 순서대로 색 점으로 찍힙니다. 한 줄 메모도 같은 카드에서 바로 적습니다.', alt: '다섯 가지 표정과 메모 줄이 있는 기분 카드, 그 아래 약효 곡선과 기분 기록 띠가 있는 Peakly 복약 화면' },
               { shot: 'lock', label: '다이나믹 아일랜드·잠금 화면', title: '남은 약효 시간이 늘 화면 위에.', body: 'iPhone은 다이나믹 아일랜드와 잠금 화면, Apple Watch 스마트 스택에, Android는 알림 영역에 남은 약효 시간이 계속 떠 있습니다. 약효가 오를 때, 최대 농도 구간에 들어설 때, 끝나갈 때는 알림으로 알려줍니다.', alt: '다이나믹 아일랜드와 잠금 화면에 콘서타 36mg 메인 피크와 남은 시간이 표시된 iPhone' },
               { shot: 'report', pdf: true, label: 'PDF 리포트', title: '진료 때 보여줄 기록을 PDF로.', body: '기간을 고르면 "지난 N일, 이렇게 지냈어요" 리포트가 두 장짜리 PDF로 만들어집니다. 복용 기록, 이전 기간과 비교한 몸 상태 변화, 하루 중 약효 흐름, 기분 메모와 진료 때 물어볼 질문을 담습니다. 진료실에서 화면을 넘기지 않고 그대로 보여주면 됩니다.', alt: '기간을 고르는 PDF 리포트 생성 화면과, 복용 기록과 몸 상태 변화가 정리된 리포트 첫 장' },
             ],
@@ -159,6 +160,7 @@ export const ui = {
             intro: 'One logged dose time shows how your medication flows through the day.',
             rows: [
               { shot: 'chart', label: 'Estimated effect curve', title: 'Know where your medication is.', body: 'Reference curves for Concerta and Medikinet show your estimated effect through the day. See at a glance whether it is rising, peaking, or wearing off, and move the peak window to match how you feel. Heart rate and movement from Apple Watch sit right below on the same timeline.', alt: 'Peakly medication screen with the expected Concerta curve above heart rate and movement graphs' },
+              { shot: 'mood', label: 'Mood check-in', title: 'One tap for your mood, a note beside it.', body: 'On the Medication tab, tap one of five faces to log how you feel right now. Log as often as you like during the day; the strip under the effect curve places each mood as a colored dot in time order. A one-line note goes in the same card.', alt: 'Peakly medication screen with a mood card of five faces and a note line, above the effect curve and a mood log strip' },
               { shot: 'lock', label: 'Dynamic Island and Lock Screen', title: 'Time left, always on screen.', body: 'The time your medication has left stays in the Dynamic Island, on the Lock Screen, and in the Apple Watch Smart Stack, and in the notification shade on Android. Notifications tell you when it starts rising, when the peak window begins, and when it is wearing off.', alt: 'iPhone Dynamic Island and Lock Screen showing Concerta 36mg at its main peak with the time left' },
               { shot: 'report', pdf: true, label: 'PDF report', title: 'Your records as a PDF for your doctor.', body: 'Pick a period and Peakly makes a two-page PDF, "How the last N days went." It covers your dose records, body changes compared with the previous period, how the effect ran through the day, your mood notes, and questions to ask at the visit. Show it as is instead of scrolling through your phone.', alt: 'PDF report screen for choosing a period, next to the first page of the report with dose records and body changes' },
             ],
@@ -259,6 +261,7 @@ export const ui = {
             intro: '飲んだ時刻ひとつで、作用の流れがわかります。',
             rows: [
               { shot: 'chart', label: '予測グラフ', title: 'いま、作用はどのあたりか。', body: 'コンサータとメディキネットの参考曲線で、時間ごとの作用の予測を描きます。上がっている途中か、ピークか、切れかけているかがひと目でわかり、ピークの時間帯は自分の感覚に合わせて動かせます。曲線の下には、Apple Watchが計測した心拍数と動きが同じ時間軸で並びます。', alt: 'コンサータの予想曲線と心拍数・動きのグラフが並ぶPeaklyの服薬画面' },
+              { shot: 'mood', label: '気分チェックイン', title: '気分はワンタップで、メモはその隣に。', body: '服薬タブで5つの表情のどれかをタップすると、その時刻の気分が記録されます。一日に何回でも残せて、作用グラフの下の帯には、その日に記録した気分が時間順に色の点で並びます。ひとことメモも同じカードにそのまま書けます。', alt: '5つの表情とメモ欄がある気分カードと、その下に作用グラフと気分の記録の帯があるPeaklyの服薬画面' },
               { shot: 'lock', label: 'Dynamic Island・ロック画面', title: '作用の残り時間を、いつも画面に。', body: 'iPhoneではDynamic Island、ロック画面、Apple Watchのスマートスタックに、Androidでは通知エリアに、作用の残り時間が表示され続けます。作用が上がり始めたとき、ピークの時間帯に入ったとき、切れかけたときは通知でお知らせします。', alt: 'Dynamic Islandとロック画面に、コンサータ36mgのメインピークと残り時間を表示したiPhone' },
               { shot: 'report', pdf: true, label: 'PDFレポート', title: '診察で見せる記録を、PDFで。', body: '期間を選ぶと、「直近N日間、こんなふうに過ごしました」というレポートが2ページのPDFになります。服薬記録、前の期間と比べた体の変化、一日の作用の流れ、気分のメモ、診察で聞きたいことを載せます。診察室でスマホをスクロールせず、そのまま見せられます。', alt: '期間を選ぶPDFレポート作成画面と、服薬記録と体の変化がまとまったレポートの1ページ目' },
             ],
