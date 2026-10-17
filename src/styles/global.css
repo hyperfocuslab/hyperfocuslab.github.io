@@ -807,10 +807,6 @@ main > .section:first-child {
 }
 
 @media (max-width: 560px) {
-  .site-nav .nav-optional {
-    display: none;
-  }
-
   /* Phones keep only the mark in the header so the menu and languages fit. */
   .site-header .wordmark-text {
     display: none;

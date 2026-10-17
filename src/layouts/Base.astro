@@ -64,10 +64,7 @@ const fontCss = `https://fonts.googleapis.com/css2?family=${plex}:wght@400;500;6
                 {t.nav.support}
               </a>
             ) : (
-              <>
-                <a class="nav-optional" href="#products">{t.nav.products}</a>
-                <a href={`mailto:${EMAIL}`}>{t.nav.contact}</a>
-              </>
+              <a href={href('support', lang)}>{t.nav.contact}</a>
             )
           }
           <div class="langs" role="group" aria-label={t.nav.language}>
@@ -124,7 +121,7 @@ const fontCss = `https://fonts.googleapis.com/css2?family=${plex}:wght@400;500;6
         </nav>
       </div>
       <div class="wrap footer-bottom">
-        <p>{t.footer.legal} · <a href={`mailto:${EMAIL}`}>{t.footer.contact}</a></p>
+        <p>{t.footer.legal} · <a href={`mailto:${EMAIL}`}>{EMAIL}</a></p>
       </div>
     </footer>
     <script is:inline>
