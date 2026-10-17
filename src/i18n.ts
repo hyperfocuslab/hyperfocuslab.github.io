@@ -112,7 +112,7 @@ export const ui = {
         features: [
           { title: 'Apple Watch 연동', platforms: ['iOS'], body: 'Apple Watch가 기록한 심박수, 움직임, 수면, 운동을 건강 앱에서 가져와 약효 곡선 아래와 컨디션 요약에 보여줍니다. 남은 약효 시간은 워치 스마트 스택에도 표시됩니다.' },
           { title: '단계별 알림', platforms: ['iOS', 'Android'], body: '약효가 오르기 시작할 때, 피크에 들어설 때, 줄어들기 시작할 때 알려줍니다. 콘서타는 2차 상승도 알려주며, 항목별로 켜고 끌 수 있습니다.' },
-          { title: '심박수 반응', platforms: ['iOS'], body: '복용 후 심박수를 평소와 비교하고, 심박수가 튄 원인이 약인지 활동인지 추정합니다.' },
+          { title: '심박수 반응', platforms: ['iOS'], body: '복용 후 심박수를 평소와 비교하고, 심박수가 튄 원인이 약효인지 활동 영향인지 추정합니다.' },
           { title: '직접 추가하는 약', platforms: ['iOS', 'Android'], body: '목록에 없는 약도 이름, 용량, 사진을 직접 넣어 기록할 수 있습니다. 곡선은 지원하는 약만 나옵니다.' },
         ],
         notes: [
@@ -202,7 +202,7 @@ export const ui = {
         features: [
           { title: 'Apple Watch', platforms: ['iOS'], body: 'Heart rate, movement, sleep, and workouts recorded by Apple Watch come in through Apple Health and appear under the effect curve and in your condition summary. The time left is also shown in the watch Smart Stack.' },
           { title: 'Phase notifications', platforms: ['iOS', 'Android'], body: 'Get notified when the effect starts rising, when it reaches its peak, and when it starts wearing off. For Concerta you also hear about the second rise. Turn each one on or off.' },
-          { title: 'Heart-rate response', platforms: ['iOS'], body: 'Compares your heart rate after a dose with your usual, and estimates whether a spike came from medication or activity.' },
+          { title: 'Heart-rate response', platforms: ['iOS'], body: 'Compares your heart rate after a dose with your usual, and estimates whether a spike reflects the medication's effect or the effect of activity.' },
           { title: 'Your own medications', platforms: ['iOS', 'Android'], body: 'Log medications that are not on the list with your own name, dose, and photo. Curves are available for supported medications only.' },
         ],
         notes: [
@@ -292,7 +292,7 @@ export const ui = {
         features: [
           { title: 'Apple Watch連携', platforms: ['iOS'], body: 'Apple Watchが記録した心拍数、動き、睡眠、ワークアウトをヘルスケアから取り込み、作用グラフの下とコンディションのまとめに表示します。残り時間はウォッチのスマートスタックにも表示されます。' },
           { title: '段階ごとの通知', platforms: ['iOS', 'Android'], body: '作用が上がりはじめたとき、ピークに入ったとき、弱まりはじめたときにお知らせします。コンサータは2回目の上昇もお知らせし、項目ごとにオン・オフできます。' },
-          { title: '心拍数の反応', platforms: ['iOS'], body: '服薬後の心拍数をふだんと比べ、心拍数の上昇が薬によるものか活動によるものかを推定します。' },
+          { title: '心拍数の反応', platforms: ['iOS'], body: '服薬後の心拍数をふだんと比べ、心拍数の上昇が薬の作用か活動の影響かを推定します。' },
           { title: '自分で追加する薬', platforms: ['iOS', 'Android'], body: 'リストにない薬も、名前・用量・写真を自分で入れて記録できます。グラフは対応している薬のみです。' },
         ],
         notes: [
