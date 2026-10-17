@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>숏츠 스튜디오</title>
+<style>
+:root {
+  color-scheme:light;
+  --bg:#ffffff; --surface:#f6f8fa; --fg:#1f2328; --mute:#59636e;
+  --line:#d1d9e0; --accent:#0969da; --danger:#d1242f; --ok:#1a7f37; --warn:#9a6700;
+}
+@media (prefers-color-scheme:dark) {
+  :root {
+    color-scheme:dark;
+    --bg:#0d1117; --surface:#161b22; --fg:#e6edf3; --mute:#9198a1;
+    --line:#30363d; --accent:#4493f8; --danger:#f85149; --ok:#3fb950; --warn:#d29922;
+  }
+}
+:root[data-theme="light"] {
+  color-scheme:light;
+  --bg:#ffffff; --surface:#f6f8fa; --fg:#1f2328; --mute:#59636e;
+  --line:#d1d9e0; --accent:#0969da; --danger:#d1242f; --ok:#1a7f37; --warn:#9a6700;
+}
+:root[data-theme="dark"] {
+  color-scheme:dark;
+  --bg:#0d1117; --surface:#161b22; --fg:#e6edf3; --mute:#9198a1;
+  --line:#30363d; --accent:#4493f8; --danger:#f85149; --ok:#3fb950; --warn:#d29922;
+}
+* { box-sizing:border-box; }
+html, body { margin:0; min-width:0; min-height:100%; background:var(--bg); color:var(--fg); }
+body { font:14px/1.5 -apple-system, "Apple SD Gothic Neo", sans-serif; }
+button, input, select { min-width:0; min-height:32px; border:1px solid var(--line); border-radius:6px; background:var(--bg); color:var(--fg); font:inherit; }
+button { padding:4px 12px; font-weight:600; cursor:pointer; }
+button:hover, .secondary:hover { background:var(--surface); }
+button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible, .job-row:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+.primary { border-color:var(--fg); border-radius:999px; background:var(--fg); color:var(--bg); }
+.primary:hover { background:var(--fg); opacity:.88; }
+.app-header { display:flex; align-items:center; gap:16px; min-height:64px; padding:12px 24px; border-bottom:1px solid var(--line); }
+.brand { flex:none; font-size:20px; font-weight:600; letter-spacing:-.02em; }
+.create-bar { display:flex; width:100%; min-width:0; gap:8px; }
+.create-bar input { flex:1; padding:4px 12px; }
+.create-bar select { width:110px; padding:4px 8px; }
+.page { width:100%; }
+.list-heading { display:flex; align-items:end; justify-content:space-between; gap:16px; padding:32px 32px 20px; }
+.list-heading h1 { margin:0; font-size:20px; }
+.count { color:var(--mute); font-size:13px; font-variant-numeric:tabular-nums; }
+.jobs { width:100%; border-collapse:collapse; table-layout:fixed; }
+.jobs col:nth-child(1) { width:auto; }
+.jobs col:nth-child(2) { width:180px; }
+.jobs col:nth-child(3) { width:120px; }
+.jobs col:nth-child(4) { width:150px; }
+.jobs col:nth-child(5) { width:120px; }
+.jobs th { height:42px; padding:8px 16px; border-top:1px solid var(--line); border-bottom:1px solid var(--line); color:var(--mute); font-size:12px; font-weight:600; text-align:left; }
+.jobs th:first-child, .jobs td:first-child { padding-left:32px; }
+.jobs th:last-child, .jobs td:last-child { padding-right:32px; }
+.job-row { cursor:pointer; }
+.job-row:hover { background:var(--surface); }
+.job-row td { height:112px; padding:16px; border-bottom:1px solid var(--line); vertical-align:middle; }
+.video-cell { display:grid; grid-template-columns:45px minmax(0,1fr); align-items:center; gap:16px; min-width:0; }
+.cover { display:block; width:45px; height:80px; border:1px solid var(--line); border-radius:4px; background:var(--surface); object-fit:cover; }
+.video-copy { min-width:0; }
+.video-title { display:-webkit-box; overflow:hidden; -webkit-box-orient:vertical; -webkit-line-clamp:2; font-weight:600; line-height:1.4; }
+.topic { margin-top:4px; overflow:hidden; color:var(--mute); font-size:12px; text-overflow:ellipsis; white-space:nowrap; }
+.status { font-weight:600; }
+.status.running { color:var(--accent); }
+.status.failed { color:var(--danger); }
+.status.done { color:var(--fg); }
+.review.pass { color:var(--ok); }
+.review.warn { color:var(--warn); }
+.cell-sub, .mobile-meta { margin-top:6px; color:var(--mute); font-size:12px; }
+.track { width:100%; height:4px; margin-top:8px; overflow:hidden; border-radius:4px; background:var(--line); }
+.track span { display:block; height:100%; background:var(--accent); }
+.number { font-variant-numeric:tabular-nums; }
+.mobile-meta { display:none; }
+.empty { display:grid; min-height:360px; place-items:center; border-top:1px solid var(--line); border-bottom:1px solid var(--line); color:var(--mute); text-align:center; }
+.empty strong { display:block; margin-bottom:4px; color:var(--fg); font-size:16px; }
+.detail-head { display:flex; align-items:center; gap:16px; min-height:64px; padding:12px 24px; border-bottom:1px solid var(--line); }
+.back { flex:none; color:var(--fg); font-weight:600; text-decoration:none; }
+.detail-head h1 { min-width:0; margin:0; overflow:hidden; font-size:16px; text-overflow:ellipsis; white-space:nowrap; }
+.detail-grid { display:grid; grid-template-columns:minmax(0,1fr) 300px; gap:48px; max-width:1180px; margin:0 auto; padding:32px; }
+.detail-main { min-width:0; }
+.side { position:sticky; top:24px; align-self:start; border:1px solid var(--line); border-radius:6px; overflow:hidden; }
+.preview { position:relative; width:100%; aspect-ratio:9/16; background:var(--surface); }
+.preview video, .preview img { display:block; width:100%; height:100%; object-fit:cover; }
+.preview-note { position:absolute; inset:0; display:grid; place-items:center; padding:16px; background:rgba(13,17,23,.72); color:#ffffff; font-weight:600; text-align:center; }
+.preview:has(.preview-note:only-child) .preview-note { background:var(--surface); color:var(--mute); }
+.facts { margin:0; padding:12px 16px; border-top:1px solid var(--line); }
+.facts div { display:grid; grid-template-columns:88px 1fr; gap:8px; padding:6px 0; }
+.facts dt { color:var(--mute); font-size:12px; }
+.facts dd { margin:0; font-size:12px; font-variant-numeric:tabular-nums; }
+.section { padding:0 0 24px; margin-bottom:24px; border-bottom:1px solid var(--line); }
+.section h2 { margin:0 0 12px; font-size:16px; }
+.detail-state { margin-bottom:12px; color:var(--mute); font-size:12px; font-weight:600; }
+.review-title { display:flex; align-items:center; gap:8px; font-size:20px; font-weight:600; }
+.review-title.pass { color:var(--ok); }
+.review-title.warn { color:var(--warn); }
+.issues { margin:12px 0 0; padding-left:20px; }
+.issues li + li { margin-top:8px; }
+.issues.error { color:var(--danger); }
+.issues.warning { color:var(--warn); }
+.actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:20px; }
+.secondary { display:inline-flex; align-items:center; min-height:32px; padding:4px 12px; border:1px solid var(--line); border-radius:6px; color:var(--fg); font-weight:600; text-decoration:none; }
+.field + .field { margin-top:16px; }
+.field-label { margin-bottom:4px; color:var(--mute); font-size:12px; font-weight:600; }
+.field-value { white-space:pre-wrap; overflow-wrap:anywhere; }
+.hashtags { color:var(--mute); }
+details { border-bottom:1px solid var(--line); }
+summary { padding:12px 0; font-weight:600; cursor:pointer; }
+.record { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:24px; padding:8px 0 20px; }
+.record h3 { margin:0 0 8px; font-size:13px; }
+.record-row { display:flex; justify-content:space-between; gap:12px; padding:4px 0; color:var(--mute); font-size:12px; }
+.progress-line { margin-bottom:24px; font-size:16px; font-weight:600; }
+.progress-line span { color:var(--mute); font-weight:400; }
+.groups { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; margin-bottom:24px; }
+.group { min-width:0; }
+.group-head { display:flex; justify-content:space-between; gap:8px; margin-bottom:6px; font-size:12px; font-weight:600; }
+.group-head span:last-child { color:var(--mute); font-variant-numeric:tabular-nums; }
+.group-track { height:8px; overflow:hidden; border-radius:4px; background:var(--line); }
+.group-track span { display:block; height:100%; background:var(--accent); }
+.group.failed .group-head { color:var(--danger); }
+.group.failed .group-track span { background:var(--danger); }
+.log-box { border:1px solid var(--line); border-radius:6px; background:var(--surface); }
+.log-head { padding:10px 12px; border-bottom:1px solid var(--line); font-size:13px; font-weight:600; }
+.log { min-height:180px; margin:0; padding:12px; overflow:auto; color:var(--mute); font:12px/1.7 ui-monospace, monospace; white-space:pre-wrap; }
+.error-line { margin-bottom:20px; padding:12px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); color:var(--danger); font-weight:600; }
+@media (max-width:900px) {
+  .app-header { align-items:flex-start; flex-direction:column; padding:12px 16px; }
+  .create-bar { flex-wrap:wrap; }
+  .create-bar input { flex-basis:100%; }
+  .create-bar select { flex:1; }
+  .list-heading { padding:24px 16px 16px; }
+  .jobs, .jobs tbody { display:block; }
+  .jobs colgroup, .jobs thead { display:none; }
+  .job-row { display:block; }
+  .job-row td { display:none; }
+  .job-row td:first-child { display:block; height:auto; padding:12px 16px; }
+  .mobile-meta { display:block; }
+  .detail-head { padding:12px 16px; }
+  .detail-grid { grid-template-columns:minmax(0,1fr) 240px; gap:24px; padding:24px 16px; }
+  .side { top:16px; }
+}
+@media (max-width:680px) {
+  .detail-grid { display:flex; flex-direction:column; }
+  .side { position:static; order:-1; width:210px; }
+  .record { grid-template-columns:1fr; gap:12px; }
+}
+@media (max-width:390px) {
+  .app-header { gap:8px; }
+  .create-bar button, .create-bar select { flex:1 1 0; padding-left:8px; padding-right:8px; }
+  .brand { font-size:16px; }
+  .video-cell { gap:12px; }
+  .detail-head { gap:12px; }
+  .detail-grid { padding:20px 16px; }
+  .side { width:180px; }
+  .groups { gap:4px; }
+  .group-head { display:block; }
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const STAGE_NAMES = {"experiment-plan":"계획","execute":"AI 실행","capture":"녹화","story":"결과 정리","script":"대본","audio":"음성","timing":"자막 타이밍","render":"영상 합치기","qa":"검수","package":"제목·설명"};
+const STAGE_GROUPS = [
+  {name:"실험", stages:["experiment-plan","execute","capture"]},
+  {name:"편집", stages:["story","script","audio","timing"]},
+  {name:"마무리", stages:["render","qa","package"]}
+];
+const DONE_STAGES = [34329,85136,77043,32417,38543,60021,11393,17909,22661,14893];
+function stages(values, failedAt) {
+  return Object.keys(STAGE_NAMES).map(function(name, i) {
+    return {name:name, status:failedAt === i ? "failed" : failedAt != null && i > failedAt ? "pending" : "done", durationMs:failedAt != null && i > failedAt ? null : values[i]};
+  });
+}
+const SAMPLE_JOBS = {jobs:[
+  {id:"2026-10-18_0055_ai한테-타자-연습-게임-만들어보라고-시켜봄",topic:"AI한테 타자 연습 게임 만들어보라고 시켜봄",runner:"claude",createdAt:"2026-10-17T15:55:29.614Z",status:"done",stages:stages(DONE_STAGES),error:null,meta:{title:"클로드한테 영어 타자 게임 시켜봤다",description:"단어를 끝까지 치면 엔터 없이 다음 단어로 넘어가고, 일부러 틀리면 정확도가 83%로 바로 떨어진다. 다시 맞게 쳐 나가니 99%까지 올라와서 타자 연습용으론 바로 쓸 만했다.",hashtags:["#클로드","#Claude","#AI코딩","#타자연습","#영어타자","#타자게임","#바이브코딩","#shorts"]},qa:{pass:false,errors:["가운데 네 장면의 앱 카드 크기·위치·구도가 똑같아 장면 간 변화가 거의 없다."],warns:["탭 표시 원과 입력 커서가 입력창 글자 위에 겹쳐 지저분해 보인다."]},upload:null,hasVideo:true,hasCover:true},
+  {id:"2026-10-17_2301_ending-test",topic:"AI한테 동네 떡볶이집 홈페이지 만들어보라고 시켜봄",runner:"claude",createdAt:"2026-10-17T14:01:34.168Z",status:"done",stages:stages([24098,71646,54565,23686,27421,106405,14315,91500,34413,9285]),error:null,meta:{title:"AI한테 떡볶이집 홈페이지 시켰더니 가게 역사를 지어냈다",description:"영업시간·주소가 첫 화면에 다 보이고, 맵기를 고르면 김밥이나 쿨피스까지 같이 권해준다. 그런데 시키지 않은 가게 역사를 지어냈다.",hashtags:["#클로드","#AI홈페이지","#떡볶이","#동네가게","#AI실험","#쇼츠"]},qa:{pass:true,errors:[],warns:[]},upload:null,hasVideo:true,hasCover:true},
+  {id:"2026-10-17_0208_ai한테-두더지-잡기-게임-만들어보라고-시켜봄",topic:"AI한테 두더지 잡기 게임 만들어보라고 시켜봄",runner:"claude",createdAt:"2026-10-16T17:08:12.955Z",status:"done",stages:stages([22865,76014,77613,20413,24258,62256,13562,57165,32767,18949]),error:null,meta:{title:"AI한테 두더지 잡기 만들어달라고 했더니 30초 만에 34점",description:"한 줄 부탁으로 만든 두더지 잡기를 직접 해봤더니 타이머, 점수, 다시 하기까지 끝까지 제대로 돌아갔다.",hashtags:["#AI게임","#두더지잡기","#AI코딩","#게임만들기","#쇼츠"]},qa:{pass:true,errors:[],warns:[]},upload:{studioUrl:"#"},hasVideo:true,hasCover:true},
+  {id:"2026-10-17_0047_ai한테-30초-반응속도-테스트-게임-만들어보라고-시켜봄",topic:"AI한테 30초 반응속도 테스트 게임 만들어보라고 시켜봄",runner:"claude",createdAt:"2026-10-16T15:47:05.504Z",status:"done",stages:stages([19096,67158,64085,24874,27426,4344,11198,143299,37054,34027]),error:null,meta:{title:"AI한테 반응속도 게임 시켜봤더니 30초에 9번 성공",description:"파일 하나로 만든 30초 반응속도 게임이다. 큰 오류 없이 결과 화면까지 돌아갔지만 스페이스바는 안 되고 터치·클릭만 된다.",hashtags:["#AI","#반응속도","#AI코딩","#게임만들기","#쇼츠"]},qa:{pass:false,errors:["남은 시간 값 옆 단위가 줄바꿈되어 숫자 아래로 떨어져 있다."],warns:["연속 장면의 화면 변화가 적다."]},upload:null,hasVideo:true,hasCover:true},
+  {id:"2026-10-17_0045_ai한테-30초-반응속도-테스트-게임-만들어보라고-시켜봄",topic:"AI한테 30초 반응속도 테스트 게임 만들어보라고 시켜봄",runner:"codex",createdAt:"2026-10-16T15:45:52.215Z",status:"failed",stages:stages([20507,5482],1),error:"Codex 종료 코드 1",meta:null,qa:null,upload:null,hasVideo:false,hasCover:false}
+]};
+const CURRENT_STAGE_ELAPSED_MS = 18000;
+const $ = function(selector) { return document.querySelector(selector); };
+function esc(value) { return String(value == null ? "" : value).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];}); }
+function fmtDate(iso) { const d=new Date(iso); return (d.getMonth()+1)+"월 "+d.getDate()+"일 "+String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0"); }
+function fmtDuration(ms) { if (ms == null) return "–"; const sec=Math.round(ms/1000); const min=Math.floor(sec/60); return min ? min+"분 "+(sec%60)+"초" : sec+"초"; }
+function fmtRunner(value) { return value === "claude" ? "Claude" : value === "codex" ? "Codex" : value; }
+function totalMs(job) { return job.stages.reduce(function(sum,s){return sum+(s.durationMs||0);},0); }
+function titleOf(job) { return job.meta && job.meta.title || job.topic; }
+function cover(job, className) { return job.hasCover ? '<img class="'+className+'" src="../../../jobs/'+encodeURIComponent(job.id)+'/cover.png" alt="">' : '<div class="'+className+'"></div>'; }
+function cloneJobs() { return SAMPLE_JOBS.jobs.map(function(j){return Object.assign({},j,{stages:j.stages.map(function(s){return Object.assign({},s);}),qa:j.qa?{pass:j.qa.pass,errors:j.qa.errors.slice(),warns:j.qa.warns.slice()}:null});}); }
+function makeRunning(job) {
+  job.status="running"; job.meta=null; job.qa=null; job.upload=null;
+  job.stages=job.stages.map(function(s,i){return Object.assign({},s,{status:i<4?"done":i===4?"running":"pending",durationMs:i<4?s.durationMs:i===4?CURRENT_STAGE_ELAPSED_MS:null});});
+  return job;
+}
+function routeModel() {
+  const hash=location.hash || "#list"; const jobs=cloneJobs();
+  if (hash === "#list-empty") return {screen:"list",jobs:[]};
+  if (hash === "#list") { makeRunning(jobs[0]); return {screen:"list",jobs:jobs}; }
+  if (!hash.startsWith("#job/")) return {screen:"list",jobs:jobs};
+  const key=decodeURIComponent(hash.slice(5)); let job;
+  if (key === "running") job=makeRunning(jobs[0]);
+  else if (key === "done-fail") job=jobs[0];
+  else if (key === "done-pass") job=jobs[1];
+  else if (key === "failed") job=jobs[4];
+  else if (key === "uploaded") job=jobs[2];
+  else job=jobs.find(function(item){return item.id===key;}) || jobs[0];
+  return {screen:"detail",job:job};
+}
+function statusInfo(job) {
+  if (job.status === "running") { const current=job.stages.find(function(s){return s.status==="running";}); return {label:"편집 · "+STAGE_NAMES[current.name], cls:"running"}; }
+  if (job.status === "failed") return {label:"실패 · "+STAGE_NAMES[job.stages.find(function(s){return s.status==="failed";}).name],cls:"failed"};
+  if (job.upload) return {label:"업로드됨",cls:"done"};
+  return {label:"완성",cls:"done"};
+}
+function reviewInfo(job) {
+  if (!job.qa) return {label:"–",cls:""};
+  const count=job.qa.errors.length+job.qa.warns.length;
+  return job.qa.pass ? {label:"통과",cls:"pass"} : {label:"지적 "+count+"건",cls:"warn"};
+}
+function progressCount(job) { return job.stages.filter(function(s){return s.status==="done";}).length + (job.stages.some(function(s){return s.status==="running";}) ? 1 : 0); }
+function header() {
+  return '<header class="app-header"><div class="brand">숏츠 스튜디오</div><div class="create-bar"><input type="text" aria-label="영상 주제" placeholder="AI한테 ○○ 시켜봄"><select aria-label="실행 AI"><option>Claude</option><option>Codex</option></select><button type="button">주제 찾기</button><button class="primary" type="button">만들기</button></div></header>';
+}
+function renderList(jobs) {
+  if (!jobs.length) return header()+'<main class="page"><div class="list-heading"><h1>콘텐츠</h1><span class="count">0개</span></div><div class="empty"><div><strong>아직 만든 영상이 없습니다</strong>위에 주제를 넣고 첫 영상을 만들어 보세요.</div></div></main>';
+  jobs.sort(function(a,b){return a.status==="running"?-1:b.status==="running"?1:new Date(b.createdAt)-new Date(a.createdAt);});
+  const rows=jobs.map(function(job){
+    const status=statusInfo(job), review=reviewInfo(job), progress=progressCount(job);
+    const bar=job.status==="running"?'<div class="track" aria-label="10단계 중 '+progress+'단계"><span style="width:'+(progress*10)+'%"></span></div><div class="cell-sub">'+progress+'/10</div>':'';
+    return '<tr class="job-row" tabindex="0" data-id="'+esc(job.id)+'"><td><div class="video-cell">'+cover(job,"cover")+'<div class="video-copy"><div class="video-title">'+esc(titleOf(job))+'</div><div class="topic">'+esc(job.topic)+'</div><div class="mobile-meta"><span class="status '+status.cls+'">'+esc(status.label)+'</span> · '+esc(fmtDate(job.createdAt))+'</div></div></div></td><td><div class="status '+status.cls+'">'+esc(status.label)+'</div>'+bar+'</td><td><span class="review '+review.cls+'">'+esc(review.label)+'</span></td><td class="number">'+esc(fmtDate(job.createdAt))+'</td><td class="number">'+esc(fmtDuration(totalMs(job)))+'</td></tr>';
+  }).join("");
+  return header()+'<main class="page"><div class="list-heading"><h1>콘텐츠</h1><span class="count">'+jobs.length+'개</span></div><table class="jobs"><colgroup><col><col><col><col><col></colgroup><thead><tr><th>영상</th><th>상태</th><th>검수</th><th>날짜</th><th>걸린 시간</th></tr></thead><tbody>'+rows+'</tbody></table></main>';
+}
+function groupBars(job) {
+  return '<div class="groups" aria-label="제작 진행">'+STAGE_GROUPS.map(function(group){
+    const ss=group.stages.map(function(name){return job.stages.find(function(s){return s.name===name;});});
+    const reached=ss.filter(function(s){return s.status==="done"||s.status==="running"||s.status==="failed";}).length;
+    const failed=ss.some(function(s){return s.status==="failed";});
+    return '<div class="group '+(failed?'failed':'')+'"><div class="group-head"><span>'+group.name+'</span><span>'+reached+'/'+ss.length+'</span></div><div class="group-track"><span style="width:'+(reached/ss.length*100)+'%"></span></div></div>';
+  }).join("")+'</div>';
+}
+function facts(job) { return '<dl class="facts"><div><dt>걸린 시간</dt><dd>'+esc(fmtDuration(totalMs(job)))+'</dd></div><div><dt>실행 AI</dt><dd>'+esc(fmtRunner(job.runner))+'</dd></div><div><dt>만든 날짜</dt><dd>'+esc(fmtDate(job.createdAt))+'</dd></div></dl>'; }
+function preview(job) {
+  if (job.status === "running") return '<aside class="side"><div class="preview">'+cover(job,"preview-image")+'<div class="preview-note">만드는 중</div></div>'+facts(job)+'</aside>';
+  if (!job.hasVideo) return '<aside class="side"><div class="preview"><div class="preview-note">영상 없음</div></div>'+facts(job)+'</aside>';
+  return '<aside class="side"><div class="preview"><video controls preload="metadata" src="../../../jobs/'+encodeURIComponent(job.id)+'/out.mp4"></video></div>'+facts(job)+'</aside>';
+}
+function runningLog(job) {
+  let elapsed=0; return job.stages.filter(function(s){return s.status==="done"||s.status==="running";}).map(function(s){
+    const start=elapsed; if(s.status==="done") elapsed+=s.durationMs||0;
+    const stamp=fmtDuration(start).replace("–","0초");
+    return '['+stamp+'] '+STAGE_NAMES[s.name]+' '+(s.status==="done"?'완료 · '+fmtDuration(s.durationMs):'진행 중 · '+fmtDuration(s.durationMs)+' 경과');
+  }).join('\n');
+}
+function remainingMs(job,current) {
+  const averages={"script":29614,"audio":155970,"timing":15018,"render":79900,"qa":38165,"package":19011};
+  const left=Math.max(0,(averages[current.name]||0)-current.durationMs);
+  const index=job.stages.indexOf(current);
+  return left+job.stages.slice(index+1).reduce(function(sum,s){return sum+(averages[s.name]||0);},0);
+}
+function renderRunning(job) {
+  const current=job.stages.find(function(s){return s.status==="running";}), count=progressCount(job), remaining=remainingMs(job,current);
+  return '<div class="progress-line">편집 · '+esc(STAGE_NAMES[current.name])+' ('+count+'/10) <span>· 경과 '+esc(fmtDuration(totalMs(job)))+' · 남은 시간 약 '+Math.max(1,Math.round(remaining/60000))+'분</span></div>'+groupBars(job)+'<section class="log-box"><div class="log-head">실시간 로그</div><pre class="log">'+esc(runningLog(job))+'</pre></section>';
+}
+function record(job) {
+  return '<details><summary>제작 기록</summary><div class="record">'+STAGE_GROUPS.map(function(group){return '<section><h3>'+group.name+'</h3>'+group.stages.map(function(name){const s=job.stages.find(function(x){return x.name===name;});return '<div class="record-row"><span>'+STAGE_NAMES[name]+'</span><span>'+fmtDuration(s.durationMs)+'</span></div>';}).join('')+'</section>';}).join('')+'</div></details>';
+}
+function renderDone(job) {
+  const count=job.qa.errors.length+job.qa.warns.length, pass=job.qa.pass;
+  const issues='<ul class="issues error">'+job.qa.errors.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul><ul class="issues warning">'+job.qa.warns.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul>';
+  const action=job.upload?'<a class="primary secondary" href="'+esc(job.upload.studioUrl)+'" target="_blank" rel="noopener">Studio에서 열기</a>':'<button class="primary" type="button">올리기 (비공개)</button><button type="button">다시 만들기</button>';
+  return (job.upload?'<div class="detail-state">업로드됨</div>':'')+'<section class="section"><h2>검수 결과</h2><div class="review-title '+(pass?'pass':'warn')+'">'+(pass?'통과':'지적 '+count+'건')+'</div>'+issues+'<div class="actions">'+action+'</div></section><section class="section"><h2>영상 정보</h2><div class="field"><div class="field-label">제목</div><div class="field-value">'+esc(job.meta.title)+'</div></div><div class="field"><div class="field-label">설명</div><div class="field-value">'+esc(job.meta.description)+'</div></div><div class="field"><div class="field-label">해시태그</div><div class="field-value hashtags">'+esc(job.meta.hashtags.join(' '))+'</div></div></section>'+record(job);
+}
+function renderFailed(job) {
+  const failed=job.stages.find(function(s){return s.status==="failed";});
+  const last=job.stages.filter(function(s){return s.status==="done"||s.status==="failed";}).map(function(s){return STAGE_NAMES[s.name]+' '+(s.status==="failed"?'실패':'완료')+' · '+fmtDuration(s.durationMs);}).join('\n');
+  return '<div class="error-line">'+esc(STAGE_NAMES[failed.name])+' 단계에서 멈췄습니다 · '+esc(job.error)+'</div><div class="actions" style="margin:0 0 24px"><button class="primary" type="button">실패한 단계부터 다시</button></div>'+groupBars(job)+'<section class="log-box"><div class="log-head">마지막 로그</div><pre class="log">'+esc(last)+'</pre></section>';
+}
+function renderDetail(job) {
+  const main=job.status==="running"?renderRunning(job):job.status==="failed"?renderFailed(job):renderDone(job);
+  return '<header class="detail-head"><a class="back" href="#list">← 목록</a><h1>'+esc(titleOf(job))+'</h1></header><main class="detail-grid"><section class="detail-main">'+main+'</section>'+preview(job)+'</main>';
+}
+function bind() {
+  document.querySelectorAll('.job-row').forEach(function(row){
+    function open(){location.hash='#job/'+encodeURIComponent(row.dataset.id);}
+    row.addEventListener('click',open); row.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();open();}});
+  });
+}
+function render() { const model=routeModel(); $('#app').innerHTML=model.screen==='list'?renderList(model.jobs):renderDetail(model.job); bind(); }
+const theme=new URLSearchParams(location.search).get('theme'); if(theme==='light'||theme==='dark') document.documentElement.dataset.theme=theme;
+window.addEventListener('hashchange',render); render();
+</script>
+</body>
+</html>
