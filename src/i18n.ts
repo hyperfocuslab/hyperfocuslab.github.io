@@ -118,7 +118,7 @@ export const ui = {
         features: [
           { title: 'Apple Watch 연동', platforms: ['iOS'], body: 'Apple Watch가 기록한 심박수, 움직임, 수면, 운동을 건강 앱에서 가져와 함께 보여줍니다. 남은 약효 시간은 워치 스마트 스택에도 표시됩니다.' },
           { title: '단계별 알림', platforms: ['iOS', 'Android'], body: '약효가 오르기 시작할 때, 피크에 들어설 때, 줄어들기 시작할 때 알려줍니다. 항목별로 켜고 끌 수 있습니다.' },
-          { title: '심박수 반응', platforms: ['iOS'], body: '복용 후 심박수를 평소와 비교하고, 심박수가 튄 원인이 약효인지 활동 영향인지 추정합니다.' },
+          { title: '심박수 반응', platforms: ['iOS'], body: '복용 후 심박수를 평소와 비교하고, 심박수가 오른 이유가 약효인지 활동 영향인지 추정합니다.' },
           { title: '직접 추가하는 약', platforms: ['iOS', 'Android'], body: '지원 목록에 없는 약도 종류와 사진을 직접 추가해 기록할 수 있습니다.' },
         ],
         notes: [
@@ -209,7 +209,7 @@ export const ui = {
         features: [
           { title: 'Apple Watch', platforms: ['iOS'], body: 'Heart rate, movement, sleep, and workouts recorded by Apple Watch come in through Apple Health and show up alongside your medication. The time left is also shown in the watch Smart Stack.' },
           { title: 'Phase notifications', platforms: ['iOS', 'Android'], body: 'Get notified when the effect starts rising, when it reaches its peak, and when it starts wearing off. Turn each one on or off.' },
-          { title: 'Heart-rate response', platforms: ['iOS'], body: 'Compares your heart rate after a dose with your usual, and estimates whether a spike reflects the medication\'s effect or the effect of activity.' },
+          { title: 'Heart-rate response', platforms: ['iOS'], body: 'Compares your heart rate after a dose with your usual, and estimates whether a rise reflects the medication\'s effect or the effect of activity.' },
           { title: 'Your own medications', platforms: ['iOS', 'Android'], body: 'Add medications that aren\'t on the supported list, with your own photo, and keep logging them.' },
         ],
         notes: [
