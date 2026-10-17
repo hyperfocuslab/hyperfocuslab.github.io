@@ -189,7 +189,8 @@ function fmtDuration(ms) { if (ms == null) return "–"; const sec=Math.round(ms
 function fmtRunner(value) { return value === "claude" ? "Claude" : value === "codex" ? "Codex" : value; }
 function totalMs(job) { return job.stages.reduce(function(sum,s){return sum+(s.durationMs||0);},0); }
 function titleOf(job) { return job.meta && job.meta.title || job.topic; }
-function cover(job, className) { return job.hasCover ? '<img class="'+className+'" src="../../../jobs/'+encodeURIComponent(job.id)+'/cover.png" alt="">' : '<div class="'+className+'"></div>'; }
+const COVERS = {"2026-10-18_0055_ai한테-타자-연습-게임-만들어보라고-시켜봄":"2ce4dbfd.jpg","2026-10-17_2301_ending-test":"7dc870a0.jpg","2026-10-17_0208_ai한테-두더지-잡기-게임-만들어보라고-시켜봄":"37630a0d.jpg","2026-10-17_0047_ai한테-30초-반응속도-테스트-게임-만들어보라고-시켜봄":"f210660f.jpg"};
+function cover(job, className) { const f=COVERS[job.id]; return job.hasCover && f ? '<img class="'+className+'" src="covers/'+f+'" alt="" onerror="this.replaceWith(Object.assign(document.createElement(\'div\'),{className:this.className}))">' : '<div class="'+className+'"></div>'; }
 function cloneJobs() { return SAMPLE_JOBS.jobs.map(function(j){return Object.assign({},j,{stages:j.stages.map(function(s){return Object.assign({},s);}),qa:j.qa?{pass:j.qa.pass,errors:j.qa.errors.slice(),warns:j.qa.warns.slice()}:null});}); }
 function makeRunning(job) {
   job.status="running"; job.meta=null; job.qa=null; job.upload=null;
@@ -247,7 +248,7 @@ function facts(job) { return '<dl class="facts"><div><dt>걸린 시간</dt><dd>'
 function preview(job) {
   if (job.status === "running") return '<aside class="side"><div class="preview">'+cover(job,"preview-image")+'<div class="preview-note">만드는 중</div></div>'+facts(job)+'</aside>';
   if (!job.hasVideo) return '<aside class="side"><div class="preview"><div class="preview-note">영상 없음</div></div>'+facts(job)+'</aside>';
-  return '<aside class="side"><div class="preview"><video controls preload="metadata" src="../../../jobs/'+encodeURIComponent(job.id)+'/out.mp4"></video></div>'+facts(job)+'</aside>';
+  return '<aside class="side"><div class="preview">'+cover(job,"preview-image")+'</div>'+facts(job)+'</aside>';
 }
 function runningLog(job) {
   let elapsed=0; return job.stages.filter(function(s){return s.status==="done"||s.status==="running";}).map(function(s){
