@@ -21,7 +21,7 @@ const meta = metas[`../data/docs/${doc}.${lang}.json`];
 <Base lang={lang} page={doc} title={meta.title} description={meta.description}>
   <article class="wrap doc">
     <header class="doc-head">
-      <p class="label">Peakly · {ui[lang].docs[doc]}</p>
+      <p class="label">{ui[lang].appName} · {ui[lang].docs[doc]}</p>
       <h1>{meta.heading}</h1>
     </header>
     <div class="prose" set:html={body} />

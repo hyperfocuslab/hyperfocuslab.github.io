@@ -33,19 +33,20 @@ export const LANG_LABEL: Record<Lang, string> = { ko: '한국어', en: 'English'
 
 export const ui = {
   ko: {
+    appName: '피클리',
     nav: { products: '제품', contact: '문의', support: '고객지원', language: '언어 선택', main: '주요 메뉴' },
     docs: { privacy: '개인정보처리방침', terms: '서비스 이용약관', support: '고객지원' },
     footer: { products: '제품', language: '언어', contact: '문의하기', legal: '© 2026 Hyperfocus Lab · 대표 이예준' },
     home: {
       title: 'Hyperfocus Lab | 소프트웨어 스튜디오',
-      description: 'Hyperfocus Lab은 자체 소프트웨어 제품을 만들고 운영하는 스튜디오입니다. 지금은 Peakly를 운영합니다.',
+      description: 'Hyperfocus Lab은 자체 소프트웨어 제품을 만들고 운영하는 스튜디오입니다. 지금은 피클리를 운영합니다.',
       products: {
         title: '제품',
         facts: [
           ['플랫폼', 'iPhone · iPad · Android'],
           ['언어', '한국어 · English · 日本語'],
         ],
-        more: 'Peakly 페이지로',
+        more: '피클리 페이지로',
       },
       peakly: {
         tagline: 'ADHD 복약 기록 앱',
@@ -55,8 +56,8 @@ export const ui = {
             tab: '복약',
             intro: '복용 시각을 기록하면 하루 동안의 약효 변화가 그려집니다.',
             rows: [
-              { shot: 'chart', label: '예상 약효 곡선', title: '지금 약효가 어디쯤인지.', body: '콘서타와 메디키넷의 알려진 약효 변화를 바탕으로 시간대별 예상 약효를 그립니다. 지금 약효가 오르는 중인지, 가장 강한 때인지, 줄어드는 중인지 알 수 있고, 단계별 시간은 내 몸에 맞게 조정할 수 있습니다. Apple Watch를 쓰면 심박수와 움직임이 곡선 아래에 시간대별로 함께 표시됩니다.', alt: '콘서타 예상 약효 곡선과 그 아래 심박수, 움직임 그래프가 있는 Peakly 복약 화면' },
-              { shot: 'mood', label: '기분 체크인', title: '기분은 한 번 탭으로, 메모는 그 아래에.', body: '다섯 가지 표정 중 하나를 누르면 그 시각의 기분이 기록됩니다. 하루에 몇 번이든 남길 수 있고, 남긴 기분은 약효 곡선 아래에 기록한 시각에 맞춰 표시됩니다. 표정 아래 칸에 한 줄 메모도 적을 수 있습니다.', alt: '다섯 가지 표정과 메모 줄이 있는 기분 카드, 그 아래 약효 곡선과 기분 기록 띠가 있는 Peakly 복약 화면' },
+              { shot: 'chart', label: '예상 약효 곡선', title: '지금 약효가 어디쯤인지.', body: '콘서타와 메디키넷의 알려진 약효 변화를 바탕으로 시간대별 예상 약효를 그립니다. 지금 약효가 오르는 중인지, 가장 강한 때인지, 줄어드는 중인지 알 수 있고, 단계별 시간은 내 몸에 맞게 조정할 수 있습니다. Apple Watch를 쓰면 심박수와 움직임이 곡선 아래에 시간대별로 함께 표시됩니다.', alt: '콘서타 예상 약효 곡선과 그 아래 심박수, 움직임 그래프가 있는 피클리 복약 화면' },
+              { shot: 'mood', label: '기분 체크인', title: '기분은 한 번 탭으로, 메모는 그 아래에.', body: '다섯 가지 표정 중 하나를 누르면 그 시각의 기분이 기록됩니다. 하루에 몇 번이든 남길 수 있고, 남긴 기분은 약효 곡선 아래에 기록한 시각에 맞춰 표시됩니다. 표정 아래 칸에 한 줄 메모도 적을 수 있습니다.', alt: '다섯 가지 표정과 메모 줄이 있는 기분 카드, 그 아래 약효 곡선과 기분 기록 띠가 있는 피클리 복약 화면' },
               { shot: 'lock', label: '다이나믹 아일랜드·잠금 화면', title: '남은 약효 시간이 늘 화면 위에.', body: 'iPhone은 다이나믹 아일랜드와 잠금 화면, Apple Watch 스마트 스택에, Android는 알림 영역에 남은 약효 시간이 계속 떠 있습니다. 약효가 오를 때, 최대 농도 구간에 들어설 때, 끝나갈 때는 알림으로 알려줍니다.', alt: '다이나믹 아일랜드와 잠금 화면에 콘서타 36mg 메인 피크와 남은 시간이 표시된 iPhone' },
               { shot: 'report', label: 'PDF 리포트', title: '진료 때 보여줄 기록을 PDF로.', body: '기간을 고르면 "지난 N일, 이렇게 지냈어요" 리포트가 두 장짜리 PDF로 만들어집니다. 복용 기록, 이전 기간과 비교한 컨디션 변화, 하루 중 약효 흐름, 일별 메모, 진료 때 물어볼 질문이 들어갑니다.', alt: '복용 기록과 컨디션 변화가 정리된 PDF 리포트 첫 장 미리보기' },
             ],
@@ -116,13 +117,14 @@ export const ui = {
           { title: '직접 추가하는 약', platforms: ['iOS', 'Android'], body: '목록에 없는 약도 이름, 용량, 사진을 직접 넣어 기록할 수 있습니다. 곡선은 지원하는 약만 나옵니다.' },
         ],
         notes: [
-          '일부 기능은 Peakly Pro에서 쓸 수 있습니다.',
+          '일부 기능은 피클리 Pro에서 쓸 수 있습니다.',
           '예상 곡선은 참고용이며 의학적 판단을 대신하지 않습니다.',
         ],
       },
     },
   },
   en: {
+    appName: 'Peakly',
     nav: { products: 'Products', contact: 'Contact', support: 'Support', language: 'Language', main: 'Main' },
     docs: { privacy: 'Privacy Policy', terms: 'Terms of Service', support: 'Support' },
     footer: { products: 'Products', language: 'Language', contact: 'Contact', legal: '© 2026 Hyperfocus Lab · Representative: Yejun Lee' },
@@ -213,6 +215,7 @@ export const ui = {
     },
   },
   ja: {
+    appName: 'ピークリー',
     nav: { products: 'プロダクト', contact: 'お問い合わせ', support: 'サポート', language: '言語', main: 'メインメニュー' },
     docs: { privacy: 'プライバシーポリシー', terms: '利用規約', support: 'サポート' },
     footer: { products: 'プロダクト', language: '言語', contact: 'お問い合わせ', legal: '© 2026 Hyperfocus Lab · 代表 Yejun Lee' },
@@ -235,8 +238,8 @@ export const ui = {
             tab: '服薬',
             intro: '服用時刻を記録すると、一日の作用の変化が描かれます。',
             rows: [
-              { shot: 'chart', label: '予測グラフ', title: 'いま、作用はどのあたりか。', body: 'コンサータとメディキネットの一般的な作用の変化をもとに、時間ごとの作用の予測を描きます。いま作用が上がっている途中か、いちばん強い時間か、弱まってきているかがわかり、各段階の時間は自分の体に合わせて調整できます。Apple Watchを使うと、心拍数と動きが曲線の下に時間ごとに表示されます。', alt: 'コンサータの予想曲線と心拍数・動きのグラフが並ぶPeaklyの服薬画面' },
-              { shot: 'mood', label: '気分チェックイン', title: '気分はワンタップで、メモはそのすぐ下に。', body: '5つの表情のどれかをタップすると、その時刻の気分が記録されます。一日に何回でも残せて、記録した気分は作用グラフの下、記録した時刻の位置に表示されます。表情の下にはひとことメモも書けます。', alt: '5つの表情とメモ欄がある気分カードと、その下に作用グラフと気分の記録の帯があるPeaklyの服薬画面' },
+              { shot: 'chart', label: '予測グラフ', title: 'いま、作用はどのあたりか。', body: 'コンサータとメディキネットの一般的な作用の変化をもとに、時間ごとの作用の予測を描きます。いま作用が上がっている途中か、いちばん強い時間か、弱まってきているかがわかり、各段階の時間は自分の体に合わせて調整できます。Apple Watchを使うと、心拍数と動きが曲線の下に時間ごとに表示されます。', alt: 'コンサータの予想曲線と心拍数・動きのグラフが並ぶピークリーの服薬画面' },
+              { shot: 'mood', label: '気分チェックイン', title: '気分はワンタップで、メモはそのすぐ下に。', body: '5つの表情のどれかをタップすると、その時刻の気分が記録されます。一日に何回でも残せて、記録した気分は作用グラフの下、記録した時刻の位置に表示されます。表情の下にはひとことメモも書けます。', alt: '5つの表情とメモ欄がある気分カードと、その下に作用グラフと気分の記録の帯があるピークリーの服薬画面' },
               { shot: 'lock', label: 'Dynamic Island・ロック画面', title: '作用の残り時間を、いつも画面に。', body: 'iPhoneではDynamic Island、ロック画面、Apple Watchのスマートスタックに、Androidでは通知エリアに、作用の残り時間が表示され続けます。作用が上がり始めたとき、ピークの時間帯に入ったとき、切れかけたときは通知でお知らせします。', alt: 'Dynamic Islandとロック画面に、コンサータ36mgのメインピークと残り時間を表示したiPhone' },
               { shot: 'report', label: 'PDFレポート', title: '診察で見せる記録を、PDFで。', body: '期間を選ぶと、「直近N日間、こんなふうに過ごしました」というレポートが2ページのPDFになります。服薬記録、前の期間と比べたコンディションの変化、一日の作用の流れ、日ごとのメモ、診察で聞きたいことが入ります。', alt: '服薬記録とコンディションの変化をまとめたPDFレポート1ページ目のプレビュー' },
             ],

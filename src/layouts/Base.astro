@@ -53,7 +53,7 @@ const fontCss = `https://fonts.googleapis.com/css2?family=${plex}:wght@400;500;6
         {
           inPeakly && (
             <a class="crumb" href={href('peakly', lang)} aria-current={page === 'peakly' ? 'page' : undefined}>
-              Peakly
+              {t.appName}
             </a>
           )
         }
@@ -102,12 +102,12 @@ const fontCss = `https://fonts.googleapis.com/css2?family=${plex}:wght@400;500;6
         </a>
         <nav aria-label={t.footer.products}>
           <p class="footer-head">{t.footer.products}</p>
-          <a href={`${href('home', lang)}#products`}>Peakly</a>
+          <a href={`${href('home', lang)}#products`}>{t.appName}</a>
           <a href={STORE.appStore} target="_blank" rel="noreferrer">App Store ↗</a>
           <a href={STORE.googlePlay} target="_blank" rel="noreferrer">Google Play ↗</a>
         </nav>
-        <nav aria-label="Peakly">
-          <p class="footer-head">Peakly</p>
+        <nav aria-label={t.appName}>
+          <p class="footer-head">{t.appName}</p>
           <a href={href('support', lang)}>{t.docs.support}</a>
           <a href={href('privacy', lang)}>{t.docs.privacy}</a>
           <a href={href('terms', lang)}>{t.docs.terms}</a>

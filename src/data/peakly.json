@@ -1,8 +1,8 @@
 {
   "ko": {
     "meta": {
-      "title": "Peakly | ADHD 복약 · 루틴 기록 앱",
-      "description": "Peakly는 복약 시간, 약효 흐름, 루틴, 할 일, 컨디션 기록을 함께 정리하는 ADHD 기록 앱입니다."
+      "title": "피클리 | ADHD 복약 · 루틴 기록 앱",
+      "description": "피클리는 복약 시간, 약효 흐름, 루틴, 할 일, 컨디션 기록을 함께 정리하는 ADHD 기록 앱입니다."
     },
     "tagline": "ADHD 기록 파트너",
     "hero": {
@@ -54,7 +54,7 @@
         }
       ],
       "image": "/assets/peakly-hero-medication.png",
-      "alt": "Peakly 약효 흐름 그래프 화면",
+      "alt": "피클리 약효 흐름 그래프 화면",
       "note": "콘서타 농도 곡선 위에 심박수와 움직임을 겹쳐서 보여줘요."
     },
     "condition": {
@@ -79,7 +79,7 @@
         }
       ],
       "image": "/assets/peakly-hero-condition.png",
-      "alt": "Peakly 컨디션 요약 화면",
+      "alt": "피클리 컨디션 요약 화면",
       "note": "수면 단계, 심박수, 걸음 수, 운동 기록을 한 곳에서 확인해요."
     },
     "features": {
