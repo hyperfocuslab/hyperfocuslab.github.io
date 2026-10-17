@@ -18,24 +18,9 @@ const sections = t.peakly.sections
   .map((section) => ({ ...section, rows: section.rows.filter((row) => hasShot(row.shot)) }))
   .filter((section) => section.rows.length > 0);
 const rows = sections.flatMap((section) => section.rows);
-const heroShot = t.peakly.sections.flatMap((section) => section.rows).find((row) => row.shot === 'widgets' && hasShot(row.shot));
 ---
 
 <Base lang={lang} page="home" title={t.title} description={t.description}>
-  <section class="wrap hero">
-    <div class="hero-copy">
-      <h1 class="display hero-title">{t.headline}</h1>
-    </div>
-    {
-      heroShot && (
-        <div class="hero-visual">
-          {/* Same screen as the widgets row below, which carries the description; decorative here. */}
-          <AppShot src={`/assets/peakly/${lang}-widgets.webp`} alt="" eager />
-        </div>
-      )
-    }
-  </section>
-
   <!-- Visitors scroll rather than click, so the product is introduced here in full. -->
   <section class="section" id="products">
     <div class="wrap">
@@ -43,7 +28,7 @@ const heroShot = t.peakly.sections.flatMap((section) => section.rows).find((row)
         <div class="product-name">
           <img class="app-icon" src="/assets/peakly-logo.png" alt="" width="72" height="72" />
           <div>
-            <h2 class="h2">Peakly</h2>
+            <h1 class="h2">Peakly</h1>
             <p class="muted">{t.peakly.tagline}</p>
           </div>
         </div>

@@ -277,6 +277,11 @@ a:hover {
   border-top: 1px solid var(--rule);
 }
 
+/* The header already draws a rule under itself. */
+main > .section:first-child {
+  border-top: 0;
+}
+
 .section-head {
   display: grid;
   gap: 14px;
@@ -346,42 +351,6 @@ a:hover {
 
 .arrow-link:hover svg {
   transform: translateX(3px);
-}
-
-/* ── Home hero ────────────────────────────────────────── */
-.hero {
-  display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
-  gap: clamp(32px, 6vw, 96px);
-  align-items: center;
-  padding-block: clamp(64px, 11vw, 140px) clamp(48px, 7vw, 88px);
-}
-
-.hero-copy {
-  display: grid;
-  gap: clamp(18px, 2.4vw, 26px);
-  justify-items: start;
-}
-
-.hero-title {
-  font-size: clamp(2rem, 4.6vw, 3.75rem);
-  max-width: 14em;
-}
-
-/* The headline is a full sentence: let Japanese wrap anywhere except before punctuation. */
-:lang(ja) .hero-title {
-  word-break: normal;
-  overflow-wrap: normal;
-  line-break: strict;
-}
-
-.hero-visual {
-  display: grid;
-  place-items: center;
-}
-
-.hero-visual .device {
-  width: min(100%, 300px);
 }
 
 .actions {
@@ -474,18 +443,6 @@ a:hover {
 }
 
 @media (max-width: 860px) {
-  .hero {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .hero-visual {
-    justify-items: start;
-  }
-
-  .hero-visual .device {
-    width: min(100%, 220px);
-  }
-
   .feature-list {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -854,7 +811,7 @@ a:hover {
     display: none;
   }
 
-  /* The hero already shows the name; on phones the header keeps only the mark. */
+  /* Phones keep only the mark in the header so the menu and languages fit. */
   .site-header .wordmark-text {
     display: none;
   }
@@ -903,24 +860,6 @@ a:hover {
   font-weight: 500;
   letter-spacing: 0.04em;
   color: var(--ink-3);
-}
-
-/* ── Hero texture: a faint grid that fades out ─────────────── */
-.hero {
-  position: relative;
-}
-
-.hero::before {
-  content: '';
-  position: absolute;
-  inset: -64px 0 0;
-  z-index: -1;
-  background-image: linear-gradient(var(--rule-soft) 1px, transparent 1px),
-    linear-gradient(90deg, var(--rule-soft) 1px, transparent 1px);
-  background-size: 64px 64px;
-  mask-image: radial-gradient(ellipse 70% 70% at 70% 40%, #000 20%, transparent 75%);
-  -webkit-mask-image: radial-gradient(ellipse 70% 70% at 70% 40%, #000 20%, transparent 75%);
-  pointer-events: none;
 }
 
 /* ── Feature rows: one idea per screen, text beside the app ── */
@@ -1117,13 +1056,13 @@ a:hover {
 }
 
 /* ── Scroll reveal (enabled by a small script in Base.astro) ── */
-.reveal-on :is(.hero-copy, .hero-visual, .p-intro, .feature-copy, .feature-visual, .data-head, .data-list li, .feature-cards li, .section-head, .facts, .email, .doc-head) {
+.reveal-on :is(.p-intro, .feature-copy, .feature-visual, .data-head, .data-list li, .feature-cards li, .section-head, .facts, .email, .doc-head) {
   opacity: 0;
   transform: translateY(24px);
   transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
-.reveal-on :is(.hero-copy, .hero-visual, .p-intro, .feature-copy, .feature-visual, .feature-cards li, .section-head, .facts, .email, .doc-head).in {
+.reveal-on :is(.p-intro, .feature-copy, .feature-visual, .feature-cards li, .section-head, .facts, .email, .doc-head).in {
   opacity: 1;
   transform: none;
 }
