@@ -363,15 +363,25 @@ a:hover {
   justify-items: start;
 }
 
-.hero-mark {
-  display: grid;
-  place-items: center;
-  color: var(--ink);
+.hero-title {
+  font-size: clamp(2rem, 4.6vw, 3.75rem);
+  max-width: 14em;
 }
 
-.hero-mark .logo {
-  width: min(100%, 320px);
-  height: auto;
+/* The headline is a full sentence: let Japanese wrap anywhere except before punctuation. */
+:lang(ja) .hero-title {
+  word-break: normal;
+  overflow-wrap: normal;
+  line-break: strict;
+}
+
+.hero-visual {
+  display: grid;
+  place-items: center;
+}
+
+.hero-visual .device {
+  width: min(100%, 300px);
 }
 
 .actions {
@@ -468,13 +478,12 @@ a:hover {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .hero-mark {
-    order: -1;
+  .hero-visual {
     justify-items: start;
   }
 
-  .hero-mark .logo {
-    width: 96px;
+  .hero-visual .device {
+    width: min(100%, 220px);
   }
 
   .feature-list {
@@ -762,7 +771,7 @@ a:hover {
 
 .footer-grid {
   display: grid;
-  grid-template-columns: minmax(0, 2fr) repeat(4, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0, 1fr));
   gap: 40px 24px;
 }
 
@@ -798,6 +807,16 @@ a:hover {
   margin-top: clamp(48px, 7vw, 72px);
   font-size: 0.8125rem;
   color: var(--ink-3);
+}
+
+.footer-bottom a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.footer-bottom a:hover {
+  color: var(--ink);
+  text-decoration: underline;
 }
 
 @media (max-width: 860px) {
@@ -1098,13 +1117,13 @@ a:hover {
 }
 
 /* ── Scroll reveal (enabled by a small script in Base.astro) ── */
-.reveal-on :is(.hero-copy, .hero-mark, .p-intro, .feature-copy, .feature-visual, .data-head, .data-list li, .feature-cards li, .section-head, .facts, .email, .doc-head) {
+.reveal-on :is(.hero-copy, .hero-visual, .p-intro, .feature-copy, .feature-visual, .data-head, .data-list li, .feature-cards li, .section-head, .facts, .email, .doc-head) {
   opacity: 0;
   transform: translateY(24px);
   transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
-.reveal-on :is(.hero-copy, .hero-mark, .p-intro, .feature-copy, .feature-visual, .feature-cards li, .section-head, .facts, .email, .doc-head).in {
+.reveal-on :is(.hero-copy, .hero-visual, .p-intro, .feature-copy, .feature-visual, .feature-cards li, .section-head, .facts, .email, .doc-head).in {
   opacity: 1;
   transform: none;
 }

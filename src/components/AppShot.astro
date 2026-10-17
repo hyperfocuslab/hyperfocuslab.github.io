@@ -4,8 +4,9 @@
 interface Props {
   src: string;
   alt: string;
+  eager?: boolean;
 }
-const { src, alt } = Astro.props;
+const { src, alt, eager = false } = Astro.props;
 ---
 
 <div class="device">
@@ -13,6 +14,6 @@ const { src, alt } = Astro.props;
   <span class="btn-side l2" aria-hidden="true"></span>
   <span class="btn-side r1" aria-hidden="true"></span>
   <div class="screen">
-    <img class="shot" src={src} alt={alt} width="660" height="1434" loading="lazy" decoding="async" />
+    <img class="shot" src={src} alt={alt} width="660" height="1434" loading={eager ? 'eager' : 'lazy'} decoding="async" />
   </div>
 </div>

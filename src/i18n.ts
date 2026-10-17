@@ -35,9 +35,10 @@ export const ui = {
   ko: {
     nav: { products: '제품', contact: '문의', support: '고객지원', language: '언어 선택', main: '주요 메뉴' },
     docs: { privacy: '개인정보처리방침', terms: '서비스 이용약관', support: '고객지원' },
-    footer: { products: '제품', company: '회사', language: '언어', contact: '문의하기', legal: '© 2026 Hyperfocus Lab · 대표 이예준' },
+    footer: { products: '제품', language: '언어', contact: '문의하기', legal: '© 2026 Hyperfocus Lab · 대표 이예준' },
     home: {
       title: 'Hyperfocus Lab | 소프트웨어 스튜디오',
+      headline: '매일 쓰는 앱을 만들고 직접 운영합니다.',
       description: 'Hyperfocus Lab은 자체 소프트웨어 제품을 만들고 운영하는 스튜디오입니다. 지금은 Peakly를 운영합니다.',
       products: {
         title: '제품',
@@ -125,9 +126,10 @@ export const ui = {
   en: {
     nav: { products: 'Products', contact: 'Contact', support: 'Support', language: 'Language', main: 'Main' },
     docs: { privacy: 'Privacy Policy', terms: 'Terms of Service', support: 'Support' },
-    footer: { products: 'Products', company: 'Company', language: 'Language', contact: 'Contact', legal: '© 2026 Hyperfocus Lab · Representative: Yejun Lee' },
+    footer: { products: 'Products', language: 'Language', contact: 'Contact', legal: '© 2026 Hyperfocus Lab · Representative: Yejun Lee' },
     home: {
       title: 'Hyperfocus Lab | Software studio',
+      headline: 'We make apps for everyday use, and run them ourselves.',
       description: 'Hyperfocus Lab is a studio that builds and runs its own software products. Today we run Peakly.',
       products: {
         title: 'Products',
@@ -215,9 +217,10 @@ export const ui = {
   ja: {
     nav: { products: 'プロダクト', contact: 'お問い合わせ', support: 'サポート', language: '言語', main: 'メインメニュー' },
     docs: { privacy: 'プライバシーポリシー', terms: '利用規約', support: 'サポート' },
-    footer: { products: 'プロダクト', company: '会社', language: '言語', contact: 'お問い合わせ', legal: '© 2026 Hyperfocus Lab · 代表 Yejun Lee' },
+    footer: { products: 'プロダクト', language: '言語', contact: 'お問い合わせ', legal: '© 2026 Hyperfocus Lab · 代表 Yejun Lee' },
     home: {
       title: 'Hyperfocus Lab | ソフトウェアスタジオ',
+      headline: '毎日使うアプリをつくり、自社で運営しています。',
       description: 'Hyperfocus Labは、自社のソフトウェア製品をつくり、運営するスタジオです。現在はピークリーを運営しています。',
       products: {
         title: 'プロダクト',

@@ -1,7 +1,6 @@
 ---
 import { existsSync } from 'node:fs';
 import Base from '../layouts/Base.astro';
-import Logo from './Logo.astro';
 import AppShot from './AppShot.astro';
 import StoreBadges from './StoreBadges.astro';
 import { ui, type Lang } from '../i18n';
@@ -19,16 +18,22 @@ const sections = t.peakly.sections
   .map((section) => ({ ...section, rows: section.rows.filter((row) => hasShot(row.shot)) }))
   .filter((section) => section.rows.length > 0);
 const rows = sections.flatMap((section) => section.rows);
+const heroShot = t.peakly.sections.flatMap((section) => section.rows).find((row) => row.shot === 'widgets' && hasShot(row.shot));
 ---
 
 <Base lang={lang} page="home" title={t.title} description={t.description}>
   <section class="wrap hero">
     <div class="hero-copy">
-      <h1 class="display">Hyperfocus Lab</h1>
+      <h1 class="display hero-title">{t.headline}</h1>
     </div>
-    <div class="hero-mark">
-      <Logo size="320" />
-    </div>
+    {
+      heroShot && (
+        <div class="hero-visual">
+          {/* Same screen as the widgets row below, which carries the description; decorative here. */}
+          <AppShot src={`/assets/peakly/${lang}-widgets.webp`} alt="" eager />
+        </div>
+      )
+    }
   </section>
 
   <!-- Visitors scroll rather than click, so the product is introduced here in full. -->

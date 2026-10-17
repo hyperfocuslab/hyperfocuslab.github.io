@@ -112,10 +112,6 @@ const fontCss = `https://fonts.googleapis.com/css2?family=${plex}:wght@400;500;6
           <a href={href('privacy', lang)}>{t.docs.privacy}</a>
           <a href={href('terms', lang)}>{t.docs.terms}</a>
         </nav>
-        <nav aria-label={t.footer.company}>
-          <p class="footer-head">{t.footer.company}</p>
-          <a href={`mailto:${EMAIL}`}>{t.footer.contact}</a>
-        </nav>
         <nav aria-label={t.footer.language}>
           <p class="footer-head">{t.footer.language}</p>
           {
@@ -128,7 +124,7 @@ const fontCss = `https://fonts.googleapis.com/css2?family=${plex}:wght@400;500;6
         </nav>
       </div>
       <div class="wrap footer-bottom">
-        <p>{t.footer.legal}</p>
+        <p>{t.footer.legal} · <a href={`mailto:${EMAIL}`}>{t.footer.contact}</a></p>
       </div>
     </footer>
     <script is:inline>
@@ -138,7 +134,7 @@ const fontCss = `https://fonts.googleapis.com/css2?family=${plex}:wght@400;500;6
         if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
         document.documentElement.classList.add('reveal-on');
         const targets = document.querySelectorAll(
-          '.hero-copy, .hero-mark, .p-intro, .feature-copy, .feature-visual, .feature-cards li, .section-head, .facts, .email, .doc-head'
+          '.hero-copy, .hero-visual, .p-intro, .feature-copy, .feature-visual, .feature-cards li, .section-head, .facts, .email, .doc-head'
         );
         const io = new IntersectionObserver(
           (entries) => {
