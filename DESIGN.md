@@ -28,7 +28,7 @@
 | 색 | 흑백만. 회사 쪽에는 포인트 색을 쓰지 않고, 화면의 색은 제품 아이콘에서만 나온다 (Linear, Vercel, Resend 참고). |
 | 글꼴 | IBM Plex 가족으로 통일. 한국어·영어는 IBM Plex Sans KR (Peakly 앱과 같은 글꼴), 일본어는 IBM Plex Sans JP, 작은 라벨·숫자는 IBM Plex Mono. |
 | 로고 | [▍] 괄호(소프트웨어) 안의 커서(지금 집중하는 한 곳). 흑백. 사이트에서는 커서가 깜빡이고, 정지된 곳(탭 아이콘, 프로필 사진)에서는 켜진 상태. 상단 메뉴에는 로고 + "Hyperfocus Lab", 첫 화면에는 로고를 크게. 파일: `src/components/Logo.astro`, `public/favicon.svg` |
-| 제품 화면 | 시뮬레이터에서 다크 모드·데모 데이터(심박수·움직임 포함)로 찍은 실제 앱 캡처를 iPhone 프레임에 넣는다. 언어별로 따로 찍는다. 원본: `/private/tmp/peakly-site-capture-shots/`, 사이트용: `public/assets/peakly/{ko,en,ja}-{chart,lock,routines,todo,goals,goals-today,calendar,report}.webp`. 차트 디자인이 바뀌면 다시 찍는다. webp에는 Display P3 프로필을 붙인다(시뮬레이터 화면과 같은 채도). lock은 홈 화면에서 찍은 다이나믹 아일랜드를 잠금 화면에 합성하고, 아일랜드 타이머는 잠금 화면 카드 숫자에 맞춰 다시 그린다. |
+| 제품 화면 | 시뮬레이터에서 다크 모드·데모 데이터(심박수·움직임 포함)로 찍은 실제 앱 캡처를 iPhone 프레임에 넣는다. 언어별로 시뮬레이터 시스템 언어를 바꿔 따로 찍는다(위젯 날짜·앱 이름이 시스템 언어를 따른다). 상태바(시간·신호·와이파이·배터리)는 지우고 다이나믹 아일랜드만 남긴다. 원본·처리 스크립트: `~/Documents/github/_scratch/peakly/site-shots/status/`, 사이트용: `public/assets/peakly/{ko,en,ja}-{chart,lock,routines,todo,goals,goals-today,calendar,report}.webp`. 차트 디자인이 바뀌면 다시 찍는다. webp에는 Display P3 프로필을 붙인다(시뮬레이터 화면과 같은 채도). lock은 홈 화면에서 찍은 다이나믹 아일랜드를 잠금 화면에 합성하고, 아일랜드 타이머는 잠금 화면 카드 숫자에 맞춰 다시 그린다. |
 | 회사 정보 | 본문에 회사 섹션을 두지 않는다. 회사명·대표·소재지는 푸터 맨 아래 한 줄 (Resend·Linear·Nothing 참고). |
 | 첫 화면 문구 | 큰 "Hyperfocus Lab" + 정의 한 줄. 슬로건은 넣지 않는다 (필요하면 문구 단계에서). |
 
