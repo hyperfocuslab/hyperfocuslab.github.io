@@ -178,7 +178,7 @@ export const ui = {
             tab: 'Settings',
             intro: 'Language, look, and backups, your way.',
             rows: [
-              { shot: 'settings', label: 'Make it yours', title: 'Language and look, your way.', body: 'Peakly is available in Korean, English, and Japanese, with dark and light modes and font options. Set your target bedtime and wake time, and Peakly warns you if the effect may last into the night.', alt: 'Settings screen with language, display mode, color theme, and target bedtime and wake time' },
+              { shot: 'settings', label: 'Make it yours', title: 'Language and look, your way.', body: 'Peakly is available in Korean, English, and Japanese, with dark and light modes and font options. Set your target bedtime and wake time, and Peakly warns you if the effect may last into the night.', alt: 'Settings screen with language, display mode, font, and target bedtime and wake time' },
               { shot: 'backup', label: 'Backup and restore', title: 'New phone, same records.', body: 'Your dose records and health data never go to an outside server. They are stored only on your device and in your own iCloud. Backups run automatically, and you can also back up now or export a file.', alt: 'Backup screen with iCloud backup, back up now, and data export and import' },
             ],
           },
@@ -268,7 +268,7 @@ export const ui = {
             tab: '設定',
             intro: '言語も画面もバックアップも、自分に合わせて。',
             rows: [
-              { shot: 'settings', label: '自分に合わせて', title: '言語も画面も、自分に合わせて。', body: '韓国語、英語、日本語で使えます。ダーク・ライトモードとフォントも選べます。目標の就寝・起床時間を決めておくと、作用が寝る時間まで続きそうなときに事前にお知らせします。', alt: '言語、ディスプレイモード、色テーマ、目標の就寝・起床時間がある設定画面' },
+              { shot: 'settings', label: '自分に合わせて', title: '言語も画面も、自分に合わせて。', body: '韓国語、英語、日本語で使えます。ダーク・ライトモードとフォントも選べます。目標の就寝・起床時間を決めておくと、作用が寝る時間まで続きそうなときに事前にお知らせします。', alt: '言語、ディスプレイモード、フォント、目標の就寝・起床時間がある設定画面' },
               { shot: 'backup', label: 'バックアップ・復元', title: '機種を変えても、記録はそのまま。', body: '服薬記録と健康データは外部のサーバーには送らず、端末と自分のiCloudにだけ保存されます。自動でバックアップし、必要なときは今すぐバックアップしたりファイルに書き出したりできます。', alt: 'iCloudバックアップ、今すぐバックアップ、データの書き出しと読み込みがあるバックアップ画面' },
             ],
           },
@@ -284,7 +284,7 @@ export const ui = {
           label: 'データ',
           title: '記録は自分の端末に。',
           items: [
-            { title: '自分のiCloudにバックアップ', body: '自分のiCloudに自動でバックアップし、同じApple アカウントのiPhone・iPad間で同期します。AndroidはGoogleドライブにバックアップします。' },
+            { title: '自分のiCloudにバックアップ', body: '自分のiCloudに自動でバックアップし、同じApple AccountのiPhone・iPad間で同期します。AndroidはGoogleドライブにバックアップします。' },
             { title: '薬の名前を隠す', body: 'ウィジェット、ロック画面、Dynamic Islandに薬の名前と画像を表示しないようにできます。' },
           ],
         },
@@ -296,7 +296,6 @@ export const ui = {
           { title: '自分で追加する薬', platforms: ['iOS', 'Android'], body: 'リストにない薬も、名前・用量・写真を自分で入れて記録できます。グラフは対応している薬のみです。' },
         ],
         notes: [
-          '一部の国では、アデロールXRとビバンセのグラフにも対応しています。',
           '一部の機能はPeakly Proで利用できます。',
           '予測グラフは参考値であり、医療上の判断に代わるものではありません。',
         ],

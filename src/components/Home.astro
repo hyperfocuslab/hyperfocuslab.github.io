@@ -64,11 +64,8 @@ const rows = sections.flatMap((section) => section.rows);
                       <h3 class="h2">{row.title}</h3>
                       <p class="lead">{row.body}</p>
                     </div>
-                    <div class:list={['feature-visual', { 'with-page': row.pdf }]}>
+                    <div class="feature-visual">
                       <AppShot src={`/assets/peakly/${lang}-${row.shot}.webp`} alt={row.alt} />
-                      {row.pdf && existsSync(`public/assets/peakly/${lang}-report-pdf-p1.webp`) && (
-                        <img class="report-page" src={`/assets/peakly/${lang}-report-pdf-p1.webp`} alt="" width="1014" height="1434" loading="lazy" decoding="async" />
-                      )}
                     </div>
                   </div>
                 );

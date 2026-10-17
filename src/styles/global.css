@@ -836,7 +836,7 @@ a:hover {
   }
 
   /* The hero already shows the name; on phones the header keeps only the mark. */
-  .wordmark-text {
+  .site-header .wordmark-text {
     display: none;
   }
 
@@ -956,28 +956,6 @@ a:hover {
   position: relative;
   display: grid;
   place-items: center;
-}
-
-/* Report row: the A4 page sits beside the phone and tucks under it a little. */
-.feature-visual.with-page {
-  grid-template-columns: minmax(0, 4fr) minmax(0, 5fr);
-  align-items: center;
-}
-
-.feature-visual.with-page .device {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  margin-right: -14%;
-}
-
-.report-page {
-  display: block;
-  height: auto;
-  width: 100%;
-  aspect-ratio: 1014 / 1434;
-  background: #fff;
-  border: 1px solid var(--rule-soft);
 }
 
 /* Two screens of one feature: the second sits lower and overlaps a little. */
@@ -1116,21 +1094,6 @@ a:hover {
 
   .feature-row.flip .feature-copy {
     order: 0;
-  }
-
-  .feature-visual.with-page {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 24px;
-  }
-
-  .feature-visual.with-page .device {
-    width: min(100%, 320px);
-    margin-right: 0;
-  }
-
-  .report-page {
-    margin-left: 0;
-    width: min(100%, 420px);
   }
 }
 
