@@ -693,6 +693,8 @@ main > .section:first-child {
 }
 
 .prose .contact {
+  width: fit-content;
+  max-width: 100%;
   margin: 28px 0 8px;
   padding: 24px;
   background: var(--paper-2);
@@ -705,7 +707,6 @@ main > .section:first-child {
 
 .prose .contact .email {
   display: inline-block;
-  margin-bottom: 14px;
   font-size: clamp(1.0625rem, 3vw, 1.375rem);
   color: var(--ink);
 }
