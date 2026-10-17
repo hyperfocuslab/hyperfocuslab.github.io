@@ -39,8 +39,6 @@ export const ui = {
     home: {
       title: 'Hyperfocus Lab | 소프트웨어 스튜디오',
       description: 'Hyperfocus Lab은 자체 소프트웨어 제품을 만들고 운영하는 스튜디오입니다. 지금은 Peakly를 운영합니다.',
-      eyebrow: 'Software studio · Seoul',
-      lead: '자체 소프트웨어 제품을 만들고 운영하는 스튜디오입니다.',
       products: {
         title: '제품',
         facts: [
@@ -51,15 +49,14 @@ export const ui = {
       },
       peakly: {
         tagline: 'ADHD 복약 기록 앱',
-        lead: '약을 먹은 시간만 기록하면, 지금 약효가 어느 단계인지 보여줍니다. 루틴과 할 일도 같은 앱에서 챙깁니다.',
-        privacy: '복약 기록과 건강 데이터는 외부 서버로 보내지 않습니다. 기기와 내 iCloud(Android는 Google Drive)에만 저장됩니다.',
+        lead: '약 먹은 시각을 기록하면 지금 약효가 오르는 중인지, 가장 강한 때인지, 줄어드는 중인지 보여줍니다. 목표와 루틴, 할 일도 함께 관리할 수 있습니다.',
         sections: [
           {
             tab: '복약',
-            intro: '약을 먹은 시간 하나로 약효의 흐름을 봅니다.',
+            intro: '복용 시각을 기록하면 하루 동안의 약효 변화가 그려집니다.',
             rows: [
-              { shot: 'chart', label: '예상 약효 곡선', title: '지금 약효가 어디쯤인지.', body: '콘서타와 메디키넷의 참고 곡선으로 시간대별 예상 약효를 그립니다. 오르는 중인지, 피크인지, 끝나가는지 바로 보이고, 피크 구간은 내 몸에 맞게 직접 옮길 수 있습니다. 곡선 아래에는 Apple Watch가 잰 심박수와 움직임이 같은 시간축으로 붙습니다.', alt: '콘서타 예상 약효 곡선과 그 아래 심박수, 움직임 그래프가 있는 Peakly 복약 화면' },
-              { shot: 'mood', label: '기분 체크인', title: '기분은 한 번 탭으로, 메모는 그 옆에.', body: '복약 탭에서 다섯 가지 표정 중 하나를 누르면 그 시각의 기분이 기록됩니다. 하루에 몇 번이든 남길 수 있고, 약효 곡선 아래 띠에는 그날 남긴 기분이 시간 순서대로 색 점으로 찍힙니다. 한 줄 메모도 같은 카드에서 바로 적습니다.', alt: '다섯 가지 표정과 메모 줄이 있는 기분 카드, 그 아래 약효 곡선과 기분 기록 띠가 있는 Peakly 복약 화면' },
+              { shot: 'chart', label: '예상 약효 곡선', title: '지금 약효가 어디쯤인지.', body: '콘서타와 메디키넷의 알려진 약효 변화를 바탕으로 시간대별 예상 약효를 그립니다. 지금 약효가 오르는 중인지, 가장 강한 때인지, 줄어드는 중인지 알 수 있고, 단계별 시간은 내 몸에 맞게 조정할 수 있습니다. Apple Watch를 쓰면 심박수와 움직임이 곡선 아래에 시간대별로 함께 표시됩니다.', alt: '콘서타 예상 약효 곡선과 그 아래 심박수, 움직임 그래프가 있는 Peakly 복약 화면' },
+              { shot: 'mood', label: '기분 체크인', title: '기분은 한 번 탭으로, 메모는 그 아래에.', body: '다섯 가지 표정 중 하나를 누르면 그 시각의 기분이 기록됩니다. 하루에 몇 번이든 남길 수 있고, 남긴 기분은 약효 곡선 아래에 기록한 시각에 맞춰 표시됩니다. 표정 아래 칸에 한 줄 메모도 적을 수 있습니다.', alt: '다섯 가지 표정과 메모 줄이 있는 기분 카드, 그 아래 약효 곡선과 기분 기록 띠가 있는 Peakly 복약 화면' },
               { shot: 'lock', label: '다이나믹 아일랜드·잠금 화면', title: '남은 약효 시간이 늘 화면 위에.', body: 'iPhone은 다이나믹 아일랜드와 잠금 화면, Apple Watch 스마트 스택에, Android는 알림 영역에 남은 약효 시간이 계속 떠 있습니다. 약효가 오를 때, 최대 농도 구간에 들어설 때, 끝나갈 때는 알림으로 알려줍니다.', alt: '다이나믹 아일랜드와 잠금 화면에 콘서타 36mg 메인 피크와 남은 시간이 표시된 iPhone' },
               { shot: 'report', pdf: true, label: 'PDF 리포트', title: '진료 때 보여줄 기록을 PDF로.', body: '기간을 고르면 "지난 N일, 이렇게 지냈어요" 리포트가 두 장짜리 PDF로 만들어집니다. 복용 기록, 이전 기간과 비교한 몸 상태 변화, 하루 중 약효 흐름, 기분 메모와 진료 때 물어볼 질문을 담습니다. 진료실에서 화면을 넘기지 않고 그대로 보여주면 됩니다.', alt: '기간을 고르는 PDF 리포트 생성 화면과, 복용 기록과 몸 상태 변화가 정리된 리포트 첫 장' },
             ],
@@ -69,7 +66,7 @@ export const ui = {
             intro: '큰 목표는 날짜로, 오늘 할 몫은 작게.',
             rows: [
               { shot: 'goals', label: '전체 목표', title: '목표는 진행률로, 기다리는 날은 D-Day로.', body: '자격증, 다이어트, 포트폴리오처럼 큰 목표에 날짜를 붙이면 진행률과 남은 기간이 함께 보입니다. 여행, 시험일, 기념일처럼 날짜가 정해진 일은 D-Day로 띄워 둡니다.', alt: 'D-Day와 목표별 진행률이 있는 전체 목표 화면' },
-              { shot: 'goals-today', label: '오늘의 목표', title: '큰 목표를 오늘 몫으로.', body: '목표를 오늘 할 작은 일로 나누고, 체크한 만큼 오늘 진행 상황이 채워집니다.', alt: '오늘의 목표 진행률과 작은 실천 목록' },
+              { shot: 'goals-today', label: '오늘의 목표', title: '목표를 오늘 할 일로 나눠서.', body: '큰 목표를 오늘 할 작은 일로 나누고, 하나씩 체크할 때마다 오늘 진행률이 올라갑니다.', alt: '오늘의 목표 진행률과 작은 실천 목록' },
             ],
           },
           {
@@ -140,8 +137,6 @@ export const ui = {
     home: {
       title: 'Hyperfocus Lab | Software studio',
       description: 'Hyperfocus Lab is a studio that builds and runs its own software products. Today we run Peakly.',
-      eyebrow: 'Software studio · Seoul',
-      lead: 'A studio that builds and runs its own software products.',
       products: {
         title: 'Products',
         facts: [
@@ -152,15 +147,14 @@ export const ui = {
       },
       peakly: {
         tagline: 'ADHD medication tracker',
-        lead: 'Log when you take your medication, and Peakly shows which phase it is in right now. Your routines and to-dos live in the same app.',
-        privacy: 'Your dose records and health data never go to an outside server. They are stored only on your device and in your own iCloud (Google Drive on Android).',
+        lead: 'Log when you take your medication, and Peakly shows whether it is rising, at its strongest, or wearing off. Goals, routines, and to-dos are in the same app.',
         sections: [
           {
             tab: 'Medication',
-            intro: 'One logged dose time shows how your medication flows through the day.',
+            intro: 'Log your dose time and see how the effect changes through the day.',
             rows: [
-              { shot: 'chart', label: 'Estimated effect curve', title: 'Know where your medication is.', body: 'Reference curves for Concerta and Medikinet show your estimated effect through the day. See at a glance whether it is rising, peaking, or wearing off, and move the peak window to match how you feel. Heart rate and movement from Apple Watch sit right below on the same timeline.', alt: 'Peakly medication screen with the expected Concerta curve above heart rate and movement graphs' },
-              { shot: 'mood', label: 'Mood check-in', title: 'One tap for your mood, a note beside it.', body: 'On the Medication tab, tap one of five faces to log how you feel right now. Log as often as you like during the day; the strip under the effect curve places each mood as a colored dot in time order. A one-line note goes in the same card.', alt: 'Peakly medication screen with a mood card of five faces and a note line, above the effect curve and a mood log strip' },
+              { shot: 'chart', label: 'Estimated effect curve', title: 'Know where your medication is.', body: 'Based on the known effect profiles of Concerta and Medikinet, Peakly draws your estimated effect by time of day. See whether it is rising, at its strongest, or wearing off, and adjust each phase\'s timing to fit how your body responds. With Apple Watch, heart rate and movement appear under the curve by time of day.', alt: 'Peakly medication screen with the expected Concerta curve above heart rate and movement graphs' },
+              { shot: 'mood', label: 'Mood check-in', title: 'One tap for your mood, a note right below.', body: 'Tap one of five faces to log how you feel at that moment. Log as often as you like; each mood appears under the effect curve at the time you logged it. You can add a one-line note right below the faces.', alt: 'Peakly medication screen with a mood card of five faces and a note line, above the effect curve and a mood log strip' },
               { shot: 'lock', label: 'Dynamic Island and Lock Screen', title: 'Time left, always on screen.', body: 'The time your medication has left stays in the Dynamic Island, on the Lock Screen, and in the Apple Watch Smart Stack, and in the notification shade on Android. Notifications tell you when it starts rising, when the peak window begins, and when it is wearing off.', alt: 'iPhone Dynamic Island and Lock Screen showing Concerta 36mg at its main peak with the time left' },
               { shot: 'report', pdf: true, label: 'PDF report', title: 'Your records as a PDF for your doctor.', body: 'Pick a period and Peakly makes a two-page PDF, "How the last N days went." It covers your dose records, body changes compared with the previous period, how the effect ran through the day, your mood notes, and questions to ask at the visit. Show it as is instead of scrolling through your phone.', alt: 'PDF report screen for choosing a period, next to the first page of the report with dose records and body changes' },
             ],
@@ -170,7 +164,7 @@ export const ui = {
             intro: 'Big goals get a date. Today\'s share stays small.',
             rows: [
               { shot: 'goals', label: 'All goals', title: 'Goals as progress, waiting days as D-Days.', body: 'Give a big goal like a certification, a diet, or a portfolio a date, and you see its progress and the time left together. Things with a fixed date, like a trip, an exam day, or an anniversary, sit on screen as D-Days.', alt: 'All Goals screen with D-Days and progress per goal' },
-              { shot: 'goals-today', label: 'Today\'s goals', title: 'Big goals, broken into today.', body: 'Split a goal into small things to do today. Each one you check fills in today\'s progress.', alt: 'Today\'s Goals with progress and small actions' },
+              { shot: 'goals-today', label: 'Today\'s goals', title: 'Turn a goal into today\'s tasks.', body: 'Split a big goal into small things to do today. Each one you check raises today\'s progress.', alt: 'Today\'s Goals with progress and small actions' },
             ],
           },
           {
@@ -241,8 +235,6 @@ export const ui = {
     home: {
       title: 'Hyperfocus Lab | ソフトウェアスタジオ',
       description: 'Hyperfocus Labは、自社のソフトウェア製品をつくり、運営するスタジオです。現在はピークリーを運営しています。',
-      eyebrow: 'Software studio · Seoul',
-      lead: '自社のソフトウェア製品をつくり、運営するスタジオです。',
       products: {
         title: 'プロダクト',
         facts: [
@@ -253,15 +245,14 @@ export const ui = {
       },
       peakly: {
         tagline: 'ADHDの服薬記録アプリ',
-        lead: '薬を飲んだ時刻を記録するだけで、いま薬の作用がどの段階かを表示します。ルーティンやタスクも同じアプリで管理できます。',
-        privacy: '服薬記録と健康データは外部のサーバーには送りません。端末と自分のiCloud（AndroidはGoogleドライブ）にだけ保存されます。',
+        lead: '薬を飲んだ時刻を記録すると、いま作用が上がっている途中か、いちばん強い時間か、弱まってきているかを表示します。目標やルーティン、タスクも同じアプリで管理できます。',
         sections: [
           {
             tab: '服薬',
-            intro: '飲んだ時刻ひとつで、作用の流れがわかります。',
+            intro: '服用時刻を記録すると、一日の作用の変化が描かれます。',
             rows: [
-              { shot: 'chart', label: '予測グラフ', title: 'いま、作用はどのあたりか。', body: 'コンサータとメディキネットの参考曲線で、時間ごとの作用の予測を描きます。上がっている途中か、ピークか、切れかけているかがひと目でわかり、ピークの時間帯は自分の感覚に合わせて動かせます。曲線の下には、Apple Watchが計測した心拍数と動きが同じ時間軸で並びます。', alt: 'コンサータの予想曲線と心拍数・動きのグラフが並ぶPeaklyの服薬画面' },
-              { shot: 'mood', label: '気分チェックイン', title: '気分はワンタップで、メモはその隣に。', body: '服薬タブで5つの表情のどれかをタップすると、その時刻の気分が記録されます。一日に何回でも残せて、作用グラフの下の帯には、その日に記録した気分が時間順に色の点で並びます。ひとことメモも同じカードにそのまま書けます。', alt: '5つの表情とメモ欄がある気分カードと、その下に作用グラフと気分の記録の帯があるPeaklyの服薬画面' },
+              { shot: 'chart', label: '予測グラフ', title: 'いま、作用はどのあたりか。', body: 'コンサータとメディキネットの一般的な作用の変化をもとに、時間ごとの作用の予測を描きます。いま作用が上がっている途中か、いちばん強い時間か、弱まってきているかがわかり、各段階の時間は自分の体に合わせて調整できます。Apple Watchを使うと、心拍数と動きが曲線の下に時間ごとに表示されます。', alt: 'コンサータの予想曲線と心拍数・動きのグラフが並ぶPeaklyの服薬画面' },
+              { shot: 'mood', label: '気分チェックイン', title: '気分はワンタップで、メモはそのすぐ下に。', body: '5つの表情のどれかをタップすると、その時刻の気分が記録されます。一日に何回でも残せて、記録した気分は作用グラフの下、記録した時刻の位置に表示されます。表情の下にはひとことメモも書けます。', alt: '5つの表情とメモ欄がある気分カードと、その下に作用グラフと気分の記録の帯があるPeaklyの服薬画面' },
               { shot: 'lock', label: 'Dynamic Island・ロック画面', title: '作用の残り時間を、いつも画面に。', body: 'iPhoneではDynamic Island、ロック画面、Apple Watchのスマートスタックに、Androidでは通知エリアに、作用の残り時間が表示され続けます。作用が上がり始めたとき、ピークの時間帯に入ったとき、切れかけたときは通知でお知らせします。', alt: 'Dynamic Islandとロック画面に、コンサータ36mgのメインピークと残り時間を表示したiPhone' },
               { shot: 'report', pdf: true, label: 'PDFレポート', title: '診察で見せる記録を、PDFで。', body: '期間を選ぶと、「直近N日間、こんなふうに過ごしました」というレポートが2ページのPDFになります。服薬記録、前の期間と比べた体の変化、一日の作用の流れ、気分のメモ、診察で聞きたいことを載せます。診察室でスマホをスクロールせず、そのまま見せられます。', alt: '期間を選ぶPDFレポート作成画面と、服薬記録と体の変化がまとまったレポートの1ページ目' },
             ],
@@ -271,7 +262,7 @@ export const ui = {
             intro: '大きな目標は日付で、今日の分は小さく。',
             rows: [
               { shot: 'goals', label: '全体の目標', title: '目標は進捗で、待つ日はD-Dayで。', body: '資格、ダイエット、ポートフォリオのような大きな目標に日付をつけると、進捗率と残り期間が一緒に見えます。旅行、試験日、記念日のように日付が決まっていることは、D-Dayとして表示しておけます。', alt: 'D-Dayと目標ごとの進捗率が並ぶ全体の目標画面' },
-              { shot: 'goals-today', label: '今日の目標', title: '大きな目標を、今日の一歩に。', body: '目標を今日やる小さなことに分けると、チェックした分だけ今日の進み具合が埋まっていきます。', alt: '今日の目標の進捗率と小さな実践の一覧' },
+              { shot: 'goals-today', label: '今日の目標', title: '目標を今日やることに分けて。', body: '大きな目標を今日やる小さなことに分けると、チェックするたびに今日の進み具合が上がります。', alt: '今日の目標の進捗率と小さな実践の一覧' },
             ],
           },
           {

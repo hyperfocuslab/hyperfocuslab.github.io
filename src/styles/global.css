@@ -363,10 +363,6 @@ a:hover {
   justify-items: start;
 }
 
-.hero-copy .lead {
-  color: var(--ink-2);
-}
-
 .hero-mark {
   display: grid;
   place-items: center;
@@ -406,12 +402,12 @@ a:hover {
 .btn-ghost {
   background: transparent;
   color: var(--ink);
-  border-color: var(--rule);
+  border-color: var(--ink-3);
 }
 
 .btn-ghost:hover {
   color: var(--ink);
-  border-color: var(--ink-2);
+  border-color: var(--ink);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -982,12 +978,6 @@ a:hover {
   aspect-ratio: 1014 / 1434;
   background: #fff;
   border: 1px solid var(--rule-soft);
-}
-
-.p-privacy {
-  max-width: 36em;
-  color: var(--ink-2);
-  font-size: 0.9375rem;
 }
 
 /* Two screens of one feature: the second sits lower and overlaps a little. */
