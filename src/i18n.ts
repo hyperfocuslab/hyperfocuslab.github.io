@@ -4,10 +4,15 @@ export type Page = 'home' | 'peakly' | 'privacy' | 'terms' | 'support';
 
 export const SITE = 'https://hyperfocuslab.app';
 export const EMAIL = 'support@hyperfocuslab.app';
-export const STORE = {
-  appStore: 'https://apps.apple.com/app/id6757836001',
-  googlePlay: 'https://play.google.com/store/apps/details?id=com.peakly.android',
-};
+// Without a country code Apple opens the US storefront on desktop, so each language
+// links to its own store page (English keeps Apple's own region choice).
+const APP_STORE_COUNTRY: Record<string, string> = { ko: 'kr/', ja: 'jp/', en: '' };
+export function storeLinks(lang: 'ko' | 'en' | 'ja') {
+  return {
+    appStore: `https://apps.apple.com/${APP_STORE_COUNTRY[lang]}app/id6757836001`,
+    googlePlay: `https://play.google.com/store/apps/details?id=com.peakly.android${lang === 'en' ? '' : `&hl=${lang}`}`,
+  };
+}
 
 const PREFIX: Record<Lang, string> = { ko: '', en: '/en', ja: '/ja' };
 const SUFFIX: Record<Lang, string> = { ko: '', en: '-en', ja: '-ja' };
@@ -34,7 +39,7 @@ export const LANG_LABEL: Record<Lang, string> = { ko: '한국어', en: 'English'
 export const ui = {
   ko: {
     appName: '피클리',
-    nav: { contact: '문의', support: '고객지원', language: '언어 선택', main: '주요 메뉴' },
+    nav: { contact: '문의', language: '언어 선택', main: '주요 메뉴' },
     docs: { privacy: '개인정보처리방침', terms: '서비스 이용약관', support: '고객지원' },
     footer: { products: '제품', language: '언어', legal: '© 2026 Hyperfocus Lab · 대표 이예준' },
     home: {
@@ -125,7 +130,7 @@ export const ui = {
   },
   en: {
     appName: 'Peakly',
-    nav: { contact: 'Contact', support: 'Support', language: 'Language', main: 'Main' },
+    nav: { contact: 'Contact', language: 'Language', main: 'Main' },
     docs: { privacy: 'Privacy Policy', terms: 'Terms of Service', support: 'Support' },
     footer: { products: 'Products', language: 'Language', legal: '© 2026 Hyperfocus Lab · Representative: Yejun Lee' },
     home: {
@@ -216,7 +221,7 @@ export const ui = {
   },
   ja: {
     appName: 'ピークリー',
-    nav: { contact: 'お問い合わせ', support: 'サポート', language: '言語', main: 'メインメニュー' },
+    nav: { contact: 'お問い合わせ', language: '言語', main: 'メインメニュー' },
     docs: { privacy: 'プライバシーポリシー', terms: '利用規約', support: 'サポート' },
     footer: { products: 'プロダクト', language: '言語', legal: '© 2026 Hyperfocus Lab · 代表 Yejun Lee' },
     home: {

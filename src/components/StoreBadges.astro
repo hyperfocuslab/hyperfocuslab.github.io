@@ -1,11 +1,15 @@
 ---
-import { STORE } from '../i18n';
+import { storeLinks, type Lang } from '../i18n';
 
 // Plain text buttons in the site's own style. Brand logos are left out on purpose:
 // Apple only permits its logo inside the official App Store badge.
+interface Props {
+  lang: Lang;
+}
+const links = storeLinks(Astro.props.lang);
 ---
 
 <div class="actions store">
-  <a class="btn" href={STORE.appStore} target="_blank" rel="noreferrer">App Store ↗</a>
-  <a class="btn btn-ghost" href={STORE.googlePlay} target="_blank" rel="noreferrer">Google Play ↗</a>
+  <a class="btn" href={links.appStore} target="_blank" rel="noreferrer">App Store ↗</a>
+  <a class="btn btn-ghost" href={links.googlePlay} target="_blank" rel="noreferrer">Google Play ↗</a>
 </div>

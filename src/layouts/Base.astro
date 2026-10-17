@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css';
 import Logo from '../components/Logo.astro';
-import { EMAIL, LANGS, LANG_LABEL, SITE, STORE, href, ui, type Lang, type Page } from '../i18n';
+import { EMAIL, LANGS, LANG_LABEL, SITE, href, storeLinks, ui, type Lang, type Page } from '../i18n';
 
 interface Props {
   lang: Lang;
@@ -53,20 +53,12 @@ const fontCss = `https://fonts.googleapis.com/css2?family=${plex}:wght@400;500;6
         {
           inPeakly && (
             <a class="crumb" href={href('peakly', lang)} aria-current={page === 'peakly' ? 'page' : undefined}>
-              {t.appName}
+              Peakly
             </a>
           )
         }
         <nav class="site-nav" aria-label={t.nav.main}>
-          {
-            inPeakly ? (
-              <a href={href('support', lang)} aria-current={page === 'support' ? 'page' : undefined}>
-                {t.nav.support}
-              </a>
-            ) : (
-              <a href={href('support', lang)}>{t.nav.contact}</a>
-            )
-          }
+          {page !== 'support' && <a href={href('support', lang)}>{t.nav.contact}</a>}
           <div class="langs" role="group" aria-label={t.nav.language}>
             {
               LANGS.map((l) => (
@@ -100,8 +92,8 @@ const fontCss = `https://fonts.googleapis.com/css2?family=${plex}:wght@400;500;6
         <nav aria-label={t.footer.products}>
           <p class="footer-head">{t.footer.products}</p>
           <a href={`${href('home', lang)}#products`}>{t.appName}</a>
-          <a href={STORE.appStore} target="_blank" rel="noreferrer">App Store ↗</a>
-          <a href={STORE.googlePlay} target="_blank" rel="noreferrer">Google Play ↗</a>
+          <a href={storeLinks(lang).appStore} target="_blank" rel="noreferrer">App Store ↗</a>
+          <a href={storeLinks(lang).googlePlay} target="_blank" rel="noreferrer">Google Play ↗</a>
         </nav>
         <nav aria-label={t.appName}>
           <p class="footer-head">{t.appName}</p>
