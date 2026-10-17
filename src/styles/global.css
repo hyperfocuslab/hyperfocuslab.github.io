@@ -894,7 +894,9 @@ main > .section:first-child {
   display: grid;
   grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
   gap: clamp(32px, 6vw, 88px);
-  align-items: center;
+  /* Copy starts at the phone's top edge, so the gap under a group title is the same
+     whichever side the phone is on. */
+  align-items: start;
 }
 
 .feature-row.flip .feature-copy {
