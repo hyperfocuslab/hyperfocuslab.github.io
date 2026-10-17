@@ -790,6 +790,7 @@ a:hover {
 }
 
 .footer-mark {
+  align-self: start;
   color: var(--ink) !important;
 }
 
