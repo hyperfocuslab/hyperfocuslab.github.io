@@ -202,7 +202,7 @@ export const ui = {
         features: [
           { title: 'Apple Watch', platforms: ['iOS'], body: 'Heart rate, movement, sleep, and workouts recorded by Apple Watch come in through Apple Health and appear under the effect curve and in your condition summary. The time left is also shown in the watch Smart Stack.' },
           { title: 'Phase notifications', platforms: ['iOS', 'Android'], body: 'Get notified when the effect starts rising, when it reaches its peak, and when it starts wearing off. For Concerta you also hear about the second rise. Turn each one on or off.' },
-          { title: 'Heart-rate response', platforms: ['iOS'], body: 'Compares your heart rate after a dose with your usual, and estimates whether a spike reflects the medication's effect or the effect of activity.' },
+          { title: 'Heart-rate response', platforms: ['iOS'], body: 'Compares your heart rate after a dose with your usual, and estimates whether a spike reflects the medication\'s effect or the effect of activity.' },
           { title: 'Your own medications', platforms: ['iOS', 'Android'], body: 'Log medications that are not on the list with your own name, dose, and photo. Curves are available for supported medications only.' },
         ],
         notes: [
