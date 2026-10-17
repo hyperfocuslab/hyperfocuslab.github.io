@@ -253,11 +253,15 @@ a:hover {
   flex: none;
   display: flex;
   gap: 2px;
-  padding-left: clamp(8px, 2vw, 20px);
-  border-left: 1px solid var(--rule);
   font-family: var(--mono);
   font-size: 0.75rem;
   letter-spacing: 0.06em;
+}
+
+/* The divider only separates the language switch from a link before it. */
+.site-nav > a + .langs {
+  padding-left: clamp(8px, 2vw, 20px);
+  border-left: 1px solid var(--rule);
 }
 
 .langs a {
