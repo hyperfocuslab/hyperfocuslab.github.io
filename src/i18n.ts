@@ -122,7 +122,6 @@ export const ui = {
           { title: '직접 추가하는 약', platforms: ['iOS', 'Android'], body: '지원 목록에 없는 약 종류와 사진도 직접 추가하여 기록을 남길 수 있습니다.' },
         ],
         notes: [
-          '일부 기능은 피클리 Pro에서 쓸 수 있습니다.',
           '예상 곡선은 참고용이며 의학적 판단을 대신하지 않습니다.',
         ],
       },
@@ -213,7 +212,6 @@ export const ui = {
           { title: 'Your own medications', platforms: ['iOS', 'Android'], body: 'Add medications that aren\'t on the supported list, with your own photo, and keep logging them.' },
         ],
         notes: [
-          'Some features require Peakly Pro.',
           'Curves are estimates for reference and do not replace medical advice.',
         ],
       },
@@ -304,7 +302,6 @@ export const ui = {
           { title: '自分で追加する薬', platforms: ['iOS', 'Android'], body: '対応リストにない薬も、種類と写真を自分で追加して記録できます。' },
         ],
         notes: [
-          '一部の機能はPeakly Proで利用できます。',
           '予測グラフは参考値であり、医療上の判断に代わるものではありません。',
         ],
       },
