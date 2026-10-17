@@ -65,24 +65,6 @@ const rows = sections.flatMap((section) => section.rows);
         }
       </div>
 
-      <!-- Privacy gets its own block: people logging medication want to know where it goes. -->
-      <div class="data-block">
-        <div class="data-head">
-          <p class="label">{t.peakly.data.label}</p>
-          <h3 class="h2">{t.peakly.data.title}</h3>
-        </div>
-        <ul class="data-list">
-          {
-            t.peakly.data.items.map((it) => (
-              <li>
-                <h4 class="h3">{it.title}</h4>
-                <p>{it.body}</p>
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-
       <h3 class="label p-sub">{t.peakly.featuresTitle}</h3>
       <ul class="feature-cards">
         {

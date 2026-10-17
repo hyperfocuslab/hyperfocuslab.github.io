@@ -123,7 +123,7 @@ const fontCss = `https://fonts.googleapis.com/css2?family=${plex}:wght@400;500;6
         if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
         document.documentElement.classList.add('reveal-on');
         const targets = document.querySelectorAll(
-          '.p-intro, .feature-copy, .feature-visual, .data-head, .data-list li, .feature-cards li, .section-head, .facts, .email, .doc-head'
+          '.p-intro, .feature-copy, .feature-visual, .feature-cards li, .section-head, .facts, .email, .doc-head'
         );
         const io = new IntersectionObserver(
           (entries) => {

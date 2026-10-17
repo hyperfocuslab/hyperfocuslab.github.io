@@ -63,7 +63,7 @@ export const ui = {
             rows: [
               { shot: 'chart', label: '예상 약효 곡선', title: '지금 약효가 어디쯤인지.', body: '콘서타와 메디키넷의 알려진 약효 변화를 바탕으로 시간대별 예상 약효를 그립니다. 지금 약효가 오르는 중인지, 가장 강한 때인지, 줄어드는 중인지 알 수 있고, 단계별 시간은 내 몸에 맞게 조정할 수 있습니다. Apple Watch를 쓰면 심박수와 움직임이 곡선 아래에 시간대별로 함께 표시됩니다.', alt: '콘서타 예상 약효 곡선과 그 아래 심박수, 움직임 그래프가 있는 피클리 복약 화면' },
               { shot: 'mood', label: '기분 체크인', title: '기분은 한 번 탭으로, 메모는 그 아래에.', body: '다섯 가지 표정 중 하나를 누르면 그 시각의 기분이 기록됩니다. 하루에 몇 번이든 남길 수 있고, 남긴 기분은 약효 곡선 아래에 기록한 시각에 맞춰 표시됩니다. 표정 아래 칸에 한 줄 메모도 적을 수 있습니다.', alt: '다섯 가지 표정과 메모 줄이 있는 기분 카드, 그 아래 약효 곡선과 기분 기록 띠가 있는 피클리 복약 화면' },
-              { shot: 'lock', label: '다이나믹 아일랜드·잠금 화면', title: '남은 약효 시간이 늘 화면 위에.', body: 'iPhone은 다이나믹 아일랜드와 잠금 화면, Apple Watch 스마트 스택에, Android는 알림 영역에 남은 약효 시간이 계속 떠 있습니다. 약효가 오를 때, 최대 농도 구간에 들어설 때, 끝나갈 때는 알림으로 알려줍니다.', alt: '다이나믹 아일랜드와 잠금 화면에 콘서타 36mg 메인 피크와 남은 시간이 표시된 iPhone' },
+              { shot: 'lock', label: '다이나믹 아일랜드·잠금 화면', title: '남은 약효 시간이 늘 화면 위에.', body: 'iPhone은 다이나믹 아일랜드와 잠금 화면, Apple Watch 스마트 스택에, Android는 알림 영역에 남은 약효 시간이 계속 떠 있습니다. 약효가 오를 때, 최대 농도 구간에 들어설 때, 끝나갈 때는 알림으로 알려줍니다. 위젯과 잠금 화면에서 약 이름과 이미지를 숨길 수도 있습니다.', alt: '다이나믹 아일랜드와 잠금 화면에 콘서타 36mg 메인 피크와 남은 시간이 표시된 iPhone' },
               { shot: 'report', label: 'PDF 리포트', title: '진료 때 보여줄 기록을 PDF로.', body: '기간을 고르면 "지난 N일, 이렇게 지냈어요" 리포트가 두 장짜리 PDF로 만들어집니다. 복용 기록, 이전 기간과 비교한 컨디션 변화, 하루 중 약효 흐름, 일별 메모, 진료 때 물어볼 질문이 들어갑니다.', alt: '복용 기록과 컨디션 변화가 정리된 PDF 리포트 첫 장 미리보기' },
             ],
           },
@@ -95,7 +95,7 @@ export const ui = {
             intro: '언어와 화면, 백업까지 내게 맞게.',
             rows: [
               { shot: 'settings', label: '내 방식대로', title: '언어와 화면을 내게 맞게.', body: '한국어, 영어, 일본어를 지원하고 다크·라이트 모드와 글꼴을 고를 수 있습니다. 목표 취침·기상 시간을 정해 두면 약효가 잠자리까지 이어질지 미리 알려줍니다.', alt: '언어, 디스플레이 모드, 글꼴, 목표 취침·기상 시간이 있는 설정 화면' },
-              { shot: 'backup', label: '백업·복구', title: '폰을 바꿔도 기록은 그대로.', body: '복약 기록과 건강 데이터는 외부 서버로 보내지 않고, 기기와 내 iCloud에만 저장됩니다. 자동으로 백업하고, 필요할 때 지금 바로 백업하거나 파일로 내보낼 수 있습니다.', alt: 'iCloud 백업, 지금 백업, 데이터 내보내기와 가져오기가 있는 백업·복구 화면' },
+              { shot: 'backup', label: '백업·복구', title: '폰을 바꿔도 기록은 그대로.', body: '복약 기록과 건강 데이터는 외부 서버로 보내지 않고, 기기와 내 iCloud(Android는 Google Drive)에만 저장됩니다. 자동으로 백업하고, 필요할 때 지금 바로 백업하거나 파일로 내보낼 수 있습니다.', alt: 'iCloud 백업, 지금 백업, 데이터 내보내기와 가져오기가 있는 백업·복구 화면' },
             ],
           },
           {
@@ -106,14 +106,6 @@ export const ui = {
             ],
           },
         ],
-        data: {
-          label: '데이터',
-          title: '기록은 내 기기에.',
-          items: [
-            { title: '내 iCloud에 백업', body: '본인 iCloud에 자동으로 백업하고, 같은 Apple 계정의 iPhone·iPad끼리 동기화합니다. Android는 Google Drive에 백업합니다.' },
-            { title: '약 이름 숨기기', body: '위젯, 잠금 화면, 다이나믹 아일랜드에 약 이름과 이미지가 보이지 않게 할 수 있습니다.' },
-          ],
-        },
         featuresTitle: '그 밖의 기능',
         features: [
           { title: 'Apple Watch 연동', platforms: ['iOS'], body: 'Apple Watch가 기록한 심박수, 움직임, 수면, 운동을 건강 앱에서 가져와 함께 보여줍니다. 남은 약효 시간은 워치 스마트 스택에도 표시됩니다.' },
@@ -155,7 +147,7 @@ export const ui = {
             rows: [
               { shot: 'chart', label: 'Estimated effect curve', title: 'Know where your medication is.', body: 'Based on the known effect profiles of Concerta and Medikinet, Peakly draws your estimated effect by time of day. See whether it is rising, at its strongest, or wearing off, and adjust each phase\'s timing to fit how your body responds. With Apple Watch, heart rate and movement appear under the curve by time of day.', alt: 'Peakly medication screen with the expected Concerta curve above heart rate and movement graphs' },
               { shot: 'mood', label: 'Mood check-in', title: 'One tap for your mood, a note right below.', body: 'Tap one of five faces to log how you feel at that moment. Log as often as you like; each mood appears under the effect curve at the time you logged it. You can add a one-line note right below the faces.', alt: 'Peakly medication screen with a mood card of five faces and a note line, above the effect curve and a mood log strip' },
-              { shot: 'lock', label: 'Dynamic Island and Lock Screen', title: 'Time left, always on screen.', body: 'The time your medication has left stays in the Dynamic Island, on the Lock Screen, and in the Apple Watch Smart Stack, and in the notification shade on Android. Notifications tell you when it starts rising, when the peak window begins, and when it is wearing off.', alt: 'iPhone Dynamic Island and Lock Screen showing Concerta 36mg at its main peak with the time left' },
+              { shot: 'lock', label: 'Dynamic Island and Lock Screen', title: 'Time left, always on screen.', body: 'The time your medication has left stays in the Dynamic Island, on the Lock Screen, and in the Apple Watch Smart Stack, and in the notification shade on Android. Notifications tell you when it starts rising, when the peak window begins, and when it is wearing off. You can also hide medication names and images on widgets and the Lock Screen.', alt: 'iPhone Dynamic Island and Lock Screen showing Concerta 36mg at its main peak with the time left' },
               { shot: 'report', label: 'PDF report', title: 'Your records as a PDF for your doctor.', body: 'Pick a period and Peakly makes a two-page PDF, "How the last N days went." It includes your dose records, how your condition changed from the previous period, how the effect ran through the day, daily notes, and questions to ask at the visit.', alt: 'Preview of the first page of the PDF report with dose records and condition changes' },
             ],
           },
@@ -187,7 +179,7 @@ export const ui = {
             intro: 'Language, look, and backups, your way.',
             rows: [
               { shot: 'settings', label: 'Make it yours', title: 'Language and look, your way.', body: 'Peakly is available in Korean, English, and Japanese, with dark and light modes and font options. Set your target bedtime and wake time, and Peakly warns you if the effect may last into the night.', alt: 'Settings screen with language, display mode, font, and target bedtime and wake time' },
-              { shot: 'backup', label: 'Backup and restore', title: 'New phone, same records.', body: 'Your dose records and health data never go to an outside server. They are stored only on your device and in your own iCloud. Backups run automatically, and you can also back up now or export a file.', alt: 'Backup screen with iCloud backup, back up now, and data export and import' },
+              { shot: 'backup', label: 'Backup and restore', title: 'New phone, same records.', body: 'Your dose records and health data never go to an outside server. They are stored only on your device and in your own iCloud (Google Drive on Android). Backups run automatically, and you can also back up now or export a file.', alt: 'Backup screen with iCloud backup, back up now, and data export and import' },
             ],
           },
           {
@@ -198,14 +190,6 @@ export const ui = {
             ],
           },
         ],
-        data: {
-          label: 'Data',
-          title: 'Your records stay on your device.',
-          items: [
-            { title: 'Backed up to your iCloud', body: 'Back up automatically to your own iCloud and sync between iPhone and iPad on the same Apple Account. Android backs up to Google Drive.' },
-            { title: 'Hide medication names', body: 'Keep medication names and images out of widgets, the Lock Screen, and the Dynamic Island.' },
-          ],
-        },
         featuresTitle: 'More in Peakly',
         features: [
           { title: 'Apple Watch', platforms: ['iOS'], body: 'Heart rate, movement, sleep, and workouts recorded by Apple Watch come in through Apple Health and show up alongside your medication. The time left is also shown in the watch Smart Stack.' },
@@ -247,7 +231,7 @@ export const ui = {
             rows: [
               { shot: 'chart', label: '予測グラフ', title: 'いま、作用はどのあたりか。', body: 'コンサータとメディキネットの一般的な作用の変化をもとに、時間ごとの作用の予測を描きます。いま作用が上がっている途中か、いちばん強い時間か、弱まってきているかがわかり、各段階の時間は自分の体に合わせて調整できます。Apple Watchを使うと、心拍数と動きが曲線の下に時間ごとに表示されます。', alt: 'コンサータの予想曲線と心拍数・動きのグラフが並ぶピークリーの服薬画面' },
               { shot: 'mood', label: '気分チェックイン', title: '気分はワンタップで、メモはそのすぐ下に。', body: '5つの表情のどれかをタップすると、その時刻の気分が記録されます。一日に何回でも残せて、記録した気分は作用グラフの下、記録した時刻の位置に表示されます。表情の下にはひとことメモも書けます。', alt: '5つの表情とメモ欄がある気分カードと、その下に作用グラフと気分の記録の帯があるピークリーの服薬画面' },
-              { shot: 'lock', label: 'Dynamic Island・ロック画面', title: '作用の残り時間を、いつも画面に。', body: 'iPhoneではDynamic Island、ロック画面、Apple Watchのスマートスタックに、Androidでは通知エリアに、作用の残り時間が表示され続けます。作用が上がり始めたとき、ピークの時間帯に入ったとき、切れかけたときは通知でお知らせします。', alt: 'Dynamic Islandとロック画面に、コンサータ36mgのメインピークと残り時間を表示したiPhone' },
+              { shot: 'lock', label: 'Dynamic Island・ロック画面', title: '作用の残り時間を、いつも画面に。', body: 'iPhoneではDynamic Island、ロック画面、Apple Watchのスマートスタックに、Androidでは通知エリアに、作用の残り時間が表示され続けます。作用が上がり始めたとき、ピークの時間帯に入ったとき、切れかけたときは通知でお知らせします。ウィジェットやロック画面で薬の名前と画像を隠すこともできます。', alt: 'Dynamic Islandとロック画面に、コンサータ36mgのメインピークと残り時間を表示したiPhone' },
               { shot: 'report', label: 'PDFレポート', title: '診察で見せる記録を、PDFで。', body: '期間を選ぶと、「直近N日間、こんなふうに過ごしました」というレポートが2ページのPDFになります。服薬記録、前の期間と比べたコンディションの変化、一日の作用の流れ、日ごとのメモ、診察で聞きたいことが入ります。', alt: '服薬記録とコンディションの変化をまとめたPDFレポート1ページ目のプレビュー' },
             ],
           },
@@ -279,7 +263,7 @@ export const ui = {
             intro: '言語も画面もバックアップも、自分に合わせて。',
             rows: [
               { shot: 'settings', label: '自分に合わせて', title: '言語も画面も、自分に合わせて。', body: '韓国語、英語、日本語で使えます。ダーク・ライトモードとフォントも選べます。目標の就寝・起床時間を決めておくと、作用が寝る時間まで続きそうなときに事前にお知らせします。', alt: '言語、ディスプレイモード、フォント、目標の就寝・起床時間がある設定画面' },
-              { shot: 'backup', label: 'バックアップ・復元', title: '機種を変えても、記録はそのまま。', body: '服薬記録と健康データは外部のサーバーには送らず、端末と自分のiCloudにだけ保存されます。自動でバックアップし、必要なときは今すぐバックアップしたりファイルに書き出したりできます。', alt: 'iCloudバックアップ、今すぐバックアップ、データの書き出しと読み込みがあるバックアップ画面' },
+              { shot: 'backup', label: 'バックアップ・復元', title: '機種を変えても、記録はそのまま。', body: '服薬記録と健康データは外部のサーバーには送らず、端末と自分のiCloud（AndroidはGoogleドライブ）にだけ保存されます。自動でバックアップし、必要なときは今すぐバックアップしたりファイルに書き出したりできます。', alt: 'iCloudバックアップ、今すぐバックアップ、データの書き出しと読み込みがあるバックアップ画面' },
             ],
           },
           {
@@ -290,14 +274,6 @@ export const ui = {
             ],
           },
         ],
-        data: {
-          label: 'データ',
-          title: '記録は自分の端末に。',
-          items: [
-            { title: '自分のiCloudにバックアップ', body: '自分のiCloudに自動でバックアップし、同じApple AccountのiPhone・iPad間で同期します。AndroidはGoogleドライブにバックアップします。' },
-            { title: '薬の名前を隠す', body: 'ウィジェット、ロック画面、Dynamic Islandに薬の名前と画像を表示しないようにできます。' },
-          ],
-        },
         featuresTitle: 'そのほかの機能',
         features: [
           { title: 'Apple Watch連携', platforms: ['iOS'], body: 'Apple Watchが記録した心拍数、動き、睡眠、ワークアウトをヘルスケアから取り込んで一緒に表示します。残り時間はウォッチのスマートスタックにも表示されます。' },

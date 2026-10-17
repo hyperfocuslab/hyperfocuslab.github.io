@@ -981,52 +981,10 @@ main > .section:first-child {
 }
 
 
-/* ── Where the data lives ───────────────────────────────────── */
-.data-block {
-  display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
-  gap: clamp(32px, 6vw, 88px);
-  margin-top: clamp(72px, 11vw, 140px);
-  padding-top: clamp(40px, 6vw, 64px);
-  border-top: 1px solid var(--rule-soft);
-}
-
-.data-head {
-  display: grid;
-  gap: 16px;
-  align-content: start;
-}
-
-.data-head .h2 {
-  font-size: clamp(1.875rem, 4vw, 3rem);
-}
-
-.data-list {
-  display: grid;
-  gap: 28px;
-}
-
-.data-list li {
-  display: grid;
-  gap: 6px;
-  padding-left: 20px;
-  border-left: 1px solid var(--rule);
-}
-
-.data-list p {
-  color: var(--ink-2);
-}
-
-@media (max-width: 860px) {
-  .data-block {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
-
 /* ── Other features as cards ──────────────────────────────── */
 .feature-cards {
   display: grid;
-  /* Four cards: two columns keep the rows even (auto-fill left one card alone). */
+  /* Two columns keep the rows even (auto-fill left a card alone on the last row). */
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
   margin-top: 20px;
@@ -1059,13 +1017,13 @@ main > .section:first-child {
 }
 
 /* ── Scroll reveal (enabled by a small script in Base.astro) ── */
-.reveal-on :is(.p-intro, .feature-copy, .feature-visual, .data-head, .data-list li, .feature-cards li, .section-head, .facts, .email, .doc-head) {
+.reveal-on :is(.p-intro, .feature-copy, .feature-visual, .feature-cards li, .section-head, .facts, .email, .doc-head) {
   opacity: 0;
   transform: translateY(24px);
   transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
-.reveal-on :is(.p-intro, .feature-copy, .feature-visual, .data-head, .data-list li, .feature-cards li, .section-head, .facts, .email, .doc-head).in {
+.reveal-on :is(.p-intro, .feature-copy, .feature-visual, .feature-cards li, .section-head, .facts, .email, .doc-head).in {
   opacity: 1;
   transform: none;
 }
