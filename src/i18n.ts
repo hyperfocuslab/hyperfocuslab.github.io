@@ -4,13 +4,13 @@ export type Page = 'home' | 'peakly' | 'privacy' | 'terms' | 'support';
 
 export const SITE = 'https://hyperfocuslab.app';
 export const EMAIL = 'support@hyperfocuslab.app';
-// Without a country code Apple opens the US storefront on desktop, so each language
-// links to its own store page (English keeps Apple's own region choice).
-const APP_STORE_COUNTRY: Record<string, string> = { ko: 'kr/', ja: 'jp/', en: '' };
+// Without a country or language the stores pick the visitor's region and language, so a
+// Korean browser landed on the Korean listing from every page. Each page pins its own.
+const APP_STORE_COUNTRY: Record<string, string> = { ko: 'kr/', ja: 'jp/', en: 'us/' };
 export function storeLinks(lang: 'ko' | 'en' | 'ja') {
   return {
     appStore: `https://apps.apple.com/${APP_STORE_COUNTRY[lang]}app/id6757836001`,
-    googlePlay: `https://play.google.com/store/apps/details?id=com.peakly.android${lang === 'en' ? '' : `&hl=${lang}`}`,
+    googlePlay: `https://play.google.com/store/apps/details?id=com.peakly.android&hl=${lang}`,
   };
 }
 
