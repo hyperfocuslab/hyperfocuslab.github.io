@@ -372,7 +372,6 @@ a:hover {
 .hero-mark .logo {
   width: min(100%, 320px);
   height: auto;
-  filter: drop-shadow(0 0 48px rgba(255, 255, 255, 0.16));
 }
 
 .actions {
