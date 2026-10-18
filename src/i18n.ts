@@ -46,8 +46,8 @@ export const ui = {
     docs: { privacy: '개인정보처리방침', terms: '서비스 이용약관', support: '고객지원' },
     footer: { products: '제품', language: '언어', legal: '© Hyperfocus Lab · 대표 이예준' },
     home: {
-      title: 'Hyperfocus Lab | 소프트웨어 스튜디오',
-      description: 'Hyperfocus Lab은 자체 소프트웨어 제품을 만들고 운영하는 스튜디오입니다. 지금은 피클리를 운영합니다.',
+      title: '피클리 | ADHD 복약 기록 앱',
+      description: '복용 시각을 기록하면 하루 동안의 예상 약효 곡선을 그려 줍니다. 기분과 목표, 할 일도 같은 앱에서 기록합니다. iPhone · iPad · Android.',
       products: {
         title: '제품',
         facts: [
@@ -128,8 +128,8 @@ export const ui = {
     docs: { privacy: 'Privacy Policy', terms: 'Terms of Service', support: 'Support' },
     footer: { products: 'Products', language: 'Language', legal: '© Hyperfocus Lab · Representative: Yejun Lee' },
     home: {
-      title: 'Hyperfocus Lab | Software studio',
-      description: 'Hyperfocus Lab is a studio that builds and runs its own software products. Today we run Peakly.',
+      title: 'Peakly | ADHD medication tracker',
+      description: "Log when you take your medication and Peakly draws the day's estimated effect curve. Mood, goals, and to-dos are in the same app. iPhone, iPad, Android.",
       products: {
         title: 'Products',
         facts: [
@@ -210,8 +210,8 @@ export const ui = {
     docs: { privacy: 'プライバシーポリシー', terms: '利用規約', support: 'サポート' },
     footer: { products: 'プロダクト', language: '言語', legal: '© Hyperfocus Lab · 代表 Yejun Lee' },
     home: {
-      title: 'Hyperfocus Lab | ソフトウェアスタジオ',
-      description: 'Hyperfocus Labは、自社のソフトウェア製品をつくり、運営するスタジオです。現在はピークリーを運営しています。',
+      title: 'ピークリー | ADHDの服薬記録アプリ',
+      description: '服用時刻を記録すると、1日の作用の予測グラフを表示します。気分や目標、タスクも同じアプリで記録できます。iPhone・iPad・Android対応。',
       products: {
         title: 'プロダクト',
         facts: [
