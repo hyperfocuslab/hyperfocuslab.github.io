@@ -121,6 +121,7 @@ export const ui = {
         notes: [
           '예상 곡선은 참고용이며 의학적 판단을 대신하지 않습니다.',
         ],
+        closing: { title: '오늘 먹은 약부터 기록해 보세요.', body: 'iPhone, iPad, Android에서 무료로 내려받을 수 있습니다.' },
       },
     },
   },
@@ -205,6 +206,7 @@ export const ui = {
         notes: [
           'Curves are estimates for reference and do not replace medical advice.',
         ],
+        closing: { title: "Start with today's dose.", body: 'Free to download on iPhone, iPad, and Android.' },
       },
     },
   },
@@ -289,6 +291,7 @@ export const ui = {
         notes: [
           '予測グラフは参考値であり、医療上の判断に代わるものではありません。',
         ],
+        closing: { title: '今日飲んだ薬から記録してみましょう。', body: 'iPhone・iPad・Androidで無料でダウンロードできます。' },
       },
     },
   },

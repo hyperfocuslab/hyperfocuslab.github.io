@@ -26,7 +26,7 @@ const rows = sections.flatMap((section) => section.rows);
     <div class="wrap">
       <div class="p-intro">
         <div class="product-name">
-          <img class="app-icon" src="/assets/peakly-logo.png" alt="" width="72" height="72" />
+          <img class="app-icon" src="/assets/peakly-icon.webp" alt="" width="72" height="72" />
           <div>
             <h1 class="h2">{ui[lang].appName}</h1>
             <p class="muted">{t.peakly.tagline}</p>
@@ -77,6 +77,12 @@ const rows = sections.flatMap((section) => section.rows);
           ))
         }
       </ul>
+
+      <div class="p-closing">
+        <h2 class="h2">{t.peakly.closing.title}</h2>
+        <p class="lead">{t.peakly.closing.body}</p>
+        <StoreBadges lang={lang} />
+      </div>
 
       <ul class="notes">
         {t.peakly.notes.map((n) => <li>{n}</li>)}
