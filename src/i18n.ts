@@ -115,7 +115,7 @@ export const ui = {
           { title: '단계별 알림', platforms: ['iOS', 'Android'], body: '약효가 오르기 시작할 때, 피크에 들어설 때, 줄어들기 시작할 때 알려줍니다. 항목별로 켜고 끌 수 있습니다.' },
           { title: '심박수 반응', platforms: ['iOS'], body: '복용 후 심박수를 평소와 비교하고, 심박수가 오른 이유가 약효인지 활동 영향인지 추정합니다.' },
           { title: '직접 추가하는 약', platforms: ['iOS', 'Android'], body: '지원 목록에 없는 약 종류와 사진도 직접 추가하여 기록을 남길 수 있습니다.' },
-          { title: '제어 센터에서 복용 기록', platforms: ['iOS'], body: '앱을 열지 않고 제어 센터나 잠금 화면 버튼으로 바로 복용을 기록합니다.' },
+          { title: '제어 센터에서 복용 기록', platforms: ['iOS'], body: '앱을 열지 않고도 제어 센터나 잠금 화면 버튼으로 복용을 기록할 수 있습니다.' },
           { title: 'iPad 지원', platforms: ['iPadOS'], body: 'iPad에서도 같은 Apple 계정의 iPhone과 기록이 동기화됩니다.' },
         ],
         closing: { title: '오늘 먹은 약부터 기록해 보세요.' },
