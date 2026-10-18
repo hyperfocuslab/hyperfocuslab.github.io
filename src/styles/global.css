@@ -971,8 +971,9 @@ main > .section:first-child {
 .screen {
   position: relative;
   height: 100%;
-  /* The black bezel around the display, about 1% of the phone's width like a current iPhone. */
-  border: max(2px, 0.9cqw) solid #000;
+  /* The black bezel around the display, about 1% of the phone's width like a current iPhone.
+     Padding over a black fill, not a border: dark-mode extensions recolor borders (black turned beige). */
+  padding: max(2px, 0.9cqw);
   border-radius: 14.8% / 6.8%;
   overflow: hidden;
   background: #000;
@@ -983,6 +984,7 @@ main > .section:first-child {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 14.2% / 6.45%;
 }
 
 
