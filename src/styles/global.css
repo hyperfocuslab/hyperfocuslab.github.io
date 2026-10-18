@@ -430,11 +430,23 @@ main > .section:first-child {
 /* Last stop before the footer: the store buttons again, so nobody scrolls back up. */
 .p-closing {
   display: grid;
-  gap: 16px;
-  justify-items: start;
+  gap: 20px;
+  justify-items: center;
+  text-align: center;
   margin-top: clamp(56px, 8vw, 96px);
-  padding-top: clamp(40px, 6vw, 64px);
+  padding-top: clamp(56px, 8vw, 96px);
   border-top: 1px solid var(--rule);
+}
+
+.p-closing .app-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 17px;
+}
+
+.p-closing .actions {
+  justify-content: center;
+  margin-top: 4px;
 }
 
 .feature-list {

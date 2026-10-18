@@ -44,7 +44,7 @@ export const ui = {
     appName: '피클리',
     nav: { contact: '문의', language: '언어 선택', main: '주요 메뉴' },
     docs: { privacy: '개인정보처리방침', terms: '서비스 이용약관', support: '고객지원' },
-    footer: { products: '제품', language: '언어', legal: '© 2026 Hyperfocus Lab · 대표 이예준' },
+    footer: { products: '제품', language: '언어', legal: '© Hyperfocus Lab · 대표 이예준' },
     home: {
       title: 'Hyperfocus Lab | 소프트웨어 스튜디오',
       description: 'Hyperfocus Lab은 자체 소프트웨어 제품을 만들고 운영하는 스튜디오입니다. 지금은 피클리를 운영합니다.',
@@ -126,7 +126,7 @@ export const ui = {
     appName: 'Peakly',
     nav: { contact: 'Contact', language: 'Language', main: 'Main' },
     docs: { privacy: 'Privacy Policy', terms: 'Terms of Service', support: 'Support' },
-    footer: { products: 'Products', language: 'Language', legal: '© 2026 Hyperfocus Lab · Representative: Yejun Lee' },
+    footer: { products: 'Products', language: 'Language', legal: '© Hyperfocus Lab · Representative: Yejun Lee' },
     home: {
       title: 'Hyperfocus Lab | Software studio',
       description: 'Hyperfocus Lab is a studio that builds and runs its own software products. Today we run Peakly.',
@@ -208,7 +208,7 @@ export const ui = {
     appName: 'ピークリー',
     nav: { contact: 'お問い合わせ', language: '言語', main: 'メインメニュー' },
     docs: { privacy: 'プライバシーポリシー', terms: '利用規約', support: 'サポート' },
-    footer: { products: 'プロダクト', language: '言語', legal: '© 2026 Hyperfocus Lab · 代表 Yejun Lee' },
+    footer: { products: 'プロダクト', language: '言語', legal: '© Hyperfocus Lab · 代表 Yejun Lee' },
     home: {
       title: 'Hyperfocus Lab | ソフトウェアスタジオ',
       description: 'Hyperfocus Labは、自社のソフトウェア製品をつくり、運営するスタジオです。現在はピークリーを運営しています。',
