@@ -855,10 +855,7 @@ main > .section:first-child {
   padding-top: clamp(48px, 6vw, 80px);
 }
 
-.notes {
-  display: grid;
-  gap: 4px;
-  margin-top: 28px;
+.row-note {
   font-size: 0.875rem;
   color: var(--ink-3);
 }

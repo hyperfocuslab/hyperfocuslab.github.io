@@ -53,6 +53,7 @@ const rows = sections.flatMap((section) => section.rows);
                       <p class="label">{row.label}</p>
                       <h3 class="h2">{row.title}</h3>
                       <p class="lead">{row.body}</p>
+                      {row.note && <p class="row-note">{row.note}</p>}
                     </div>
                     <div class="feature-visual">
                       <AppShot src={`/assets/peakly/${lang}-${row.shot}.webp`} alt={row.alt} />
@@ -80,13 +81,8 @@ const rows = sections.flatMap((section) => section.rows);
 
       <div class="p-closing">
         <h2 class="h2">{t.peakly.closing.title}</h2>
-        <p class="lead">{t.peakly.closing.body}</p>
         <StoreBadges lang={lang} />
       </div>
-
-      <ul class="notes">
-        {t.peakly.notes.map((n) => <li>{n}</li>)}
-      </ul>
 
     </div>
   </section>
