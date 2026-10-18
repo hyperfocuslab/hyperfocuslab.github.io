@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
 import { LANGS, SITE, href, type Page } from '../i18n';
 
-const PAGES: Page[] = ['home', 'peakly', 'support', 'privacy', 'terms'];
+const PAGES: Page[] = ['home', 'support', 'privacy', 'terms'];
 
 export const GET: APIRoute = () => {
   const urls = PAGES.flatMap((page) => LANGS.map((lang) => `  <url><loc>${SITE}${href(page, lang)}</loc></url>`));

@@ -23,7 +23,8 @@ const SUFFIX: Record<Lang, string> = { ko: '', en: '-en', ja: '-ja' };
 // policies and support pages live under /peakly/.
 export function href(page: Page, lang: Lang): string {
   if (page === 'home') return `${PREFIX[lang]}/`;
-  if (page === 'peakly') return `${PREFIX[lang]}/peakly/`;
+  // Peakly is introduced on the home page; /peakly/ itself redirects there.
+  if (page === 'peakly') return `${PREFIX[lang]}/#products`;
   return `${PREFIX[lang]}/peakly/${page}/`;
 }
 
@@ -33,7 +34,7 @@ export function legacySlugs(): { slug: string; to: string }[] {
   const docs = (['privacy', 'terms', 'support'] as const).flatMap((doc) =>
     LANGS.map((lang) => ({ slug: `${doc}${SUFFIX[lang]}`, to: href(doc, lang) })),
   );
-  return [...docs, { slug: 'index-en', to: href('peakly', 'en') }, { slug: 'index-ja', to: href('peakly', 'ja') }];
+  return [...docs, { slug: 'index-en', to: href('home', 'en') }, { slug: 'index-ja', to: href('home', 'ja') }];
 }
 
 export const LANG_LABEL: Record<Lang, string> = { ko: '한국어', en: 'English', ja: '日本語' };

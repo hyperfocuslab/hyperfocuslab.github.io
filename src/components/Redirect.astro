@@ -1,0 +1,21 @@
+---
+import { SITE } from '../i18n';
+
+// A page that moved: points search engines at the new URL and sends visitors there.
+interface Props {
+  to: string;
+}
+const { to } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Hyperfocus Lab</title>
+    <link rel="canonical" href={SITE + to} />
+    <meta http-equiv="refresh" content={`0; url=${to}`} />
+    <meta name="robots" content="noindex" />
+  </head>
+  <body><a href={to}>{SITE + to}</a></body>
+</html>

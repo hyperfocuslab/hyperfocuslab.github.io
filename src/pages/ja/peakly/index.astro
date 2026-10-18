@@ -1,5 +1,8 @@
 ---
-import Peakly from '../../../components/Peakly.astro';
+import Redirect from '../../../components/Redirect.astro';
+import { href } from '../../../i18n';
+
+// The Peakly introduction lives on the home page.
 ---
 
-<Peakly lang="ja" />
+<Redirect to={href('home', 'ja')} />
