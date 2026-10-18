@@ -53,8 +53,9 @@ const fontCss = `https://fonts.googleapis.com/css2?family=${plex}:wght@400;500;6
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <!-- While Peakly is the only product, shared links preview the app (effect-curve screen). -->
-    <meta property="og:image" content={`${SITE}/assets/og-${lang}.png`} />
+    <!-- While Peakly is the only product, shared links preview the app (effect-curve screen).
+         Bump ?v= when the card changes: KakaoTalk caches images by URL. -->
+    <meta property="og:image" content={`${SITE}/assets/og-${lang}.png?v=2`} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
