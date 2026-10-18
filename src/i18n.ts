@@ -7,10 +7,12 @@ export const EMAIL = 'support@hyperfocuslab.app';
 // Without a country or language the stores pick the visitor's region and language, so a
 // Korean browser landed on the Korean listing from every page. Each page pins its own.
 const APP_STORE_COUNTRY: Record<string, string> = { ko: 'kr/', ja: 'jp/', en: 'us/' };
+// Campaign tags so installs from this site show up per language in App Store Connect
+// (Acquisition > Campaigns) and Play Console (Acquisition reports, UTM).
 export function storeLinks(lang: 'ko' | 'en' | 'ja') {
   return {
-    appStore: `https://apps.apple.com/${APP_STORE_COUNTRY[lang]}app/id6757836001`,
-    googlePlay: `https://play.google.com/store/apps/details?id=com.peakly.android&hl=${lang}`,
+    appStore: `https://apps.apple.com/${APP_STORE_COUNTRY[lang]}app/id6757836001?pt=128442127&ct=website-${lang}&mt=8`,
+    googlePlay: `https://play.google.com/store/apps/details?id=com.peakly.android&hl=${lang}&referrer=utm_source%3Dhyperfocuslab.app%26utm_medium%3Dwebsite%26utm_campaign%3Dwebsite-${lang}`,
   };
 }
 
