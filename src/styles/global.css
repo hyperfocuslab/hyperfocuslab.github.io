@@ -812,8 +812,8 @@ main > .section:first-child {
 }
 
 @media (max-width: 560px) {
-  /* Phones keep only the mark in the header so the menu and languages fit. */
-  .site-header .wordmark-text {
+  /* The footer carries the language list on phones. */
+  .site-header .langs {
     display: none;
   }
 
@@ -824,6 +824,13 @@ main > .section:first-child {
   .phone {
     border-radius: 22px;
     box-shadow: 0 0 0 4px var(--paper-2), 0 0 0 5px var(--rule);
+  }
+}
+
+/* Narrow phones: the wordmark and contact link take priority over the Peakly crumb. */
+@media (max-width: 400px) {
+  .site-header .crumb {
+    display: none;
   }
 }
 

@@ -14,6 +14,8 @@ const { lang, page, title, description } = Astro.props;
 const t = ui[lang];
 // The company home is its own section; every other page belongs to Peakly.
 const inPeakly = page !== 'home';
+// First-visit language redirect runs only on the Korean home and Korean Peakly page.
+const autoLang = lang === 'ko' && (page === 'home' || page === 'peakly');
 const canonical = SITE + href(page, lang);
 // Same family as the Peakly app (IBM Plex Sans KR), with the JP cut for Japanese.
 const plex = lang === 'ja' ? 'IBM+Plex+Sans+JP' : 'IBM+Plex+Sans+KR';
@@ -24,6 +26,22 @@ const fontCss = `https://fonts.googleapis.com/css2?family=${plex}:wght@400;500;6
 <html lang={lang}>
   <head>
     <meta charset="utf-8" />
+    {
+      autoLang && (
+        <script is:inline set:html={`// Send first-time visitors to their browser language before anything paints.
+// A stored choice (hfl_lang) or arriving from a page of this site (e.g. the KO link) wins.
+(() => {
+  try {
+    if (/bot|crawl|spider|slurp|lighthouse|headless|inspectiontool|yeti/i.test(navigator.userAgent)) return;
+    try { if (localStorage.getItem('hfl_lang')) return; } catch (e) {}
+    if (document.referrer && new URL(document.referrer).origin === location.origin) return;
+    const l = ((navigator.languages && navigator.languages[0]) || navigator.language || 'ko').toLowerCase();
+    if (l.startsWith('ko')) return;
+    location.replace((l.startsWith('ja') ? '/ja' : '/en') + location.pathname + location.search + location.hash);
+  } catch (e) {}
+})();`} />
+      )
+    }
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -116,6 +134,13 @@ const fontCss = `https://fonts.googleapis.com/css2?family=${plex}:wght@400;500;6
         <p>{t.footer.legal} · <a href={`mailto:${EMAIL}`}>{EMAIL}</a></p>
       </div>
     </footer>
+    <script is:inline>
+      // Remember an explicit language choice so the first-visit redirect never overrides it.
+      document.addEventListener('click', (e) => {
+        if (!(e.target instanceof Element) || !e.target.closest('a[hreflang]')) return;
+        try { localStorage.setItem('hfl_lang', e.target.closest('a[hreflang]').getAttribute('hreflang')); } catch (_) {}
+      });
+    </script>
     <script is:inline>
       // Light scroll reveal: content rises a little as it enters the viewport.
       // Without JS, or with reduced motion, everything is simply visible.
