@@ -20,6 +20,7 @@ const canonical = SITE + href(page, lang);
 // Same family as the Peakly app (IBM Plex Sans KR), with the JP cut for Japanese.
 const plex = lang === 'ja' ? 'IBM+Plex+Sans+JP' : 'IBM+Plex+Sans+KR';
 const fontCss = `https://fonts.googleapis.com/css2?family=${plex}:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap`;
+const GA_ID = 'G-96T0GRTD1R';
 ---
 
 <!doctype html>
@@ -64,6 +65,20 @@ const fontCss = `https://fonts.googleapis.com/css2?family=${plex}:wght@400;500;6
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href={fontCss} />
+    {
+      // Site visits and where they come from (GA4 property "hyperfocuslab.app", separate from the Peakly app property).
+      import.meta.env.PROD && (
+        <>
+          <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} />
+          <script is:inline define:vars={{ GA_ID }}>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+            gtag('config', GA_ID);
+          </script>
+        </>
+      )
+    }
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>
