@@ -1,11 +1,20 @@
 ---
-// A real capture of the app (iOS Simulator, dark mode, demo data) inside an iPhone frame.
-// Captures are 1320×2868 px (402×874 pt), downscaled to 660 px wide in public/assets/peakly/.
+// A real capture of the app (iOS Simulator, demo data) inside an iPhone frame.
+// Captures are 1320×2868 px (402×874 pt), downscaled to 990 px wide in public/assets/peakly/.
+// With a dark twin the phone becomes a two-page scroll-snap strip (light first): swipe, trackpad
+// or the two dots switch pages. The dark image loads lazily.
 interface Props {
   src: string;
+  darkSrc?: string;
   alt: string;
+  lang?: 'ko' | 'en' | 'ja';
 }
-const { src, alt } = Astro.props;
+const { src, darkSrc, alt, lang = 'ko' } = Astro.props;
+const LABEL = {
+  ko: ['라이트 화면', '다크 화면'],
+  en: ['Light screen', 'Dark screen'],
+  ja: ['ライト画面', 'ダーク画面'],
+}[lang];
 ---
 
 <div class="device">
@@ -13,6 +22,43 @@ const { src, alt } = Astro.props;
   <span class="btn-side l2" aria-hidden="true"></span>
   <span class="btn-side r1" aria-hidden="true"></span>
   <div class="screen">
-    <img class="shot" src={src} alt={alt} width="660" height="1434" loading="lazy" decoding="async" />
+    {
+      darkSrc ? (
+        <div class="shot-track" data-shot-track>
+          <img class="shot" src={src} alt={alt} width="990" height="2151" loading="lazy" decoding="async" />
+          <img class="shot" src={darkSrc} alt="" width="990" height="2151" loading="lazy" decoding="async" />
+        </div>
+      ) : (
+        <img class="shot" src={src} alt={alt} width="990" height="2151" loading="lazy" decoding="async" />
+      )
+    }
   </div>
+  {
+    darkSrc && (
+      <div class="shot-dots" role="group" data-shot-dots>
+        <button type="button" aria-label={LABEL[0]} aria-pressed="true" data-i="0" />
+        <button type="button" aria-label={LABEL[1]} aria-pressed="false" data-i="1" />
+      </div>
+    )
+  }
 </div>
+
+<script>
+  // One delegated listener set for every phone on the page.
+  const sync = (track: HTMLElement) => {
+    const i = track.scrollLeft > track.clientWidth / 2 ? 1 : 0;
+    const dots = track.closest('.device')?.querySelectorAll<HTMLButtonElement>('[data-shot-dots] button');
+    dots?.forEach((b, n) => b.setAttribute('aria-pressed', String(n === i)));
+  };
+  document.querySelectorAll<HTMLElement>('[data-shot-track]').forEach((track) => {
+    track.addEventListener('scroll', () => sync(track), { passive: true });
+  });
+  document.querySelectorAll<HTMLButtonElement>('[data-shot-dots] button').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const track = btn.closest('.device')?.querySelector<HTMLElement>('[data-shot-track]');
+      if (!track) return;
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      track.scrollTo({ left: Number(btn.dataset.i) * track.clientWidth, behavior: reduce ? 'auto' : 'smooth' });
+    });
+  });
+</script>

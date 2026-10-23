@@ -14,6 +14,8 @@ const t = ui[lang].home;
 // Rows alternate sides across the whole page, not per section.
 // A row is shown only when its capture exists, so a missing screenshot never ships as a broken image.
 const hasShot = (shot: string) => existsSync(`public/assets/peakly/${lang}-${shot}.webp`);
+// A dark twin ({lang}-{shot}-dark.webp) turns the phone into a light/dark swipe strip.
+const hasDark = (shot: string) => existsSync(`public/assets/peakly/${lang}-${shot}-dark.webp`);
 const sections = t.peakly.sections
   .map((section) => ({ ...section, rows: section.rows.filter((row) => hasShot(row.shot)) }))
   .filter((section) => section.rows.length > 0);
@@ -56,7 +58,12 @@ const rows = sections.flatMap((section) => section.rows);
                       {row.note && <p class="row-note">{row.note}</p>}
                     </div>
                     <div class="feature-visual">
-                      <AppShot src={`/assets/peakly/${lang}-${row.shot}.webp`} alt={row.alt} />
+                      <AppShot
+                        src={`/assets/peakly/${lang}-${row.shot}.webp`}
+                        darkSrc={hasDark(row.shot) ? `/assets/peakly/${lang}-${row.shot}-dark.webp` : undefined}
+                        alt={row.alt}
+                        lang={lang}
+                      />
                     </div>
                   </div>
                 );
