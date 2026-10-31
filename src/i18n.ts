@@ -1,4 +1,4 @@
-export const LANGS = ['ko', 'en', 'ja'] as const;
+export const LANGS = ['ko', 'en', 'ja', 'zh-Hant'] as const;
 export type Lang = (typeof LANGS)[number];
 export type Page = 'home' | 'peakly' | 'privacy' | 'terms' | 'support';
 
@@ -6,18 +6,21 @@ export const SITE = 'https://hyperfocuslab.app';
 export const EMAIL = 'support@hyperfocuslab.app';
 // Without a country or language the stores pick the visitor's region and language, so a
 // Korean browser landed on the Korean listing from every page. Each page pins its own.
-const APP_STORE_COUNTRY: Record<string, string> = { ko: 'kr/', ja: 'jp/', en: 'us/' };
+const APP_STORE_COUNTRY: Record<Lang, string> = { ko: 'kr/', ja: 'jp/', en: 'us/', 'zh-Hant': 'tw/' };
+// Google Play interface language for the store link (hl).
+const PLAY_HL: Record<Lang, string> = { ko: 'ko', en: 'en', ja: 'ja', 'zh-Hant': 'zh-TW' };
 // Campaign tags so installs from this site show up per language in App Store Connect
 // (Acquisition > Campaigns) and Play Console (Acquisition reports, UTM).
-export function storeLinks(lang: 'ko' | 'en' | 'ja') {
+export function storeLinks(lang: Lang) {
   return {
     appStore: `https://apps.apple.com/${APP_STORE_COUNTRY[lang]}app/id6757836001?pt=128442127&ct=website-${lang}&mt=8`,
-    googlePlay: `https://play.google.com/store/apps/details?id=com.peakly.android&hl=${lang}&referrer=utm_source%3Dhyperfocuslab.app%26utm_medium%3Dwebsite%26utm_campaign%3Dwebsite-${lang}`,
+    googlePlay: `https://play.google.com/store/apps/details?id=com.peakly.android&hl=${PLAY_HL[lang]}&referrer=utm_source%3Dhyperfocuslab.app%26utm_medium%3Dwebsite%26utm_campaign%3Dwebsite-${lang}`,
   };
 }
 
-const PREFIX: Record<Lang, string> = { ko: '', en: '/en', ja: '/ja' };
-const SUFFIX: Record<Lang, string> = { ko: '', en: '-en', ja: '-ja' };
+const PREFIX: Record<Lang, string> = { ko: '', en: '/en', ja: '/ja', 'zh-Hant': '/zh-Hant' };
+// The old flat file names exist only for the languages the previous site had.
+const SUFFIX: Partial<Record<Lang, string>> = { ko: '', en: '-en', ja: '-ja' };
 
 // Hyperfocus Lab is the company; Peakly is a product under it, and its
 // policies and support pages live under /peakly/.
@@ -31,13 +34,16 @@ export function href(page: Page, lang: Lang): string {
 // File names the previous Peakly site used (/privacy-en.html). They are kept
 // as redirects so old store and in-app links can be pointed here later.
 export function legacySlugs(): { slug: string; to: string }[] {
+  const legacyLangs = LANGS.filter((lang) => SUFFIX[lang] !== undefined);
   const docs = (['privacy', 'terms', 'support'] as const).flatMap((doc) =>
-    LANGS.map((lang) => ({ slug: `${doc}${SUFFIX[lang]}`, to: href(doc, lang) })),
+    legacyLangs.map((lang) => ({ slug: `${doc}${SUFFIX[lang]}`, to: href(doc, lang) })),
   );
   return [...docs, { slug: 'index-en', to: href('home', 'en') }, { slug: 'index-ja', to: href('home', 'ja') }];
 }
 
-export const LANG_LABEL: Record<Lang, string> = { ko: '한국어', en: 'English', ja: '日本語' };
+export const LANG_LABEL: Record<Lang, string> = { ko: '한국어', en: 'English', ja: '日本語', 'zh-Hant': '繁體中文' };
+// Short code shown in the header switch.
+export const LANG_CODE: Record<Lang, string> = { ko: 'KO', en: 'EN', ja: 'JA', 'zh-Hant': 'ZH' };
 
 export const ui = {
   ko: {
@@ -283,6 +289,88 @@ export const ui = {
           { title: 'iPad対応', platforms: ['iPadOS'], body: 'iPadでも、同じApple AccountのiPhoneと記録が同期されます。' },
         ],
         closing: { title: '今日飲んだ薬から記録してみましょう。' },
+      },
+    },
+  },
+  'zh-Hant': {
+    appName: 'Peakly',
+    nav: { contact: '聯絡我們', language: '選擇語言', main: '主要選單' },
+    docs: { privacy: '隱私權政策', terms: '服務條款', support: '客戶支援' },
+    footer: { products: '產品', language: '語言', legal: '© Hyperfocus Lab · 代表 Yejun Lee' },
+    home: {
+      title: 'Peakly | ADHD 服藥紀錄 App',
+      description: '記錄服藥時間，Peakly 就會畫出一天中的預估藥效曲線。心情、目標與待辦事項也能在同一個 App 裡記錄。支援 iPhone、iPad、Android。',
+      products: {
+        title: '產品',
+        facts: [
+          ['平台', 'iPhone · iPad · Android'],
+          ['語言', '한국어 · English · 日本語 · 繁體中文'],
+        ],
+        more: '前往 Peakly 頁面',
+      },
+      peakly: {
+        tagline: 'ADHD 服藥紀錄 App',
+        lead: '記錄服藥時間，就能看到藥效現在是正在上升、最強，還是正在減弱。目標、例行事項與待辦事項也能在同一個 App 裡管理。',
+        sections: [
+          {
+            tab: '服藥',
+            intro: '記錄服藥時間，就能看到一整天的藥效變化。',
+            rows: [
+              { shot: 'chart', label: '預估藥效曲線', title: '隨時掌握藥效走到哪裡。', body: '依據 Concerta 與 Medikinet 已知的藥效變化，畫出一天中各時段的預估藥效。你可以看出藥效是正在上升、最強，還是正在減弱，也能依自己身體的反應調整各階段的時間。搭配 Apple Watch 使用時，心率與活動量會依時段顯示在曲線下方。', alt: 'Peakly 服藥畫面，Concerta 預估藥效曲線下方有心率與活動量圖表', note: '曲線為預估值，僅供參考，不能取代醫療建議。' },
+              { shot: 'mood', label: '心情簽到', title: '心情點一下，備註寫一行。', body: '從五種表情中點選一個，就能記錄當下的心情。一天可以記錄多次，記下的心情會依記錄時間顯示在藥效曲線下方。表情下方的欄位也可以寫一行備註。', alt: 'Peakly 服藥畫面，心情卡片有五種表情與備註欄，下方是藥效曲線與心情記錄列' },
+              { shot: 'lock', label: '動態島與鎖定畫面', title: '剩餘藥效時間，隨時在畫面上。', body: '剩餘的藥效時間會持續顯示在 iPhone 的動態島與鎖定畫面、Apple Watch 的智慧型疊放，Android 則顯示在通知欄。藥效開始上升、進入高峰時段、即將減弱時，都會以通知提醒你。你也可以在小工具與鎖定畫面上隱藏藥物名稱與圖片。', alt: 'iPhone 動態島與鎖定畫面顯示 Concerta 36mg 處於主要高峰與剩餘時間' },
+              { shot: 'report', label: 'PDF 報告', title: '看診時要給醫師看的紀錄，直接產生 PDF。', body: '選擇期間後，會產生兩頁的「過去 N 天的狀況」PDF 報告。內容包含服藥紀錄、與前一段期間相比的狀態變化、一天中的藥效變化、每日備註，以及看診時想詢問的問題。', alt: '整理了服藥紀錄與狀態變化的 PDF 報告第一頁預覽' },
+            ],
+          },
+          {
+            tab: '目標',
+            intro: '替大目標訂下期限，再拆成今天要做的事。',
+            rows: [
+              { shot: 'goals', label: '全部目標', title: '目標看進度，期待的日子看 D-Day。', body: '替證照、減重、作品集這類大目標訂下日期，就能同時看到進度與剩餘時間。旅行、考試日、紀念日這類日期固定的事，則以 D-Day 顯示在畫面上。', alt: '顯示 D-Day 與各目標進度的全部目標畫面' },
+              { shot: 'goals-today', label: '今日目標', title: '把目標拆成今天要做的事。', body: '把大目標拆成今天要做的小事，逐項勾選。每天的小步驟累積起來，就能完成大目標。', alt: '顯示進度與小行動清單的今日目標畫面' },
+            ],
+          },
+          {
+            tab: '待辦',
+            intro: '每天要做的事與有截止日的事，分開管理。',
+            rows: [
+              { shot: 'routines', label: '每日例行事項', title: '有固定時間的事，與隨時都能做的事。', body: '起床、散步這類有固定時間的事，歸在定時例行事項；伸展這類一天中隨時做都可以的事，歸在隨時例行事項。也會顯示過去 7 天與本月沒完成的次數。', alt: '有定時例行事項與隨時例行事項的每日例行事項畫面' },
+              { shot: 'todo', label: '待辦事項', title: '截止日最近的先做。', body: '有截止日的事會分成今天、本週與之後，讓你一眼看出該先做什麼。', alt: '依剩餘時間分組的待辦事項清單' },
+            ],
+          },
+          {
+            tab: '紀錄',
+            intro: '留下過去的日子，以及每一天的心情。',
+            rows: [
+              { shot: 'calendar', label: '行事曆', title: '過去的日子一眼看完。', body: '每個日期都會用圓點標示服藥、目標與待辦的紀錄。點選日期，就能看到當天服用的藥物，以及完成的目標與待辦事項，也能搜尋更早的紀錄。留下當天的心情與備註，看診時更容易說明這段時間的狀況。', alt: '以圓點標示服藥、目標與待辦的行事曆' },
+            ],
+          },
+          {
+            tab: '設定',
+            intro: '語言、外觀與備份，都能依自己的方式調整。',
+            rows: [
+              { shot: 'settings', label: '依你的方式使用', title: '語言與外觀，由你決定。', body: 'Peakly 支援韓文、英文、日文與繁體中文，並提供深色與淺色模式，也能選擇字型。設定目標就寢與起床時間後，若藥效可能延續到睡前，Peakly 會事先提醒你。', alt: '有語言、顯示模式、字型與目標就寢、起床時間的設定畫面' },
+              { shot: 'backup', label: '備份與還原', title: '換了手機，紀錄也都在。', body: '你的服藥紀錄與健康資料不會傳送到外部伺服器，只會儲存在你的裝置與你自己的 iCloud（Android 則為 Google 雲端硬碟）。App 會自動備份，你也可以隨時立即備份，或匯出成檔案。', alt: '有 iCloud 備份、立即備份、資料匯出與匯入的備份與還原畫面' },
+            ],
+          },
+          {
+            tab: '小工具',
+            intro: '主畫面與鎖定畫面上就能看。',
+            rows: [
+              { shot: 'widgets', label: '主畫面小工具', title: '不用開啟 App。', body: '服藥狀態、目標 D-Day、目標進度、每日例行事項、待辦事項、狀態與行事曆，都可以放在主畫面與鎖定畫面的小工具上。', alt: '有藥效曲線小工具與目標 D-Day 小工具的 iPhone 主畫面' },
+            ],
+          },
+        ],
+        featuresTitle: 'Peakly 的其他功能',
+        features: [
+          { title: 'Apple Watch', platforms: ['iOS'], body: 'Apple Watch 記錄的心率、活動量、睡眠與運動，會透過「健康」App 匯入，並與服藥紀錄一起顯示。剩餘藥效時間也會顯示在手錶的智慧型疊放。' },
+          { title: '階段通知', platforms: ['iOS', 'Android'], body: '藥效開始上升、進入高峰、開始減弱時都會通知你。每一項都可以個別開啟或關閉。' },
+          { title: '心率反應', platforms: ['iOS'], body: '將服藥後的心率與你平時的心率相比，並推估心率上升是來自藥效，還是活動的影響。' },
+          { title: '自訂藥物', platforms: ['iOS', 'Android'], body: '不在支援清單裡的藥物，也能自行新增並附上自己的照片，持續記錄。' },
+          { title: '從控制中心記錄服藥', platforms: ['iOS'], body: '不用開啟 App，從控制中心或鎖定畫面按鈕就能記錄服藥。' },
+          { title: '支援 iPad', platforms: ['iPadOS'], body: '在 iPad 上，紀錄會與使用同一個 Apple 帳號的 iPhone 同步。' },
+        ],
+        closing: { title: '從今天吃的藥開始記錄吧。' },
       },
     },
   },

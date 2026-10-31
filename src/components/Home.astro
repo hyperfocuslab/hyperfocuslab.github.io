@@ -13,9 +13,11 @@ const t = ui[lang].home;
 // Each feature row shows one capture: public/assets/peakly/{lang}-{shot}.webp.
 // Rows alternate sides across the whole page, not per section.
 // A row is shown only when its capture exists, so a missing screenshot never ships as a broken image.
-const hasShot = (shot: string) => existsSync(`public/assets/peakly/${lang}-${shot}.webp`);
+// Traditional Chinese has no captures of its own yet, so it shows the English ones.
+const shotLang = lang === 'zh-Hant' ? 'en' : lang;
+const hasShot = (shot: string) => existsSync(`public/assets/peakly/${shotLang}-${shot}.webp`);
 // A dark twin ({lang}-{shot}-dark.webp) turns the phone into a light/dark swipe strip.
-const hasDark = (shot: string) => existsSync(`public/assets/peakly/${lang}-${shot}-dark.webp`);
+const hasDark = (shot: string) => existsSync(`public/assets/peakly/${shotLang}-${shot}-dark.webp`);
 const sections = t.peakly.sections
   .map((section) => ({ ...section, rows: section.rows.filter((row) => hasShot(row.shot)) }))
   .filter((section) => section.rows.length > 0);
@@ -59,8 +61,8 @@ const rows = sections.flatMap((section) => section.rows);
                     </div>
                     <div class="feature-visual">
                       <AppShot
-                        src={`/assets/peakly/${lang}-${row.shot}.webp`}
-                        darkSrc={hasDark(row.shot) ? `/assets/peakly/${lang}-${row.shot}-dark.webp` : undefined}
+                        src={`/assets/peakly/${shotLang}-${row.shot}.webp`}
+                        darkSrc={hasDark(row.shot) ? `/assets/peakly/${shotLang}-${row.shot}-dark.webp` : undefined}
                         alt={row.alt}
                         lang={lang}
                       />

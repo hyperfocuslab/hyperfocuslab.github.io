@@ -7,13 +7,14 @@ interface Props {
   src: string;
   darkSrc?: string;
   alt: string;
-  lang?: 'ko' | 'en' | 'ja';
+  lang?: 'ko' | 'en' | 'ja' | 'zh-Hant';
 }
 const { src, darkSrc, alt, lang = 'ko' } = Astro.props;
 const LABEL = {
   ko: ['라이트 화면', '다크 화면'],
   en: ['Light screen', 'Dark screen'],
   ja: ['ライト画面', 'ダーク画面'],
+  'zh-Hant': ['淺色畫面', '深色畫面'],
 }[lang];
 ---
 
