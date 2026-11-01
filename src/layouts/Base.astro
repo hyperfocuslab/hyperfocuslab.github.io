@@ -14,8 +14,8 @@ const { lang, page, title, description } = Astro.props;
 const t = ui[lang];
 // The company home is its own section; every other page belongs to Peakly.
 const inPeakly = page !== 'home';
-// First-visit language redirect runs only on the Korean home and Korean Peakly page.
-const autoLang = lang === 'ko' && (page === 'home' || page === 'peakly');
+// First-visit language redirect runs only on the root home, which is English.
+const autoLang = lang === 'en' && page === 'home';
 const canonical = SITE + href(page, lang);
 // Same family as the Peakly app (IBM Plex Sans KR), with the JP cut for Japanese.
 // IBM Plex has no Traditional Chinese cut, so zh-Hant uses Noto Sans TC.
@@ -33,16 +33,16 @@ const GA_ID = 'G-96T0GRTD1R';
     {
       autoLang && (
         <script is:inline set:html={`// Send first-time visitors to their browser language before anything paints.
-// A stored choice (hfl_lang) or arriving from a page of this site (e.g. the KO link) wins.
+// Arriving from a page of this site (e.g. the EN link) wins, then a stored choice (hfl_lang).
 (() => {
   try {
     if (/bot|crawl|spider|slurp|lighthouse|headless|inspectiontool|yeti/i.test(navigator.userAgent)) return;
-    try { if (localStorage.getItem('hfl_lang')) return; } catch (e) {}
     if (document.referrer && new URL(document.referrer).origin === location.origin) return;
-    const l = ((navigator.languages && navigator.languages[0]) || navigator.language || 'ko').toLowerCase();
-    if (l.startsWith('ko')) return;
-    const zhHant = /^zh-(tw|hk|mo|hant)/.test(l);
-    location.replace((l.startsWith('ja') ? '/ja' : zhHant ? '/zh-Hant' : '/en') + location.pathname + location.search + location.hash);
+    let stored = null;
+    try { stored = localStorage.getItem('hfl_lang'); } catch (e) {}
+    const l = (stored || (navigator.languages && navigator.languages[0]) || navigator.language || 'en').toLowerCase();
+    const home = l.startsWith('ko') ? '/ko/' : l.startsWith('ja') ? '/ja/' : /^zh-(tw|hk|mo|hant)/.test(l) ? '/zh-Hant/' : '';
+    if (home) location.replace(home + location.search + location.hash);
   } catch (e) {}
 })();`} />
       )

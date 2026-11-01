@@ -19,15 +19,17 @@ export function storeLinks(lang: Lang) {
 }
 
 const PREFIX: Record<Lang, string> = { ko: '', en: '/en', ja: '/ja', 'zh-Hant': '/zh-Hant' };
+// The root home is English. Peakly documents keep PREFIX: the apps and stores link to those URLs.
+const HOME: Record<Lang, string> = { ko: '/ko/', en: '/', ja: '/ja/', 'zh-Hant': '/zh-Hant/' };
 // The old flat file names exist only for the languages the previous site had.
 const SUFFIX: Partial<Record<Lang, string>> = { ko: '', en: '-en', ja: '-ja' };
 
 // Hyperfocus Lab is the company; Peakly is a product under it, and its
 // policies and support pages live under /peakly/.
 export function href(page: Page, lang: Lang): string {
-  if (page === 'home') return `${PREFIX[lang]}/`;
+  if (page === 'home') return HOME[lang];
   // Peakly is introduced on the home page; /peakly/ itself redirects there.
-  if (page === 'peakly') return `${PREFIX[lang]}/#products`;
+  if (page === 'peakly') return `${HOME[lang]}#products`;
   return `${PREFIX[lang]}/peakly/${page}/`;
 }
 
