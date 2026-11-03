@@ -28,8 +28,14 @@ type Copy = {
   now: string;
   names: Names;
   formulations: Names;
-  section: Record<SectionKind, string>;
-  ritalinLA: [string, string];
+  /** Window names as each app chart shows them: Concerta and Medikinet have charts of their own;
+   *  the others share the reference chart (sectionTitle), which calls Ritalin LA's first two peaks. */
+  labels: {
+    concerta: [string, string, string];
+    medikinet: [string, string, string];
+    reference: Record<SectionKind, string>;
+    ritalinLA: [string, string];
+  };
   window: (label: string) => string;
   beforeDose: string;
   rising: string;
@@ -94,9 +100,13 @@ export const copy: Record<TimingLang, Copy> = {
       adderall_xr: '혼합 암페타민염 서방 캡슐 (d-암페타민 기준)',
       vyvanse: '리스덱스암페타민 (활성체 d-암페타민 기준)',
     },
-    section: { initial: '초기', peak: '최고 농도', secondary: '2차 농도', decline: '감소' },
-    ritalinLA: ['1차 피크', '2차 피크'],
-    window: (label) => `${label} 구간`,
+    labels: {
+      concerta: ['1차', '최대농도', '감소'],
+      medikinet: ['1차 상승', '2차 상승', '감소'],
+      reference: { initial: '농도 상승', peak: '최고 농도', secondary: '2차 농도 구간', decline: '농도 감소' },
+      ritalinLA: ['1차 피크', '2차 피크'],
+    },
+    window: (label) => (label.endsWith('구간') ? label : `${label} 구간`),
     beforeDose: '복용 전',
     rising: '상승 중',
     middle: '중간 구간',
@@ -159,9 +169,13 @@ export const copy: Record<TimingLang, Copy> = {
     now: 'Now',
     names: { concerta: 'Concerta', medikinet: 'Medikinet Retard', penid_ir: 'Penid', ritalin_ir: 'Ritalin', ritalin_la: 'Ritalin LA', adderall_xr: 'Adderall XR', vyvanse: 'Vyvanse' },
     formulations: FORMULATION_EN,
-    section: { initial: 'Early', peak: 'Peak', secondary: 'Second window', decline: 'Decline' },
-    ritalinLA: ['First peak', 'Second peak'],
-    window: (label) => `${label} window`,
+    labels: {
+      concerta: ['1st', 'Max', 'Decline'],
+      medikinet: ['First rise', 'Second rise', 'Decline'],
+      reference: { initial: 'Concentration rise', peak: 'Peak concentration', secondary: 'Second concentration window', decline: 'Concentration decline' },
+      ritalinLA: ['First peak', 'Second peak'],
+    },
+    window: (label) => (label.endsWith('window') ? label : `${label} window`),
     beforeDose: 'Before the dose',
     rising: 'Rising',
     middle: 'Middle window',
@@ -233,8 +247,12 @@ export const copy: Record<TimingLang, Copy> = {
       adderall_xr: '混合アンフェタミン塩 徐放カプセル（d-アンフェタミン基準）',
       vyvanse: 'リスデキサンフェタミン（活性体 d-アンフェタミン基準）',
     },
-    section: { initial: '初期', peak: '最高濃度', secondary: '第2濃度帯', decline: '減少' },
-    ritalinLA: ['1回目のピーク', '2回目のピーク'],
+    labels: {
+      concerta: ['一次', '最大濃度', '減少'],
+      medikinet: ['一次上昇', '二次上昇', '減少'],
+      reference: { initial: '濃度上昇', peak: '最高濃度', secondary: '第2濃度帯', decline: '濃度低下' },
+      ritalinLA: ['一次ピーク', '二次ピーク'],
+    },
     window: (label) => `${label}の区間`,
     beforeDose: '服用前',
     rising: '上昇中',
@@ -394,9 +412,11 @@ export function selectGroups(lang: TimingLang, current?: DrugId): { label: strin
 // ── Phases ──────────────────────────────────────────────────────
 
 export function windowLabels(lang: TimingLang, profile: Profile): [string, string, string] {
-  const t = copy[lang];
-  if (profile.id === 'ritalin_la') return [t.ritalinLA[0], t.ritalinLA[1], t.section.decline];
-  return profile.sectionKinds.map((k) => t.section[k]) as [string, string, string];
+  const l = copy[lang].labels;
+  if (profile.id === 'concerta') return l.concerta;
+  if (profile.id === 'medikinet') return l.medikinet;
+  if (profile.id === 'ritalin_la') return [l.ritalinLA[0], l.ritalinLA[1], l.reference.decline];
+  return profile.sectionKinds.map((k) => l.reference[k]) as [string, string, string];
 }
 
 export interface PhaseState {

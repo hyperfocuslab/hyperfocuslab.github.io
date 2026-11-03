@@ -32,7 +32,7 @@ export interface Profile {
   sources: { title: string; url: string }[];
   /// Kind of each of the three fixed windows, in chart order.
   sectionKinds: [SectionKind, SectionKind, SectionKind];
-  /// Default positions of the three annotation windows (hours after the dose).
+  /// The three shaded windows as the app's chart draws them by default (hours after the dose).
   windows: [Window, Window, Window];
   conditions: string;
 }
@@ -105,12 +105,19 @@ export class ReferenceCurve {
 }
 
 const CHART_WINDOW_HOURS = 16;
+// Concerta and Medikinet have charts of their own in the app, which shade the editable windows.
+// The other profiles share MedicationReferencePKChartView, which shades the catalog's peak section
+// in the middle instead (MedicationPhase.chartPhaseRanges), so the chart, the phase text and the
+// Live Activity call the same hours "peak": Adderall XR 5.2–7.7 h rather than 5.75–8.25 h.
+const OWN_CHART = ['concerta', 'medikinet'];
 
 export const MODEL_VERSION: string = catalog.modelVersion;
 
 export const PROFILES: Record<DrugId, Profile> = Object.fromEntries(
   catalog.profiles.map((p) => {
     const windows = p.manualTiming.windows.map(([start, end]) => ({ start, end })) as [Window, Window, Window];
+    const peak = p.sections.find((s) => s.kind === 'peak');
+    if (!OWN_CHART.includes(p.id) && peak) windows[1] = { start: peak.hours[0], end: peak.hours[1] };
     const profile: Profile = {
       id: p.id as DrugId,
       name: p.name,

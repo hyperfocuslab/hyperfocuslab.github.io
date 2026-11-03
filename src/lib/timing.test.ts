@@ -124,24 +124,47 @@ test('phaseAt walks the three windows the way the app names them', () => {
   const at = (h: number) => phaseAt('ko', c, h).text;
   assert.equal(at(-1), '복용 전');
   assert.equal(at(0.25), '상승 중');
-  assert.equal(at(1), '초기 구간');
+  assert.equal(at(1), '1차 구간');
   assert.equal(at(3), '상승 중');
-  assert.equal(at(8), '최고 농도 구간');
-  assert.equal(at(10), '최고 농도 구간'); // the shared boundary belongs to the earlier window
+  assert.equal(at(8), '최대농도 구간');
+  assert.equal(at(10), '최대농도 구간'); // the shared boundary belongs to the earlier window
   assert.equal(at(11), '감소 구간');
   assert.equal(at(14), '잔효');
   assert.equal(at(17), '표시 범위 밖');
 
   const m = PROFILES.medikinet; // windows 2–4, 5–6, 6–7
-  assert.equal(phaseAt('ko', m, 3).text, '최고 농도 구간');
+  assert.equal(phaseAt('ko', m, 3).text, '1차 상승 구간');
   assert.equal(phaseAt('ko', m, 4.5).text, '중간 구간');
-  assert.equal(phaseAt('ko', m, 5.5).text, '2차 농도 구간');
+  assert.equal(phaseAt('ko', m, 5.5).text, '2차 상승 구간');
   assert.equal(phaseAt('en', m, 6.5).text, 'Decline window');
 
   const la = PROFILES.ritalin_la; // windows 1.5–2.5, 5–6, 7–8
   assert.equal(phaseAt('ko', la, 2).text, '1차 피크 구간');
   assert.equal(phaseAt('ko', la, 4).text, '중간 구간');
-  assert.equal(phaseAt('ja', la, 5.5).text, '2回目のピークの区間');
+  assert.equal(phaseAt('ja', la, 5.5).text, '二次ピークの区間');
+  assert.equal(phaseAt('ko', la, 7.5).text, '농도 감소 구간');
+
+  // The shared reference chart shades the catalog's peak section in the middle (5.2–7.7 h).
+  const a = PROFILES.adderall_xr;
+  assert.equal(phaseAt('ko', a, 1).text, '농도 상승 구간');
+  assert.equal(phaseAt('ko', a, 5.5).text, '최고 농도 구간');
+  assert.equal(phaseAt('ko', a, 8).text, '감소 중');
+  assert.equal(phaseAt('ko', a, 11).text, '농도 감소 구간');
+  assert.equal(phaseAt('en', a, 11).text, 'Concentration decline window');
+});
+
+test('the middle window follows the app chart: peak section for shared-chart profiles', () => {
+  const mid = (drug: keyof typeof PROFILES) => [PROFILES[drug].windows[1].start, PROFILES[drug].windows[1].end];
+  assert.deepEqual(mid('adderall_xr'), [5.2, 7.7]); // editing default 5.75–8.25
+  assert.deepEqual(mid('vyvanse'), [3.8, 4.7]); // editing default 3.55–4.45
+  assert.deepEqual(mid('concerta'), [6, 10]); // its own chart keeps the editable window
+  assert.deepEqual(mid('medikinet'), [5, 6]);
+  const legend = (drug: keyof typeof PROFILES) => render({ lang: 'ko', drug, minutes: 480, nowHours: null }).legend;
+  assert.ok(legend('adderall_xr').includes('오후 1:12~3:42'));
+  assert.ok(legend('adderall_xr').includes('농도 상승'));
+  assert.ok(legend('vyvanse').includes('오전 11:48~오후 12:42'));
+  assert.ok(legend('concerta').includes('최대농도'));
+  assert.ok(describe('ko', 'adderall_xr').includes('오후 1:12~3:42'));
 });
 
 test('render produces the chart, legend and sources for every drug and language', () => {
