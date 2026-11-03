@@ -20,7 +20,14 @@ const first = render({ lang, drug: current, minutes: DEFAULT_MINUTES, nowHours: 
 const title = t.title(t.names[current]);
 const description = describe(lang, current);
 const ogImage = `/assets/og/timing-${lang}-${current}.png`;
-const appStore = storeLinks(lang, `timing-tool-${lang}`).appStore;
+// Installs from this tool are counted apart from the rest of the site: ct=timing-tool-{lang}
+// on the App Store, and a Play referrer of utm_source=hyperfocuslab / utm_medium=web /
+// utm_campaign=timing-tool-{lang}.
+const stores = storeLinks(lang, `timing-tool-${lang}`);
+const appStore = stores.appStore;
+const play = new URL(stores.googlePlay);
+play.searchParams.set('referrer', `utm_source=hyperfocuslab&utm_medium=web&utm_campaign=timing-tool-${lang}`);
+const googlePlay = play.toString();
 ---
 
 <Base lang={lang} page="timing" sub={drug} title={title} description={description} ogImage={ogImage}>
@@ -65,8 +72,10 @@ const appStore = storeLinks(lang, `timing-tool-${lang}`).appStore;
         <img class="app-icon" src="/assets/peakly-icon.webp" alt="" width="72" height="72" loading="lazy" />
         <h2 class="h2">{t.cta.title}</h2>
         <p class="lead">{t.cta.body}</p>
-        <div class="actions">
-          <a class="btn" href={appStore} target="_blank" rel="noreferrer">{t.cta.button}</a>
+        <!-- Both stores carry the same weight: Android is a large share of Korean visitors. -->
+        <div class="actions pk-stores">
+          <a class="btn" href={appStore} target="_blank" rel="noreferrer">App Store ↗</a>
+          <a class="btn" href={googlePlay} target="_blank" rel="noreferrer">Google Play ↗</a>
         </div>
       </div>
     </div>

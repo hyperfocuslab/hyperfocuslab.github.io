@@ -53,7 +53,7 @@ type Copy = {
   /** One label per catalog source, in catalog order, in the reader's language. */
   sourceLabels: Record<DrugId, string[]>;
   notice: string[];
-  cta: { title: string; body: string; button: string };
+  cta: { title: string; body: string };
 };
 
 const FORMULATION_EN: Names = Object.fromEntries(DRUG_IDS.map((id) => [id, PROFILES[id].formulation])) as Names;
@@ -137,7 +137,6 @@ export const copy: Record<TimingLang, Copy> = {
     cta: {
       title: '내 복용 기록으로 매일 보기',
       body: '피클리에 복용 시각을 기록하면 이 곡선이 매일 그려지고, 상승·피크·감소 때 알림을 받습니다. 구간 시간은 내 몸에 맞게 조정할 수 있습니다.',
-      button: 'App Store에서 피클리 받기 ↗',
     },
   },
   en: {
@@ -210,7 +209,6 @@ export const copy: Record<TimingLang, Copy> = {
     cta: {
       title: 'See it every day with your own doses',
       body: 'Log your dose time in Peakly and this curve is drawn every day, with notifications as it rises, peaks, and wears off. You can adjust each window to fit how your body responds.',
-      button: 'Get Peakly on the App Store ↗',
     },
   },
   ja: {
@@ -291,7 +289,6 @@ export const copy: Record<TimingLang, Copy> = {
     cta: {
       title: '自分の服薬記録で毎日見る',
       body: 'ピークリーに服用時刻を記録すると、この曲線が毎日描かれ、上昇・ピーク・減少のときに通知が届きます。区間の時間は自分の体に合わせて調整できます。',
-      button: 'App Storeでピークリーを入手 ↗',
     },
   },
 };

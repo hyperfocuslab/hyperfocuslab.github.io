@@ -1425,6 +1425,19 @@ main > .section:first-child {
   max-width: 34em;
 }
 
+/* On phones the two store buttons stack, each full width. */
+@media (max-width: 480px) {
+  .pk-stores {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .pk-stores .btn {
+    text-align: center;
+  }
+}
+
 @media (max-width: 640px) {
   .pk-controls {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
