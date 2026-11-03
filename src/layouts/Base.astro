@@ -10,11 +10,13 @@ interface Props {
   description: string;
   /** Sub-path under the page (the drug of a timing page), kept across language switches. */
   sub?: string;
+  /** Languages that have the sub-page; the others link to the page without it. Omitted: all. */
+  subLangs?: readonly Lang[];
   /** Share card for this page; the Peakly app card otherwise. */
   ogImage?: string;
 }
 
-const { lang, page, title, description, sub, ogImage } = Astro.props;
+const { lang, page, title, description, sub, subLangs, ogImage } = Astro.props;
 const t = ui[lang];
 // The company home is its own section; every other page belongs to Peakly.
 const inPeakly = page !== 'home';
@@ -23,6 +25,11 @@ const autoLang = lang === 'en' && page === 'home';
 const canonical = SITE + href(page, lang, sub);
 // Languages this page exists in: alternates and the switch never point at a missing page.
 const langs = pageLangs(page);
+// A sub-page (a drug of the timing tool) may exist in fewer languages than its page. Alternates
+// list only those; the switch sends the other languages to the page itself (/ko/peakly/timing/).
+const hasSub = (l: Lang) => !sub || !subLangs || subLangs.includes(l);
+const altLangs = langs.filter(hasSub);
+const switchHref = (l: Lang) => href(page, l, hasSub(l) ? sub : undefined);
 // Same family as the Peakly app (IBM Plex Sans KR), with the JP cut for Japanese.
 // IBM Plex has no Traditional Chinese cut, so zh-Hant uses Noto Sans TC.
 const plex = lang === 'ja' ? 'IBM+Plex+Sans+JP' : lang === 'zh-Hant' ? 'Noto+Sans+TC' : 'IBM+Plex+Sans+KR';
@@ -59,14 +66,15 @@ const analyticsPathOnly = page === 'timing';
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    {langs.map((l) => <link rel="alternate" hreflang={l} href={SITE + href(page, l, sub)} />)}
-    <link rel="alternate" hreflang="x-default" href={SITE + href(page, 'en', sub)} />
+    {altLangs.map((l) => <link rel="alternate" hreflang={l} href={SITE + href(page, l, sub)} />)}
+    {altLangs.includes('en') && <link rel="alternate" hreflang="x-default" href={SITE + href(page, 'en', sub)} />}
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content={t.appName} />
+    <!-- Tool pages carry the company name, not the app's: they stay apart from app promotion. -->
+    <meta property="og:site_name" content={page === 'timing' ? 'Hyperfocus Lab' : t.appName} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <!-- While Peakly is the only product, shared links preview the app (effect-curve screen).
+    <!-- While Peakly is the only product, shared links preview the app (its chart screen).
          Bump ?v= when the card changes: KakaoTalk caches images by URL. -->
     <meta property="og:image" content={ogImage ? SITE + ogImage : `${SITE}/assets/og-${ogLang}.png?v=5`} />
     <meta property="og:image:width" content="1200" />
@@ -113,7 +121,7 @@ const analyticsPathOnly = page === 'timing';
             {
               langs.map((l) => (
                 <a
-                  href={href(page, l, sub)}
+                  href={switchHref(l)}
                   lang={l}
                   hreflang={l}
                   title={LANG_LABEL[l]}
@@ -142,8 +150,12 @@ const analyticsPathOnly = page === 'timing';
         <nav aria-label={t.footer.products}>
           <p class="footer-head">{t.footer.products}</p>
           <a href={`${href('home', lang)}#products`}>{t.appName}</a>
-          <a href={storeLinks(lang).appStore} target="_blank" rel="noreferrer">App Store ↗</a>
-          <a href={storeLinks(lang).googlePlay} target="_blank" rel="noreferrer">Google Play ↗</a>
+          {page !== 'timing' && (
+            <>
+              <a href={storeLinks(lang).appStore} target="_blank" rel="noreferrer">App Store ↗</a>
+              <a href={storeLinks(lang).googlePlay} target="_blank" rel="noreferrer">Google Play ↗</a>
+            </>
+          )}
         </nav>
         <nav aria-label={t.appName}>
           <p class="footer-head">{t.appName}</p>
@@ -155,7 +167,7 @@ const analyticsPathOnly = page === 'timing';
           <p class="footer-head">{t.footer.language}</p>
           {
             langs.map((l) => (
-              <a href={href(page, l, sub)} lang={l} hreflang={l} aria-current={l === lang ? 'page' : undefined}>
+              <a href={switchHref(l)} lang={l} hreflang={l} aria-current={l === lang ? 'page' : undefined}>
                 {LANG_LABEL[l]}
               </a>
             ))

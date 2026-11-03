@@ -137,10 +137,28 @@ export const PROFILES: Record<DrugId, Profile> = Object.fromEntries(
   }),
 ) as Record<DrugId, Profile>;
 
-/// Select order: the Korean market first, then the catalog's other profiles.
-export const DRUG_IDS: DrugId[] = ['concerta', 'medikinet', 'penid_ir', 'ritalin_ir', 'adderall_xr', 'vyvanse', 'ritalin_la'];
+/// Profiles the web tool shows. Ritalin IR is left out: its curve, windows and peak are the same as
+/// Penid's, and the web names a profile by ingredient and form, so the two would be one entry twice.
+export type ToolDrugId = Exclude<DrugId, 'ritalin_ir'>;
 
-// Own keys only: `'constructor' in PROFILES` is true, and a ?drug=constructor would then crash.
-export function isDrugId(value: unknown): value is DrugId {
-  return typeof value === 'string' && Object.hasOwn(PROFILES, value);
+/// Select order: the Korean market first, then the catalog's other profiles.
+export const DRUG_IDS: ToolDrugId[] = ['concerta', 'medikinet', 'penid_ir', 'adderall_xr', 'vyvanse', 'ritalin_la'];
+
+/// What a reader sees in the URL and the share card's file name: ingredient and form, never a
+/// product name. The catalog ids stay inside the code.
+export const DRUG_SLUGS: Record<ToolDrugId, string> = {
+  concerta: 'methylphenidate-oros',
+  medikinet: 'methylphenidate-mr',
+  penid_ir: 'methylphenidate-ir',
+  ritalin_la: 'methylphenidate-biphasic',
+  adderall_xr: 'amphetamine-salts-er',
+  vyvanse: 'lisdexamfetamine',
+};
+
+const BY_SLUG = new Map<string, ToolDrugId>(DRUG_IDS.map((id) => [DRUG_SLUGS[id], id]));
+
+/// The tool's drug for a URL slug (?drug=methylphenidate-oros), or null. A Map, so inherited
+/// object keys (?drug=constructor) are not slugs.
+export function drugFromSlug(value: unknown): ToolDrugId | null {
+  return typeof value === 'string' ? (BY_SLUG.get(value) ?? null) : null;
 }

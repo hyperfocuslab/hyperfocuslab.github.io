@@ -1150,12 +1150,20 @@ main > .section:first-child {
   gap: 14px;
 }
 
+/* Ingredient-and-form names are long and start alike, so the select takes the wider column, and
+   the whole row on phones, where a half-width field would show only "메틸페니데이트…". */
 .pk-controls {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
   gap: 12px;
   align-items: end;
   margin-top: clamp(20px, 4vw, 36px);
+}
+
+@media (max-width: 560px) {
+  .pk-controls {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 .pk-controls label {
@@ -1266,15 +1274,6 @@ main > .section:first-child {
   margin-top: 6px;
   color: var(--ink-2);
   font-variant-numeric: tabular-nums;
-}
-
-.pk-notify {
-  margin-top: 10px;
-  font-size: 0.9375rem;
-}
-
-.pk-notify a {
-  color: var(--ink);
 }
 
 /* The app's PKPhaseLegend: one line, first item at the left edge, last at the right, the space
@@ -1497,21 +1496,14 @@ main > .section:first-child {
   color: var(--ink-3);
 }
 
-.timing .p-closing .lead {
-  max-width: 34em;
+/* The one link to the app, at the foot of the page and away from the drug and the chart. */
+.pk-about {
+  margin-top: 16px;
+  font-size: 0.9375rem;
 }
 
-/* On phones the two store buttons stack, each full width. */
-@media (max-width: 480px) {
-  .pk-stores {
-    flex-direction: column;
-    align-items: stretch;
-    width: 100%;
-  }
-
-  .pk-stores .btn {
-    text-align: center;
-  }
+.pk-about a {
+  color: var(--ink-2);
 }
 
 @media (max-width: 640px) {

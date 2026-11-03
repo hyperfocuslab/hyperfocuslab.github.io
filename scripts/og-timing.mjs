@@ -1,4 +1,5 @@
-// Share cards for the effect timing tool: public/assets/og/timing-{lang}-{drug}.png (1200×630).
+// Share cards for the reference curve tool: public/assets/og/timing-{lang}-{slug}.png (1200×630),
+// one per drug that has a page in that language, named by the URL slug (ingredient and form).
 // Each card is the page's own chart (same render code, same CSS) screenshotted with headless
 // Chrome, so the card matches what the link opens. Run after changing the curve, the copy or
 // the chart styles: npm run og:timing
@@ -7,7 +8,7 @@ import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'nod
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { DEFAULT_MINUTES, DRUG_IDS, TIMING_LANGS, clockText, copy, render } from '../src/lib/timing.ts';
+import { DEFAULT_MINUTES, DRUG_SLUGS, TIMING_LANGS, clockText, copy, drugsFor, render } from '../src/lib/timing.ts';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const outDir = join(root, 'public/assets/og');
@@ -38,11 +39,13 @@ function page(lang, drug) {
 <style>
 ${css}
 html, body { width: 1200px; height: 630px; overflow: hidden; }
-.og { display: grid; grid-template-rows: auto auto 1fr auto; gap: 18px; width: 1200px; height: 630px; padding: 52px 64px 44px; }
-.og-top { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; }
-.og-top .label { margin-bottom: 10px; font-size: 0.9375rem; }
-.og-name { font-size: 3.5rem; font-weight: 700; line-height: 1; letter-spacing: -0.03em; }
-.og-dose { font-size: 1.25rem; color: var(--ink-2); font-variant-numeric: tabular-nums; padding-bottom: 6px; }
+.og { display: grid; grid-template-rows: auto auto auto 1fr auto auto; gap: 18px; width: 1200px; height: 630px; padding: 48px 64px 44px; }
+.og-top { display: flex; justify-content: space-between; align-items: baseline; gap: 24px; }
+.og-top .label { font-size: 0.9375rem; }
+/* Ingredient-and-form names run long (up to two lines in en and ja). They break at their spaces
+   and brackets only, so a Japanese name is not split inside a word. */
+.og-name { font-size: 2.75rem; font-weight: 700; line-height: 1.12; letter-spacing: -0.025em; text-wrap: balance; word-break: keep-all; }
+.og-dose { font-size: 1.125rem; color: var(--ink-2); font-variant-numeric: tabular-nums; }
 .og .pk-legend { margin-top: 6px; }
 .og .pk-legend-item { font-size: 1.25rem; }
 .og .pk-legend-range { font-size: 1.125rem; }
@@ -57,12 +60,10 @@ html, body { width: 1200px; height: 630px; overflow: hidden; }
 <body>
 <div class="og">
   <div class="og-top">
-    <div>
-      <p class="label">${t.label}</p>
-      <p class="og-name">${t.names[drug]}</p>
-    </div>
+    <p class="label">${t.label}</p>
     <p class="og-dose">${SUBTITLE[lang](clockText(lang, DEFAULT_MINUTES))}</p>
   </div>
+  <p class="og-name">${t.names[drug]}</p>
   <div class="pk-legend">${r.legend}</div>
   <div class="pk-chart">${r.chart}</div>
   <div class="pk-axis">${r.axis}</div>
@@ -76,9 +77,10 @@ mkdirSync(outDir, { recursive: true });
 const work = mkdtempSync(join(tmpdir(), 'og-timing-'));
 try {
   for (const lang of TIMING_LANGS) {
-    for (const drug of DRUG_IDS) {
-      const html = join(work, `${lang}-${drug}.html`);
-      const png = join(outDir, `timing-${lang}-${drug}.png`);
+    for (const drug of drugsFor(lang)) {
+      const slug = DRUG_SLUGS[drug];
+      const html = join(work, `${lang}-${slug}.html`);
+      const png = join(outDir, `timing-${lang}-${slug}.png`);
       writeFileSync(html, page(lang, drug));
       execFileSync(chrome, [
         '--headless=new',

@@ -1,19 +1,21 @@
 ---
-// The effect timing tool: one page per language, plus one per drug so each share link gets
-// its own card. The default state (dose at 08:00) is rendered at build; the browser re-renders
-// on every change. The drug is kept in the path (/ko/peakly/timing/concerta/); the dose time
-// goes only into the link the copy button makes (?t=08:00), never into the address bar, so the
-// site's analytics (Base.astro) sees the path and not the dose time. The curve itself is
+// The reference concentration curve: one page per language, plus one per drug so each share link
+// gets its own card. The default state (dose at 08:00) is rendered at build; the browser re-renders
+// on every change. The drug is kept in the path by its ingredient-and-form slug
+// (/ko/peakly/timing/methylphenidate-oros/); catalog ids never reach the HTML or the URL. The dose
+// time goes only into the link the copy button makes (?t=08:00), never into the address bar, so
+// the site's analytics (Base.astro) sees the path and not the dose time. The curve itself is
 // computed in the page and the inputs are not sent to any server.
+// Nothing about the app sits near the drug or the chart: one plain link at the foot of the page.
 import Base from '../layouts/Base.astro';
-import { href, storeLinks } from '../i18n';
-import type { DrugId } from '../lib/pk';
-import { DEFAULT_DRUG, DEFAULT_MINUTES, copy, describe, render, selectGroups, toHHMM, type TimingLang } from '../lib/timing';
+import { href } from '../i18n';
+import type { ToolDrugId } from '../lib/pk';
+import { DEFAULT_DRUG, DEFAULT_MINUTES, DRUG_SLUGS, copy, describe, langsFor, render, selectGroups, toHHMM, type TimingLang } from '../lib/timing';
 
 interface Props {
   lang: TimingLang;
   /** The drug page; the index page leaves it out and starts with the default drug. */
-  drug?: DrugId;
+  drug?: ToolDrugId;
 }
 const { lang, drug } = Astro.props;
 const t = copy[lang];
@@ -21,16 +23,20 @@ const current = drug ?? DEFAULT_DRUG;
 const first = render({ lang, drug: current, minutes: DEFAULT_MINUTES, nowHours: null });
 const title = t.title(t.names[current]);
 const description = describe(lang, current);
-const ogImage = `/assets/og/timing-${lang}-${current}.png`;
-// Installs from this tool are counted apart from the rest of the site (campaign timing-tool-{lang}).
-const { appStore, googlePlay } = storeLinks(lang, `timing-tool-${lang}`);
-// The notification line under the status is counted on its own (timing-tool-{lang}-notify).
-const notifyStores = storeLinks(lang, `timing-tool-${lang}-notify`);
+const ogImage = `/assets/og/timing-${lang}-${DRUG_SLUGS[current]}.png`;
 const groups = selectGroups(lang, current);
 ---
 
-<Base lang={lang} page="timing" sub={drug} title={title} description={description} ogImage={ogImage}>
-  <section class="section timing" id="timing" data-lang={lang} data-drug={current} data-base={href('timing', lang)}>
+<Base
+  lang={lang}
+  page="timing"
+  sub={drug && DRUG_SLUGS[drug]}
+  subLangs={drug && langsFor(drug)}
+  title={title}
+  description={description}
+  ogImage={ogImage}
+>
+  <section class="section timing" id="timing" data-lang={lang} data-drug={DRUG_SLUGS[current]} data-base={href('timing', lang)}>
     <div class="wrap">
       <header class="timing-head">
         <p class="label">{t.label}</p>
@@ -41,10 +47,10 @@ const groups = selectGroups(lang, current);
         <label>
           <span class="label">{t.drug}</span>
           <select name="drug" id="pk-drug">
-            {groups[0].ids.map((id) => <option value={id} selected={id === current}>{t.names[id]}</option>)}
+            {groups[0].ids.map((id) => <option value={DRUG_SLUGS[id]} selected={id === current}>{t.names[id]}</option>)}
             {groups[1].ids.length > 0 && (
               <optgroup label={groups[1].label}>
-                {groups[1].ids.map((id) => <option value={id} selected={id === current}>{t.names[id]}</option>)}
+                {groups[1].ids.map((id) => <option value={DRUG_SLUGS[id]} selected={id === current}>{t.names[id]}</option>)}
               </optgroup>
             )}
           </select>
@@ -61,9 +67,6 @@ const groups = selectGroups(lang, current);
           <div class="pk-status" id="pk-status" set:html={first.status} />
           <button type="button" class="pk-pill" id="pk-copy" data-copied={t.copied}>{t.copy}</button>
         </div>
-        <p class="pk-notify">
-          <a id="pk-notify" href="#pk-app" data-app-store={notifyStores.appStore} data-google-play={notifyStores.googlePlay}>{t.notify}</a>
-        </p>
         <div class="pk-legend" id="pk-legend" set:html={first.legend} />
         <div class="pk-chart" id="pk-chart" set:html={first.chart} />
         <div class="pk-axis" id="pk-axis" set:html={first.axis} />
@@ -75,24 +78,14 @@ const groups = selectGroups(lang, current);
       </section>
 
       <p class="pk-notice">{t.notice}</p>
-
-      <div class="p-closing" id="pk-app">
-        <img class="app-icon" src="/assets/peakly-icon.webp" alt="" width="72" height="72" loading="lazy" />
-        <h2 class="h2">{t.cta.title}</h2>
-        <p class="lead">{t.cta.body}</p>
-        <!-- Both stores carry the same weight: Android is a large share of Korean visitors. -->
-        <div class="actions pk-stores">
-          <a class="btn" href={appStore} target="_blank" rel="noreferrer">App Store ↗</a>
-          <a class="btn" href={googlePlay} target="_blank" rel="noreferrer">Google Play ↗</a>
-        </div>
-      </div>
+      <p class="pk-about"><a href={href('peakly', lang)}>{t.about}</a></p>
     </div>
   </section>
 </Base>
 
 <script>
-  import { isDrugId, type DrugId } from '../lib/pk';
-  import { DEFAULT_MINUTES, PROFILES, copy, hoursSinceDose, parseMinutes, render, toHHMM, type TimingLang } from '../lib/timing';
+  import type { ToolDrugId } from '../lib/pk';
+  import { DEFAULT_DRUG, DEFAULT_MINUTES, DRUG_SLUGS, PROFILES, copy, drugIn, hoursSinceDose, parseMinutes, render, toHHMM, type TimingLang } from '../lib/timing';
 
   const root = document.getElementById('timing')!;
   const lang = root.dataset.lang as TimingLang;
@@ -109,18 +102,20 @@ const groups = selectGroups(lang, current);
     sources: document.getElementById('pk-sources')!,
   };
 
-  // State comes from the page's drug, then the query (?drug=concerta&t=08:00) on top.
+  // State comes from the page's drug, then the query (?drug=methylphenidate-oros&t=08:00) on top.
+  // Slugs only: an unknown slug, or one this language has no page for (an en-only drug on a ko
+  // page), leaves the page's own drug, which on the index page is the default.
   const params = new URLSearchParams(location.search);
-  const queried = params.get('drug');
-  let drug: DrugId = isDrugId(queried) ? queried : (root.dataset.drug as DrugId);
+  let drug: ToolDrugId = drugIn(lang, params.get('drug')) ?? drugIn(lang, root.dataset.drug) ?? DEFAULT_DRUG;
   let minutes = parseMinutes(params.get('t')) ?? DEFAULT_MINUTES;
   // A drug outside this language's list (Ritalin LA via ?drug=) is added so the select agrees with the page.
-  if (![...drugSelect.options].some((o) => o.value === drug)) drugSelect.add(new Option(t.names[drug], drug));
-  drugSelect.value = drug;
+  const slug = () => DRUG_SLUGS[drug];
+  if (![...drugSelect.options].some((o) => o.value === slug())) drugSelect.add(new Option(t.names[drug], slug()));
+  drugSelect.value = slug();
   timeInput.value = toHHMM(minutes);
 
   // The dose time travels only inside this link, not in the address bar.
-  const shareUrl = () => `${location.origin}${base}${drug}/?t=${toHHMM(minutes)}`;
+  const shareUrl = () => `${location.origin}${base}${slug()}/?t=${toHHMM(minutes)}`;
 
   function draw() {
     const r = render({ lang, drug, minutes, nowHours: hoursSinceDose(new Date(), minutes, PROFILES[drug].chartEndHours) });
@@ -147,12 +142,12 @@ const groups = selectGroups(lang, current);
   function update(fromUser: boolean) {
     draw();
     // Only the drug goes into the URL, and only when it changed.
-    const path = `${base}${drug}/`;
+    const path = `${base}${slug()}/`;
     if (fromUser && location.pathname !== path) history.replaceState(null, '', path);
   }
 
   drugSelect.addEventListener('change', () => {
-    if (isDrugId(drugSelect.value)) drug = drugSelect.value;
+    drug = drugIn(lang, drugSelect.value) ?? drug;
     update(true);
   });
   timeInput.addEventListener('change', () => {
@@ -178,18 +173,6 @@ const groups = selectGroups(lang, current);
     copyButton.textContent = copyButton.dataset.copied ?? label;
     setTimeout(() => (copyButton.textContent = label), 1800);
   });
-
-  // On a phone the notification line opens that phone's store; elsewhere it scrolls to both buttons.
-  // iPadOS reports itself as a Mac, so a touch screen on "Macintosh" counts as iOS.
-  const notify = document.getElementById('pk-notify') as HTMLAnchorElement;
-  const ua = navigator.userAgent;
-  const ios = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
-  const store = /Android/i.test(ua) ? notify.dataset.googlePlay : ios ? notify.dataset.appStore : undefined;
-  if (store) {
-    notify.href = store;
-    notify.target = '_blank';
-    notify.rel = 'noreferrer';
-  }
 
   update(false);
   // The marker follows the clock.

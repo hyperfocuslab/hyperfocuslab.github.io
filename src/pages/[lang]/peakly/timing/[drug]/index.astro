@@ -1,14 +1,15 @@
 ---
 import Timing from '../../../../../components/Timing.astro';
-import { DRUG_IDS, type DrugId } from '../../../../../lib/pk';
-import { TIMING_LANGS, type TimingLang } from '../../../../../lib/timing';
+import type { ToolDrugId } from '../../../../../lib/pk';
+import { DRUG_SLUGS, TIMING_LANGS, drugsFor, type TimingLang } from '../../../../../lib/timing';
 
-// One page per drug so a shared link previews that drug's curve.
+// One page per drug so a shared link previews that drug's curve. The path carries the
+// ingredient-and-form slug (/en/peakly/timing/lisdexamfetamine/); each language has its own list.
 export function getStaticPaths() {
-  return TIMING_LANGS.flatMap((lang) => DRUG_IDS.map((drug) => ({ params: { lang, drug } })));
+  return TIMING_LANGS.flatMap((lang) => drugsFor(lang).map((drug) => ({ params: { lang, drug: DRUG_SLUGS[drug] }, props: { drug } })));
 }
 const lang = Astro.params.lang as TimingLang;
-const drug = Astro.params.drug as DrugId;
+const { drug } = Astro.props as { drug: ToolDrugId };
 ---
 
 <Timing lang={lang} drug={drug} />

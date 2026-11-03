@@ -1,14 +1,19 @@
 // Run: npm test. Clock text, phase naming and the rendered HTML of the timing tool.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { MODEL_VERSION, PROFILES } from './pk.ts';
+import { MODEL_VERSION, PROFILES, type DrugId } from './pk.ts';
 import {
+  DEFAULT_MINUTES,
+  DRUG_IDS,
   PHASE_COLORS,
+  TIMING_LANGS,
   clockText,
   copy,
   describe,
+  drugIn,
+  drugsFor,
   hoursSinceDose,
-  objectParticle,
+  langsFor,
   parseMinutes,
   phaseAt,
   type PhaseKey,
@@ -57,34 +62,65 @@ test('tickOffsets land on whole clock hours', () => {
   assert.ok(axis.includes('class="pk-tick start"'), 'first label is aligned inward');
 });
 
-test('objectParticle follows the final sound', () => {
-  assert.equal(objectParticle('콘서타'), '를');
-  assert.equal(objectParticle('메디키넷'), '을');
-  assert.equal(objectParticle('리탈린'), '을');
-  assert.equal(objectParticle('애더럴 XR'), '을');
-  assert.equal(objectParticle('리탈린 LA'), '를');
-  assert.equal(objectParticle('바이반스'), '를');
-  assert.ok(describe('ko', 'medikinet').includes('메디키넷을 먹으면'));
-  assert.ok(describe('ko', 'adderall_xr').includes('애더럴 XR을 먹으면'));
-  assert.ok(describe('ko', 'concerta').includes('콘서타를 먹으면'));
+test('page titles, descriptions and headings follow the label wording', () => {
+  assert.equal(copy.ko.title(copy.ko.names.concerta), '메틸페니데이트 OROS 서방정 혈중 농도 흐름 | Hyperfocus Lab');
+  assert.equal(copy.en.title(copy.en.names.vyvanse), 'Lisdexamfetamine capsule: blood concentration over time | Hyperfocus Lab');
+  assert.equal(copy.ja.title(copy.ja.names.concerta), 'メチルフェニデート OROS 徐放錠の血中濃度の推移 | Hyperfocus Lab');
+  assert.equal(
+    describe('ko', 'concerta'),
+    '오전 8:00에 복용하면 메틸페니데이트 OROS 서방정의 설명서 기준 최고 농도 구간은 오후 2:00~6:00입니다. 복용 시각을 바꿔 참고 곡선을 볼 수 있습니다.',
+  );
+  assert.equal(
+    describe('en', 'concerta'),
+    "Taken at 8:00 AM, the label's peak concentration window for Methylphenidate OROS extended-release tablet is 2:00–6:00 PM. Change the dose time to see the reference curve.",
+  );
+  assert.equal(
+    describe('ja', 'concerta'),
+    '8:00に服用した場合、メチルフェニデート OROS 徐放錠の製品情報に基づく最高濃度の区間は14:00~18:00です。服用時刻を変えて参考曲線を確認できます。',
+  );
+  assert.deepEqual([copy.ko.h1, copy.en.h1, copy.ja.h1], ['설명서 기준 평균 혈중 농도 흐름', 'Mean blood concentration over time, per the label', '製品情報に基づく平均血中濃度の推移']);
+  assert.deepEqual([copy.ko.drug, copy.en.drug, copy.ja.drug], ['성분·제형', 'Ingredient and form', '成分・剤形']);
+  for (const lang of TIMING_LANGS) assert.ok(!/Peakly|피클리|ピークリー/.test(copy[lang].title('X')), `${lang} title names the app`);
+});
+
+test('each language has its own drug pages: ko only the drugs approved in Korea', () => {
+  assert.deepEqual(drugsFor('ko'), ['concerta', 'medikinet', 'penid_ir']);
+  assert.deepEqual(drugsFor('en'), ['concerta', 'medikinet', 'penid_ir', 'adderall_xr', 'vyvanse', 'ritalin_la']);
+  assert.deepEqual(drugsFor('ja'), drugsFor('en'));
+  assert.deepEqual(langsFor('concerta'), ['ko', 'en', 'ja']);
+  assert.deepEqual(langsFor('penid_ir'), ['ko', 'en', 'ja']);
+  assert.deepEqual(langsFor('vyvanse'), ['en', 'ja']);
+  assert.deepEqual(langsFor('ritalin_la'), ['en', 'ja']);
+  // A URL slug resolves only where the language has that page; catalog ids are not slugs.
+  assert.equal(drugIn('ko', 'methylphenidate-oros'), 'concerta');
+  assert.equal(drugIn('ko', 'methylphenidate-ir'), 'penid_ir');
+  assert.equal(drugIn('ko', 'lisdexamfetamine'), null);
+  assert.equal(drugIn('ko', 'amphetamine-salts-er'), null);
+  assert.equal(drugIn('en', 'lisdexamfetamine'), 'vyvanse');
+  assert.equal(drugIn('ja', 'methylphenidate-biphasic'), 'ritalin_la');
+  for (const bad of ['concerta', 'ritalin_ir', 'constructor', '', null]) assert.equal(drugIn('en', bad), null, String(bad));
+  assert.deepEqual(
+    [copy.ko.names.concerta, copy.ko.names.medikinet, copy.ko.names.penid_ir],
+    ['메틸페니데이트 OROS 서방정', '메틸페니데이트 속방·장용 펠렛 캡슐', '메틸페니데이트 속방정'],
+  );
 });
 
 test('selectGroups lists the home market first and leaves Ritalin LA out', () => {
-  assert.deepEqual(selectGroups('ko').map((g) => g.ids), [
-    ['concerta', 'medikinet', 'penid_ir'],
-    ['ritalin_ir', 'adderall_xr', 'vyvanse'],
-  ]);
+  // ko lists Korean drugs only, so there is no second group to show.
+  assert.deepEqual(selectGroups('ko').map((g) => g.ids), [['concerta', 'medikinet', 'penid_ir'], []]);
   assert.deepEqual(selectGroups('ja').map((g) => g.ids), [
     ['concerta', 'vyvanse'],
-    ['medikinet', 'penid_ir', 'ritalin_ir', 'adderall_xr'],
+    ['medikinet', 'penid_ir', 'adderall_xr'],
   ]);
+  // The US sells methylphenidate immediate-release tablets, so that entry is home in en.
   assert.deepEqual(selectGroups('en').map((g) => g.ids), [
-    ['concerta', 'ritalin_ir', 'adderall_xr', 'vyvanse'],
-    ['medikinet', 'penid_ir'],
+    ['concerta', 'penid_ir', 'adderall_xr', 'vyvanse'],
+    ['medikinet'],
   ]);
-  assert.equal(selectGroups('ko')[1].label, '국내 미출시');
-  // The Ritalin LA page itself still lists its own drug.
-  assert.ok(selectGroups('ko', 'ritalin_la')[1].ids.includes('ritalin_la'));
+  assert.equal(selectGroups('en')[1].label, 'Not sold in the US');
+  // The Ritalin LA page itself still lists its own drug; ko has no such page.
+  assert.ok(selectGroups('en', 'ritalin_la')[1].ids.includes('ritalin_la'));
+  assert.deepEqual(selectGroups('ko', 'ritalin_la').flatMap((g) => g.ids), ['concerta', 'medikinet', 'penid_ir']);
 });
 
 test('parseMinutes accepts HH:MM only', () => {
@@ -136,131 +172,131 @@ function expectRows(drug: keyof typeof PROFILES, rows: Row[], lang: 'ko' | 'en' 
 test('phaseAt: Concerta follows the app (windows 0.5–1.5, 6–10, release 10–12, valley midpoint 3.75)', () => {
   expectRows('concerta', [
     [-1, '복용 전', null],
-    [0, '상승 중', 0],
-    [0.25, '상승 중', 0],
-    [0.5, '1차 체감', 0],
-    [1.5, '1차 체감', 0],
+    [0, '농도 상승 중', 0],
+    [0.25, '농도 상승 중', 0],
+    [0.5, '1차 구간', 0],
+    [1.5, '1차 구간', 0],
     [1.51, '중간 구간', 0],
     [2, '중간 구간', 0],
     [3.74, '중간 구간', 0],
     [3.75, '2차 상승', 0],
     [5, '2차 상승', 0],
     [5.99, '2차 상승', 0],
-    [6, '메인 피크', 1],
-    [8, '메인 피크', 1],
-    [10 - 1 / 3600, '메인 피크', 1],
+    [6, '최고 농도 구간', 1],
+    [8, '최고 농도 구간', 1],
+    [10 - 1 / 3600, '최고 농도 구간', 1],
     // The app's own test: orange peak until 10 h, then the gray decline from exactly 10 h.
-    [10, '감소 구간', 2],
-    [11, '감소 구간', 2],
-    [12, '감소 구간', 2],
-    [12.01, '잔효', null],
-    [13, '잔효', null],
-    [17.9, '잔효', null],
-    [18, '잔효', null],
-    [30, '잔효', null],
+    [10, '농도 감소 구간', 2],
+    [11, '농도 감소 구간', 2],
+    [12, '농도 감소 구간', 2],
+    [12.01, '후반 구간', null],
+    [13, '후반 구간', null],
+    [17.9, '후반 구간', null],
+    [18, '후반 구간', null],
+    [30, '후반 구간', null],
   ]);
-  expectRows('concerta', [[2, 'Middle window', 0], [5, 'Second rise', 0], [8, 'Main peak', 1], [11, 'Declining phase', 2], [13, 'Residual effect', null], [0.25, 'Rising', 0], [1, 'Initial effect', 0]], 'en');
-  expectRows('concerta', [[2, '中間区間', 0], [5, '二次上昇', 0], [8, 'メインピーク', 1], [11, '減少段階', 2], [13, '残存効果', null], [1, '一次体感', 0]], 'ja');
+  expectRows('concerta', [[2, 'Middle window', 0], [5, 'Second rise', 0], [8, 'Peak concentration window', 1], [11, 'Concentration decline window', 2], [13, 'Late phase', null], [0.25, 'Concentration rising', 0], [1, 'First window', 0]], 'en');
+  expectRows('concerta', [[2, '中間区間', 0], [5, '二次上昇', 0], [8, '最高濃度の区間', 1], [11, '濃度減少の区間', 2], [13, '後半の区間', null], [1, '一次区間', 0]], 'ja');
 });
 
 test('phaseAt: Medikinet follows the app (windows 2–4, 5–6, release 6–7, valley midpoint 4.5)', () => {
   expectRows('medikinet', [
     [-0.5, '복용 전', null],
-    [1, '상승 중', 0],
+    [1, '농도 상승 중', 0],
     [2, '최대 농도', 0],
     [4, '최대 농도', 0],
     [4.2, '중간 구간', 0],
     [4.49, '중간 구간', 0],
     [4.5, '2차 상승', 0],
     [4.99, '2차 상승', 0],
-    [5, '2차 피크', 1],
-    [6 - 1 / 3600, '2차 피크', 1],
-    [6, '감소 구간', 2],
-    [6.5, '감소 구간', 2],
-    [7, '감소 구간', 2],
-    [7.01, '잔효', null],
-    [12, '잔효', null],
+    [5, '2차 최고 농도', 1],
+    [6 - 1 / 3600, '2차 최고 농도', 1],
+    [6, '농도 감소 구간', 2],
+    [6.5, '농도 감소 구간', 2],
+    [7, '농도 감소 구간', 2],
+    [7.01, '후반 구간', null],
+    [12, '후반 구간', null],
   ]);
-  expectRows('medikinet', [[3, 'Peak', 0], [5.5, 'Second peak', 1], [6.5, 'Declining phase', 2], [8, 'Residual effect', null]], 'en');
-  expectRows('medikinet', [[3, '最大濃度', 0], [5.5, '二次ピーク', 1], [4.2, '中間区間', 0]], 'ja');
+  expectRows('medikinet', [[3, 'Peak concentration', 0], [5.5, 'Second peak concentration', 1], [6.5, 'Concentration decline window', 2], [8, 'Late phase', null]], 'en');
+  expectRows('medikinet', [[3, '最大濃度', 0], [5.5, '二次最高濃度', 1], [4.2, '中間区間', 0]], 'ja');
 });
 
 test('phaseAt: Adderall XR follows the app (early 0.5–1.5, peak section 5.2–7.7, ends at 12)', () => {
   expectRows('adderall_xr', [
-    [0, '작용 시작', 0],
-    [0.49, '작용 시작', 0],
-    [0.5, '초기 구간', 0],
-    [1.5, '초기 구간', 0],
-    [1.6, '상승 구간', 0],
-    [5.19, '상승 구간', 0],
-    [5.2, '최대 효과 구간', 1],
-    [7, '최대 효과 구간', 1],
-    [7.7, '최대 효과 구간', 1],
-    [7.71, '감소 구간', 2],
-    [10, '감소 구간', 2],
-    [11.99, '감소 구간', 2],
+    [0, '농도 상승 중', 0],
+    [0.49, '농도 상승 중', 0],
+    [0.5, '1차 구간', 0],
+    [1.5, '1차 구간', 0],
+    [1.6, '농도 상승 중', 0],
+    [5.19, '농도 상승 중', 0],
+    [5.2, '최고 농도 구간', 1],
+    [7, '최고 농도 구간', 1],
+    [7.7, '최고 농도 구간', 1],
+    [7.71, '농도 감소 중', 2],
+    [10, '농도 감소 중', 2],
+    [11.99, '농도 감소 중', 2],
     // No release-end phase and no "residual": after the last window the app says the final phase.
-    [12, '종료 구간', null],
-    [20, '종료 구간', null],
+    [12, '농도 감소 구간', null],
+    [20, '농도 감소 구간', null],
   ]);
-  expectRows('adderall_xr', [[0.2, 'Onset', 0], [1, 'Early phase', 0], [3, 'Rising phase', 0], [6, 'Peak effect', 1], [9, 'Declining phase', 2], [12, 'Final phase', null]], 'en');
-  expectRows('adderall_xr', [[0.2, '作用開始', 0], [6, '最大効果区間', 1], [15, '終了段階', null]], 'ja');
+  expectRows('adderall_xr', [[0.2, 'Concentration rising', 0], [1, 'First window', 0], [3, 'Concentration rising', 0], [6, 'Peak concentration window', 1], [9, 'Concentration falling', 2], [12, 'Concentration decline window', null]], 'en');
+  expectRows('adderall_xr', [[0.2, '濃度上昇中', 0], [6, '最高濃度の区間', 1], [15, '濃度減少の区間', null]], 'ja');
 });
 
 test('phaseAt: Vyvanse follows the app (early 1–2, peak section 3.8–4.7, ending 12–14)', () => {
   expectRows('vyvanse', [
-    [0.5, '작용 시작', 0],
-    [1, '초기 구간', 0],
-    [2, '초기 구간', 0],
-    [2.5, '상승 구간', 0],
-    [3.79, '상승 구간', 0],
-    [3.8, '최대 효과 구간', 1],
-    [4.7, '최대 효과 구간', 1],
-    [5, '감소 구간', 2],
-    [11.99, '감소 구간', 2],
-    [12, '종료 구간', 2],
-    [14, '종료 구간', 2],
-    [14.01, '잔효', null],
-    [20, '잔효', null],
+    [0.5, '농도 상승 중', 0],
+    [1, '1차 구간', 0],
+    [2, '1차 구간', 0],
+    [2.5, '농도 상승 중', 0],
+    [3.79, '농도 상승 중', 0],
+    [3.8, '최고 농도 구간', 1],
+    [4.7, '최고 농도 구간', 1],
+    [5, '농도 감소 중', 2],
+    [11.99, '농도 감소 중', 2],
+    [12, '농도 감소 구간', 2],
+    [14, '농도 감소 구간', 2],
+    [14.01, '후반 구간', null],
+    [20, '후반 구간', null],
   ]);
-  expectRows('vyvanse', [[4, 'Peak effect', 1], [13, 'Final phase', 2], [15, 'Residual effect', null]], 'en');
-  expectRows('vyvanse', [[13, '終了段階', 2], [15, '残存効果', null]], 'ja');
+  expectRows('vyvanse', [[4, 'Peak concentration window', 1], [13, 'Concentration decline window', 2], [15, 'Late phase', null]], 'en');
+  expectRows('vyvanse', [[13, '濃度減少の区間', 2], [15, '後半の区間', null]], 'ja');
 });
 
 test('phaseAt: Penid and Ritalin share the short-profile windows (0.25–0.75, 1.5–2.5, 3–4)', () => {
   for (const drug of ['penid_ir', 'ritalin_ir'] as const) {
     expectRows(drug, [
-      [0.1, '작용 시작', 0],
-      [0.25, '초기 구간', 0],
-      [0.75, '초기 구간', 0],
-      [1, '상승 구간', 0],
-      [1.5, '최대 효과 구간', 1],
-      [2.5, '최대 효과 구간', 1],
-      [2.8, '감소 구간', 2],
-      [3, '종료 구간', 2],
-      [4, '종료 구간', 2],
-      [4.5, '잔효', null],
-      [9, '잔효', null],
+      [0.1, '농도 상승 중', 0],
+      [0.25, '1차 구간', 0],
+      [0.75, '1차 구간', 0],
+      [1, '농도 상승 중', 0],
+      [1.5, '최고 농도 구간', 1],
+      [2.5, '최고 농도 구간', 1],
+      [2.8, '농도 감소 중', 2],
+      [3, '농도 감소 구간', 2],
+      [4, '농도 감소 구간', 2],
+      [4.5, '후반 구간', null],
+      [9, '후반 구간', null],
     ]);
   }
 });
 
 test('phaseAt: Ritalin LA has a dip between its two peaks (1.5–2.5, 5–6, ending 7–8)', () => {
   expectRows('ritalin_la', [
-    [1, '작용 시작', 0],
-    [1.5, '1차 피크', 0],
-    [2.5, '1차 피크', 0],
+    [1, '농도 상승 중', 0],
+    [1.5, '1차 최고 농도', 0],
+    [2.5, '1차 최고 농도', 0],
     [3, '중간 구간', 0],
     [4.99, '중간 구간', 0],
-    [5, '2차 피크', 1],
-    [6, '2차 피크', 1],
-    [6.5, '감소 구간', 2],
-    [7, '종료 구간', 2],
-    [8, '종료 구간', 2],
-    [9, '잔효', null],
+    [5, '2차 최고 농도', 1],
+    [6, '2차 최고 농도', 1],
+    [6.5, '농도 감소 중', 2],
+    [7, '농도 감소 구간', 2],
+    [8, '농도 감소 구간', 2],
+    [9, '후반 구간', null],
   ]);
-  expectRows('ritalin_la', [[2, 'First peak', 0], [4, 'Middle window', 0], [5.5, 'Second peak', 1], [7.5, 'Final phase', 2], [10, 'Residual effect', null]], 'en');
-  expectRows('ritalin_la', [[2, '一次ピーク', 0], [4, '中間区間', 0], [5.5, '二次ピーク', 1]], 'ja');
+  expectRows('ritalin_la', [[2, 'First peak concentration', 0], [4, 'Middle window', 0], [5.5, 'Second peak concentration', 1], [7.5, 'Concentration decline window', 2], [10, 'Late phase', null]], 'en');
+  expectRows('ritalin_la', [[2, '一次最高濃度', 0], [4, '中間区間', 0], [5.5, '二次最高濃度', 1]], 'ja');
 });
 
 test('phaseAt: keys only move forward, every language has words, colour follows the key', () => {
@@ -287,20 +323,20 @@ test('phaseAt: keys only move forward, every language has words, colour follows 
 });
 
 test('the status title and the now dot take the app\'s status colour', () => {
-  const title = (drug: keyof typeof PROFILES, nowHours: number | null) => render({ lang: 'ko', drug, minutes: 480, nowHours }).status.split('</p>')[0];
-  const dot = (drug: keyof typeof PROFILES, nowHours: number) => /<span class="pk-now-dot" style="([^"]*)">/.exec(render({ lang: 'ko', drug, minutes: 480, nowHours }).chart)?.[1];
+  const title = (drug: (typeof DRUG_IDS)[number], nowHours: number | null) => render({ lang: 'ko', drug, minutes: 480, nowHours }).status.split('</p>')[0];
+  const dot = (drug: (typeof DRUG_IDS)[number], nowHours: number) => /<span class="pk-now-dot" style="([^"]*)">/.exec(render({ lang: 'ko', drug, minutes: 480, nowHours }).chart)?.[1];
   const [first, main, decline] = PHASE_COLORS;
   // Concerta: valley and rising share the first colour, the main peak is the second, the decline the third.
-  assert.ok(title('concerta', 0.25).includes(`style="color:${first}">상승 중`));
+  assert.ok(title('concerta', 0.25).includes(`style="color:${first}">농도 상승 중`));
   assert.ok(title('concerta', 2).includes(`style="color:${first}">중간 구간`));
   assert.ok(title('concerta', 5).includes(`style="color:${first}">2차 상승`));
-  assert.ok(title('concerta', 8).includes(`style="color:${main}">메인 피크`));
-  assert.ok(title('concerta', 11).includes(`style="color:${decline}">감소 구간`));
+  assert.ok(title('concerta', 8).includes(`style="color:${main}">최고 농도 구간`));
+  assert.ok(title('concerta', 11).includes(`style="color:${decline}">농도 감소 구간`));
   // Finished: the app's grey (DS.Palette.Phase.after). Before the dose and at build time: no colour.
-  assert.equal(title('concerta', 13), '<p class="pk-phase" style="color:#8E8E93">잔효');
-  assert.equal(title('adderall_xr', 14), '<p class="pk-phase" style="color:#8E8E93">종료 구간');
+  assert.equal(title('concerta', 13), '<p class="pk-phase" style="color:#8E8E93">후반 구간');
+  assert.equal(title('adderall_xr', 14), '<p class="pk-phase" style="color:#8E8E93">농도 감소 구간');
   assert.equal(title('concerta', -1), '<p class="pk-phase">복용 전');
-  assert.equal(title('concerta', null), '<p class="pk-phase">콘서타');
+  assert.equal(title('concerta', null), '<p class="pk-phase">메틸페니데이트 OROS 서방정');
   // The dot has the same colour inline; the left/top part is unchanged.
   assert.ok(dot('concerta', 2)?.endsWith(`;background:${first}`));
   assert.ok(dot('concerta', 8)?.endsWith(`;background:${main}`));
@@ -319,7 +355,7 @@ test('the middle window follows the app chart: peak section for shared-chart pro
   assert.deepEqual(mid('vyvanse'), [3.8, 4.7]); // editing default 3.55–4.45
   assert.deepEqual(mid('concerta'), [6, 10]); // its own chart keeps the editable window
   assert.deepEqual(mid('medikinet'), [5, 6]);
-  const legend = (drug: keyof typeof PROFILES) => render({ lang: 'ko', drug, minutes: 480, nowHours: null }).legend;
+  const legend = (drug: (typeof DRUG_IDS)[number]) => render({ lang: 'ko', drug, minutes: 480, nowHours: null }).legend;
   assert.ok(legend('adderall_xr').includes('오후 1:12~3:42'));
   assert.ok(legend('adderall_xr').includes('농도 상승'));
   assert.ok(legend('vyvanse').includes('오전 11:48~오후 12:42'));
@@ -327,9 +363,9 @@ test('the middle window follows the app chart: peak section for shared-chart pro
   assert.ok(describe('ko', 'adderall_xr').includes('오후 1:12~3:42'));
 });
 
-test('render produces the chart, legend and sources for every drug and language', () => {
-  for (const lang of ['ko', 'en', 'ja'] as const) {
-    for (const drug of Object.keys(PROFILES) as (keyof typeof PROFILES)[]) {
+test('render produces the chart, legend and sources for every page', () => {
+  for (const lang of TIMING_LANGS) {
+    for (const drug of drugsFor(lang)) {
       const r = render({ lang, drug, minutes: 480, nowHours: 7 });
       assert.ok(r.chart.startsWith('<svg'), `${lang} ${drug} chart`);
       assert.ok(!r.chart.includes('NaN'), `${lang} ${drug} chart has NaN`);
@@ -337,29 +373,108 @@ test('render produces the chart, legend and sources for every drug and language'
       assert.equal((r.legend.match(/pk-legend-item/g) ?? []).length, 3, `${lang} ${drug} legend`);
       assert.equal((r.axis.match(/pk-tick/g) ?? []).length, PROFILES[drug].chartEndHours / 4 + 1, `${lang} ${drug} axis`);
       assert.ok(!r.sources.includes(`<dd>${PROFILES[drug].referenceDoseMg} mg</dd>`), `${lang} ${drug} shows the reference dose row`);
-      // Attribute values are escaped, so a URL with a query shows up with &amp;.
-      for (const s of PROFILES[drug].sources) assert.ok(r.sources.includes(s.url.replace(/&/g, '&amp;')), `${lang} ${drug} source ${s.url}`);
-      // Readers see link text in their language, one label per catalog source, and no internal notes.
-      assert.equal(copy[lang].sourceLabels[drug].length, PROFILES[drug].sources.length, `${lang} ${drug} source labels`);
-      for (const label of copy[lang].sourceLabels[drug]) assert.ok(r.sources.includes(label), `${lang} ${drug} label ${label}`);
+      // The links are the language's own list: a label in the reader's language and an https URL each.
+      const links = copy[lang].sources[drug];
+      assert.ok(links.length > 0, `${lang} ${drug} has no sources`);
+      for (const s of links) {
+        assert.ok(s.label.length > 0, `${lang} ${drug} empty label`);
+        assert.match(s.url, /^https:\/\//, `${lang} ${drug} url`);
+        // Attribute values are escaped, so a URL with a query shows up with &amp;.
+        assert.ok(r.sources.includes(s.url.replace(/&/g, '&amp;')), `${lang} ${drug} source ${s.url}`);
+        assert.ok(r.sources.includes(`${s.label} ↗</a>`), `${lang} ${drug} label ${s.label}`);
+      }
+      assert.equal((r.sources.match(/<a /g) ?? []).length, links.length, `${lang} ${drug} link count`);
       for (const s of PROFILES[drug].sources) assert.ok(!r.sources.includes(s.title), `${lang} ${drug} leaks "${s.title}"`);
       assert.ok(!r.sources.includes(MODEL_VERSION), `${lang} ${drug} shows the model version`);
       assert.ok(!/Tmax|Peakly reference|기존 앱|既存アプリ/.test(r.sources), `${lang} ${drug} internal wording`);
     }
   }
-  // No conditions row; a schematic profile says so once, on its formulation line.
-  const sources = (drug: keyof typeof PROFILES) => render({ lang: 'ko', drug, minutes: 480, nowHours: null }).sources;
-  for (const drug of Object.keys(PROFILES) as (keyof typeof PROFILES)[]) assert.ok(!sources(drug).includes('<dt>조건</dt>'), drug);
-  assert.ok(sources('vyvanse').includes('실측이 아닌 개략 곡선'));
-  assert.ok(!sources('concerta').includes('개략'));
-  assert.ok(!sources('adderall_xr').includes('개략'));
+  // en and ja link the catalog's sources; ko has its own list so it can move to MFDS pages.
+  for (const lang of ['en', 'ja'] as const) {
+    for (const drug of DRUG_IDS) assert.deepEqual(copy[lang].sources[drug].map((s) => s.url), PROFILES[drug].sources.map((s) => s.url), `${lang} ${drug}`);
+  }
+  // No conditions row. The grey note says what the curve is measured as and whether it is
+  // schematic; a name that already says it all has no note.
+  const sources = (drug: (typeof DRUG_IDS)[number]) => render({ lang: 'ko', drug, minutes: 480, nowHours: null }).sources;
+  for (const drug of DRUG_IDS) assert.ok(!sources(drug).includes('<dt>조건</dt>'), drug);
+  assert.ok(sources('vyvanse').includes('<span class="muted">활성체 d-암페타민 기준 · 실측이 아닌 개략 곡선</span>'));
+  assert.ok(sources('adderall_xr').includes('<span class="muted">d-암페타민 기준</span>'));
+  assert.ok(sources('penid_ir').includes('<span class="muted">실측이 아닌 개략 곡선</span>'));
+  assert.equal(sources('concerta').split('</p>')[0], '<p class="pk-drug-name">메틸페니데이트 OROS 서방정');
+  assert.equal(sources('medikinet').split('</p>')[0], '<p class="pk-drug-name">메틸페니데이트 속방·장용 펠렛 캡슐');
+  // Korean pages cite the domestic approval first, then the label the times come from.
+  for (const drug of ['concerta', 'medikinet', 'penid_ir'] as const) {
+    const links = [...sources(drug).matchAll(/<a href="([^"]+)"[^>]*>([^<]+)<\/a>/g)];
+    assert.ok(links[0][1].startsWith('https://nedrug.mfds.go.kr/'), drug);
+    assert.equal(links[0][2], '국내 허가사항 (식약처 의약품안전나라) ↗', drug);
+    assert.ok(links.length >= 2 && !links[1][1].includes('mfds'), `${drug} keeps a label with the times`);
+  }
+  assert.ok(!sources('penid_ir').includes('환인'));
   // Build time has no clock: the header shows the drug, not a phase, and no marker.
   const first = render({ lang: 'ko', drug: 'concerta', minutes: 480, nowHours: null });
-  assert.ok(first.status.includes('콘서타'));
+  assert.ok(first.status.includes('메틸페니데이트 OROS 서방정'));
   assert.ok(!first.chart.includes('pk-now-dot'));
   // Beyond the chart the marker is hidden but the status still names the phase.
   const late = render({ lang: 'ko', drug: 'adderall_xr', minutes: 480, nowHours: 20 });
   assert.ok(!late.chart.includes('pk-now-dot'));
-  assert.ok(late.status.includes('종료 구간'));
-  assert.ok(render({ lang: 'ko', drug: 'vyvanse', minutes: 480, nowHours: 20 }).status.includes('잔효'));
+  assert.ok(late.status.includes('농도 감소 구간'));
+  assert.ok(render({ lang: 'ko', drug: 'vyvanse', minutes: 480, nowHours: 20 }).status.includes('후반 구간'));
+});
+
+// Product names and effect words the page must never show (the label's concentration data only).
+const PRODUCT_NAMES = [
+  '콘서타', '메디키넷', '페니드', '리탈린', '애더럴', '바이반스',
+  'Concerta', 'Medikinet', 'Penid', 'Ritalin', 'Adderall', 'Vyvanse',
+  'コンサータ', 'メディキネット', 'リタリン', 'アデロール', 'ビバンセ',
+];
+const EFFECT_WORDS = ['약효', '효과', '체감', '잔효', '작용', '집중', 'effect', 'onset', 'wearing off', 'focus', '作用', '体感', '効果', '残存', 'ADHD'];
+// Latin words match at a word start (so "effects" counts but the company name "Hyperfocus" does
+// not); Korean and Japanese words anywhere.
+const BANNED = [...PRODUCT_NAMES, ...EFFECT_WORDS].map((word) => ({
+  word,
+  re: /^[A-Za-z ]+$/.test(word) ? new RegExp(`(^|[^a-z])${word}`, 'i') : new RegExp(word),
+}));
+function assertClean(text: string, where: string) {
+  for (const { word, re } of BANNED) assert.ok(!re.test(text), `${where} has "${word}": ${text}`);
+}
+
+/// Every string in the copy, with each function called on sample arguments.
+function strings(value: unknown, path: string, out: [string, string][]) {
+  if (typeof value === 'string') out.push([path, value]);
+  else if (typeof value === 'function') out.push([path, String(value('X', 'Y', 'Z'))]);
+  else if (value && typeof value === 'object') for (const [k, v] of Object.entries(value)) strings(v, `${path}.${k}`, out);
+  return out;
+}
+
+test('the copy names no product and no effect, in every language', () => {
+  for (const lang of TIMING_LANGS) {
+    const all = strings(copy[lang], lang, []);
+    assert.ok(all.length > 50, `${lang} walked too little`);
+    for (const [path, text] of all) assertClean(text, path);
+  }
+});
+
+test('rendered pages name no product and no effect, at every hour', () => {
+  for (const lang of TIMING_LANGS) {
+    for (const drug of drugsFor(lang)) {
+      assertClean(describe(lang, drug), `${lang} ${drug} description`);
+      assertClean(copy[lang].title(copy[lang].names[drug]), `${lang} ${drug} title`);
+      for (const nowHours of [null, -1, ...Array.from({ length: 81 }, (_, i) => i / 4)]) {
+        const r = render({ lang, drug, minutes: DEFAULT_MINUTES, nowHours });
+        // URLs are checked apart: they are the regulator's and publisher's own addresses.
+        const visible = `${r.status} ${r.legend} ${r.sources.replace(/href="[^"]*"/g, '')}`;
+        assertClean(visible, `${lang} ${drug} @${nowHours}`);
+      }
+    }
+  }
+  // The phase words of every profile, the merged Ritalin IR included.
+  for (const lang of TIMING_LANGS) {
+    for (const id of Object.keys(PROFILES) as DrugId[]) {
+      for (let h = 0; h <= 30; h += 0.05) assertClean(phaseAt(lang, PROFILES[id], h).text, `${lang} ${id} phase @${h}`);
+    }
+  }
+  // Source URLs carry no product name either.
+  for (const lang of TIMING_LANGS) {
+    for (const drug of DRUG_IDS) for (const s of copy[lang].sources[drug]) for (const name of PRODUCT_NAMES) assert.ok(!s.url.toLowerCase().includes(name.toLowerCase()), `${lang} ${drug} url ${s.url}`);
+  }
 });

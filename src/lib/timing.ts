@@ -1,21 +1,28 @@
-// The "effect timing" tool: copy, clock maths and the HTML/SVG the page shows.
+// The reference concentration curve tool: copy, clock maths and the HTML/SVG the page shows.
 // Runs at build (first paint of the default state) and in the browser (every change),
 // so everything here is plain TypeScript with no DOM access.
 // The explicit extension lets Node run this module directly (tests, the share-card script).
-import { DRUG_IDS, MODEL_VERSION, PROFILES, type DrugId, type Profile, type SectionKind } from './pk.ts';
+//
+// Wording: the page names a profile by ingredient and form, never by product name, and speaks of
+// the label's blood concentration, never of an effect. ko, en and ja follow the same rule.
+import { DRUG_IDS, DRUG_SLUGS, MODEL_VERSION, PROFILES, drugFromSlug, type DrugId, type Profile, type SectionKind, type ToolDrugId } from './pk.ts';
 
 export type TimingLang = 'ko' | 'en' | 'ja';
 export const TIMING_LANGS: TimingLang[] = ['ko', 'en', 'ja'];
-export const DEFAULT_DRUG: DrugId = 'concerta';
+export const DEFAULT_DRUG: ToolDrugId = 'concerta';
 export const DEFAULT_MINUTES = 8 * 60;
-export { DRUG_IDS, MODEL_VERSION, PROFILES };
+export { DRUG_IDS, DRUG_SLUGS, MODEL_VERSION, PROFILES };
 
 // Phase colours of the app's dark chart (PKPhasePalette, dark): first window, main peak, decline.
 export const PHASE_COLORS = ['#6CCBFF', '#FF7A6B', '#A99BFF'] as const;
 // Clock tick every four hours; the app caps the chart at 16 h after the dose.
 const TICK_HOURS = 4;
 
-type Names = Record<DrugId, string>;
+type Names = Record<ToolDrugId, string>;
+export interface Source {
+  label: string;
+  url: string;
+}
 type Copy = {
   title: (drug: string) => string;
   description: (drug: string, dose: string, peak: string) => string;
@@ -27,6 +34,7 @@ type Copy = {
   copied: string;
   now: string;
   names: Names;
+  /** Grey note after the name in the sources table; empty where the name already says it all. */
   formulations: Names;
   /** Window names as each app chart shows them: Concerta and Medikinet have charts of their own;
    *  the others share the reference chart (sectionTitle), which calls Ritalin LA's first two peaks. */
@@ -40,57 +48,61 @@ type Copy = {
   taken: (drug: string, time: string) => string;
   elapsed: (h: number, m: number) => string;
   untilDose: (h: number, m: number) => string;
-  /** The link under the status to the app, which notifies as each window starts. */
-  notify: string;
   nextDay: string;
   axis: (hour24: number) => string;
-  /** Heading of the second group in the medication list: drugs not sold in the language's market. */
+  /** Heading of the second group in the list: drugs not sold in the language's market. ko lists
+   *  only drugs approved in Korea, so it has no second group. */
   market: string;
   sourcesTitle: string;
   rows: { timing: string; links: string };
-  /** Added to the formulation line of a schematic profile, the one place it says so. */
+  /** Added to the note of a schematic profile, the one place it says so. */
   schematic: string;
   timing: Names;
-  /** One label per catalog source, in catalog order, in the reader's language. */
-  sourceLabels: Record<DrugId, string[]>;
+  /** Source links in the reader's language. Each language has its own list, so one can point at
+   *  its own regulator (ko → MFDS) without touching the others. */
+  sources: Record<ToolDrugId, Source[]>;
   notice: string;
-  cta: { title: string; body: string };
+  /** Plain link at the foot of the page to the Peakly introduction. */
+  about: string;
 };
 
-const FORMULATION_EN: Names = Object.fromEntries(DRUG_IDS.map((id) => [id, PROFILES[id].formulation])) as Names;
+/// The catalog's links for `drug` under the reader's labels, one label per link in catalog order.
+// A product's approval record on the MFDS drug safety portal (의약품안전나라), by item number.
+const MFDS = (itemSeq: string) => `https://nedrug.mfds.go.kr/pbp/CCBBB01/getItemDetail?itemSeq=${itemSeq}`;
 
-/// Korean object particle after a word: 을 after a final consonant, 를 otherwise. Latin letters
-/// and digits go by how they are read aloud (XR → "알" → 을, LA → "에이" → 를).
-export function objectParticle(word: string): string {
-  const last = word.trim().slice(-1);
-  const code = last.charCodeAt(0);
-  if (code >= 0xac00 && code <= 0xd7a3) return (code - 0xac00) % 28 === 0 ? '를' : '을';
-  if (/[lmnrLMNR]/.test(last)) return '을';
-  if (/[013678]/.test(last)) return '을';
-  return '를';
+function catalogLinks(drug: ToolDrugId, ...labels: string[]): Source[] {
+  return PROFILES[drug].sources.map((s, i) => ({ label: labels[i] ?? '', url: s.url }));
 }
 
 export const copy: Record<TimingLang, Copy> = {
   ko: {
-    title: (drug) => `${drug} 약효 흐름 | 피클리`,
+    title: (drug) => `${drug} 혈중 농도 흐름 | Hyperfocus Lab`,
     description: (drug, dose, peak) =>
-      `${dose}에 ${drug}${objectParticle(drug)} 먹으면 최고 농도 구간은 ${peak}입니다. 약과 복용 시각을 바꿔 참고 곡선을 볼 수 있습니다.`,
-    label: '피클리 · 약효 흐름',
-    h1: 'ADHD 약 약효 흐름',
-    drug: '약',
+      `${dose}에 복용하면 ${drug}의 설명서 기준 최고 농도 구간은 ${peak}입니다. 복용 시각을 바꿔 참고 곡선을 볼 수 있습니다.`,
+    label: '설명서 기준 참고 곡선',
+    // No indication in any heading: the page shows the label's concentration data only.
+    h1: '설명서 기준 평균 혈중 농도 흐름',
+    drug: '성분·제형',
     time: '복용 시각',
     copy: '링크 복사',
     copied: '복사됨',
     now: '지금',
-    names: { concerta: '콘서타', medikinet: '메디키넷', penid_ir: '페니드', ritalin_ir: '리탈린', ritalin_la: '리탈린 LA', adderall_xr: '애더럴 XR', vyvanse: '바이반스' },
-    formulations: {
+    // Only the first three have pages in Korean (LANG_DRUGS); the rest keep the type complete.
+    names: {
       concerta: '메틸페니데이트 OROS 서방정',
-      medikinet: '메틸페니데이트 속방 50% · 서방 50%',
+      medikinet: '메틸페니데이트 속방·장용 펠렛 캡슐',
       penid_ir: '메틸페니데이트 속방정',
-      ritalin_ir: '메틸페니데이트 속방정',
-      ritalin_la: '메틸페니데이트 속방 50% · 장용 지연방출 비드 50%',
-      adderall_xr: '혼합 암페타민염 서방 캡슐 (d-암페타민 기준)',
-      vyvanse: '리스덱스암페타민 (활성체 d-암페타민 기준)',
+      ritalin_la: '메틸페니데이트 이상성 캡슐(속방 50%·지연 방출 50%)',
+      adderall_xr: '혼합 암페타민염 서방 캡슐',
+      vyvanse: '리스덱스암페타민 캡슐',
+    },
+    formulations: {
+      concerta: '',
+      medikinet: '',
+      penid_ir: '',
+      ritalin_la: '',
+      adderall_xr: 'd-암페타민 기준',
+      vyvanse: '활성체 d-암페타민 기준',
     },
     labels: {
       concerta: ['1차', '최대농도', '감소'],
@@ -102,10 +114,9 @@ export const copy: Record<TimingLang, Copy> = {
     taken: (drug, time) => `${drug} · ${time} 복용`,
     elapsed: (h, m) => `${h}시간 ${m}분 지남`,
     untilDose: (h, m) => `복용까지 ${h}시간 ${m}분`,
-    notify: '약효 구간별로 알림 받기',
     nextDay: '다음 날 ',
     axis: (h) => `${h}시`,
-    market: '국내 미출시',
+    market: '',
     sourcesTitle: '출처와 기준',
     rows: { timing: '최고 농도', links: '출처' },
     schematic: '실측이 아닌 개략 곡선',
@@ -113,39 +124,60 @@ export const copy: Record<TimingLang, Copy> = {
       concerta: '복용 후 6~10시간',
       medikinet: '아침 식후 복용 시 2~4시간',
       penid_ir: '복용 후 약 2시간 (1~2시간)',
-      ritalin_ir: '복용 후 약 2시간 (1~2시간)',
       ritalin_la: '2차 피크: 복용 후 5.5시간 (4.3~6.5시간, 소아 평균 6.6시간)',
       adderall_xr: '복용 후 5.2~7.7시간',
       vyvanse: '복용 후 3.8~4.7시간',
     },
-    sourceLabels: {
-      concerta: ['콘서타 제품 설명서 (FDA)'],
-      medikinet: ['메디키넷 XL 제품 특성 요약 (영국 emc)'],
-      penid_ir: ['페니드 제품 정보 (환인제약)', '리탈린 제품 설명서 (FDA, 성분 참고)', '리탈린 10mg 제품 특성 요약 (영국 emc, 반감기 참고)'],
-      ritalin_ir: ['리탈린 제품 설명서 (FDA)', '리탈린 10mg 제품 특성 요약 (영국 emc)'],
-      ritalin_la: ['리탈린 LA 제품 설명서 (FDA, 2025년 9월 개정)', '리탈린 LA 제품 설명서 (FDA, 2019)'],
-      adderall_xr: ['애더럴 XR 제품 설명서 (FDA, 2023)'],
-      vyvanse: ['바이반스 제품 설명서 (FDA, 2025)'],
+    sources: {
+      // The domestic approval first. Korean labels have no pharmacokinetics section, so the times
+      // on the chart come from the US (FDA) or UK (emc) labels listed after it.
+      concerta: [
+        { label: '국내 허가사항 (식약처 의약품안전나라)', url: MFDS('202005265') },
+        { label: '미국 FDA 설명서 (최고 농도 시점)', url: PROFILES.concerta.sources[0].url },
+      ],
+      medikinet: [
+        { label: '국내 허가사항 (식약처 의약품안전나라)', url: MFDS('201111086') },
+        { label: '영국 emc 제품 특성 요약 (최고 농도 시점)', url: PROFILES.medikinet.sources[0].url },
+      ],
+      penid_ir: [
+        { label: '국내 허가사항 (식약처 의약품안전나라)', url: MFDS('198902796') },
+        { label: '미국 FDA 설명서 (최고 농도 시점)', url: PROFILES.penid_ir.sources[1].url },
+        { label: '영국 emc 제품 특성 요약 (반감기)', url: PROFILES.penid_ir.sources[2].url },
+      ],
+      ritalin_la: catalogLinks('ritalin_la', '메틸페니데이트 이상성 캡슐 설명서 (미국 FDA, 2025년 9월 개정)', '메틸페니데이트 이상성 캡슐 설명서 (미국 FDA, 2019)'),
+      adderall_xr: catalogLinks('adderall_xr', '혼합 암페타민염 서방 캡슐 설명서 (미국 FDA, 2023)'),
+      vyvanse: catalogLinks('vyvanse', '리스덱스암페타민 캡슐 설명서 (미국 FDA, 2025)'),
     },
-    notice: '개인 측정값이 아닌 참고 곡선입니다. 체감 피크는 농도 피크와 다를 수 있고, 그래프 끝이 약효 종료는 아닙니다. 복용 시각·용량 변경은 의사·약사와 상의하세요.',
-    cta: {
-      title: '내 복용 기록으로 매일 보기',
-      body: '피클리에 복용 시각을 기록하면 이 곡선이 매일 그려지고, 상승·피크·감소 때 알림을 받습니다. 구간은 직접 옮겨서 맞출 수 있습니다.',
-    },
+    notice: '개인 측정값이 아니라 설명서의 평균값으로 그린 참고 곡선입니다. 그래프가 끝나는 시점이 농도가 사라지는 시점은 아닙니다. 복용 시각·용량은 의사·약사와 상의하세요.',
+    about: '피클리 소개',
   },
   en: {
-    title: (drug) => `${drug} effect timing | Peakly`,
+    title: (drug) => `${drug}: blood concentration over time | Hyperfocus Lab`,
     description: (drug, dose, peak) =>
-      `Taken at ${dose}, ${drug}'s peak window is ${peak}. Change the medication or dose time to see its reference curve.`,
-    label: 'Peakly · Effect timing',
-    h1: 'ADHD medication effect timing',
-    drug: 'Medication',
+      `Taken at ${dose}, the label's peak concentration window for ${drug} is ${peak}. Change the dose time to see the reference curve.`,
+    label: 'Reference curve from the label',
+    h1: 'Mean blood concentration over time, per the label',
+    drug: 'Ingredient and form',
     time: 'Dose time',
     copy: 'Copy link',
     copied: 'Copied',
     now: 'Now',
-    names: { concerta: 'Concerta', medikinet: 'Medikinet Retard', penid_ir: 'Penid', ritalin_ir: 'Ritalin', ritalin_la: 'Ritalin LA', adderall_xr: 'Adderall XR', vyvanse: 'Vyvanse' },
-    formulations: FORMULATION_EN,
+    names: {
+      concerta: 'Methylphenidate OROS extended-release tablet',
+      medikinet: 'Methylphenidate modified-release capsule (50% IR, 50% ER)',
+      penid_ir: 'Methylphenidate immediate-release tablet',
+      ritalin_la: 'Methylphenidate biphasic capsule (50% IR, 50% delayed release)',
+      adderall_xr: 'Mixed amphetamine salts extended-release capsule',
+      vyvanse: 'Lisdexamfetamine capsule',
+    },
+    formulations: {
+      concerta: '',
+      medikinet: '',
+      penid_ir: '',
+      ritalin_la: '',
+      adderall_xr: 'd-amphetamine',
+      vyvanse: 'active d-amphetamine',
+    },
     labels: {
       concerta: ['1st', 'Max', 'Decline'],
       medikinet: ['First rise', 'Second rise', 'Decline'],
@@ -156,7 +188,6 @@ export const copy: Record<TimingLang, Copy> = {
     taken: (drug, time) => `${drug} · taken ${time}`,
     elapsed: (h, m) => `${h} h ${m} min since`,
     untilDose: (h, m) => `${h} h ${m} min until the dose`,
-    notify: 'Get notified as each window starts',
     nextDay: ' next day',
     axis: (h) => (h === 0 ? '12am' : h < 12 ? `${h}am` : h === 12 ? '12pm' : `${h - 12}pm`),
     market: 'Not sold in the US',
@@ -167,47 +198,56 @@ export const copy: Record<TimingLang, Copy> = {
       concerta: '6–10 h after the dose',
       medikinet: '2–4 h after a dose taken after breakfast',
       penid_ir: 'About 2 h after the dose (1–2 h)',
-      ritalin_ir: 'About 2 h after the dose (1–2 h)',
       ritalin_la: 'Second peak: 5.5 h after the dose (4.3–6.5 h; children mean 6.6 h)',
       adderall_xr: '5.2–7.7 h after the dose',
       vyvanse: '3.8–4.7 h after the dose',
     },
-    sourceLabels: {
-      concerta: ['Concerta prescribing information (FDA)'],
-      medikinet: ['Medikinet XL summary of product characteristics (UK emc)'],
-      penid_ir: ['Penid product information (Whanin Pharm)', 'Ritalin prescribing information (FDA, ingredient reference)', 'Ritalin 10 mg summary of product characteristics (UK emc, half-life)'],
-      ritalin_ir: ['Ritalin prescribing information (FDA)', 'Ritalin 10 mg summary of product characteristics (UK emc)'],
-      ritalin_la: ['Ritalin LA prescribing information (FDA, rev. Sept 2025)', 'Ritalin LA prescribing information (FDA, 2019)'],
-      adderall_xr: ['Adderall XR prescribing information (FDA, 2023)'],
-      vyvanse: ['Vyvanse prescribing information (FDA, 2025)'],
+    sources: {
+      concerta: catalogLinks('concerta', 'Methylphenidate OROS extended-release tablet prescribing information (US FDA)'),
+      medikinet: catalogLinks('medikinet', 'Methylphenidate modified-release capsule summary of product characteristics (UK emc)'),
+      penid_ir: catalogLinks(
+        'penid_ir',
+        'Methylphenidate immediate-release tablet product information (Whanin Pharm, Korea)',
+        'Methylphenidate immediate-release tablet prescribing information (US FDA, ingredient reference)',
+        'Methylphenidate 10 mg immediate-release tablet summary of product characteristics (UK emc, half-life)',
+      ),
+      ritalin_la: catalogLinks(
+        'ritalin_la',
+        'Methylphenidate biphasic capsule prescribing information (US FDA, rev. Sept 2025)',
+        'Methylphenidate biphasic capsule prescribing information (US FDA, 2019)',
+      ),
+      adderall_xr: catalogLinks('adderall_xr', 'Mixed amphetamine salts extended-release capsule prescribing information (US FDA, 2023)'),
+      vyvanse: catalogLinks('vyvanse', 'Lisdexamfetamine capsule prescribing information (US FDA, 2025)'),
     },
-    notice: 'A reference curve, not a personal measurement. The felt peak can differ from the concentration peak, and the end of the chart is not the end of the effect. Talk to your doctor or pharmacist before changing a dose or its timing.',
-    cta: {
-      title: 'See it every day with your own doses',
-      body: 'Log your dose time in Peakly and this curve is drawn every day, with notifications as it rises, peaks, and wears off. You can move each window yourself.',
-    },
+    notice: "A reference curve drawn from the label's mean values, not a personal measurement. The end of the chart is not where the concentration reaches zero. Ask your doctor or pharmacist about dose and timing.",
+    about: 'About Peakly',
   },
   ja: {
-    title: (drug) => `${drug}の作用の流れ | ピークリー`,
+    title: (drug) => `${drug}の血中濃度の推移 | Hyperfocus Lab`,
     description: (drug, dose, peak) =>
-      `${dose}に${drug}を服用した場合、最高濃度の区間は${peak}です。薬と服用時刻を変えて参考曲線を確認できます。`,
-    label: 'ピークリー · 作用の流れ',
-    // Not "ADHD治療薬": Ritalin is approved for narcolepsy, not ADHD, in Japan.
-    h1: '薬の作用の流れ',
-    drug: '薬',
+      `${dose}に服用した場合、${drug}の製品情報に基づく最高濃度の区間は${peak}です。服用時刻を変えて参考曲線を確認できます。`,
+    label: '製品情報に基づく参考曲線',
+    h1: '製品情報に基づく平均血中濃度の推移',
+    drug: '成分・剤形',
     time: '服用時刻',
     copy: 'リンクをコピー',
     copied: 'コピーしました',
     now: '現在',
-    names: { concerta: 'コンサータ', medikinet: 'メディキネット', penid_ir: 'Penid', ritalin_ir: 'リタリン', ritalin_la: 'リタリン LA', adderall_xr: 'アデロール XR', vyvanse: 'ビバンセ' },
-    formulations: {
+    names: {
       concerta: 'メチルフェニデート OROS 徐放錠',
-      medikinet: 'メチルフェニデート 速放50% · 徐放50%',
+      medikinet: 'メチルフェニデート 徐放カプセル（速放50%・徐放50%）',
       penid_ir: 'メチルフェニデート 速放錠',
-      ritalin_ir: 'メチルフェニデート 速放錠',
-      ritalin_la: 'メチルフェニデート 速放50% · 腸溶性遅延放出ビーズ50%',
-      adderall_xr: '混合アンフェタミン塩 徐放カプセル（d-アンフェタミン基準）',
-      vyvanse: 'リスデキサンフェタミン（活性体 d-アンフェタミン基準）',
+      ritalin_la: 'メチルフェニデート 二相性カプセル（速放50%・遅延放出50%）',
+      adderall_xr: '混合アンフェタミン塩 徐放カプセル',
+      vyvanse: 'リスデキサンフェタミン カプセル',
+    },
+    formulations: {
+      concerta: '',
+      medikinet: '',
+      penid_ir: '',
+      ritalin_la: '',
+      adderall_xr: 'd-アンフェタミン基準',
+      vyvanse: '活性体 d-アンフェタミン基準',
     },
     labels: {
       concerta: ['一次', '最大濃度', '減少'],
@@ -219,7 +259,6 @@ export const copy: Record<TimingLang, Copy> = {
     taken: (drug, time) => `${drug} · ${time} 服用`,
     elapsed: (h, m) => `${h}時間${m}分経過`,
     untilDose: (h, m) => `服用まで${h}時間${m}分`,
-    notify: '作用の区間ごとに通知を受け取る',
     nextDay: '翌日 ',
     axis: (h) => `${h}時`,
     market: '日本未発売・適応外',
@@ -232,25 +271,29 @@ export const copy: Record<TimingLang, Copy> = {
       concerta: '服用後6~10時間',
       medikinet: '朝食後の服用で2~4時間',
       penid_ir: '服用後約2時間（1~2時間）',
-      ritalin_ir: '服用後約2時間（1~2時間）',
       ritalin_la: '2回目のピーク: 服用後5.5時間（4.3~6.5時間、小児平均6.6時間）',
       adderall_xr: '服用後5.2~7.7時間',
       vyvanse: '服用後3.8~4.7時間',
     },
-    sourceLabels: {
-      concerta: ['コンサータ 米国の製品ラベル（FDA）'],
-      medikinet: ['メディキネット XL 英国の製品情報（emc）'],
-      penid_ir: ['Penid 製品情報（Whanin製薬）', 'リタリン 米国の製品ラベル（FDA、成分の参考）', 'リタリン 10mg 英国の製品情報（emc、半減期の参考）'],
-      ritalin_ir: ['リタリン 米国の製品ラベル（FDA）', 'リタリン 10mg 英国の製品情報（emc）'],
-      ritalin_la: ['リタリン LA 米国の製品ラベル（FDA、2025年9月改訂）', 'リタリン LA 米国の製品ラベル（FDA、2019）'],
-      adderall_xr: ['アデロール XR 米国の製品ラベル（FDA、2023）'],
-      vyvanse: ['ビバンセ 米国の製品ラベル（FDA、2025）'],
+    sources: {
+      concerta: catalogLinks('concerta', 'メチルフェニデート OROS 徐放錠 米国の製品ラベル（FDA）'),
+      medikinet: catalogLinks('medikinet', 'メチルフェニデート 徐放カプセル 英国の製品情報（emc）'),
+      penid_ir: catalogLinks(
+        'penid_ir',
+        'メチルフェニデート 速放錠 韓国の製品情報（Whanin製薬）',
+        'メチルフェニデート 速放錠 米国の製品ラベル（FDA、成分の参考）',
+        'メチルフェニデート 速放錠 10mg 英国の製品情報（emc、半減期の参考）',
+      ),
+      ritalin_la: catalogLinks(
+        'ritalin_la',
+        'メチルフェニデート 二相性カプセル 米国の製品ラベル（FDA、2025年9月改訂）',
+        'メチルフェニデート 二相性カプセル 米国の製品ラベル（FDA、2019）',
+      ),
+      adderall_xr: catalogLinks('adderall_xr', '混合アンフェタミン塩 徐放カプセル 米国の製品ラベル（FDA、2023）'),
+      vyvanse: catalogLinks('vyvanse', 'リスデキサンフェタミン カプセル 米国の製品ラベル（FDA、2025）'),
     },
-    notice: '個人の測定値ではない参考曲線です。体感のピークは濃度のピークと異なることがあり、グラフの終わりは作用の終わりではありません。服用時刻や用量の変更は医師・薬剤師に相談してください。',
-    cta: {
-      title: '自分の服薬記録で毎日見る',
-      body: 'ピークリーに服用時刻を記録すると、この曲線が毎日描かれ、上昇・ピーク・減少のときに通知が届きます。区間は自分で動かして合わせられます。',
-    },
+    notice: '個人の測定値ではなく、製品情報の平均値から描いた参考曲線です。グラフの終わりは濃度がなくなる時点ではありません。服用時刻や用量は医師・薬剤師に相談してください。',
+    about: 'ピークリーについて',
   },
 };
 
@@ -335,21 +378,47 @@ export function tickOffsets(doseMinutes: number, end: number): number[] {
   return ticks;
 }
 
-// Drugs sold in the language's home market (ko → Korea, ja → Japan, en → US), after the app's
-// MedicationMarketAvailability (KOR: Penid; JPN: Vyvanse; USA: Adderall XR, Vyvanse, Ritalin) plus
-// Concerta and Medikinet where they are sold. The rest are listed under a separate heading.
-// Ritalin LA (Taiwan, Hong Kong only) is left out of every list; its pages stay reachable by URL.
-const HOME_MARKET: Record<TimingLang, DrugId[]> = {
+// Drugs with a page in each language. Korean pages cover only the drugs approved in Korea;
+// en and ja cover the catalog. Ritalin LA (Taiwan, Hong Kong only) has pages but no list entry.
+const LANG_DRUGS: Record<TimingLang, ToolDrugId[]> = {
   ko: ['concerta', 'medikinet', 'penid_ir'],
+  en: DRUG_IDS,
+  ja: DRUG_IDS,
+};
+
+/// Drugs that have a page in `lang`, in list order.
+export function drugsFor(lang: TimingLang): ToolDrugId[] {
+  return LANG_DRUGS[lang];
+}
+
+/// Languages that have a page for `drug`.
+export function langsFor(drug: ToolDrugId): TimingLang[] {
+  return TIMING_LANGS.filter((lang) => LANG_DRUGS[lang].includes(drug));
+}
+
+/// The drug a URL slug asks for in `lang`, or null when the slug is unknown or that language has
+/// no page for it (an en-only slug on a ko page).
+export function drugIn(lang: TimingLang, slug: unknown): ToolDrugId | null {
+  const id = drugFromSlug(slug);
+  return id && LANG_DRUGS[lang].includes(id) ? id : null;
+}
+
+// Drugs sold in the language's home market (ja → Japan, en → US), after the app's
+// MedicationMarketAvailability (JPN: Vyvanse; USA: Adderall XR, Vyvanse, Ritalin) plus Concerta
+// where it is sold. The US has methylphenidate immediate-release tablets (Ritalin and generics), so
+// the one immediate-release entry (penid_ir, named by ingredient and form) is home there; Japan's
+// are approved for narcolepsy only, so it stays in the second group. ko lists Korean drugs only.
+const HOME_MARKET: Record<TimingLang, ToolDrugId[]> = {
+  ko: LANG_DRUGS.ko,
   ja: ['concerta', 'vyvanse'],
-  en: ['concerta', 'ritalin_ir', 'adderall_xr', 'vyvanse'],
+  en: ['concerta', 'penid_ir', 'adderall_xr', 'vyvanse'],
 };
 
 /// Medication list for the select: the home market first, then the others under `market`.
 /// `current` keeps the page's own drug listed even when it is Ritalin LA.
-export function selectGroups(lang: TimingLang, current?: DrugId): { label: string; ids: DrugId[] }[] {
+export function selectGroups(lang: TimingLang, current?: ToolDrugId): { label: string; ids: ToolDrugId[] }[] {
   const home = HOME_MARKET[lang];
-  const listed = DRUG_IDS.filter((id) => id !== 'ritalin_la' || id === current);
+  const listed = LANG_DRUGS[lang].filter((id) => id !== 'ritalin_la' || id === current);
   return [
     { label: '', ids: listed.filter((id) => home.includes(id)) },
     { label: copy[lang].market, ids: listed.filter((id) => !home.includes(id)) },
@@ -402,35 +471,36 @@ function phaseFamily(id: DrugId): PhaseFamily {
   return 'standard'; // Vyvanse, Penid, Ritalin
 }
 
-function phaseWords(concerta: PhaseWords, standard: PhaseWords, medikinet: Pick<PhaseWords, 'peak_1' | 'peak_2'>, ritalinLA: Pick<PhaseWords, 'peak_1' | 'peak_2' | 'valley'>): Record<PhaseFamily, PhaseWords> {
+/// The app's phases in concentration words (the web never names an effect). `standard` is the
+/// shared wording; Concerta and Medikinet call the gap before their main window a second rise,
+/// Medikinet and Ritalin LA name their two peaks.
+function phaseWords(
+  standard: PhaseWords,
+  w: { secondRise: string; maxConcentration: string; firstPeak: string; secondPeak: string },
+): Record<PhaseFamily, PhaseWords> {
+  const concerta = { ...standard, rising_2: w.secondRise };
   return {
     concerta,
-    medikinet: { ...concerta, ...medikinet },
+    medikinet: { ...concerta, peak_1: w.maxConcentration, peak_2: w.secondPeak },
     // Adderall XR has no "residual": past its last window the app says the final phase.
     adderall_xr: { ...standard, after: standard.releaseEnd },
     standard,
-    ritalin_la: { ...standard, ...ritalinLA },
+    ritalin_la: { ...standard, peak_1: w.firstPeak, peak_2: w.secondPeak },
   };
 }
 
 const PHASE_TEXT: Record<TimingLang, Record<PhaseFamily, PhaseWords>> = {
   ko: phaseWords(
-    { rising_1: '상승 중', rising_2: '2차 상승', peak_1: '1차 체감', peak_2: '메인 피크', valley: '중간 구간', falling: '감소 중', releaseEnd: '감소 구간', after: '잔효' },
-    { rising_1: '작용 시작', rising_2: '상승 구간', peak_1: '초기 구간', peak_2: '최대 효과 구간', valley: '안정 구간', falling: '감소 구간', releaseEnd: '종료 구간', after: '잔효' },
-    { peak_1: '최대 농도', peak_2: '2차 피크' },
-    { peak_1: '1차 피크', peak_2: '2차 피크', valley: '중간 구간' },
+    { rising_1: '농도 상승 중', peak_1: '1차 구간', valley: '중간 구간', rising_2: '농도 상승 중', peak_2: '최고 농도 구간', falling: '농도 감소 중', releaseEnd: '농도 감소 구간', after: '후반 구간' },
+    { secondRise: '2차 상승', maxConcentration: '최대 농도', firstPeak: '1차 최고 농도', secondPeak: '2차 최고 농도' },
   ),
   en: phaseWords(
-    { rising_1: 'Rising', rising_2: 'Second rise', peak_1: 'Initial effect', peak_2: 'Main peak', valley: 'Middle window', falling: 'Wearing off', releaseEnd: 'Declining phase', after: 'Residual effect' },
-    { rising_1: 'Onset', rising_2: 'Rising phase', peak_1: 'Early phase', peak_2: 'Peak effect', valley: 'Steady window', falling: 'Declining phase', releaseEnd: 'Final phase', after: 'Residual effect' },
-    { peak_1: 'Peak', peak_2: 'Second peak' },
-    { peak_1: 'First peak', peak_2: 'Second peak', valley: 'Middle window' },
+    { rising_1: 'Concentration rising', peak_1: 'First window', valley: 'Middle window', rising_2: 'Concentration rising', peak_2: 'Peak concentration window', falling: 'Concentration falling', releaseEnd: 'Concentration decline window', after: 'Late phase' },
+    { secondRise: 'Second rise', maxConcentration: 'Peak concentration', firstPeak: 'First peak concentration', secondPeak: 'Second peak concentration' },
   ),
   ja: phaseWords(
-    { rising_1: '上昇中', rising_2: '二次上昇', peak_1: '一次体感', peak_2: 'メインピーク', valley: '中間区間', falling: '減少中', releaseEnd: '減少段階', after: '残存効果' },
-    { rising_1: '作用開始', rising_2: '上昇段階', peak_1: '初期段階', peak_2: '最大効果区間', valley: '安定区間', falling: '減少段階', releaseEnd: '終了段階', after: '残存効果' },
-    { peak_1: '最大濃度', peak_2: '二次ピーク' },
-    { peak_1: '一次ピーク', peak_2: '二次ピーク', valley: '中間区間' },
+    { rising_1: '濃度上昇中', peak_1: '一次区間', valley: '中間区間', rising_2: '濃度上昇中', peak_2: '最高濃度の区間', falling: '濃度減少中', releaseEnd: '濃度減少の区間', after: '後半の区間' },
+    { secondRise: '二次上昇', maxConcentration: '最大濃度', firstPeak: '一次最高濃度', secondPeak: '二次最高濃度' },
   ),
 };
 
@@ -490,7 +560,7 @@ export function phaseAt(lang: TimingLang, profile: Profile, elapsedHours: number
 
 export interface RenderInput {
   lang: TimingLang;
-  drug: DrugId;
+  drug: ToolDrugId;
   /** Dose time as minutes after midnight. */
   minutes: number;
   /** Current time as minutes after the dose; omitted at build time. */
@@ -619,13 +689,15 @@ export function render(input: RenderInput): Rendered {
     })
     .join('');
 
-  // Link text is the reader's own language; the catalog's titles are internal notes.
-  const links = profile.sources
-    .map((s, i) => `<a href="${esc(s.url)}" target="_blank" rel="noreferrer">${esc(t.sourceLabels[drug][i] ?? s.title)} ↗</a>`)
+  // Links come from the reader's language (copy.sources); the catalog's titles are internal notes.
+  const links = t.sources[drug]
+    .map((s) => `<a href="${esc(s.url)}" target="_blank" rel="noreferrer">${esc(s.label)} ↗</a>`)
     .join('');
   const row = (k: string, v: string) => (v ? `<div><dt>${esc(k)}</dt><dd>${v}</dd></div>` : '');
+  // The grey note: what the curve is measured as, then "schematic" where it is; nothing otherwise.
+  const note = [t.formulations[drug], profile.evidence === 'schematic' ? t.schematic : ''].filter(Boolean).join(' · ');
   const sources =
-    `<p class="pk-drug-name">${esc(name)} <span class="muted">${esc(t.formulations[drug])}${profile.evidence === 'schematic' ? ` · ${esc(t.schematic)}` : ''}</span></p>` +
+    `<p class="pk-drug-name">${esc(name)}${note ? ` <span class="muted">${esc(note)}</span>` : ''}</p>` +
     `<dl class="pk-facts">` +
     row(t.rows.timing, esc(t.timing[drug])) +
     row(t.rows.links, `<span class="pk-links">${links}</span>`) +
@@ -635,7 +707,7 @@ export function render(input: RenderInput): Rendered {
 }
 
 /// Meta description of a drug page in its default state (dose at 08:00).
-export function describe(lang: TimingLang, drug: DrugId): string {
+export function describe(lang: TimingLang, drug: ToolDrugId): string {
   const t = copy[lang];
   const profile = PROFILES[drug];
   const peakIndex = Math.max(0, profile.sectionKinds.indexOf('peak'));

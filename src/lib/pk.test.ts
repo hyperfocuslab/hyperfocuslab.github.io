@@ -3,13 +3,36 @@
 // so a passing run means the web curve equals the iOS curve at these points (|diff| <= 1e-12).
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { PROFILES, DRUG_IDS, MODEL_VERSION, isDrugId, type DrugId } from './pk.ts';
+import { PROFILES, DRUG_IDS, DRUG_SLUGS, MODEL_VERSION, drugFromSlug, type DrugId } from './pk.ts';
 
-test('isDrugId accepts catalog ids only, not inherited object keys', () => {
-  for (const id of DRUG_IDS) assert.equal(isDrugId(id), true, id);
-  for (const bad of ['constructor', '__proto__', 'toString', 'hasOwnProperty', '', 'Concerta', null, undefined, 3]) {
-    assert.equal(isDrugId(bad), false, String(bad));
+test('slugs and ids map one to one, and only slugs are accepted', () => {
+  const slugs = DRUG_IDS.map((id) => DRUG_SLUGS[id]);
+  assert.equal(new Set(slugs).size, DRUG_IDS.length);
+  for (const id of DRUG_IDS) assert.equal(drugFromSlug(DRUG_SLUGS[id]), id, id);
+  assert.deepEqual(DRUG_SLUGS, {
+    concerta: 'methylphenidate-oros',
+    medikinet: 'methylphenidate-mr',
+    penid_ir: 'methylphenidate-ir',
+    ritalin_la: 'methylphenidate-biphasic',
+    adderall_xr: 'amphetamine-salts-er',
+    vyvanse: 'lisdexamfetamine',
+  });
+  // Catalog ids (the old URLs), inherited object keys and other values are not slugs.
+  for (const bad of [...Object.keys(PROFILES), 'constructor', '__proto__', 'toString', 'hasOwnProperty', '', 'Concerta', null, undefined, 3]) {
+    assert.equal(drugFromSlug(bad), null, String(bad));
   }
+  // Slugs name ingredient and form only.
+  for (const slug of slugs) assert.match(slug, /^(methylphenidate|amphetamine|lisdexamfetamine)(-[a-z]+)*$/);
+});
+
+test('Ritalin IR is left out of the web list: its curve and windows are Penid\'s', () => {
+  assert.ok(!(DRUG_IDS as string[]).includes('ritalin_ir'));
+  const [a, b] = [PROFILES.penid_ir, PROFILES.ritalin_ir];
+  assert.deepEqual(a.curve.points, b.curve.points);
+  assert.deepEqual(a.windows, b.windows);
+  assert.deepEqual(a.sectionKinds, b.sectionKinds);
+  assert.deepEqual(a.tmaxHours, b.tmaxHours);
+  assert.equal(a.evidence, b.evidence);
 });
 
 const GOLDEN: [DrugId, number, number][] = [
@@ -84,7 +107,7 @@ test('interpolation matches the app golden values', () => {
 });
 
 test('anchors are reproduced exactly and out-of-domain input returns 0', () => {
-  for (const id of DRUG_IDS) {
+  for (const id of Object.keys(PROFILES) as DrugId[]) {
     const p = PROFILES[id];
     for (const anchor of p.curve.points) assert.ok(Math.abs(p.curve.value(anchor.hour) - anchor.value) <= 1e-12, `${id} anchor ${anchor.hour}`);
     assert.equal(p.curve.value(NaN), 0);
@@ -94,9 +117,10 @@ test('anchors are reproduced exactly and out-of-domain input returns 0', () => {
 });
 
 test('catalog shape: seven profiles, three ordered windows each, 16 h chart cap', () => {
-  assert.equal(DRUG_IDS.length, 7);
+  assert.equal(Object.keys(PROFILES).length, 7);
+  assert.equal(DRUG_IDS.length, 6);
   assert.equal(MODEL_VERSION, '2026-11-01-v4');
-  for (const id of DRUG_IDS) {
+  for (const id of Object.keys(PROFILES) as DrugId[]) {
     const p = PROFILES[id];
     assert.equal(p.windows.length, 3);
     for (let i = 0; i < 3; i++) {
