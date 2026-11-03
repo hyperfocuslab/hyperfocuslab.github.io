@@ -10,7 +10,7 @@ test('slugs and ids map one to one, and only slugs are accepted', () => {
   assert.equal(new Set(slugs).size, DRUG_IDS.length);
   for (const id of DRUG_IDS) assert.equal(drugFromSlug(DRUG_SLUGS[id]), id, id);
   assert.deepEqual(DRUG_SLUGS, {
-    concerta: 'methylphenidate-oros',
+    concerta: 'methylphenidate-osmotic',
     medikinet: 'methylphenidate-mr',
     penid_ir: 'methylphenidate-ir',
     ritalin_la: 'methylphenidate-biphasic',
