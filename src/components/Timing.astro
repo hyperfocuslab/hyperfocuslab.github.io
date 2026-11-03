@@ -1,0 +1,164 @@
+---
+// The effect timing tool: one page per language, plus one per drug so each share link gets
+// its own card. The default state (dose at 08:00) is rendered at build; the browser re-renders
+// on every change and keeps the state in the URL (/ko/peakly/timing/concerta/?t=08:00).
+// Nothing is sent anywhere: the curve is computed in the page.
+import Base from '../layouts/Base.astro';
+import { href, storeLinks } from '../i18n';
+import type { DrugId } from '../lib/pk';
+import { DEFAULT_DRUG, DEFAULT_MINUTES, DRUG_IDS, copy, describe, render, toHHMM, type TimingLang } from '../lib/timing';
+
+interface Props {
+  lang: TimingLang;
+  /** The drug page; the index page leaves it out and starts with the default drug. */
+  drug?: DrugId;
+}
+const { lang, drug } = Astro.props;
+const t = copy[lang];
+const current = drug ?? DEFAULT_DRUG;
+const first = render({ lang, drug: current, minutes: DEFAULT_MINUTES, nowHours: null });
+const title = t.title(t.names[current]);
+const description = describe(lang, current);
+const ogImage = `/assets/og/timing-${lang}-${current}.png`;
+const appStore = storeLinks(lang, `timing-tool-${lang}`).appStore;
+---
+
+<Base lang={lang} page="timing" sub={drug} title={title} description={description} ogImage={ogImage}>
+  <section class="section timing" id="timing" data-lang={lang} data-drug={current} data-base={href('timing', lang)}>
+    <div class="wrap">
+      <header class="timing-head">
+        <p class="label">{t.label}</p>
+        <h1 class="h2">{t.h1}</h1>
+        <p class="lead">{t.lead}</p>
+      </header>
+
+      <form class="pk-controls" id="pk-form">
+        <label>
+          <span class="label">{t.drug}</span>
+          <select name="drug" id="pk-drug">
+            {DRUG_IDS.map((id) => <option value={id} selected={id === current}>{t.names[id]}</option>)}
+          </select>
+        </label>
+        <label>
+          <span class="label">{t.time}</span>
+          <input type="time" name="t" id="pk-time" value={toHHMM(DEFAULT_MINUTES)} step="300" required />
+        </label>
+        <button type="button" class="btn btn-ghost" id="pk-copy" data-copied={t.copied}>{t.copy}</button>
+      </form>
+
+      <div class="pk-panel">
+        <div class="pk-status" id="pk-status" set:html={first.status} />
+        <div class="pk-legend" id="pk-legend" set:html={first.legend} />
+        <div class="pk-chart" id="pk-chart" set:html={first.chart} />
+        <div class="pk-axis" id="pk-axis" set:html={first.axis} />
+      </div>
+      <p class="pk-summary lead" id="pk-summary" set:html={first.summary} />
+
+      <section class="pk-sources" aria-labelledby="pk-sources-title">
+        <h2 class="label" id="pk-sources-title">{t.sourcesTitle}</h2>
+        <div id="pk-sources" set:html={first.sources} />
+      </section>
+
+      <div class="pk-notice">{t.notice.map((p) => <p>{p}</p>)}</div>
+
+      <div class="p-closing">
+        <img class="app-icon" src="/assets/peakly-icon.webp" alt="" width="72" height="72" loading="lazy" />
+        <h2 class="h2">{t.cta.title}</h2>
+        <p class="lead">{t.cta.body}</p>
+        <div class="actions">
+          <a class="btn" href={appStore} target="_blank" rel="noreferrer">{t.cta.button}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  import { isDrugId, type DrugId } from '../lib/pk';
+  import { DEFAULT_MINUTES, PROFILES, copy, parseMinutes, render, toHHMM, type TimingLang } from '../lib/timing';
+
+  const root = document.getElementById('timing')!;
+  const lang = root.dataset.lang as TimingLang;
+  const base = root.dataset.base!;
+  const t = copy[lang];
+  const drugSelect = document.getElementById('pk-drug') as HTMLSelectElement;
+  const timeInput = document.getElementById('pk-time') as HTMLInputElement;
+  const copyButton = document.getElementById('pk-copy') as HTMLButtonElement;
+  const out = {
+    status: document.getElementById('pk-status')!,
+    legend: document.getElementById('pk-legend')!,
+    chart: document.getElementById('pk-chart')!,
+    axis: document.getElementById('pk-axis')!,
+    summary: document.getElementById('pk-summary')!,
+    sources: document.getElementById('pk-sources')!,
+  };
+
+  // State comes from the page's drug, then the query (?drug=concerta&t=08:00) on top.
+  const params = new URLSearchParams(location.search);
+  let drug: DrugId = isDrugId(params.get('drug')) ? (params.get('drug') as DrugId) : (root.dataset.drug as DrugId);
+  let minutes = parseMinutes(params.get('t')) ?? DEFAULT_MINUTES;
+  drugSelect.value = drug;
+  timeInput.value = toHHMM(minutes);
+
+  const shareUrl = () => `${location.origin}${base}${drug}/?t=${toHHMM(minutes)}`;
+
+  // Hours since today's dose. A dose later today counts as yesterday's when that is still
+  // inside the modeled range, so an evening dose is seen after midnight.
+  function nowHours(): number {
+    const now = new Date();
+    let hours = (now.getHours() * 60 + now.getMinutes() - minutes) / 60 + now.getSeconds() / 3600;
+    if (hours < 0 && hours + 24 <= PROFILES[drug].displayEndHours) hours += 24;
+    return hours;
+  }
+
+  function draw() {
+    const r = render({ lang, drug, minutes, nowHours: nowHours() });
+    out.status.innerHTML = r.status;
+    out.legend.innerHTML = r.legend;
+    out.chart.innerHTML = r.chart;
+    out.axis.innerHTML = r.axis;
+    out.summary.innerHTML = r.summary;
+    out.sources.innerHTML = r.sources;
+    document.title = t.title(t.names[drug]);
+  }
+
+  function update(fromUser: boolean) {
+    draw();
+    if (fromUser) history.replaceState(null, '', `${base}${drug}/?t=${toHHMM(minutes)}`);
+  }
+
+  drugSelect.addEventListener('change', () => {
+    if (isDrugId(drugSelect.value)) drug = drugSelect.value;
+    update(true);
+  });
+  timeInput.addEventListener('change', () => {
+    const parsed = parseMinutes(timeInput.value);
+    if (parsed === null) return;
+    minutes = parsed;
+    update(true);
+  });
+  copyButton.addEventListener('click', async () => {
+    const url = shareUrl();
+    try {
+      await navigator.clipboard.writeText(url);
+    } catch {
+      // Clipboard blocked (older WebView): the share sheet, if any, carries the link instead.
+      if (navigator.share) {
+        try {
+          await navigator.share({ url });
+        } catch {}
+      }
+      return;
+    }
+    const label = copyButton.textContent;
+    copyButton.textContent = copyButton.dataset.copied ?? label;
+    setTimeout(() => (copyButton.textContent = label), 1800);
+  });
+
+  update(false);
+  // The marker follows the clock.
+  setInterval(draw, 60_000);
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) draw();
+  });
+</script>

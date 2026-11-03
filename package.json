@@ -6,7 +6,9 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "extract": "node scripts/extract-legacy.mjs"
+    "extract": "node scripts/extract-legacy.mjs",
+    "test": "node --test src/lib/*.test.ts",
+    "og:timing": "node scripts/og-timing.mjs"
   },
   "dependencies": {
     "astro": "^7.3.8"

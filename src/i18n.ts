@@ -1,6 +1,6 @@
 export const LANGS = ['ko', 'en', 'ja', 'zh-Hant'] as const;
 export type Lang = (typeof LANGS)[number];
-export type Page = 'home' | 'peakly' | 'privacy' | 'terms' | 'support';
+export type Page = 'home' | 'peakly' | 'privacy' | 'terms' | 'support' | 'timing';
 
 export const SITE = 'https://hyperfocuslab.app';
 export const EMAIL = 'support@hyperfocuslab.app';
@@ -11,10 +11,11 @@ const APP_STORE_COUNTRY: Record<Lang, string> = { ko: 'kr/', ja: 'jp/', en: 'us/
 const PLAY_HL: Record<Lang, string> = { ko: 'ko', en: 'en', ja: 'ja', 'zh-Hant': 'zh-TW' };
 // Campaign tags so installs from this site show up per language in App Store Connect
 // (Acquisition > Campaigns) and Play Console (Acquisition reports, UTM).
-export function storeLinks(lang: Lang) {
+// `campaign` defaults to the site-wide tag; a tool page passes its own (timing-tool-ko).
+export function storeLinks(lang: Lang, campaign = `website-${lang}`) {
   return {
-    appStore: `https://apps.apple.com/${APP_STORE_COUNTRY[lang]}app/id6757836001?pt=128442127&ct=website-${lang}&mt=8`,
-    googlePlay: `https://play.google.com/store/apps/details?id=com.peakly.android&hl=${PLAY_HL[lang]}&referrer=utm_source%3Dhyperfocuslab.app%26utm_medium%3Dwebsite%26utm_campaign%3Dwebsite-${lang}`,
+    appStore: `https://apps.apple.com/${APP_STORE_COUNTRY[lang]}app/id6757836001?pt=128442127&ct=${campaign}&mt=8`,
+    googlePlay: `https://play.google.com/store/apps/details?id=com.peakly.android&hl=${PLAY_HL[lang]}&referrer=utm_source%3Dhyperfocuslab.app%26utm_medium%3Dwebsite%26utm_campaign%3D${campaign}`,
   };
 }
 
@@ -26,11 +27,19 @@ const SUFFIX: Partial<Record<Lang, string>> = { ko: '', en: '-en', ja: '-ja' };
 
 // Hyperfocus Lab is the company; Peakly is a product under it, and its
 // policies and support pages live under /peakly/.
-export function href(page: Page, lang: Lang): string {
+export function href(page: Page, lang: Lang, sub?: string): string {
   if (page === 'home') return HOME[lang];
   // Peakly is introduced on the home page; /peakly/ itself redirects there.
   if (page === 'peakly') return `${HOME[lang]}#products`;
+  // Tool pages are new, so every language carries its prefix (/ko/peakly/timing/concerta/).
+  if (page === 'timing') return `/${lang}/peakly/timing/${sub ? `${sub}/` : ''}`;
   return `${PREFIX[lang]}/peakly/${page}/`;
+}
+
+// Languages a page is built in. Tool pages exist only where their copy has been written.
+const PAGE_LANGS: Partial<Record<Page, readonly Lang[]>> = { timing: ['ko', 'en', 'ja'] };
+export function pageLangs(page: Page): readonly Lang[] {
+  return PAGE_LANGS[page] ?? LANGS;
 }
 
 // File names the previous Peakly site used (/privacy-en.html). They are kept

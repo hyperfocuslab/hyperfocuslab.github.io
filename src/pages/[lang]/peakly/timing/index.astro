@@ -1,0 +1,11 @@
+---
+import Timing from '../../../../components/Timing.astro';
+import { TIMING_LANGS, type TimingLang } from '../../../../lib/timing';
+
+export function getStaticPaths() {
+  return TIMING_LANGS.map((lang) => ({ params: { lang } }));
+}
+const lang = Astro.params.lang as TimingLang;
+---
+
+<Timing lang={lang} />

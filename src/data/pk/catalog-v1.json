@@ -1,0 +1,1000 @@
+{
+  "schemaVersion": 1,
+  "modelVersion": "2026-11-01-v4",
+  "profiles": [
+    {
+      "id": "concerta",
+      "swiftID": "concerta",
+      "name": "Concerta",
+      "formulation": "methylphenidate OROS",
+      "evidence": "legacyReference",
+      "referenceDoseMg": 18,
+      "tmaxHours": [
+        6,
+        10
+      ],
+      "displayEndHours": 16,
+      "anchors": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.5,
+          0.25
+        ],
+        [
+          1.0,
+          0.5
+        ],
+        [
+          2.75,
+          0.6
+        ],
+        [
+          4.5,
+          0.66
+        ],
+        [
+          5.666666666667,
+          0.82
+        ],
+        [
+          6.833333333333,
+          0.96
+        ],
+        [
+          8.0,
+          1.0
+        ],
+        [
+          9.125,
+          0.88
+        ],
+        [
+          11.0,
+          0.64
+        ],
+        [
+          13.5,
+          0.42
+        ],
+        [
+          16.0,
+          0.28
+        ]
+      ],
+      "aliases": [
+        "Concerta",
+        "콘서타",
+        "コンサータ"
+      ],
+      "sources": [
+        {
+          "title": "Concerta label; existing Peakly reference anchors",
+          "url": "https://dailymed.nlm.nih.gov/dailymed/lookup.cfm?setid=1a88218c-5b18-4220-8f56-526de1a276cd"
+        }
+      ],
+      "sections": [
+        {
+          "kind": "initial",
+          "hours": [
+            0.5,
+            1.5
+          ]
+        },
+        {
+          "kind": "peak",
+          "hours": [
+            6,
+            10
+          ]
+        },
+        {
+          "kind": "decline",
+          "hours": [
+            10,
+            12
+          ]
+        }
+      ],
+      "conditions": "Existing app shape retained; population mean Tmax is not an individual bound.",
+      "supportsTimingEdit": true,
+      "supportsHRPrediction": true,
+      "supportsRelativeDoseOverlay": true,
+      "manualTiming": {
+        "windows": [
+          [
+            0.5,
+            1.5
+          ],
+          [
+            6,
+            10
+          ],
+          [
+            10,
+            12
+          ]
+        ],
+        "startLimits": [
+          [
+            0,
+            1.5
+          ],
+          [
+            4,
+            8
+          ],
+          [
+            8,
+            12
+          ]
+        ],
+        "anchors": [
+          1,
+          8,
+          11
+        ],
+        "interpretation": "Product editing guardrails informed by reference PK and clinical duration; not individual physiological bounds or measured peak-width estimates."
+      }
+    },
+    {
+      "id": "medikinet",
+      "swiftID": "medikinet",
+      "name": "Medikinet Retard",
+      "formulation": "methylphenidate 50% IR / 50% modified release",
+      "evidence": "legacyReference",
+      "referenceDoseMg": 20,
+      "tmaxHours": [
+        2,
+        4
+      ],
+      "displayEndHours": 16,
+      "anchors": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.375,
+          0.25
+        ],
+        [
+          0.75,
+          0.5
+        ],
+        [
+          1.5,
+          0.81
+        ],
+        [
+          2.25,
+          0.95
+        ],
+        [
+          3.0,
+          1.0
+        ],
+        [
+          3.357142857143,
+          0.96
+        ],
+        [
+          3.714285714286,
+          0.91
+        ],
+        [
+          4.071428571429,
+          0.87
+        ],
+        [
+          4.428571428571,
+          0.88
+        ],
+        [
+          5.142857142857,
+          0.92
+        ],
+        [
+          5.5,
+          0.93
+        ],
+        [
+          6.5,
+          0.83
+        ],
+        [
+          8.0,
+          0.55
+        ],
+        [
+          10.0,
+          0.37
+        ],
+        [
+          12.0,
+          0.25
+        ],
+        [
+          16.0,
+          0.12
+        ]
+      ],
+      "aliases": [
+        "Medikinet Retard",
+        "Medikinet XL",
+        "메디키넷",
+        "메디키네트",
+        "メディキネット"
+      ],
+      "sources": [
+        {
+          "title": "Medikinet XL 20 mg SmPC; existing Peakly reference anchors",
+          "url": "https://www.medicines.org.uk/emc/product/8237/smpc"
+        }
+      ],
+      "sections": [
+        {
+          "kind": "peak",
+          "hours": [
+            2,
+            4
+          ]
+        },
+        {
+          "kind": "secondary",
+          "hours": [
+            5,
+            6
+          ]
+        },
+        {
+          "kind": "decline",
+          "hours": [
+            6,
+            7
+          ]
+        }
+      ],
+      "conditions": "Reference description is after breakfast. Meal-condition personalization is deferred.",
+      "supportsTimingEdit": true,
+      "supportsHRPrediction": true,
+      "supportsRelativeDoseOverlay": true,
+      "manualTiming": {
+        "windows": [
+          [
+            2,
+            4
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            6,
+            7
+          ]
+        ],
+        "startLimits": [
+          [
+            0.5,
+            2.5
+          ],
+          [
+            4,
+            5.5
+          ],
+          [
+            5,
+            8
+          ]
+        ],
+        "anchors": [
+          3,
+          5.5,
+          6.5
+        ],
+        "interpretation": "Product editing guardrails informed by reference PK and clinical duration; not individual physiological bounds or measured peak-width estimates."
+      }
+    },
+    {
+      "id": "adderall_xr",
+      "swiftID": "adderallXR",
+      "name": "Adderall XR",
+      "formulation": "mixed amphetamine salts extended release; d-amphetamine",
+      "evidence": "digitized",
+      "referenceDoseMg": 20,
+      "tmaxHours": [
+        5.2,
+        7.7
+      ],
+      "displayEndHours": 24,
+      "anchors": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0.1
+        ],
+        [
+          2,
+          0.38
+        ],
+        [
+          3,
+          0.65
+        ],
+        [
+          4,
+          0.82
+        ],
+        [
+          5,
+          0.94
+        ],
+        [
+          6,
+          0.98
+        ],
+        [
+          7,
+          1
+        ],
+        [
+          8,
+          0.97
+        ],
+        [
+          10,
+          0.9
+        ],
+        [
+          12,
+          0.78
+        ],
+        [
+          16,
+          0.6
+        ],
+        [
+          20,
+          0.47
+        ],
+        [
+          24,
+          0.36
+        ]
+      ],
+      "aliases": [
+        "Adderall XR",
+        "mixed amphetamine salts XR",
+        "애더럴 XR",
+        "アデロール XR"
+      ],
+      "sources": [
+        {
+          "title": "FDA Adderall XR label (2023), Figure 1, rounded d-amphetamine values",
+          "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2023/021303s038lbl.pdf"
+        }
+      ],
+      "sections": [
+        {
+          "kind": "initial",
+          "hours": [
+            0,
+            5.2
+          ]
+        },
+        {
+          "kind": "peak",
+          "hours": [
+            5.2,
+            7.7
+          ]
+        },
+        {
+          "kind": "decline",
+          "hours": [
+            7.7,
+            24
+          ]
+        }
+      ],
+      "conditions": "Single 20 mg dose after a meal (label Figure 1); mean d-amphetamine profile; rounded digitization.",
+      "supportsTimingEdit": true,
+      "supportsHRPrediction": true,
+      "supportsRelativeDoseOverlay": false,
+      "manualTiming": {
+        "windows": [
+          [
+            0.5,
+            1.5
+          ],
+          [
+            5.75,
+            8.25
+          ],
+          [
+            10,
+            12
+          ]
+        ],
+        "startLimits": [
+          [
+            0,
+            1.5
+          ],
+          [
+            3.95,
+            6.45
+          ],
+          [
+            8,
+            12
+          ]
+        ],
+        "anchors": [
+          1,
+          7,
+          11
+        ],
+        "interpretation": "Product editing guardrails informed by reference PK and clinical duration; not individual physiological bounds or measured peak-width estimates."
+      }
+    },
+    {
+      "id": "vyvanse",
+      "swiftID": "vyvanse",
+      "name": "Vyvanse",
+      "formulation": "lisdexamfetamine; active d-amphetamine",
+      "evidence": "schematic",
+      "referenceDoseMg": 70,
+      "tmaxHours": [
+        3.8,
+        4.7
+      ],
+      "displayEndHours": 24,
+      "anchors": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0.18
+        ],
+        [
+          2,
+          0.5
+        ],
+        [
+          3,
+          0.82
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          5,
+          0.98
+        ],
+        [
+          6,
+          0.91
+        ],
+        [
+          8,
+          0.79
+        ],
+        [
+          10,
+          0.68
+        ],
+        [
+          12,
+          0.58
+        ],
+        [
+          16,
+          0.44
+        ],
+        [
+          20,
+          0.33
+        ],
+        [
+          24,
+          0.25
+        ]
+      ],
+      "aliases": [
+        "Vyvanse",
+        "lisdexamfetamine",
+        "바이반스",
+        "ビバンセ"
+      ],
+      "sources": [
+        {
+          "title": "FDA Vyvanse label (2025), clinical pharmacology",
+          "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2025/021977s054%2C208510s011lbl.pdf"
+        }
+      ],
+      "sections": [
+        {
+          "kind": "initial",
+          "hours": [
+            0,
+            3.8
+          ]
+        },
+        {
+          "kind": "peak",
+          "hours": [
+            3.8,
+            4.7
+          ]
+        },
+        {
+          "kind": "decline",
+          "hours": [
+            4.7,
+            24
+          ]
+        }
+      ],
+      "conditions": "Schematic active d-amphetamine shape from label Tmax and adult elimination; not sampled plasma measurements.",
+      "supportsTimingEdit": true,
+      "supportsHRPrediction": true,
+      "supportsRelativeDoseOverlay": false,
+      "manualTiming": {
+        "windows": [
+          [
+            1,
+            2
+          ],
+          [
+            3.55,
+            4.45
+          ],
+          [
+            12,
+            14
+          ]
+        ],
+        "startLimits": [
+          [
+            0.5,
+            2
+          ],
+          [
+            2.55,
+            4.55
+          ],
+          [
+            10,
+            14
+          ]
+        ],
+        "anchors": [
+          1.5,
+          4,
+          13
+        ],
+        "interpretation": "Product editing guardrails informed by reference PK and clinical duration; not individual physiological bounds or measured peak-width estimates."
+      }
+    },
+    {
+      "id": "penid_ir",
+      "swiftID": "penidIR",
+      "name": "Penid IR",
+      "formulation": "methylphenidate immediate-release tablet",
+      "evidence": "schematic",
+      "referenceDoseMg": 10,
+      "tmaxHours": [
+        1.5,
+        2.5
+      ],
+      "displayEndHours": 12,
+      "anchors": [
+        [
+          0,
+          0
+        ],
+        [
+          0.5,
+          0.2
+        ],
+        [
+          1,
+          0.75
+        ],
+        [
+          1.5,
+          0.95
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0.757858283255
+        ],
+        [
+          4,
+          0.574349177499
+        ],
+        [
+          6,
+          0.329876977693
+        ],
+        [
+          8,
+          0.189464570814
+        ],
+        [
+          10,
+          0.108818820412
+        ],
+        [
+          12,
+          0.0625
+        ]
+      ],
+      "aliases": [
+        "Penid",
+        "Penid IR",
+        "페니드",
+        "페니드정"
+      ],
+      "sources": [
+        {
+          "title": "Whanin Penid formulation and strength",
+          "url": "https://www.whanin.com/_product/view.php?item=109"
+        },
+        {
+          "title": "Ritalin IR label, ingredient-level reference only",
+          "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=c0bf0835-6a2f-4067-a158-8b86c4b0668a"
+        },
+        {
+          "title": "Ritalin 10 mg SmPC, elimination half-life reference",
+          "url": "https://www.medicines.org.uk/emc/product/15987/smpc"
+        }
+      ],
+      "sections": [
+        {
+          "kind": "initial",
+          "hours": [
+            0,
+            1.5
+          ]
+        },
+        {
+          "kind": "peak",
+          "hours": [
+            1.5,
+            2.5
+          ]
+        },
+        {
+          "kind": "decline",
+          "hours": [
+            2.5,
+            12
+          ]
+        }
+      ],
+      "conditions": "Generic MPH IR schematic. Penid-specific plasma measurements and brand bioequivalence are not asserted.",
+      "supportsTimingEdit": true,
+      "supportsHRPrediction": false,
+      "supportsRelativeDoseOverlay": false,
+      "manualTiming": {
+        "windows": [
+          [
+            0.25,
+            0.75
+          ],
+          [
+            1.5,
+            2.5
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "startLimits": [
+          [
+            0,
+            0.5
+          ],
+          [
+            0.5,
+            1.5
+          ],
+          [
+            2.5,
+            4
+          ]
+        ],
+        "anchors": [
+          0.5,
+          2,
+          3.5
+        ],
+        "interpretation": "Product editing guardrails informed by reference PK and clinical duration; not individual physiological bounds or measured peak-width estimates."
+      }
+    },
+    {
+      "id": "ritalin_ir",
+      "swiftID": "ritalinIR",
+      "name": "Ritalin IR",
+      "formulation": "methylphenidate immediate-release tablet",
+      "evidence": "schematic",
+      "referenceDoseMg": 10,
+      "tmaxHours": [
+        1.5,
+        2.5
+      ],
+      "displayEndHours": 12,
+      "anchors": [
+        [
+          0,
+          0
+        ],
+        [
+          0.5,
+          0.2
+        ],
+        [
+          1,
+          0.75
+        ],
+        [
+          1.5,
+          0.95
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0.757858283255
+        ],
+        [
+          4,
+          0.574349177499
+        ],
+        [
+          6,
+          0.329876977693
+        ],
+        [
+          8,
+          0.189464570814
+        ],
+        [
+          10,
+          0.108818820412
+        ],
+        [
+          12,
+          0.0625
+        ]
+      ],
+      "aliases": [
+        "Ritalin",
+        "Ritalin IR",
+        "리탈린",
+        "리탈린 IR",
+        "リタリン"
+      ],
+      "sources": [
+        {
+          "title": "Ritalin tablets label, 10 mg mean Tmax",
+          "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=c0bf0835-6a2f-4067-a158-8b86c4b0668a"
+        },
+        {
+          "title": "Ritalin 10 mg SmPC, elimination half-life",
+          "url": "https://www.medicines.org.uk/emc/product/15987/smpc"
+        }
+      ],
+      "sections": [
+        {
+          "kind": "initial",
+          "hours": [
+            0,
+            1.5
+          ]
+        },
+        {
+          "kind": "peak",
+          "hours": [
+            1.5,
+            2.5
+          ]
+        },
+        {
+          "kind": "decline",
+          "hours": [
+            2.5,
+            12
+          ]
+        }
+      ],
+      "conditions": "Schematic curve anchored at 2 h with a 2 h elimination half-life; not a measured concentration series.",
+      "supportsTimingEdit": true,
+      "supportsHRPrediction": false,
+      "supportsRelativeDoseOverlay": false,
+      "manualTiming": {
+        "windows": [
+          [
+            0.25,
+            0.75
+          ],
+          [
+            1.5,
+            2.5
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "startLimits": [
+          [
+            0,
+            0.5
+          ],
+          [
+            0.5,
+            1.5
+          ],
+          [
+            2.5,
+            4
+          ]
+        ],
+        "anchors": [
+          0.5,
+          2,
+          3.5
+        ],
+        "interpretation": "Product editing guardrails informed by reference PK and clinical duration; not individual physiological bounds or measured peak-width estimates."
+      }
+    },
+    {
+      "id": "ritalin_la",
+      "swiftID": "ritalinLA",
+      "name": "Ritalin LA",
+      "formulation": "methylphenidate 50% immediate-release / 50% enteric-coated delayed-release beads",
+      "evidence": "schematic",
+      "referenceDoseMg": 20,
+      "tmaxHours": [
+        5,
+        6
+      ],
+      "displayEndHours": 16,
+      "anchors": [
+        [
+          0,
+          0
+        ],
+        [
+          0.7,
+          0
+        ],
+        [
+          2,
+          0.854838709677
+        ],
+        [
+          3.6,
+          0.483870967742
+        ],
+        [
+          5.5,
+          1
+        ],
+        [
+          8,
+          0.59148940937
+        ],
+        [
+          10,
+          0.388601570443
+        ],
+        [
+          12,
+          0.255306651579
+        ],
+        [
+          14,
+          0.167733460949
+        ],
+        [
+          16,
+          0.110198906875
+        ]
+      ],
+      "aliases": [],
+      "sources": [
+        {
+          "title": "Ritalin LA label (rev. 9/2025), Table 4, adult males 20 mg, n=8",
+          "url": "https://dailymed.nlm.nih.gov/dailymed/fda/fdaDrugXsl.cfm?setid=effd952d-ac94-47bb-b107-589a4934dcca&type=display"
+        },
+        {
+          "title": "FDA Ritalin LA label (2019), Table 4",
+          "url": "https://www.accessdata.fda.gov/drugsatfda_docs/label/2019/021284s016s029lbl.pdf"
+        }
+      ],
+      "sections": [
+        {
+          "kind": "initial",
+          "hours": [
+            1.5,
+            2.5
+          ]
+        },
+        {
+          "kind": "peak",
+          "hours": [
+            5,
+            6
+          ]
+        },
+        {
+          "kind": "decline",
+          "hours": [
+            7,
+            8
+          ]
+        }
+      ],
+      "conditions": "Schematic curve from mean values in label Table 4 (adult males, single 20 mg dose, n=8): lag 0.7 h, first peak 2.0 h (5.3 ng/mL), interpeak minimum 3.6 h (3.0 ng/mL), second peak 5.5 h (6.2 ng/mL). Later points are computed from a 3.3 h half-life. Not a measured concentration series. Children reach the second peak later (mean 6.6 h).",
+      "supportsTimingEdit": true,
+      "supportsHRPrediction": false,
+      "supportsRelativeDoseOverlay": false,
+      "manualTiming": {
+        "windows": [
+          [
+            1.5,
+            2.5
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            7,
+            8
+          ]
+        ],
+        "startLimits": [
+          [
+            0.8,
+            2.2
+          ],
+          [
+            3.8,
+            6
+          ],
+          [
+            6,
+            9
+          ]
+        ],
+        "anchors": [
+          2,
+          5.5,
+          7.5
+        ],
+        "interpretation": "Product editing guardrails informed by reference PK and clinical duration; not individual physiological bounds or measured peak-width estimates."
+      }
+    }
+  ]
+}

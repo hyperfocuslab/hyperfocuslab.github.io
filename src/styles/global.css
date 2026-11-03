@@ -1139,3 +1139,314 @@ main > .section:first-child {
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* ── Effect timing tool (/{lang}/peakly/timing/) ─────────── */
+.timing .wrap {
+  max-width: calc(820px + var(--gutter) * 2);
+}
+
+.timing-head {
+  display: grid;
+  gap: 14px;
+}
+
+.pk-controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: end;
+  margin-top: 36px;
+}
+
+.pk-controls label {
+  display: grid;
+  gap: 8px;
+}
+
+.pk-controls select,
+.pk-controls input {
+  width: 100%;
+  min-height: 48px;
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--rule);
+  background: var(--paper-2);
+  color: var(--ink);
+  font: inherit;
+  font-size: 1rem;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.pk-controls select {
+  padding-right: 40px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath d='M3 5l4 4 4-4' fill='none' stroke='%23b6bac0' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+}
+
+.pk-controls input[type='time'] {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Safari draws the time field as a flex of parts; without this it ignores the padding. */
+.pk-controls input[type='time']::-webkit-date-and-time-value {
+  text-align: left;
+  min-height: 1.4em;
+}
+
+.pk-controls .btn {
+  min-height: 48px;
+  padding-block: 10px;
+}
+
+/* The chart panel mirrors the app's card: name, legend, curve. */
+.pk-panel {
+  margin-top: 20px;
+  padding: clamp(20px, 3.5vw, 32px);
+  background: var(--paper-2);
+  border: 1px solid var(--rule-soft);
+  border-radius: 20px;
+}
+
+.pk-phase {
+  font-size: clamp(1.625rem, 4vw, 2.25rem);
+  font-weight: 680;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+}
+
+.pk-sub {
+  margin-top: 6px;
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.pk-legend {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.pk-legend-item {
+  display: grid;
+  gap: 2px;
+  font-size: 0.9375rem;
+}
+
+.pk-legend-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 640;
+}
+
+.pk-legend-name i {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+}
+
+.pk-legend-range {
+  color: var(--ink-2);
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.pk-chart {
+  position: relative;
+  height: clamp(170px, 42vw, 260px);
+  margin-top: 16px;
+}
+
+.pk-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.pk-fill {
+  fill: rgba(238, 238, 234, 0.08);
+}
+
+.pk-line {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.pk-grid {
+  stroke: rgba(238, 238, 234, 0.1);
+  stroke-width: 1;
+}
+
+.pk-base {
+  stroke: var(--rule);
+  stroke-width: 1;
+}
+
+.pk-now-line {
+  stroke: var(--ink);
+  stroke-width: 1.5;
+  stroke-dasharray: 4 4;
+}
+
+.pk-now-dot {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  margin: -6px 0 0 -6px;
+  border-radius: 50%;
+  background: var(--ink);
+  border: 2px solid var(--paper-2);
+}
+
+.pk-now-tag {
+  position: absolute;
+  transform: translate(-50%, calc(-100% - 12px));
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+.pk-now-tag.flip {
+  transform: translate(-92%, calc(-100% - 12px));
+}
+
+.pk-now-tag.below {
+  transform: translate(-50%, 12px);
+}
+
+.pk-now-tag.below.flip {
+  transform: translate(-92%, 12px);
+}
+
+.pk-axis {
+  position: relative;
+  height: 20px;
+  margin-top: 8px;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--ink-3);
+}
+
+.pk-tick {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.pk-tick.start {
+  transform: none;
+}
+
+.pk-tick.end {
+  transform: translateX(-100%);
+}
+
+.pk-summary {
+  margin-top: 24px;
+  max-width: none;
+}
+
+.pk-sources {
+  display: grid;
+  gap: 14px;
+  margin-top: clamp(40px, 6vw, 64px);
+}
+
+.pk-drug-name {
+  font-weight: 640;
+}
+
+.pk-drug-name .muted {
+  font-weight: 400;
+}
+
+/* Same rows as .facts on the home page, under its own name: the scroll-reveal script targets
+   .facts, and this list is re-rendered by the tool, so it must stay visible on its own. */
+.pk-facts {
+  width: 100%;
+  border-top: 1px solid var(--rule);
+}
+
+.pk-facts div {
+  display: grid;
+  grid-template-columns: minmax(8.5em, max-content) 1fr;
+  gap: 16px;
+  padding-block: 13px;
+  border-bottom: 1px solid var(--rule);
+  font-size: 0.9375rem;
+}
+
+.pk-facts dt {
+  color: var(--ink-3);
+}
+
+.pk-facts dd {
+  color: var(--ink-2);
+}
+
+.pk-links {
+  display: grid;
+  gap: 6px;
+  justify-items: start;
+}
+
+.pk-links a {
+  color: var(--ink);
+}
+
+.pk-notice {
+  display: grid;
+  gap: 10px;
+  max-width: 44em;
+  margin-top: clamp(32px, 5vw, 48px);
+  font-size: 0.9375rem;
+  color: var(--ink-3);
+}
+
+.timing .p-closing .lead {
+  max-width: 34em;
+}
+
+@media (max-width: 640px) {
+  .pk-controls {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .pk-controls .btn {
+    grid-column: 1 / -1;
+  }
+
+  .pk-legend {
+    gap: 8px;
+  }
+
+  .pk-legend-item {
+    font-size: 0.875rem;
+  }
+
+  .pk-legend-range {
+    font-size: 0.8125rem;
+  }
+
+  .pk-facts div {
+    grid-template-columns: minmax(6.5em, max-content) 1fr;
+  }
+}

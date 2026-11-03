@@ -1,0 +1,14 @@
+---
+import Timing from '../../../../../components/Timing.astro';
+import { DRUG_IDS, type DrugId } from '../../../../../lib/pk';
+import { TIMING_LANGS, type TimingLang } from '../../../../../lib/timing';
+
+// One page per drug so a shared link previews that drug's curve.
+export function getStaticPaths() {
+  return TIMING_LANGS.flatMap((lang) => DRUG_IDS.map((drug) => ({ params: { lang, drug } })));
+}
+const lang = Astro.params.lang as TimingLang;
+const drug = Astro.params.drug as DrugId;
+---
+
+<Timing lang={lang} drug={drug} />
