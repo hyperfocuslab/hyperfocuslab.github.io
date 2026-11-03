@@ -24,6 +24,8 @@ const description = describe(lang, current);
 const ogImage = `/assets/og/timing-${lang}-${current}.png`;
 // Installs from this tool are counted apart from the rest of the site (campaign timing-tool-{lang}).
 const { appStore, googlePlay } = storeLinks(lang, `timing-tool-${lang}`);
+// The notification line under the status is counted on its own (timing-tool-{lang}-notify).
+const notifyStores = storeLinks(lang, `timing-tool-${lang}-notify`);
 const groups = selectGroups(lang, current);
 ---
 
@@ -56,6 +58,9 @@ const groups = selectGroups(lang, current);
 
       <div class="pk-panel">
         <div class="pk-status" id="pk-status" set:html={first.status} />
+        <p class="pk-notify">
+          <a id="pk-notify" href="#pk-app" data-app-store={notifyStores.appStore} data-google-play={notifyStores.googlePlay}>{t.notify}</a>
+        </p>
         <div class="pk-legend" id="pk-legend" set:html={first.legend} />
         <div class="pk-chart" id="pk-chart" set:html={first.chart} />
         <div class="pk-axis" id="pk-axis" set:html={first.axis} />
@@ -68,7 +73,7 @@ const groups = selectGroups(lang, current);
 
       <p class="pk-notice">{t.notice}</p>
 
-      <div class="p-closing">
+      <div class="p-closing" id="pk-app">
         <img class="app-icon" src="/assets/peakly-icon.webp" alt="" width="72" height="72" loading="lazy" />
         <h2 class="h2">{t.cta.title}</h2>
         <p class="lead">{t.cta.body}</p>
@@ -158,6 +163,18 @@ const groups = selectGroups(lang, current);
     copyButton.textContent = copyButton.dataset.copied ?? label;
     setTimeout(() => (copyButton.textContent = label), 1800);
   });
+
+  // On a phone the notification line opens that phone's store; elsewhere it scrolls to both buttons.
+  // iPadOS reports itself as a Mac, so a touch screen on "Macintosh" counts as iOS.
+  const notify = document.getElementById('pk-notify') as HTMLAnchorElement;
+  const ua = navigator.userAgent;
+  const ios = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+  const store = /Android/i.test(ua) ? notify.dataset.googlePlay : ios ? notify.dataset.appStore : undefined;
+  if (store) {
+    notify.href = store;
+    notify.target = '_blank';
+    notify.rel = 'noreferrer';
+  }
 
   update(false);
   // The marker follows the clock.

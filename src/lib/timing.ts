@@ -40,6 +40,8 @@ type Copy = {
   taken: (drug: string, time: string) => string;
   elapsed: (h: number, m: number) => string;
   untilDose: (h: number, m: number) => string;
+  /** The link under the status to the app, which notifies as each window starts. */
+  notify: string;
   nextDay: string;
   axis: (hour24: number) => string;
   /** Heading of the second group in the medication list: drugs not sold in the language's market. */
@@ -104,6 +106,7 @@ export const copy: Record<TimingLang, Copy> = {
     taken: (drug, time) => `${drug} · ${time} 복용`,
     elapsed: (h, m) => `${h}시간 ${m}분 지남`,
     untilDose: (h, m) => `복용까지 ${h}시간 ${m}분`,
+    notify: '약효 구간별로 알림 받기',
     nextDay: '다음 날 ',
     axis: (h) => `${h}시`,
     market: '국내 미출시',
@@ -168,6 +171,7 @@ export const copy: Record<TimingLang, Copy> = {
     taken: (drug, time) => `${drug} · taken ${time}`,
     elapsed: (h, m) => `${h} h ${m} min since`,
     untilDose: (h, m) => `${h} h ${m} min until the dose`,
+    notify: 'Get notified as each window starts',
     nextDay: ' next day',
     axis: (h) => (h === 0 ? '12am' : h < 12 ? `${h}am` : h === 12 ? '12pm' : `${h - 12}pm`),
     market: 'Not sold in the US',
@@ -241,6 +245,7 @@ export const copy: Record<TimingLang, Copy> = {
     taken: (drug, time) => `${drug} · ${time} 服用`,
     elapsed: (h, m) => `${h}時間${m}分経過`,
     untilDose: (h, m) => `服用まで${h}時間${m}分`,
+    notify: '作用の区間ごとに通知を受け取る',
     nextDay: '翌日 ',
     axis: (h) => `${h}時`,
     market: '日本未発売・適応外',

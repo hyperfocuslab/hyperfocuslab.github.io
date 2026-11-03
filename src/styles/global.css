@@ -1224,6 +1224,15 @@ main > .section:first-child {
   font-variant-numeric: tabular-nums;
 }
 
+.pk-notify {
+  margin-top: 10px;
+  font-size: 0.9375rem;
+}
+
+.pk-notify a {
+  color: var(--ink);
+}
+
 /* A key, not column headings: the windows move with the drug and the dose time, so the items
    are packed from the left instead of sitting in thirds that only sometimes line up with them. */
 .pk-legend {
