@@ -2,7 +2,7 @@
 // Runs at build (first paint of the default state) and in the browser (every change),
 // so everything here is plain TypeScript with no DOM access.
 // The explicit extension lets Node run this module directly (tests, the share-card script).
-import { DRUG_IDS, MODEL_VERSION, PROFILES, type DrugId, type Evidence, type Profile, type SectionKind } from './pk.ts';
+import { DRUG_IDS, MODEL_VERSION, PROFILES, type DrugId, type Profile, type SectionKind } from './pk.ts';
 
 export type TimingLang = 'ko' | 'en' | 'ja';
 export const TIMING_LANGS: TimingLang[] = ['ko', 'en', 'ja'];
@@ -45,8 +45,9 @@ type Copy = {
   /** Heading of the second group in the medication list: drugs not sold in the language's market. */
   market: string;
   sourcesTitle: string;
-  rows: { timing: string; evidence: string; conditions: string; links: string };
-  evidence: Record<Evidence, string>;
+  rows: { timing: string; conditions: string; links: string };
+  /** Put in front of the conditions of a schematic profile, the one place it says so. */
+  schematic: string;
   timing: Names;
   /** Empty when the profile needs no extra note; the row is then left out. */
   conditions: Names;
@@ -107,12 +108,8 @@ export const copy: Record<TimingLang, Copy> = {
     axis: (h) => `${h}시`,
     market: '국내 미출시',
     sourcesTitle: '출처와 기준',
-    rows: { timing: '최고 농도', evidence: '곡선 근거', conditions: '조건', links: '출처' },
-    evidence: {
-      legacyReference: '설명서 평균값',
-      digitized: '설명서 평균 농도 그래프를 옮김',
-      schematic: '설명서 수치로 그린 개략 곡선 · 실측 곡선 아님',
-    },
+    rows: { timing: '최고 농도', conditions: '조건', links: '출처' },
+    schematic: '실측 곡선이 아닌 개략 곡선. ',
     timing: {
       concerta: '복용 후 6~10시간',
       medikinet: '아침 식후 복용 시 2~4시간',
@@ -125,7 +122,7 @@ export const copy: Record<TimingLang, Copy> = {
     conditions: {
       concerta: '',
       medikinet: '피크 이후는 발표된 평균 곡선을 참고한 추정',
-      penid_ir: '페니드 측정값이 아닌 메틸페니데이트 속방정 일반 곡선. 2시간 뒤 피크, 이후 2.5시간마다 절반으로 감소',
+      penid_ir: '메틸페니데이트 속방정 일반값(페니드 자체 자료 아님). 2시간 뒤 피크, 이후 2.5시간마다 절반으로 감소',
       ritalin_ir: '2시간 뒤 피크, 이후 2.5시간마다 절반으로 감소하도록 계산',
       ritalin_la: '성인 남성 8명, 20mg 1회 복용 평균값(2·3.6·5.5시간). 8시간 이후는 3.3시간마다 절반으로 감소하도록 계산',
       adderall_xr: '성인, 식후 20mg 1회 복용 평균 곡선 (설명서 그림 1)',
@@ -175,12 +172,8 @@ export const copy: Record<TimingLang, Copy> = {
     axis: (h) => (h === 0 ? '12am' : h < 12 ? `${h}am` : h === 12 ? '12pm' : `${h - 12}pm`),
     market: 'Not sold in the US',
     sourcesTitle: 'Sources and basis',
-    rows: { timing: 'Peak', evidence: 'Curve basis', conditions: 'Conditions', links: 'Sources' },
-    evidence: {
-      legacyReference: "Label's mean values",
-      digitized: "Traced from the label's mean concentration figure",
-      schematic: "Schematic curve from the label's figures · not a measured curve",
-    },
+    rows: { timing: 'Peak', conditions: 'Conditions', links: 'Sources' },
+    schematic: 'Schematic, not a measured curve. ',
     timing: {
       concerta: '6–10 h after the dose',
       medikinet: '2–4 h after a dose taken after breakfast',
@@ -193,7 +186,7 @@ export const copy: Record<TimingLang, Copy> = {
     conditions: {
       concerta: '',
       medikinet: 'After the peak, an estimate guided by published mean curves',
-      penid_ir: 'A general methylphenidate IR curve, not measurements of Penid. Peak at 2 h, then halving every 2.5 h',
+      penid_ir: 'General methylphenidate IR values, not Penid data. Peak at 2 h, then halving every 2.5 h',
       ritalin_ir: 'Peak at 2 h, then halving every 2.5 h',
       ritalin_la: 'Mean values for eight adult men after one 20 mg dose (2, 3.6 and 5.5 h). From 8 h on, halving every 3.3 h',
       adderall_xr: 'Adults, one 20 mg dose with food, mean curve (label Figure 1)',
@@ -252,14 +245,10 @@ export const copy: Record<TimingLang, Copy> = {
     axis: (h) => `${h}時`,
     market: '日本未発売・適応外',
     sourcesTitle: '出典と基準',
-    rows: { timing: '最高濃度', evidence: '曲線の根拠', conditions: '条件', links: '出典' },
+    rows: { timing: '最高濃度', conditions: '条件', links: '出典' },
     // The sources are US labels (FDA) and UK product information (emc), not Japanese 添付文書;
     // the source links name the country.
-    evidence: {
-      legacyReference: '製品情報の平均値',
-      digitized: '製品情報の平均濃度グラフを写したもの',
-      schematic: '製品情報の数値から描いた概略曲線・実測の曲線ではありません',
-    },
+    schematic: '実測ではない概略曲線。',
     timing: {
       concerta: '服用後6~10時間',
       medikinet: '朝食後の服用で2~4時間',
@@ -272,7 +261,7 @@ export const copy: Record<TimingLang, Copy> = {
     conditions: {
       concerta: '',
       medikinet: 'ピーク後は公表された平均曲線をもとにした推定',
-      penid_ir: 'Penid固有の測定値ではなく、メチルフェニデート速放錠の一般的な曲線。2時間後にピーク、その後2.5時間ごとに半減',
+      penid_ir: 'メチルフェニデート速放錠の一般的な値（Penid固有のデータではありません）。2時間後にピーク、その後2.5時間ごとに半減',
       ritalin_ir: '2時間後にピーク、その後2.5時間ごとに半減するものとして計算',
       ritalin_la: '成人男性8人、20mg単回服用の平均値（2・3.6・5.5時間）。8時間以降は3.3時間ごとに半減するものとして計算',
       adderall_xr: '成人、食後20mg単回服用の平均曲線（米国の製品ラベル 図1）',
@@ -568,8 +557,7 @@ export function render(input: RenderInput): Rendered {
     `<p class="pk-drug-name">${esc(name)} <span class="muted">${esc(t.formulations[drug])}</span></p>` +
     `<dl class="pk-facts">` +
     row(t.rows.timing, esc(t.timing[drug])) +
-    row(t.rows.evidence, esc(t.evidence[profile.evidence])) +
-    row(t.rows.conditions, esc(t.conditions[drug])) +
+    row(t.rows.conditions, esc((profile.evidence === 'schematic' ? t.schematic : '') + t.conditions[drug])) +
     row(t.rows.links, `<span class="pk-links">${links}</span>`) +
     `</dl>`;
 
