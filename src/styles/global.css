@@ -1224,10 +1224,12 @@ main > .section:first-child {
   font-variant-numeric: tabular-nums;
 }
 
+/* A key, not column headings: the windows move with the drug and the dose time, so the items
+   are packed from the left instead of sitting in thirds that only sometimes line up with them. */
 .pk-legend {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 36px;
   margin-top: 24px;
 }
 
@@ -1440,11 +1442,16 @@ main > .section:first-child {
     grid-column: 1 / -1;
   }
 
+  /* One row per window, name left and time right, as the app does when one line does not fit. */
   .pk-legend {
-    gap: 8px;
+    flex-direction: column;
+    gap: 6px;
   }
 
   .pk-legend-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
     font-size: 0.875rem;
   }
 
