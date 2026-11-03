@@ -33,7 +33,6 @@ const groups = selectGroups(lang, current);
       <header class="timing-head">
         <p class="label">{t.label}</p>
         <h1 class="h2">{t.h1}</h1>
-        <p class="lead">{t.lead}</p>
       </header>
 
       <form class="pk-controls" id="pk-form">
@@ -61,14 +60,13 @@ const groups = selectGroups(lang, current);
         <div class="pk-chart" id="pk-chart" set:html={first.chart} />
         <div class="pk-axis" id="pk-axis" set:html={first.axis} />
       </div>
-      <p class="pk-summary lead" id="pk-summary" set:html={first.summary} />
 
       <section class="pk-sources" aria-labelledby="pk-sources-title">
         <h2 class="label" id="pk-sources-title">{t.sourcesTitle}</h2>
         <div id="pk-sources" set:html={first.sources} />
       </section>
 
-      <div class="pk-notice">{t.notice.map((p) => <p>{p}</p>)}</div>
+      <p class="pk-notice">{t.notice}</p>
 
       <div class="p-closing">
         <img class="app-icon" src="/assets/peakly-icon.webp" alt="" width="72" height="72" loading="lazy" />
@@ -100,7 +98,6 @@ const groups = selectGroups(lang, current);
     legend: document.getElementById('pk-legend')!,
     chart: document.getElementById('pk-chart')!,
     axis: document.getElementById('pk-axis')!,
-    summary: document.getElementById('pk-summary')!,
     sources: document.getElementById('pk-sources')!,
   };
 
@@ -123,7 +120,6 @@ const groups = selectGroups(lang, current);
     out.legend.innerHTML = r.legend;
     out.chart.innerHTML = r.chart;
     out.axis.innerHTML = r.axis;
-    out.summary.innerHTML = r.summary;
     out.sources.innerHTML = r.sources;
     document.title = t.title(t.names[drug]);
   }

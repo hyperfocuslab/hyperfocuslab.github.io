@@ -21,7 +21,6 @@ type Copy = {
   description: (drug: string, dose: string, peak: string) => string;
   label: string;
   h1: string;
-  lead: string;
   drug: string;
   time: string;
   copy: string;
@@ -41,7 +40,6 @@ type Copy = {
   taken: (drug: string, time: string) => string;
   elapsed: (h: number, m: number) => string;
   untilDose: (h: number, m: number) => string;
-  summary: (time: string, peakLabel: string, peakRange: string, declineLabel: string, declineRange: string, end: number) => string;
   nextDay: string;
   axis: (hour24: number) => string;
   /** Heading of the second group in the medication list: drugs not sold in the language's market. */
@@ -54,7 +52,7 @@ type Copy = {
   conditions: Names;
   /** One label per catalog source, in catalog order, in the reader's language. */
   sourceLabels: Record<DrugId, string[]>;
-  notice: string[];
+  notice: string;
   cta: { title: string; body: string };
 };
 
@@ -75,10 +73,9 @@ export const copy: Record<TimingLang, Copy> = {
   ko: {
     title: (drug) => `${drug} 약효 흐름 | 피클리`,
     description: (drug, dose, peak) =>
-      `${dose}에 ${drug}${objectParticle(drug)} 먹으면 피클리 앱의 기본 표시 구간으로는 최고 농도 구간이 ${peak}입니다. 약과 복용 시각을 바꿔 가며 하루 약효 흐름을 참고 곡선으로 볼 수 있습니다.`,
+      `${dose}에 ${drug}${objectParticle(drug)} 먹으면 최고 농도 구간은 ${peak}입니다. 약과 복용 시각을 바꿔 참고 곡선을 볼 수 있습니다.`,
     label: '피클리 · 약효 흐름',
     h1: 'ADHD 약 약효 흐름',
-    lead: '약과 복용 시각을 고르면 복용 후 16시간의 약효 흐름을 참고 곡선으로 그립니다. 피클리 앱의 약효 차트와 같은 곡선입니다.',
     drug: '약',
     time: '복용 시각',
     copy: '링크 복사',
@@ -106,35 +103,33 @@ export const copy: Record<TimingLang, Copy> = {
     taken: (drug, time) => `${drug} · ${time} 복용`,
     elapsed: (h, m) => `${h}시간 ${m}분 지남`,
     untilDose: (h, m) => `복용까지 ${h}시간 ${m}분`,
-    summary: (time, peakLabel, peakRange, declineLabel, declineRange, end) =>
-      `${time}에 먹으면 피클리 앱의 기본 표시 구간으로는 ${peakLabel} 구간이 ${peakRange}, ${declineLabel} 구간이 ${declineRange}입니다. 그래프는 복용 후 ${end}시간까지 표시합니다.`,
     nextDay: '다음 날 ',
     axis: (h) => `${h}시`,
     market: '국내 미출시',
     sourcesTitle: '출처와 기준',
-    rows: { timing: '기준 시점', evidence: '곡선 종류', conditions: '조건', links: '출처' },
+    rows: { timing: '최고 농도', evidence: '곡선 근거', conditions: '조건', links: '출처' },
     evidence: {
-      legacyReference: '제품 설명서의 평균값을 바탕으로 한 참고 곡선',
-      digitized: '제품 설명서의 평균 농도 그래프를 옮긴 참고 곡선',
-      schematic: '제품 설명서의 수치로 만든 개략 곡선 (실제 측정 곡선 아님)',
+      legacyReference: '설명서 평균값',
+      digitized: '설명서 평균 농도 그래프를 옮김',
+      schematic: '설명서 수치로 그린 개략 곡선 · 실측 곡선 아님',
     },
     timing: {
-      concerta: '설명서 기준 평균 최고 농도: 복용 후 6~10시간',
-      medikinet: '설명서 기준(아침 식후) 최고 농도: 복용 후 2~4시간. 그 뒤 구간은 발표된 평균 곡선을 참고한 추정',
-      penid_ir: '성분(메틸페니데이트 속방) 설명서 기준 평균 최고 농도: 복용 후 약 2시간 (1~2시간)',
-      ritalin_ir: '설명서 기준 평균 최고 농도: 복용 후 약 2시간 (1~2시간)',
-      ritalin_la: '설명서 기준 2차 최고 농도: 복용 후 5.5시간 (4.3~6.5시간, 소아 평균 6.6시간)',
-      adderall_xr: '설명서 기준(성인) 평균 최고 농도: 복용 후 5.2~7.7시간',
-      vyvanse: '설명서 기준 평균 최고 농도: 복용 후 3.8~4.7시간',
+      concerta: '복용 후 6~10시간',
+      medikinet: '아침 식후 복용 시 2~4시간',
+      penid_ir: '복용 후 약 2시간 (1~2시간)',
+      ritalin_ir: '복용 후 약 2시간 (1~2시간)',
+      ritalin_la: '2차 피크: 복용 후 5.5시간 (4.3~6.5시간, 소아 평균 6.6시간)',
+      adderall_xr: '복용 후 5.2~7.7시간',
+      vyvanse: '복용 후 3.8~4.7시간',
     },
     conditions: {
       concerta: '',
-      medikinet: '아침 식후 복용 기준의 곡선입니다.',
-      penid_ir: '복용 2시간 뒤 최고, 이후 2.5시간마다 절반으로 줄어드는 것으로 그린 메틸페니데이트 속방정의 일반적인 곡선입니다. 페니드만의 측정값은 아닙니다.',
-      ritalin_ir: '복용 2시간 뒤 최고, 이후 2.5시간마다 절반으로 줄어드는 것으로 그린 곡선입니다.',
-      ritalin_la: '성인 남성 8명이 20mg을 1회 복용한 설명서 평균값(2시간·3.6시간·5.5시간)으로 그렸습니다. 8시간 이후는 3.3시간마다 절반으로 줄어드는 것으로 계산했습니다. 소아는 2차 최고 농도가 더 늦습니다(평균 6.6시간).',
-      adderall_xr: '식후 20mg을 1회 복용한 성인의 평균 곡선(설명서 그림 1)입니다.',
-      vyvanse: '설명서의 최고 농도 시점과 성인 반감기로 그린 곡선입니다. 실제 측정 곡선이 아닙니다.',
+      medikinet: '피크 이후는 발표된 평균 곡선을 참고한 추정',
+      penid_ir: '페니드 측정값이 아닌 메틸페니데이트 속방정 일반 곡선. 2시간 뒤 피크, 이후 2.5시간마다 절반으로 감소',
+      ritalin_ir: '2시간 뒤 피크, 이후 2.5시간마다 절반으로 감소하도록 계산',
+      ritalin_la: '성인 남성 8명, 20mg 1회 복용 평균값(2·3.6·5.5시간). 8시간 이후는 3.3시간마다 절반으로 감소하도록 계산',
+      adderall_xr: '성인, 식후 20mg 1회 복용 평균 곡선 (설명서 그림 1)',
+      vyvanse: '설명서의 피크 시점과 성인 반감기로 계산',
     },
     sourceLabels: {
       concerta: ['콘서타 제품 설명서 (FDA)'],
@@ -145,10 +140,7 @@ export const copy: Record<TimingLang, Copy> = {
       adderall_xr: ['애더럴 XR 제품 설명서 (FDA, 2023)'],
       vyvanse: ['바이반스 제품 설명서 (FDA, 2025)'],
     },
-    notice: [
-      '정규화된 참고 곡선입니다. 개인 측정값이 아니며, 농도 피크와 체감 약효 피크는 서로 다를 수 있습니다. 표시 마지막 시각은 약효 종료 시각이 아닙니다.',
-      '이 페이지의 약물 정보는 이해를 돕기 위한 참고용 요약이며 의학적 진단이나 치료, 처방을 대신하지 않습니다. 복용 시각이나 용량 변경은 의사 또는 약사와 상의하세요.',
-    ],
+    notice: '개인 측정값이 아닌 참고 곡선입니다. 체감 피크는 농도 피크와 다를 수 있고, 그래프 끝이 약효 종료는 아닙니다. 복용 시각·용량 변경은 의사·약사와 상의하세요.',
     cta: {
       title: '내 복용 기록으로 매일 보기',
       body: '피클리에 복용 시각을 기록하면 이 곡선이 매일 그려지고, 상승·피크·감소 때 알림을 받습니다. 구간은 직접 옮겨서 맞출 수 있습니다.',
@@ -157,10 +149,9 @@ export const copy: Record<TimingLang, Copy> = {
   en: {
     title: (drug) => `${drug} effect timing | Peakly`,
     description: (drug, dose, peak) =>
-      `Taken at ${dose}, Peakly's default display windows put ${drug}'s peak window at ${peak}. Change the medication and dose time to see the day's effect curve for reference.`,
+      `Taken at ${dose}, ${drug}'s peak window is ${peak}. Change the medication or dose time to see its reference curve.`,
     label: 'Peakly · Effect timing',
     h1: 'ADHD medication effect timing',
-    lead: 'Pick a medication and a dose time to draw the 16 hours after the dose as a reference curve. It is the same curve as the effect chart in the Peakly app.',
     drug: 'Medication',
     time: 'Dose time',
     copy: 'Copy link',
@@ -180,35 +171,33 @@ export const copy: Record<TimingLang, Copy> = {
     taken: (drug, time) => `${drug} · taken ${time}`,
     elapsed: (h, m) => `${h} h ${m} min since`,
     untilDose: (h, m) => `${h} h ${m} min until the dose`,
-    summary: (time, peakLabel, peakRange, declineLabel, declineRange, end) =>
-      `Taken at ${time}, Peakly's default display windows put the ${peakLabel.toLowerCase()} window at ${peakRange} and the ${declineLabel.toLowerCase()} window at ${declineRange}. The chart shows the first ${end} hours after the dose.`,
     nextDay: ' next day',
     axis: (h) => (h === 0 ? '12am' : h < 12 ? `${h}am` : h === 12 ? '12pm' : `${h - 12}pm`),
     market: 'Not sold in the US',
     sourcesTitle: 'Sources and basis',
-    rows: { timing: 'Reference timing', evidence: 'Curve type', conditions: 'Conditions', links: 'Sources' },
+    rows: { timing: 'Peak', evidence: 'Curve basis', conditions: 'Conditions', links: 'Sources' },
     evidence: {
-      legacyReference: "Reference curve based on the label's mean values",
-      digitized: "Reference curve traced from the label's mean concentration figure",
-      schematic: "Schematic curve built from the label's figures (not a measured curve)",
+      legacyReference: "Label's mean values",
+      digitized: "Traced from the label's mean concentration figure",
+      schematic: "Schematic curve from the label's figures · not a measured curve",
     },
     timing: {
-      concerta: 'Label mean peak concentration: 6–10 h after the dose',
-      medikinet: 'Label peak (after breakfast): 2–4 h after the dose. The later part of the curve is an estimate guided by published mean curves',
-      penid_ir: 'Ingredient (methylphenidate IR) label mean peak: about 2 h after the dose (1–2 h)',
-      ritalin_ir: 'Label mean peak concentration: about 2 h after the dose (1–2 h)',
-      ritalin_la: 'Label second peak: 5.5 h after the dose (4.3–6.5 h; children mean 6.6 h)',
-      adderall_xr: 'Label mean peak concentration (adults): 5.2–7.7 h after the dose',
-      vyvanse: 'Label mean peak concentration: 3.8–4.7 h after the dose',
+      concerta: '6–10 h after the dose',
+      medikinet: '2–4 h after a dose taken after breakfast',
+      penid_ir: 'About 2 h after the dose (1–2 h)',
+      ritalin_ir: 'About 2 h after the dose (1–2 h)',
+      ritalin_la: 'Second peak: 5.5 h after the dose (4.3–6.5 h; children mean 6.6 h)',
+      adderall_xr: '5.2–7.7 h after the dose',
+      vyvanse: '3.8–4.7 h after the dose',
     },
     conditions: {
       concerta: '',
-      medikinet: 'Curve for a dose taken after breakfast.',
-      penid_ir: 'A general methylphenidate IR curve drawn with a peak at 2 h and a halving every 2.5 h after it, not measurements of Penid itself.',
-      ritalin_ir: 'Drawn with a peak at 2 h and a halving every 2.5 h after it.',
-      ritalin_la: "Drawn from the label's mean values for eight adult men after a single 20 mg dose (2 h, 3.6 h, 5.5 h); from 8 h on it halves every 3.3 h. Children reach the second peak later (mean 6.6 h).",
-      adderall_xr: 'Mean curve of adults after a single 20 mg dose with food (label Figure 1).',
-      vyvanse: "Drawn from the label's peak timing and adult half-life, not from measured concentrations.",
+      medikinet: 'After the peak, an estimate guided by published mean curves',
+      penid_ir: 'A general methylphenidate IR curve, not measurements of Penid. Peak at 2 h, then halving every 2.5 h',
+      ritalin_ir: 'Peak at 2 h, then halving every 2.5 h',
+      ritalin_la: 'Mean values for eight adult men after one 20 mg dose (2, 3.6 and 5.5 h). From 8 h on, halving every 3.3 h',
+      adderall_xr: 'Adults, one 20 mg dose with food, mean curve (label Figure 1)',
+      vyvanse: "Calculated from the label's peak timing and adult half-life",
     },
     sourceLabels: {
       concerta: ['Concerta prescribing information (FDA)'],
@@ -219,10 +208,7 @@ export const copy: Record<TimingLang, Copy> = {
       adderall_xr: ['Adderall XR prescribing information (FDA, 2023)'],
       vyvanse: ['Vyvanse prescribing information (FDA, 2025)'],
     },
-    notice: [
-      'This is a normalized reference curve, not a personal measurement. Concentration and felt effect can peak at different times. The last displayed time is not the end of the effect.',
-      'Medication information on this page is a general reference summary and does not replace medical diagnosis, treatment, or prescribing advice. Talk to your doctor or pharmacist before changing a dose or its timing.',
-    ],
+    notice: 'A reference curve, not a personal measurement. The felt peak can differ from the concentration peak, and the end of the chart is not the end of the effect. Talk to your doctor or pharmacist before changing a dose or its timing.',
     cta: {
       title: 'See it every day with your own doses',
       body: 'Log your dose time in Peakly and this curve is drawn every day, with notifications as it rises, peaks, and wears off. You can move each window yourself.',
@@ -231,11 +217,10 @@ export const copy: Record<TimingLang, Copy> = {
   ja: {
     title: (drug) => `${drug}の作用の流れ | ピークリー`,
     description: (drug, dose, peak) =>
-      `${dose}に${drug}を服用した場合、ピークリーアプリの標準の表示区間では最高濃度の区間は${peak}です。薬と服用時刻を変えて、一日の作用の流れを参考曲線で確認できます。`,
+      `${dose}に${drug}を服用した場合、最高濃度の区間は${peak}です。薬と服用時刻を変えて参考曲線を確認できます。`,
     label: 'ピークリー · 作用の流れ',
     // Not "ADHD治療薬": Ritalin is approved for narcolepsy, not ADHD, in Japan.
     h1: '薬の作用の流れ',
-    lead: '薬と服用時刻を選ぶと、服用後16時間の作用の流れを参考曲線で描きます。ピークリーアプリの作用チャートと同じ曲線です。',
     drug: '薬',
     time: '服用時刻',
     copy: 'リンクをコピー',
@@ -263,36 +248,35 @@ export const copy: Record<TimingLang, Copy> = {
     taken: (drug, time) => `${drug} · ${time} 服用`,
     elapsed: (h, m) => `${h}時間${m}分経過`,
     untilDose: (h, m) => `服用まで${h}時間${m}分`,
-    summary: (time, peakLabel, peakRange, declineLabel, declineRange, end) =>
-      `${time}に服用した場合、ピークリーアプリの標準の表示区間では、${peakLabel}の区間は${peakRange}、${declineLabel}の区間は${declineRange}です。グラフは服用後${end}時間まで表示します。`,
     nextDay: '翌日 ',
     axis: (h) => `${h}時`,
     market: '日本未発売・適応外',
     sourcesTitle: '出典と基準',
-    rows: { timing: '基準時点', evidence: '曲線の種類', conditions: '条件', links: '出典' },
-    // The sources are US labels (FDA) and UK product information (emc), not Japanese 添付文書.
+    rows: { timing: '最高濃度', evidence: '曲線の根拠', conditions: '条件', links: '出典' },
+    // The sources are US labels (FDA) and UK product information (emc), not Japanese 添付文書;
+    // the source links name the country.
     evidence: {
-      legacyReference: '製品情報の平均値をもとにした参考曲線',
-      digitized: '製品情報の平均濃度グラフを写した参考曲線',
-      schematic: '製品情報の数値から作った概略曲線（実測の曲線ではありません）',
+      legacyReference: '製品情報の平均値',
+      digitized: '製品情報の平均濃度グラフを写したもの',
+      schematic: '製品情報の数値から描いた概略曲線・実測の曲線ではありません',
     },
     timing: {
-      concerta: '米国の製品ラベル（FDA）の平均最高濃度: 服用後6~10時間',
-      medikinet: '英国の製品情報（emc）の最高濃度（朝食後）: 服用後2~4時間。その後の曲線は公表された平均曲線をもとにした推定',
-      penid_ir: '成分（メチルフェニデート速放）の米国の製品ラベル（FDA）の平均最高濃度: 服用後約2時間（1~2時間）',
-      ritalin_ir: '米国の製品ラベル（FDA）の平均最高濃度: 服用後約2時間（1~2時間）',
-      ritalin_la: '米国の製品ラベル（FDA）の2回目の最高濃度: 服用後5.5時間（4.3~6.5時間、小児平均6.6時間）',
-      adderall_xr: '米国の製品ラベル（FDA）の平均最高濃度（成人）: 服用後5.2~7.7時間',
-      vyvanse: '米国の製品ラベル（FDA）の平均最高濃度: 服用後3.8~4.7時間',
+      concerta: '服用後6~10時間',
+      medikinet: '朝食後の服用で2~4時間',
+      penid_ir: '服用後約2時間（1~2時間）',
+      ritalin_ir: '服用後約2時間（1~2時間）',
+      ritalin_la: '2回目のピーク: 服用後5.5時間（4.3~6.5時間、小児平均6.6時間）',
+      adderall_xr: '服用後5.2~7.7時間',
+      vyvanse: '服用後3.8~4.7時間',
     },
     conditions: {
       concerta: '',
-      medikinet: '朝食後に服用した場合の曲線です。',
-      penid_ir: '服用2時間後に最高、その後2.5時間ごとに半分になるものとして描いたメチルフェニデート速放錠の一般的な曲線で、Penid固有の測定値ではありません。',
-      ritalin_ir: '服用2時間後に最高、その後2.5時間ごとに半分になるものとして描いた曲線です。',
-      ritalin_la: '成人男性8人が20mgを単回服用した米国の製品ラベルの平均値（2時間・3.6時間・5.5時間）から描きました。8時間以降は3.3時間ごとに半分になるものとして計算しています。小児は2回目の最高濃度がより遅くなります（平均6.6時間）。',
-      adderall_xr: '食後に20mgを単回服用した成人の平均曲線（米国の製品ラベル 図1）です。',
-      vyvanse: '米国の製品ラベルの最高濃度の時点と成人の半減期から描いた曲線で、実測の曲線ではありません。',
+      medikinet: 'ピーク後は公表された平均曲線をもとにした推定',
+      penid_ir: 'Penid固有の測定値ではなく、メチルフェニデート速放錠の一般的な曲線。2時間後にピーク、その後2.5時間ごとに半減',
+      ritalin_ir: '2時間後にピーク、その後2.5時間ごとに半減するものとして計算',
+      ritalin_la: '成人男性8人、20mg単回服用の平均値（2・3.6・5.5時間）。8時間以降は3.3時間ごとに半減するものとして計算',
+      adderall_xr: '成人、食後20mg単回服用の平均曲線（米国の製品ラベル 図1）',
+      vyvanse: '米国の製品ラベルのピーク時点と成人の半減期から計算',
     },
     sourceLabels: {
       concerta: ['コンサータ 米国の製品ラベル（FDA）'],
@@ -303,10 +287,7 @@ export const copy: Record<TimingLang, Copy> = {
       adderall_xr: ['アデロール XR 米国の製品ラベル（FDA、2023）'],
       vyvanse: ['ビバンセ 米国の製品ラベル（FDA、2025）'],
     },
-    notice: [
-      '正規化した参考曲線で、個人の測定値ではありません。濃度のピークと体感のピークは異なる場合があります。表示の最後の時刻は作用の終了時刻ではありません。',
-      'このページの薬の情報は理解を助けるための参考用の要約であり、医学的な診断、治療、処方に代わるものではありません。服用時刻や用量の変更は医師または薬剤師に相談してください。',
-    ],
+    notice: '個人の測定値ではない参考曲線です。体感のピークは濃度のピークと異なることがあり、グラフの終わりは作用の終わりではありません。服用時刻や用量の変更は医師・薬剤師に相談してください。',
     cta: {
       title: '自分の服薬記録で毎日見る',
       body: 'ピークリーに服用時刻を記録すると、この曲線が毎日描かれ、上昇・ピーク・減少のときに通知が届きます。区間は自分で動かして合わせられます。',
@@ -460,7 +441,6 @@ export interface Rendered {
   legend: string;
   chart: string;
   axis: string;
-  summary: string;
   sources: string;
 }
 
@@ -579,18 +559,6 @@ export function render(input: RenderInput): Rendered {
     })
     .join('');
 
-  const peakIndex = Math.max(0, profile.sectionKinds.indexOf('peak'));
-  const summary = esc(
-    t.summary(
-      clockText(lang, minutes),
-      labels[peakIndex],
-      rangeText(lang, minutes, profile.windows[peakIndex].start, profile.windows[peakIndex].end),
-      labels[2],
-      rangeText(lang, minutes, profile.windows[2].start, profile.windows[2].end),
-      end,
-    ),
-  );
-
   // Link text is the reader's own language; the catalog's titles are internal notes.
   const links = profile.sources
     .map((s, i) => `<a href="${esc(s.url)}" target="_blank" rel="noreferrer">${esc(t.sourceLabels[drug][i] ?? s.title)} ↗</a>`)
@@ -605,7 +573,7 @@ export function render(input: RenderInput): Rendered {
     row(t.rows.links, `<span class="pk-links">${links}</span>`) +
     `</dl>`;
 
-  return { status, legend, chart, axis, summary, sources };
+  return { status, legend, chart, axis, sources };
 }
 
 /// Meta description of a drug page in its default state (dose at 08:00).
