@@ -465,7 +465,8 @@ function esc(s: string): string {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
-const TOP = 80; // headroom above the peak in viewBox units (of 1000)
+// Headroom above the peak in viewBox units (of 1000): the app's y domain is 0...1.05 on every chart.
+const TOP = 1000 * (0.05 / 1.05);
 function sx(hour: number, end: number): number {
   return (hour / end) * 1000;
 }
