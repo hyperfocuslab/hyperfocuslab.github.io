@@ -159,6 +159,29 @@ const GA_ID = 'G-96T0GRTD1R';
       </div>
     </footer>
     <script is:inline>
+      // A visitor from an @Peakly_dev post (utm_campaign=p-YYYYMMDD-xxxx, set by x-ops) carries that
+      // post id into the store links, so App Store Connect (ct) and Play Console (referrer) count
+      // installs per post. Read from this page's URL only; nothing is stored between pages.
+      (() => {
+        try {
+          const camp = new URLSearchParams(location.search).get('utm_campaign');
+          if (!camp || !/^p-[0-9]{8}-[a-z0-9]{4}$/.test(camp)) return;
+          document.querySelectorAll('a[href^="https://apps.apple.com/"]').forEach((a) => {
+            const u = new URL(a.href);
+            u.searchParams.set('ct', camp);
+            a.href = u.href;
+          });
+          document.querySelectorAll('a[href^="https://play.google.com/"]').forEach((a) => {
+            const u = new URL(a.href);
+            const ref = new URLSearchParams(u.searchParams.get('referrer') || '');
+            ref.set('utm_campaign', camp);
+            u.searchParams.set('referrer', ref.toString());
+            a.href = u.href;
+          });
+        } catch (_) {}
+      })();
+    </script>
+    <script is:inline>
       // Remember an explicit language choice so the first-visit redirect never overrides it.
       document.addEventListener('click', (e) => {
         if (!(e.target instanceof Element) || !e.target.closest('a[hreflang]')) return;
