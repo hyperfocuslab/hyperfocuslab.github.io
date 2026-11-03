@@ -3,7 +3,14 @@
 // so a passing run means the web curve equals the iOS curve at these points (|diff| <= 1e-12).
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { PROFILES, DRUG_IDS, MODEL_VERSION, type DrugId } from './pk.ts';
+import { PROFILES, DRUG_IDS, MODEL_VERSION, isDrugId, type DrugId } from './pk.ts';
+
+test('isDrugId accepts catalog ids only, not inherited object keys', () => {
+  for (const id of DRUG_IDS) assert.equal(isDrugId(id), true, id);
+  for (const bad of ['constructor', '__proto__', 'toString', 'hasOwnProperty', '', 'Concerta', null, undefined, 3]) {
+    assert.equal(isDrugId(bad), false, String(bad));
+  }
+});
 
 const GOLDEN: [DrugId, number, number][] = [
   ['concerta', 0.75, 0.398733296213808],

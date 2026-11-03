@@ -133,6 +133,7 @@ export const PROFILES: Record<DrugId, Profile> = Object.fromEntries(
 /// Select order: the Korean market first, then the catalog's other profiles.
 export const DRUG_IDS: DrugId[] = ['concerta', 'medikinet', 'penid_ir', 'ritalin_ir', 'adderall_xr', 'vyvanse', 'ritalin_la'];
 
+// Own keys only: `'constructor' in PROFILES` is true, and a ?drug=constructor would then crash.
 export function isDrugId(value: unknown): value is DrugId {
-  return typeof value === 'string' && value in PROFILES;
+  return typeof value === 'string' && Object.hasOwn(PROFILES, value);
 }

@@ -1,12 +1,14 @@
 ---
 // The effect timing tool: one page per language, plus one per drug so each share link gets
 // its own card. The default state (dose at 08:00) is rendered at build; the browser re-renders
-// on every change and keeps the state in the URL (/ko/peakly/timing/concerta/?t=08:00).
-// Nothing is sent anywhere: the curve is computed in the page.
+// on every change. The drug is kept in the path (/ko/peakly/timing/concerta/); the dose time
+// goes only into the link the copy button makes (?t=08:00), never into the address bar, so the
+// site's analytics (Base.astro) sees the path and not the dose time. The curve itself is
+// computed in the page and the inputs are not sent to any server.
 import Base from '../layouts/Base.astro';
 import { href, storeLinks } from '../i18n';
 import type { DrugId } from '../lib/pk';
-import { DEFAULT_DRUG, DEFAULT_MINUTES, DRUG_IDS, copy, describe, render, toHHMM, type TimingLang } from '../lib/timing';
+import { DEFAULT_DRUG, DEFAULT_MINUTES, copy, describe, render, selectGroups, toHHMM, type TimingLang } from '../lib/timing';
 
 interface Props {
   lang: TimingLang;
@@ -20,14 +22,9 @@ const first = render({ lang, drug: current, minutes: DEFAULT_MINUTES, nowHours: 
 const title = t.title(t.names[current]);
 const description = describe(lang, current);
 const ogImage = `/assets/og/timing-${lang}-${current}.png`;
-// Installs from this tool are counted apart from the rest of the site: ct=timing-tool-{lang}
-// on the App Store, and a Play referrer of utm_source=hyperfocuslab / utm_medium=web /
-// utm_campaign=timing-tool-{lang}.
-const stores = storeLinks(lang, `timing-tool-${lang}`);
-const appStore = stores.appStore;
-const play = new URL(stores.googlePlay);
-play.searchParams.set('referrer', `utm_source=hyperfocuslab&utm_medium=web&utm_campaign=timing-tool-${lang}`);
-const googlePlay = play.toString();
+// Installs from this tool are counted apart from the rest of the site (campaign timing-tool-{lang}).
+const { appStore, googlePlay } = storeLinks(lang, `timing-tool-${lang}`);
+const groups = selectGroups(lang, current);
 ---
 
 <Base lang={lang} page="timing" sub={drug} title={title} description={description} ogImage={ogImage}>
@@ -43,7 +40,12 @@ const googlePlay = play.toString();
         <label>
           <span class="label">{t.drug}</span>
           <select name="drug" id="pk-drug">
-            {DRUG_IDS.map((id) => <option value={id} selected={id === current}>{t.names[id]}</option>)}
+            {groups[0].ids.map((id) => <option value={id} selected={id === current}>{t.names[id]}</option>)}
+            {groups[1].ids.length > 0 && (
+              <optgroup label={groups[1].label}>
+                {groups[1].ids.map((id) => <option value={id} selected={id === current}>{t.names[id]}</option>)}
+              </optgroup>
+            )}
           </select>
         </label>
         <label>
@@ -84,7 +86,7 @@ const googlePlay = play.toString();
 
 <script>
   import { isDrugId, type DrugId } from '../lib/pk';
-  import { DEFAULT_MINUTES, PROFILES, copy, parseMinutes, render, toHHMM, type TimingLang } from '../lib/timing';
+  import { DEFAULT_MINUTES, copy, hoursSinceDose, parseMinutes, render, toHHMM, type TimingLang } from '../lib/timing';
 
   const root = document.getElementById('timing')!;
   const lang = root.dataset.lang as TimingLang;
@@ -104,24 +106,19 @@ const googlePlay = play.toString();
 
   // State comes from the page's drug, then the query (?drug=concerta&t=08:00) on top.
   const params = new URLSearchParams(location.search);
-  let drug: DrugId = isDrugId(params.get('drug')) ? (params.get('drug') as DrugId) : (root.dataset.drug as DrugId);
+  const queried = params.get('drug');
+  let drug: DrugId = isDrugId(queried) ? queried : (root.dataset.drug as DrugId);
   let minutes = parseMinutes(params.get('t')) ?? DEFAULT_MINUTES;
+  // A drug outside this language's list (Ritalin LA via ?drug=) is added so the select agrees with the page.
+  if (![...drugSelect.options].some((o) => o.value === drug)) drugSelect.add(new Option(t.names[drug], drug));
   drugSelect.value = drug;
   timeInput.value = toHHMM(minutes);
 
+  // The dose time travels only inside this link, not in the address bar.
   const shareUrl = () => `${location.origin}${base}${drug}/?t=${toHHMM(minutes)}`;
 
-  // Hours since today's dose. A dose later today counts as yesterday's when that is still
-  // inside the modeled range, so an evening dose is seen after midnight.
-  function nowHours(): number {
-    const now = new Date();
-    let hours = (now.getHours() * 60 + now.getMinutes() - minutes) / 60 + now.getSeconds() / 3600;
-    if (hours < 0 && hours + 24 <= PROFILES[drug].displayEndHours) hours += 24;
-    return hours;
-  }
-
   function draw() {
-    const r = render({ lang, drug, minutes, nowHours: nowHours() });
+    const r = render({ lang, drug, minutes, nowHours: hoursSinceDose(new Date(), minutes) });
     out.status.innerHTML = r.status;
     out.legend.innerHTML = r.legend;
     out.chart.innerHTML = r.chart;
@@ -133,7 +130,9 @@ const googlePlay = play.toString();
 
   function update(fromUser: boolean) {
     draw();
-    if (fromUser) history.replaceState(null, '', `${base}${drug}/?t=${toHHMM(minutes)}`);
+    // Only the drug goes into the URL, and only when it changed.
+    const path = `${base}${drug}/`;
+    if (fromUser && location.pathname !== path) history.replaceState(null, '', path);
   }
 
   drugSelect.addEventListener('change', () => {

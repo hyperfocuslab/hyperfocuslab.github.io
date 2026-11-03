@@ -2,7 +2,74 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { MODEL_VERSION, PROFILES } from './pk.ts';
-import { clockText, copy, parseMinutes, phaseAt, rangeText, render, toHHMM } from './timing.ts';
+import {
+  clockText,
+  copy,
+  describe,
+  hoursSinceDose,
+  objectParticle,
+  parseMinutes,
+  phaseAt,
+  rangeText,
+  render,
+  selectGroups,
+  tickOffsets,
+  toHHMM,
+} from './timing.ts';
+
+test('hoursSinceDose is negative before today\'s dose and never borrows yesterday', () => {
+  const at = (h: number, m: number, s = 0) => new Date(2026, 10, 4, h, m, s);
+  assert.equal(hoursSinceDose(at(15, 0), 8 * 60), 7);
+  assert.ok(Math.abs(hoursSinceDose(at(15, 30, 36), 8 * 60) - 7.51) < 1e-9);
+  assert.equal(hoursSinceDose(at(7, 0), 8 * 60), -1);
+  assert.equal(hoursSinceDose(at(1, 0), 20 * 60), -19);
+  // Before the dose the page says so and draws no marker, whatever the drug's horizon.
+  for (const drug of ['concerta', 'adderall_xr'] as const) {
+    const r = render({ lang: 'ko', drug, minutes: 20 * 60, nowHours: hoursSinceDose(at(1, 0), 20 * 60) });
+    assert.ok(r.status.includes('복용 전'), drug);
+    assert.ok(r.status.includes('복용까지 19시간 0분'), drug);
+    assert.ok(!r.chart.includes('pk-now-dot'), drug);
+  }
+});
+
+test('tickOffsets land on whole clock hours', () => {
+  assert.deepEqual(tickOffsets(8 * 60, 16), [0, 4, 8, 12, 16]);
+  assert.deepEqual(tickOffsets(8 * 60 + 30, 16), [0.5, 4.5, 8.5, 12.5]);
+  assert.deepEqual(tickOffsets(8 * 60 + 1, 12), [59 / 60, 59 / 60 + 4, 59 / 60 + 8]);
+  const axis = render({ lang: 'ko', drug: 'concerta', minutes: 8 * 60 + 30, nowHours: null }).axis;
+  assert.deepEqual([...axis.matchAll(/>([^<]+)<\/span>/g)].map((m) => m[1]), ['9시', '13시', '17시', '21시']);
+  assert.ok(axis.includes('class="pk-tick start"'), 'first label is aligned inward');
+});
+
+test('objectParticle follows the final sound', () => {
+  assert.equal(objectParticle('콘서타'), '를');
+  assert.equal(objectParticle('메디키넷'), '을');
+  assert.equal(objectParticle('리탈린'), '을');
+  assert.equal(objectParticle('애더럴 XR'), '을');
+  assert.equal(objectParticle('리탈린 LA'), '를');
+  assert.equal(objectParticle('바이반스'), '를');
+  assert.ok(describe('ko', 'medikinet').includes('메디키넷을 먹으면'));
+  assert.ok(describe('ko', 'adderall_xr').includes('애더럴 XR을 먹으면'));
+  assert.ok(describe('ko', 'concerta').includes('콘서타를 먹으면'));
+});
+
+test('selectGroups lists the home market first and leaves Ritalin LA out', () => {
+  assert.deepEqual(selectGroups('ko').map((g) => g.ids), [
+    ['concerta', 'medikinet', 'penid_ir'],
+    ['ritalin_ir', 'adderall_xr', 'vyvanse'],
+  ]);
+  assert.deepEqual(selectGroups('ja').map((g) => g.ids), [
+    ['concerta', 'vyvanse'],
+    ['medikinet', 'penid_ir', 'ritalin_ir', 'adderall_xr'],
+  ]);
+  assert.deepEqual(selectGroups('en').map((g) => g.ids), [
+    ['concerta', 'ritalin_ir', 'adderall_xr', 'vyvanse'],
+    ['medikinet', 'penid_ir'],
+  ]);
+  assert.equal(selectGroups('ko')[1].label, '국내 미출시');
+  // The Ritalin LA page itself still lists its own drug.
+  assert.ok(selectGroups('ko', 'ritalin_la')[1].ids.includes('ritalin_la'));
+});
 
 test('parseMinutes accepts HH:MM only', () => {
   assert.equal(parseMinutes('08:00'), 480);
@@ -72,6 +139,7 @@ test('render produces the chart, legend and sources for every drug and language'
       assert.ok(r.chart.includes('pk-now-dot'), `${lang} ${drug} marker`);
       assert.equal((r.legend.match(/pk-legend-item/g) ?? []).length, 3, `${lang} ${drug} legend`);
       assert.equal((r.axis.match(/pk-tick/g) ?? []).length, PROFILES[drug].chartEndHours / 4 + 1, `${lang} ${drug} axis`);
+      assert.ok(!r.sources.includes(`<dd>${PROFILES[drug].referenceDoseMg} mg</dd>`), `${lang} ${drug} shows the reference dose row`);
       // Attribute values are escaped, so a URL with a query shows up with &amp;.
       for (const s of PROFILES[drug].sources) assert.ok(r.sources.includes(s.url.replace(/&/g, '&amp;')), `${lang} ${drug} source ${s.url}`);
       // Readers see link text in their language, one label per catalog source, and no internal notes.

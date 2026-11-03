@@ -30,6 +30,8 @@ const fontCss = `https://fonts.googleapis.com/css2?family=${plex}:wght@400;500;6
 // Share cards exist for ko/en/ja only; Traditional Chinese pages use the English card.
 const ogLang = lang === 'zh-Hant' ? 'en' : lang;
 const GA_ID = 'G-96T0GRTD1R';
+// Tool pages can be opened with the dose time in the query (?t=08:00); analytics gets the path only.
+const analyticsPathOnly = page === 'timing';
 ---
 
 <!doctype html>
@@ -80,11 +82,11 @@ const GA_ID = 'G-96T0GRTD1R';
       import.meta.env.PROD && (
         <>
           <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} />
-          <script is:inline define:vars={{ GA_ID }}>
+          <script is:inline define:vars={{ GA_ID, PATH_ONLY: analyticsPathOnly }}>
             window.dataLayer = window.dataLayer || [];
             function gtag() { dataLayer.push(arguments); }
             gtag('js', new Date());
-            gtag('config', GA_ID);
+            gtag('config', GA_ID, PATH_ONLY ? { page_location: location.origin + location.pathname } : {});
           </script>
         </>
       )
