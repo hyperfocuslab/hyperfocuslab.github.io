@@ -2,7 +2,7 @@
 // The reference concentration curve: one page per language, plus one per drug so each share link
 // gets its own card. The default state (dose at 08:00) is rendered at build; the browser re-renders
 // on every change. The drug is kept in the path by its ingredient-and-form slug
-// (/ko/peakly/timing/methylphenidate-oros/); catalog ids never reach the HTML or the URL. The dose
+// (/ko/peakly/timing/methylphenidate-osmotic/); catalog ids never reach the HTML or the URL. The dose
 // time goes only into the link the copy button makes (?t=08:00), never into the address bar, so
 // the site's analytics (Base.astro) sees the path and not the dose time. The curve itself is
 // computed in the page and the inputs are not sent to any server.
@@ -102,7 +102,7 @@ const groups = selectGroups(lang, current);
     sources: document.getElementById('pk-sources')!,
   };
 
-  // State comes from the page's drug, then the query (?drug=methylphenidate-oros&t=08:00) on top.
+  // State comes from the page's drug, then the query (?drug=methylphenidate-osmotic&t=08:00) on top.
   // Slugs only: an unknown slug, or one this language has no page for (an en-only drug on a ko
   // page), leaves the page's own drug, which on the index page is the default.
   const params = new URLSearchParams(location.search);

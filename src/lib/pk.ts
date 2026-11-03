@@ -147,7 +147,7 @@ export const DRUG_IDS: ToolDrugId[] = ['concerta', 'medikinet', 'penid_ir', 'add
 /// What a reader sees in the URL and the share card's file name: ingredient and form, never a
 /// product name. The catalog ids stay inside the code.
 export const DRUG_SLUGS: Record<ToolDrugId, string> = {
-  concerta: 'methylphenidate-oros',
+  concerta: 'methylphenidate-osmotic',
   medikinet: 'methylphenidate-mr',
   penid_ir: 'methylphenidate-ir',
   ritalin_la: 'methylphenidate-biphasic',
@@ -157,7 +157,7 @@ export const DRUG_SLUGS: Record<ToolDrugId, string> = {
 
 const BY_SLUG = new Map<string, ToolDrugId>(DRUG_IDS.map((id) => [DRUG_SLUGS[id], id]));
 
-/// The tool's drug for a URL slug (?drug=methylphenidate-oros), or null. A Map, so inherited
+/// The tool's drug for a URL slug (?drug=methylphenidate-osmotic), or null. A Map, so inherited
 /// object keys (?drug=constructor) are not slugs.
 export function drugFromSlug(value: unknown): ToolDrugId | null {
   return typeof value === 'string' ? (BY_SLUG.get(value) ?? null) : null;

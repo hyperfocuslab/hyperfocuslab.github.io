@@ -63,22 +63,22 @@ test('tickOffsets land on whole clock hours', () => {
 });
 
 test('page titles, descriptions and headings follow the label wording', () => {
-  assert.equal(copy.ko.title(copy.ko.names.concerta), '메틸페니데이트 OROS 서방정 혈중 농도 흐름 | Hyperfocus Lab');
-  assert.equal(copy.en.title(copy.en.names.vyvanse), 'Lisdexamfetamine capsule: blood concentration over time | Hyperfocus Lab');
-  assert.equal(copy.ja.title(copy.ja.names.concerta), 'メチルフェニデート OROS 徐放錠の血中濃度の推移 | Hyperfocus Lab');
+  assert.equal(copy.ko.title(copy.ko.names.concerta), '메틸페니데이트염산염 삼투압 방출형 서방정 혈중 농도 참고 곡선 | Hyperfocus Lab');
+  assert.equal(copy.en.title(copy.en.names.vyvanse), 'Lisdexamfetamine dimesylate capsule: reference blood concentration curve | Hyperfocus Lab');
+  assert.equal(copy.ja.title(copy.ja.names.concerta), 'メチルフェニデート塩酸塩 浸透圧型徐放錠の血中濃度参考曲線 | Hyperfocus Lab');
   assert.equal(
     describe('ko', 'concerta'),
-    '오전 8:00에 복용하면 메틸페니데이트 OROS 서방정의 설명서 기준 최고 농도 구간은 오후 2:00~6:00입니다. 복용 시각을 바꿔 참고 곡선을 볼 수 있습니다.',
+    '오전 8:00 복용 기준 메틸페니데이트염산염 삼투압 방출형 서방정의 혈중 농도 참고 곡선입니다. 곡선의 최고 농도 구간은 오후 2:00~6:00입니다.',
   );
   assert.equal(
     describe('en', 'concerta'),
-    "Taken at 8:00 AM, the label's peak concentration window for Methylphenidate OROS extended-release tablet is 2:00–6:00 PM. Change the dose time to see the reference curve.",
+    "Reference blood concentration curve for Methylphenidate hydrochloride osmotic extended-release tablet taken at 8:00 AM. The curve's peak window is 2:00–6:00 PM.",
   );
   assert.equal(
     describe('ja', 'concerta'),
-    '8:00に服用した場合、メチルフェニデート OROS 徐放錠の製品情報に基づく最高濃度の区間は14:00~18:00です。服用時刻を変えて参考曲線を確認できます。',
+    '8:00に服用した場合のメチルフェニデート塩酸塩 浸透圧型徐放錠の血中濃度参考曲線です。曲線の最高濃度の区間は14:00~18:00です。',
   );
-  assert.deepEqual([copy.ko.h1, copy.en.h1, copy.ja.h1], ['설명서 기준 평균 혈중 농도 흐름', 'Mean blood concentration over time, per the label', '製品情報に基づく平均血中濃度の推移']);
+  assert.deepEqual([copy.ko.h1, copy.en.h1, copy.ja.h1], ['설명서를 참고한 혈중 농도 곡선', 'Blood concentration curves drawn from the label', '製品情報を参考にした血中濃度曲線']);
   assert.deepEqual([copy.ko.drug, copy.en.drug, copy.ja.drug], ['성분·제형', 'Ingredient and form', '成分・剤形']);
   for (const lang of TIMING_LANGS) assert.ok(!/Peakly|피클리|ピークリー/.test(copy[lang].title('X')), `${lang} title names the app`);
 });
@@ -92,7 +92,7 @@ test('each language has its own drug pages: ko only the drugs approved in Korea'
   assert.deepEqual(langsFor('vyvanse'), ['en', 'ja']);
   assert.deepEqual(langsFor('ritalin_la'), ['en', 'ja']);
   // A URL slug resolves only where the language has that page; catalog ids are not slugs.
-  assert.equal(drugIn('ko', 'methylphenidate-oros'), 'concerta');
+  assert.equal(drugIn('ko', 'methylphenidate-osmotic'), 'concerta');
   assert.equal(drugIn('ko', 'methylphenidate-ir'), 'penid_ir');
   assert.equal(drugIn('ko', 'lisdexamfetamine'), null);
   assert.equal(drugIn('ko', 'amphetamine-salts-er'), null);
@@ -101,7 +101,7 @@ test('each language has its own drug pages: ko only the drugs approved in Korea'
   for (const bad of ['concerta', 'ritalin_ir', 'constructor', '', null]) assert.equal(drugIn('en', bad), null, String(bad));
   assert.deepEqual(
     [copy.ko.names.concerta, copy.ko.names.medikinet, copy.ko.names.penid_ir],
-    ['메틸페니데이트 OROS 서방정', '메틸페니데이트 속방·장용 펠렛 캡슐', '메틸페니데이트 속방정'],
+    ['메틸페니데이트염산염 삼투압 방출형 서방정', '메틸페니데이트염산염 경질캡슐(속방·장용 펠렛)', '메틸페니데이트염산염 속방정'],
   );
 });
 
@@ -117,7 +117,7 @@ test('selectGroups lists the home market first and leaves Ritalin LA out', () =>
     ['concerta', 'penid_ir', 'adderall_xr', 'vyvanse'],
     ['medikinet'],
   ]);
-  assert.equal(selectGroups('en')[1].label, 'Not sold in the US');
+  assert.equal(selectGroups('en')[1].label, 'Other formulations');
   // The Ritalin LA page itself still lists its own drug; ko has no such page.
   assert.ok(selectGroups('en', 'ritalin_la')[1].ids.includes('ritalin_la'));
   assert.deepEqual(selectGroups('ko', 'ritalin_la').flatMap((g) => g.ids), ['concerta', 'medikinet', 'penid_ir']);
@@ -336,7 +336,7 @@ test('the status title and the now dot take the app\'s status colour', () => {
   assert.equal(title('concerta', 13), '<p class="pk-phase" style="color:#8E8E93">후반 구간');
   assert.equal(title('adderall_xr', 14), '<p class="pk-phase" style="color:#8E8E93">농도 감소 구간');
   assert.equal(title('concerta', -1), '<p class="pk-phase">복용 전');
-  assert.equal(title('concerta', null), '<p class="pk-phase">메틸페니데이트 OROS 서방정');
+  assert.equal(title('concerta', null), '<p class="pk-phase">메틸페니데이트염산염 삼투압 방출형 서방정');
   // The dot has the same colour inline; the left/top part is unchanged.
   assert.ok(dot('concerta', 2)?.endsWith(`;background:${first}`));
   assert.ok(dot('concerta', 8)?.endsWith(`;background:${main}`));
@@ -389,9 +389,13 @@ test('render produces the chart, legend and sources for every page', () => {
       assert.ok(!/Tmax|Peakly reference|기존 앱|既存アプリ/.test(r.sources), `${lang} ${drug} internal wording`);
     }
   }
-  // en and ja link the catalog's sources; ko has its own list so it can move to MFDS pages.
+  // en and ja link the catalog's sources, less the manufacturer page for the IR tablet; ko leads
+  // with the MFDS approval records.
   for (const lang of ['en', 'ja'] as const) {
-    for (const drug of DRUG_IDS) assert.deepEqual(copy[lang].sources[drug].map((s) => s.url), PROFILES[drug].sources.map((s) => s.url), `${lang} ${drug}`);
+    for (const drug of DRUG_IDS) {
+      const catalog = PROFILES[drug].sources.map((s) => s.url).filter((u) => !u.includes('whanin'));
+      assert.deepEqual(copy[lang].sources[drug].map((s) => s.url), catalog, `${lang} ${drug}`);
+    }
   }
   // No conditions row. The grey note says what the curve is measured as and whether it is
   // schematic; a name that already says it all has no note.
@@ -400,8 +404,8 @@ test('render produces the chart, legend and sources for every page', () => {
   assert.ok(sources('vyvanse').includes('<span class="muted">활성체 d-암페타민 기준 · 실측이 아닌 개략 곡선</span>'));
   assert.ok(sources('adderall_xr').includes('<span class="muted">d-암페타민 기준</span>'));
   assert.ok(sources('penid_ir').includes('<span class="muted">실측이 아닌 개략 곡선</span>'));
-  assert.equal(sources('concerta').split('</p>')[0], '<p class="pk-drug-name">메틸페니데이트 OROS 서방정');
-  assert.equal(sources('medikinet').split('</p>')[0], '<p class="pk-drug-name">메틸페니데이트 속방·장용 펠렛 캡슐');
+  assert.equal(sources('concerta').split('</p>')[0], '<p class="pk-drug-name">메틸페니데이트염산염 삼투압 방출형 서방정');
+  assert.equal(sources('medikinet').split('</p>')[0], '<p class="pk-drug-name">메틸페니데이트염산염 경질캡슐(속방·장용 펠렛)');
   // Korean pages cite the domestic approval first, then the label the times come from.
   for (const drug of ['concerta', 'medikinet', 'penid_ir'] as const) {
     const links = [...sources(drug).matchAll(/<a href="([^"]+)"[^>]*>([^<]+)<\/a>/g)];
@@ -410,9 +414,14 @@ test('render produces the chart, legend and sources for every page', () => {
     assert.ok(links.length >= 2 && !links[1][1].includes('mfds'), `${drug} keeps a label with the times`);
   }
   assert.ok(!sources('penid_ir').includes('환인'));
+  // No language cites the manufacturer's product page, and OROS (a trademark) appears nowhere.
+  for (const lang of TIMING_LANGS) {
+    assert.ok(!copy[lang].sources.penid_ir.some((s) => s.url.includes('whanin')), lang);
+    assert.ok(!JSON.stringify(copy[lang]).includes('OROS'), lang);
+  }
   // Build time has no clock: the header shows the drug, not a phase, and no marker.
   const first = render({ lang: 'ko', drug: 'concerta', minutes: 480, nowHours: null });
-  assert.ok(first.status.includes('메틸페니데이트 OROS 서방정'));
+  assert.ok(first.status.includes('메틸페니데이트염산염 삼투압 방출형 서방정'));
   assert.ok(!first.chart.includes('pk-now-dot'));
   // Beyond the chart the marker is hidden but the status still names the phase.
   const late = render({ lang: 'ko', drug: 'adderall_xr', minutes: 480, nowHours: 20 });
