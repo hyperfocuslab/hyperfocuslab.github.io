@@ -17,18 +17,32 @@ import {
   toHHMM,
 } from './timing.ts';
 
-test('hoursSinceDose is negative before today\'s dose and never borrows yesterday', () => {
+test('hoursSinceDose counts from yesterday\'s dose while now is still on the chart axis', () => {
   const at = (h: number, m: number, s = 0) => new Date(2026, 10, 4, h, m, s);
-  assert.equal(hoursSinceDose(at(15, 0), 8 * 60), 7);
-  assert.ok(Math.abs(hoursSinceDose(at(15, 30, 36), 8 * 60) - 7.51) < 1e-9);
-  assert.equal(hoursSinceDose(at(7, 0), 8 * 60), -1);
-  assert.equal(hoursSinceDose(at(1, 0), 20 * 60), -19);
-  // Before the dose the page says so and draws no marker, whatever the drug's horizon.
+  assert.equal(hoursSinceDose(at(15, 0), 8 * 60, 16), 7);
+  assert.ok(Math.abs(hoursSinceDose(at(15, 30, 36), 8 * 60, 16) - 7.51) < 1e-9);
+  // After midnight, a time the axis still covers: dose 20:00 → axis 20:00–12:00.
+  assert.equal(hoursSinceDose(at(1, 0), 20 * 60, 16), 5);
+  assert.ok(Math.abs(hoursSinceDose(at(2, 20), 11 * 60, 16) - (15 + 1 / 3)) < 1e-9);
+  assert.equal(hoursSinceDose(at(12, 0), 20 * 60, 16), 16);
+  // Off the axis it is today's dose still to come; a 12-hour chart reaches less far.
+  assert.equal(hoursSinceDose(at(7, 0), 8 * 60, 16), -1);
+  assert.equal(hoursSinceDose(at(1, 0), 8 * 60, 16), -7);
+  assert.equal(hoursSinceDose(at(9, 0), 20 * 60, 12), -11);
+
+  const at1 = (drug: 'concerta' | 'adderall_xr', dose: number) =>
+    render({ lang: 'ko', drug, minutes: dose, nowHours: hoursSinceDose(at(1, 0), dose, PROFILES[drug].chartEndHours) });
   for (const drug of ['concerta', 'adderall_xr'] as const) {
-    const r = render({ lang: 'ko', drug, minutes: 20 * 60, nowHours: hoursSinceDose(at(1, 0), 20 * 60) });
-    assert.ok(r.status.includes('복용 전'), drug);
-    assert.ok(r.status.includes('복용까지 19시간 0분'), drug);
-    assert.ok(!r.chart.includes('pk-now-dot'), drug);
+    // 1:00 after a 20:00 dose: on the chart, with the marker.
+    const on = at1(drug, 20 * 60);
+    assert.ok(!on.status.includes('복용 전'), drug);
+    assert.ok(on.status.includes('5시간 0분 지남'), drug);
+    assert.ok(on.chart.includes('pk-now-dot'), drug);
+    // 1:00 with an 08:00 dose: 17 h after yesterday's, past the chart, so before today's.
+    const before = at1(drug, 8 * 60);
+    assert.ok(before.status.includes('복용 전'), drug);
+    assert.ok(before.status.includes('복용까지 7시간 0분'), drug);
+    assert.ok(!before.chart.includes('pk-now-dot'), drug);
   }
 });
 

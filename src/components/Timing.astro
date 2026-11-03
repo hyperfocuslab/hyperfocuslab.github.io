@@ -84,7 +84,7 @@ const groups = selectGroups(lang, current);
 
 <script>
   import { isDrugId, type DrugId } from '../lib/pk';
-  import { DEFAULT_MINUTES, copy, hoursSinceDose, parseMinutes, render, toHHMM, type TimingLang } from '../lib/timing';
+  import { DEFAULT_MINUTES, PROFILES, copy, hoursSinceDose, parseMinutes, render, toHHMM, type TimingLang } from '../lib/timing';
 
   const root = document.getElementById('timing')!;
   const lang = root.dataset.lang as TimingLang;
@@ -115,7 +115,7 @@ const groups = selectGroups(lang, current);
   const shareUrl = () => `${location.origin}${base}${drug}/?t=${toHHMM(minutes)}`;
 
   function draw() {
-    const r = render({ lang, drug, minutes, nowHours: hoursSinceDose(new Date(), minutes) });
+    const r = render({ lang, drug, minutes, nowHours: hoursSinceDose(new Date(), minutes, PROFILES[drug].chartEndHours) });
     out.status.innerHTML = r.status;
     out.legend.innerHTML = r.legend;
     out.chart.innerHTML = r.chart;

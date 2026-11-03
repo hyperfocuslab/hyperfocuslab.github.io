@@ -348,9 +348,12 @@ export function rangeText(lang: TimingLang, doseMinutes: number, start: number, 
   return `${first}~${sameDay ? hhmm24(b) : clockText(lang, doseMinutes, end)}`;
 }
 
-/// Hours since today's dose, negative before it. A dose later today is simply "before the dose".
-export function hoursSinceDose(now: Date, doseMinutes: number): number {
-  return (now.getHours() * 60 + now.getMinutes() - doseMinutes) / 60 + now.getSeconds() / 3600;
+/// Hours since the dose the chart shows, negative before it. The axis runs from the dose time
+/// past midnight, so a time still on it counts from yesterday's dose (dose 20:00, now 1:00 → 5 h);
+/// any other time before today's dose is "before the dose" (dose 8:00, now 7:00 → -1 h).
+export function hoursSinceDose(now: Date, doseMinutes: number, chartEndHours: number): number {
+  const hours = (now.getHours() * 60 + now.getMinutes() - doseMinutes) / 60 + now.getSeconds() / 3600;
+  return hours < 0 && hours + 24 <= chartEndHours ? hours + 24 : hours;
 }
 
 /// Tick positions (hours after the dose) on whole clock hours: the first whole hour at or after
