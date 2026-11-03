@@ -187,9 +187,12 @@ test('render produces the chart, legend and sources for every drug and language'
       assert.ok(!/Tmax|Peakly reference|기존 앱|既存アプリ/.test(r.sources), `${lang} ${drug} internal wording`);
     }
   }
-  // A profile without a note has no conditions row.
-  assert.ok(!render({ lang: 'ko', drug: 'concerta', minutes: 480, nowHours: null }).sources.includes('<dt>조건</dt>'));
-  assert.ok(render({ lang: 'ko', drug: 'medikinet', minutes: 480, nowHours: null }).sources.includes('<dt>조건</dt>'));
+  // No conditions row; a schematic profile says so once, on its formulation line.
+  const sources = (drug: keyof typeof PROFILES) => render({ lang: 'ko', drug, minutes: 480, nowHours: null }).sources;
+  for (const drug of Object.keys(PROFILES) as (keyof typeof PROFILES)[]) assert.ok(!sources(drug).includes('<dt>조건</dt>'), drug);
+  assert.ok(sources('vyvanse').includes('실측이 아닌 개략 곡선'));
+  assert.ok(!sources('concerta').includes('개략'));
+  assert.ok(!sources('adderall_xr').includes('개략'));
   // Build time has no clock: the header shows the drug, not a phase, and no marker.
   const first = render({ lang: 'ko', drug: 'concerta', minutes: 480, nowHours: null });
   assert.ok(first.status.includes('콘서타'));
