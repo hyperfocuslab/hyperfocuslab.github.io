@@ -45,16 +45,18 @@ type Copy = {
   nextDay: string;
   axis: (hour24: number) => string;
   sourcesTitle: string;
-  rows: { timing: string; evidence: string; dose: string; conditions: string; links: string; model: string };
+  rows: { timing: string; evidence: string; dose: string; conditions: string; links: string };
   evidence: Record<Evidence, string>;
   timing: Names;
+  /** Empty when the profile needs no extra note; the row is then left out. */
   conditions: Names;
+  /** One label per catalog source, in catalog order, in the reader's language. */
+  sourceLabels: Record<DrugId, string[]>;
   notice: string[];
   cta: { title: string; body: string; button: string };
 };
 
 const FORMULATION_EN: Names = Object.fromEntries(DRUG_IDS.map((id) => [id, PROFILES[id].formulation])) as Names;
-const CONDITIONS_EN: Names = Object.fromEntries(DRUG_IDS.map((id) => [id, PROFILES[id].conditions])) as Names;
 
 export const copy: Record<TimingLang, Copy> = {
   ko: {
@@ -95,25 +97,38 @@ export const copy: Record<TimingLang, Copy> = {
     nextDay: '다음 날 ',
     axis: (h) => `${h}시`,
     sourcesTitle: '출처와 기준',
-    rows: { timing: '기준 시점', evidence: '곡선 종류', dose: '기준 용량', conditions: '조건', links: '출처', model: '모델 버전' },
-    evidence: { legacyReference: '기존 피클리 참고 곡선 (라벨 기반)', digitized: '라벨 그림을 수치화', schematic: '라벨 수치로 만든 개략 곡선' },
+    rows: { timing: '기준 시점', evidence: '곡선 종류', dose: '기준 용량', conditions: '조건', links: '출처' },
+    evidence: {
+      legacyReference: '제품 설명서의 평균값을 바탕으로 한 참고 곡선',
+      digitized: '제품 설명서의 평균 농도 그래프를 옮긴 참고 곡선',
+      schematic: '제품 설명서의 수치로 만든 개략 곡선 (실제 측정 곡선 아님)',
+    },
     timing: {
-      concerta: '라벨 평균 Tmax 6–10시간',
-      medikinet: '식후 기준 2–4시간. 후반부는 앱의 근사치',
-      penid_ir: '성분 기준 평균 Tmax 약 2시간 (라벨·SmPC 1–2시간)',
-      ritalin_ir: '라벨 평균 Tmax 약 2시간 (SmPC 1–2시간)',
-      ritalin_la: '2차 피크 5.5시간 (범위 4.3–6.5시간, 소아 평균 6.6시간)',
-      adderall_xr: '성인 라벨 Tmax 5.2–7.7시간 (식전·식후)',
-      vyvanse: '라벨 Tmax 3.8–4.7시간 (식전·식후)',
+      concerta: '설명서 기준 평균 최고 농도: 복용 후 6~10시간',
+      medikinet: '설명서 기준(아침 식후) 최고 농도: 복용 후 2~4시간. 그 뒤 구간은 발표된 평균 곡선을 참고한 추정',
+      penid_ir: '성분(메틸페니데이트 속방) 설명서 기준 평균 최고 농도: 복용 후 약 2시간 (1~2시간)',
+      ritalin_ir: '설명서 기준 평균 최고 농도: 복용 후 약 2시간 (1~2시간)',
+      ritalin_la: '설명서 기준 2차 최고 농도: 복용 후 5.5시간 (4.3~6.5시간, 소아 평균 6.6시간)',
+      adderall_xr: '설명서 기준(성인) 평균 최고 농도: 복용 후 5.2~7.7시간',
+      vyvanse: '설명서 기준 평균 최고 농도: 복용 후 3.8~4.7시간',
     },
     conditions: {
-      concerta: '기존 앱 곡선을 그대로 사용합니다. 집단 평균 Tmax는 개인의 범위가 아닙니다.',
-      medikinet: '아침 식후 기준입니다. 식사 조건별 개인화는 아직 없습니다.',
-      penid_ir: '메틸페니데이트 속방정의 일반 개략 곡선입니다. 페니드 고유의 혈중 측정값이나 브랜드 간 생물학적 동등성을 주장하지 않습니다.',
-      ritalin_ir: '2시간에 피크, 소실 반감기 2시간으로 만든 개략 곡선입니다. 실제 농도 측정값이 아닙니다.',
-      ritalin_la: '라벨 표 4 평균값(성인 남성, 20mg 1회, n=8)으로 만든 개략 곡선입니다. 지연 0.7시간, 1차 피크 2.0시간, 중간 최저 3.6시간, 2차 피크 5.5시간. 이후는 반감기 3.3시간으로 계산했습니다. 소아는 2차 피크가 더 늦습니다(평균 6.6시간).',
-      adderall_xr: '식후 20mg 1회 복용(라벨 그림 1), d-암페타민 평균 곡선을 반올림해 수치화했습니다.',
-      vyvanse: '라벨 Tmax와 성인 소실 반감기로 만든 d-암페타민 개략 곡선입니다. 실제 혈중 측정값이 아닙니다.',
+      concerta: '',
+      medikinet: '아침 식후 복용 기준의 곡선입니다.',
+      penid_ir: '메틸페니데이트 속방정의 일반적인 곡선입니다. 페니드만의 측정값은 아닙니다.',
+      ritalin_ir: '복용 2시간 뒤 최고, 이후 2시간마다 절반으로 줄어드는 것으로 그린 곡선입니다.',
+      ritalin_la: '성인 남성 8명이 20mg을 1회 복용한 설명서 평균값(2시간·3.6시간·5.5시간)으로 그렸습니다. 8시간 이후는 3.3시간마다 절반으로 줄어드는 것으로 계산했습니다. 소아는 2차 최고 농도가 더 늦습니다(평균 6.6시간).',
+      adderall_xr: '식후 20mg을 1회 복용한 성인의 평균 곡선(설명서 그림 1)입니다.',
+      vyvanse: '설명서의 최고 농도 시점과 성인 반감기로 그린 곡선입니다. 실제 측정 곡선이 아닙니다.',
+    },
+    sourceLabels: {
+      concerta: ['콘서타 제품 설명서 (FDA)'],
+      medikinet: ['메디키넷 XL 제품 특성 요약 (영국 emc)'],
+      penid_ir: ['페니드 제품 정보 (환인제약)', '리탈린 제품 설명서 (FDA, 성분 참고)', '리탈린 10mg 제품 특성 요약 (영국 emc, 반감기 참고)'],
+      ritalin_ir: ['리탈린 제품 설명서 (FDA)', '리탈린 10mg 제품 특성 요약 (영국 emc)'],
+      ritalin_la: ['리탈린 LA 제품 설명서 (FDA, 2025년 9월 개정)', '리탈린 LA 제품 설명서 (FDA, 2019)'],
+      adderall_xr: ['애더럴 XR 제품 설명서 (FDA, 2023)'],
+      vyvanse: ['바이반스 제품 설명서 (FDA, 2025)'],
     },
     notice: [
       '정규화된 참고 곡선입니다. 개인 측정값이 아니며, 농도 피크와 체감 약효 피크는 서로 다를 수 있습니다. 표시 마지막 시각은 약효 종료 시각이 아닙니다.',
@@ -155,18 +170,39 @@ export const copy: Record<TimingLang, Copy> = {
     nextDay: ' next day',
     axis: (h) => (h === 0 ? '12am' : h < 12 ? `${h}am` : h === 12 ? '12pm' : `${h - 12}pm`),
     sourcesTitle: 'Sources and basis',
-    rows: { timing: 'Reference timing', evidence: 'Curve type', dose: 'Reference dose', conditions: 'Conditions', links: 'Sources', model: 'Model version' },
-    evidence: { legacyReference: 'Existing Peakly reference curve (label-based)', digitized: 'Digitized from the label figure', schematic: 'Schematic curve from label values' },
-    timing: {
-      concerta: 'Label mean Tmax 6–10 h',
-      medikinet: 'Fed reference 2–4 h; the later section is an app approximation',
-      penid_ir: 'Ingredient reference mean Tmax about 2 h (label/SmPC 1–2 h)',
-      ritalin_ir: 'Label mean Tmax about 2 h (SmPC 1–2 h)',
-      ritalin_la: 'Second peak 5.5 h (range 4.3–6.5 h; children mean 6.6 h)',
-      adderall_xr: 'Adult label Tmax 5.2–7.7 h (fed/fasted)',
-      vyvanse: 'Label Tmax 3.8–4.7 h (fed/fasted)',
+    rows: { timing: 'Reference timing', evidence: 'Curve type', dose: 'Reference dose', conditions: 'Conditions', links: 'Sources' },
+    evidence: {
+      legacyReference: "Reference curve based on the label's mean values",
+      digitized: "Reference curve traced from the label's mean concentration figure",
+      schematic: "Schematic curve built from the label's figures (not a measured curve)",
     },
-    conditions: CONDITIONS_EN,
+    timing: {
+      concerta: 'Label mean peak concentration: 6–10 h after the dose',
+      medikinet: 'Label peak (after breakfast): 2–4 h after the dose. The later part of the curve is an estimate guided by published mean curves',
+      penid_ir: 'Ingredient (methylphenidate IR) label mean peak: about 2 h after the dose (1–2 h)',
+      ritalin_ir: 'Label mean peak concentration: about 2 h after the dose (1–2 h)',
+      ritalin_la: 'Label second peak: 5.5 h after the dose (4.3–6.5 h; children mean 6.6 h)',
+      adderall_xr: 'Label mean peak concentration (adults): 5.2–7.7 h after the dose',
+      vyvanse: 'Label mean peak concentration: 3.8–4.7 h after the dose',
+    },
+    conditions: {
+      concerta: '',
+      medikinet: 'Curve for a dose taken after breakfast.',
+      penid_ir: 'A general methylphenidate IR curve, not measurements of Penid itself.',
+      ritalin_ir: 'Drawn with a peak at 2 h and a halving every 2 h after it.',
+      ritalin_la: "Drawn from the label's mean values for eight adult men after a single 20 mg dose (2 h, 3.6 h, 5.5 h); from 8 h on it halves every 3.3 h. Children reach the second peak later (mean 6.6 h).",
+      adderall_xr: 'Mean curve of adults after a single 20 mg dose with food (label Figure 1).',
+      vyvanse: "Drawn from the label's peak timing and adult half-life, not from measured concentrations.",
+    },
+    sourceLabels: {
+      concerta: ['Concerta prescribing information (FDA)'],
+      medikinet: ['Medikinet XL summary of product characteristics (UK emc)'],
+      penid_ir: ['Penid product information (Whanin Pharm)', 'Ritalin prescribing information (FDA, ingredient reference)', 'Ritalin 10 mg summary of product characteristics (UK emc, half-life)'],
+      ritalin_ir: ['Ritalin prescribing information (FDA)', 'Ritalin 10 mg summary of product characteristics (UK emc)'],
+      ritalin_la: ['Ritalin LA prescribing information (FDA, rev. Sept 2025)', 'Ritalin LA prescribing information (FDA, 2019)'],
+      adderall_xr: ['Adderall XR prescribing information (FDA, 2023)'],
+      vyvanse: ['Vyvanse prescribing information (FDA, 2025)'],
+    },
     notice: [
       'This is a normalized reference curve, not a personal measurement. Concentration and felt effect can peak at different times. The last displayed time is not the end of the effect.',
       'Medication information on this page is a general reference summary and does not replace medical diagnosis, treatment, or prescribing advice. Talk to your doctor or pharmacist before changing a dose or its timing.',
@@ -215,25 +251,38 @@ export const copy: Record<TimingLang, Copy> = {
     nextDay: '翌日 ',
     axis: (h) => `${h}時`,
     sourcesTitle: '出典と基準',
-    rows: { timing: '基準時点', evidence: '曲線の種類', dose: '基準用量', conditions: '条件', links: '出典', model: 'モデルバージョン' },
-    evidence: { legacyReference: '既存のピークリー参考曲線（添付文書ベース）', digitized: '添付文書の図を数値化', schematic: '添付文書の値から作った概略曲線' },
+    rows: { timing: '基準時点', evidence: '曲線の種類', dose: '基準用量', conditions: '条件', links: '出典' },
+    evidence: {
+      legacyReference: '添付文書の平均値をもとにした参考曲線',
+      digitized: '添付文書の平均濃度グラフを写した参考曲線',
+      schematic: '添付文書の数値から作った概略曲線（実測の曲線ではありません）',
+    },
     timing: {
-      concerta: '添付文書の平均Tmax 6–10時間',
-      medikinet: '食後基準 2–4時間。後半はアプリの近似値',
-      penid_ir: '成分基準の平均Tmax 約2時間（添付文書・SmPC 1–2時間）',
-      ritalin_ir: '添付文書の平均Tmax 約2時間（SmPC 1–2時間）',
-      ritalin_la: '2回目のピーク 5.5時間（範囲 4.3–6.5時間、小児平均 6.6時間）',
-      adderall_xr: '成人の添付文書 Tmax 5.2–7.7時間（空腹時・食後）',
-      vyvanse: '添付文書 Tmax 3.8–4.7時間（空腹時・食後）',
+      concerta: '添付文書の平均最高濃度: 服用後6~10時間',
+      medikinet: '添付文書の最高濃度（朝食後）: 服用後2~4時間。その後の曲線は公表された平均曲線をもとにした推定',
+      penid_ir: '成分（メチルフェニデート速放）の添付文書の平均最高濃度: 服用後約2時間（1~2時間）',
+      ritalin_ir: '添付文書の平均最高濃度: 服用後約2時間（1~2時間）',
+      ritalin_la: '添付文書の2回目の最高濃度: 服用後5.5時間（4.3~6.5時間、小児平均6.6時間）',
+      adderall_xr: '添付文書の平均最高濃度（成人）: 服用後5.2~7.7時間',
+      vyvanse: '添付文書の平均最高濃度: 服用後3.8~4.7時間',
     },
     conditions: {
-      concerta: '既存アプリの曲線をそのまま使用します。集団平均のTmaxは個人の範囲ではありません。',
-      medikinet: '朝食後の基準です。食事条件ごとの個人化はまだありません。',
-      penid_ir: 'メチルフェニデート速放錠の一般的な概略曲線です。Penid固有の血中測定値やブランド間の生物学的同等性は主張しません。',
-      ritalin_ir: '2時間でピーク、消失半減期2時間として作った概略曲線です。実際の濃度測定値ではありません。',
-      ritalin_la: '添付文書の表4の平均値（成人男性、20mg単回、n=8）から作った概略曲線です。遅延0.7時間、1回目のピーク2.0時間、中間の最低値3.6時間、2回目のピーク5.5時間。以降は半減期3.3時間で計算しています。小児は2回目のピークがより遅くなります（平均6.6時間）。',
-      adderall_xr: '食後に20mgを単回服用（添付文書 図1）、d-アンフェタミンの平均曲線を丸めて数値化しました。',
-      vyvanse: '添付文書のTmaxと成人の消失半減期から作ったd-アンフェタミンの概略曲線です。実際の血中測定値ではありません。',
+      concerta: '',
+      medikinet: '朝食後に服用した場合の曲線です。',
+      penid_ir: 'メチルフェニデート速放錠の一般的な曲線で、Penid固有の測定値ではありません。',
+      ritalin_ir: '服用2時間後に最高、その後2時間ごとに半分になるものとして描いた曲線です。',
+      ritalin_la: '成人男性8人が20mgを単回服用した添付文書の平均値（2時間・3.6時間・5.5時間）から描きました。8時間以降は3.3時間ごとに半分になるものとして計算しています。小児は2回目の最高濃度がより遅くなります（平均6.6時間）。',
+      adderall_xr: '食後に20mgを単回服用した成人の平均曲線（添付文書 図1）です。',
+      vyvanse: '添付文書の最高濃度の時点と成人の半減期から描いた曲線で、実測の曲線ではありません。',
+    },
+    sourceLabels: {
+      concerta: ['コンサータ 添付文書（FDA）'],
+      medikinet: ['メディキネット XL 製品特性概要（英国 emc）'],
+      penid_ir: ['Penid 製品情報（Whanin製薬）', 'リタリン 添付文書（FDA、成分の参考）', 'リタリン 10mg 製品特性概要（英国 emc、半減期の参考）'],
+      ritalin_ir: ['リタリン 添付文書（FDA）', 'リタリン 10mg 製品特性概要（英国 emc）'],
+      ritalin_la: ['リタリン LA 添付文書（FDA、2025年9月改訂）', 'リタリン LA 添付文書（FDA、2019）'],
+      adderall_xr: ['アデロール XR 添付文書（FDA、2023）'],
+      vyvanse: ['ビバンセ 添付文書（FDA、2025）'],
     },
     notice: [
       '正規化した参考曲線で、個人の測定値ではありません。濃度のピークと体感のピークは異なる場合があります。表示の最後の時刻は作用の終了時刻ではありません。',
@@ -486,10 +535,11 @@ export function render(input: RenderInput): Rendered {
     ),
   );
 
+  // Link text is the reader's own language; the catalog's titles are internal notes.
   const links = profile.sources
-    .map((s) => `<a href="${esc(s.url)}" target="_blank" rel="noreferrer">${esc(s.title)} ↗</a>`)
+    .map((s, i) => `<a href="${esc(s.url)}" target="_blank" rel="noreferrer">${esc(t.sourceLabels[drug][i] ?? s.title)} ↗</a>`)
     .join('');
-  const row = (k: string, v: string) => `<div><dt>${esc(k)}</dt><dd>${v}</dd></div>`;
+  const row = (k: string, v: string) => (v ? `<div><dt>${esc(k)}</dt><dd>${v}</dd></div>` : '');
   const sources =
     `<p class="pk-drug-name">${esc(name)} <span class="muted">${esc(t.formulations[drug])}</span></p>` +
     `<dl class="pk-facts">` +
@@ -498,7 +548,6 @@ export function render(input: RenderInput): Rendered {
     row(t.rows.dose, `${profile.referenceDoseMg} mg`) +
     row(t.rows.conditions, esc(t.conditions[drug])) +
     row(t.rows.links, `<span class="pk-links">${links}</span>`) +
-    row(t.rows.model, `<span class="label">${esc(MODEL_VERSION)}</span>`) +
     `</dl>`;
 
   return { status, legend, chart, axis, summary, sources };

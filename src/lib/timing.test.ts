@@ -1,8 +1,8 @@
 // Run: npm test. Clock text, phase naming and the rendered HTML of the timing tool.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { PROFILES } from './pk.ts';
-import { clockText, parseMinutes, phaseAt, rangeText, render, toHHMM } from './timing.ts';
+import { MODEL_VERSION, PROFILES } from './pk.ts';
+import { clockText, copy, parseMinutes, phaseAt, rangeText, render, toHHMM } from './timing.ts';
 
 test('parseMinutes accepts HH:MM only', () => {
   assert.equal(parseMinutes('08:00'), 480);
@@ -74,9 +74,17 @@ test('render produces the chart, legend and sources for every drug and language'
       assert.equal((r.axis.match(/pk-tick/g) ?? []).length, PROFILES[drug].chartEndHours / 4 + 1, `${lang} ${drug} axis`);
       // Attribute values are escaped, so a URL with a query shows up with &amp;.
       for (const s of PROFILES[drug].sources) assert.ok(r.sources.includes(s.url.replace(/&/g, '&amp;')), `${lang} ${drug} source ${s.url}`);
-      assert.ok(r.sources.includes('2026-11-01-v4'));
+      // Readers see link text in their language, one label per catalog source, and no internal notes.
+      assert.equal(copy[lang].sourceLabels[drug].length, PROFILES[drug].sources.length, `${lang} ${drug} source labels`);
+      for (const label of copy[lang].sourceLabels[drug]) assert.ok(r.sources.includes(label), `${lang} ${drug} label ${label}`);
+      for (const s of PROFILES[drug].sources) assert.ok(!r.sources.includes(s.title), `${lang} ${drug} leaks "${s.title}"`);
+      assert.ok(!r.sources.includes(MODEL_VERSION), `${lang} ${drug} shows the model version`);
+      assert.ok(!/Tmax|Peakly reference|기존 앱|既存アプリ/.test(r.sources), `${lang} ${drug} internal wording`);
     }
   }
+  // A profile without a note has no conditions row.
+  assert.ok(!render({ lang: 'ko', drug: 'concerta', minutes: 480, nowHours: null }).sources.includes('<dt>조건</dt>'));
+  assert.ok(render({ lang: 'ko', drug: 'medikinet', minutes: 480, nowHours: null }).sources.includes('<dt>조건</dt>'));
   // Build time has no clock: the header shows the drug, not a phase, and no marker.
   const first = render({ lang: 'ko', drug: 'concerta', minutes: 480, nowHours: null });
   assert.ok(first.status.includes('콘서타'));
