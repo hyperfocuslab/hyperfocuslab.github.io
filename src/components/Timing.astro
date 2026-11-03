@@ -53,11 +53,14 @@ const groups = selectGroups(lang, current);
           <span class="label">{t.time}</span>
           <input type="time" name="t" id="pk-time" value={toHHMM(DEFAULT_MINUTES)} step="300" required />
         </label>
-        <button type="button" class="btn btn-ghost" id="pk-copy" data-copied={t.copied}>{t.copy}</button>
       </form>
 
       <div class="pk-panel">
-        <div class="pk-status" id="pk-status" set:html={first.status} />
+        <!-- The copy button sits where the app's card keeps its one action ("구간 조정"). -->
+        <div class="pk-panel-head">
+          <div class="pk-status" id="pk-status" set:html={first.status} />
+          <button type="button" class="pk-pill" id="pk-copy" data-copied={t.copied}>{t.copy}</button>
+        </div>
         <p class="pk-notify">
           <a id="pk-notify" href="#pk-app" data-app-store={notifyStores.appStore} data-google-play={notifyStores.googlePlay}>{t.notify}</a>
         </p>
@@ -123,11 +126,23 @@ const groups = selectGroups(lang, current);
     const r = render({ lang, drug, minutes, nowHours: hoursSinceDose(new Date(), minutes, PROFILES[drug].chartEndHours) });
     out.status.innerHTML = r.status;
     out.legend.innerHTML = r.legend;
+    fitLegend();
     out.chart.innerHTML = r.chart;
     out.axis.innerHTML = r.axis;
     out.sources.innerHTML = r.sources;
     document.title = t.title(t.names[drug]);
   }
+
+  // As the app's PKPhaseLegend (ViewThatFits): one line when the three fit, one row per window otherwise.
+  function fitLegend() {
+    const items = out.legend.children;
+    out.legend.classList.remove('stacked');
+    const first = items[0] as HTMLElement | undefined;
+    const last = items[items.length - 1] as HTMLElement | undefined;
+    if (first && last && last.offsetTop > first.offsetTop) out.legend.classList.add('stacked');
+  }
+  window.addEventListener('resize', fitLegend);
+  document.fonts?.ready.then(fitLegend);
 
   function update(fromUser: boolean) {
     draw();

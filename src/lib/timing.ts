@@ -36,13 +36,7 @@ type Copy = {
     reference: Record<SectionKind, string>;
     ritalinLA: [string, string];
   };
-  window: (label: string) => string;
   beforeDose: string;
-  rising: string;
-  middle: string;
-  wearingOff: string;
-  residual: string;
-  outside: string;
   taken: (drug: string, time: string) => string;
   elapsed: (h: number, m: number) => string;
   untilDose: (h: number, m: number) => string;
@@ -104,13 +98,7 @@ export const copy: Record<TimingLang, Copy> = {
       reference: { initial: '농도 상승', peak: '최고 농도', secondary: '2차 농도 구간', decline: '농도 감소' },
       ritalinLA: ['1차 피크', '2차 피크'],
     },
-    window: (label) => (label.endsWith('구간') ? label : `${label} 구간`),
     beforeDose: '복용 전',
-    rising: '상승 중',
-    middle: '중간 구간',
-    wearingOff: '감소 중',
-    residual: '잔효',
-    outside: '표시 범위 밖',
     taken: (drug, time) => `${drug} · ${time} 복용`,
     elapsed: (h, m) => `${h}시간 ${m}분 지남`,
     untilDose: (h, m) => `복용까지 ${h}시간 ${m}분`,
@@ -164,13 +152,7 @@ export const copy: Record<TimingLang, Copy> = {
       reference: { initial: 'Concentration rise', peak: 'Peak concentration', secondary: 'Second concentration window', decline: 'Concentration decline' },
       ritalinLA: ['First peak', 'Second peak'],
     },
-    window: (label) => (label.endsWith('window') ? label : `${label} window`),
     beforeDose: 'Before the dose',
-    rising: 'Rising',
-    middle: 'Middle window',
-    wearingOff: 'Wearing off',
-    residual: 'Residual effect',
-    outside: 'Outside the displayed range',
     taken: (drug, time) => `${drug} · taken ${time}`,
     elapsed: (h, m) => `${h} h ${m} min since`,
     untilDose: (h, m) => `${h} h ${m} min until the dose`,
@@ -233,13 +215,7 @@ export const copy: Record<TimingLang, Copy> = {
       reference: { initial: '濃度上昇', peak: '最高濃度', secondary: '第2濃度帯', decline: '濃度低下' },
       ritalinLA: ['一次ピーク', '二次ピーク'],
     },
-    window: (label) => `${label}の区間`,
     beforeDose: '服用前',
-    rising: '上昇中',
-    middle: '中間区間',
-    wearingOff: '減少中',
-    residual: '残存効果',
-    outside: '表示範囲外',
     taken: (drug, time) => `${drug} · ${time} 服用`,
     elapsed: (h, m) => `${h}時間${m}分経過`,
     untilDose: (h, m) => `服用まで${h}時間${m}分`,
@@ -390,27 +366,124 @@ export function windowLabels(lang: TimingLang, profile: Profile): [string, strin
   return profile.sectionKinds.map((k) => l.reference[k]) as [string, string, string];
 }
 
-export interface PhaseState {
-  text: string;
-  /** Index of the window the elapsed time falls in, or -1 between windows. */
-  windowIndex: number;
+/// The app's phase (PKPhase); the keys are MedicationPhase.key(for:).
+export type PhaseKey = 'rising_1' | 'peak_1' | 'valley' | 'rising_2' | 'peak_2' | 'falling' | 'releaseEnd' | 'after';
+/// Index into PHASE_COLORS (the app's PKPhasePalette: first window, main peak, decline); null is neutral.
+export type ColorIndex = 0 | 1 | 2 | null;
+
+/// MedicationPhase.statusPaletteIndex: the colour of the status title and of the chart band of that
+/// phase. It does not depend on the medication.
+const STATUS_COLOR: Record<PhaseKey, ColorIndex> = {
+  rising_1: 0,
+  peak_1: 0,
+  valley: 0,
+  rising_2: 0,
+  peak_2: 1,
+  falling: 2,
+  releaseEnd: 2,
+  after: null,
+};
+// DS.Palette.Phase.after: the app paints the finished state grey rather than leaving it uncoloured.
+const AFTER_COLOR = '#8E8E93';
+
+/// Colour of the status title and the now dot; empty before the dose (a web-only state).
+function statusColor(phase: PhaseState): string {
+  if (phase.colorIndex != null) return PHASE_COLORS[phase.colorIndex];
+  return phase.key === 'after' ? AFTER_COLOR : '';
 }
 
+// The app words a phase per medication: Concerta and Medikinet have their own (compactText(medication:)),
+// the others share compactText(stimulantProfileKind:) with small differences.
+type PhaseFamily = 'concerta' | 'medikinet' | 'adderall_xr' | 'standard' | 'ritalin_la';
+type PhaseWords = Record<PhaseKey, string>;
+
+function phaseFamily(id: DrugId): PhaseFamily {
+  if (id === 'concerta' || id === 'medikinet' || id === 'adderall_xr' || id === 'ritalin_la') return id;
+  return 'standard'; // Vyvanse, Penid, Ritalin
+}
+
+function phaseWords(concerta: PhaseWords, standard: PhaseWords, medikinet: Pick<PhaseWords, 'peak_1' | 'peak_2'>, ritalinLA: Pick<PhaseWords, 'peak_1' | 'peak_2' | 'valley'>): Record<PhaseFamily, PhaseWords> {
+  return {
+    concerta,
+    medikinet: { ...concerta, ...medikinet },
+    // Adderall XR has no "residual": past its last window the app says the final phase.
+    adderall_xr: { ...standard, after: standard.releaseEnd },
+    standard,
+    ritalin_la: { ...standard, ...ritalinLA },
+  };
+}
+
+const PHASE_TEXT: Record<TimingLang, Record<PhaseFamily, PhaseWords>> = {
+  ko: phaseWords(
+    { rising_1: '상승 중', rising_2: '2차 상승', peak_1: '1차 체감', peak_2: '메인 피크', valley: '중간 구간', falling: '감소 중', releaseEnd: '감소 구간', after: '잔효' },
+    { rising_1: '작용 시작', rising_2: '상승 구간', peak_1: '초기 구간', peak_2: '최대 효과 구간', valley: '안정 구간', falling: '감소 구간', releaseEnd: '종료 구간', after: '잔효' },
+    { peak_1: '최대 농도', peak_2: '2차 피크' },
+    { peak_1: '1차 피크', peak_2: '2차 피크', valley: '중간 구간' },
+  ),
+  en: phaseWords(
+    { rising_1: 'Rising', rising_2: 'Second rise', peak_1: 'Initial effect', peak_2: 'Main peak', valley: 'Middle window', falling: 'Wearing off', releaseEnd: 'Declining phase', after: 'Residual effect' },
+    { rising_1: 'Onset', rising_2: 'Rising phase', peak_1: 'Early phase', peak_2: 'Peak effect', valley: 'Steady window', falling: 'Declining phase', releaseEnd: 'Final phase', after: 'Residual effect' },
+    { peak_1: 'Peak', peak_2: 'Second peak' },
+    { peak_1: 'First peak', peak_2: 'Second peak', valley: 'Middle window' },
+  ),
+  ja: phaseWords(
+    { rising_1: '上昇中', rising_2: '二次上昇', peak_1: '一次体感', peak_2: 'メインピーク', valley: '中間区間', falling: '減少中', releaseEnd: '減少段階', after: '残存効果' },
+    { rising_1: '作用開始', rising_2: '上昇段階', peak_1: '初期段階', peak_2: '最大効果区間', valley: '安定区間', falling: '減少段階', releaseEnd: '終了段階', after: '残存効果' },
+    { peak_1: '最大濃度', peak_2: '二次ピーク' },
+    { peak_1: '一次ピーク', peak_2: '二次ピーク', valley: '中間区間' },
+  ),
+};
+
 const EPS = 1e-9;
+
+/// Concerta and Medikinet: MedicationPhase.phase(medication:elapsedHours:settings:eventOffsets:) with the
+/// default settings. The windows are the app's defaults: first window, main peak, release end.
+function ownChartKey([first, main, releaseEnd]: Profile['windows'], hours: number): PhaseKey {
+  if (hours >= 18) return 'after';
+  // The release end takes over at its start, so the main peak's last instant is just before it.
+  if (hours > releaseEnd.end) return 'after';
+  if (hours >= releaseEnd.start && hours <= releaseEnd.end) return 'releaseEnd';
+  if (hours < first.start) return 'rising_1';
+  if (hours <= first.end) return 'peak_1';
+  if (hours < (first.end + main.start) / 2) return 'valley';
+  if (hours < main.start) return 'rising_2';
+  if (hours <= main.end) return 'peak_2';
+  return 'falling';
+}
+
+/// The other profiles: MedicationPhase.phase(stimulantProfileKind:elapsedHours:sections:windows:) with the
+/// default windows. The peak is the catalog's peak section, which `windows[1]` holds for these profiles.
+function stimulantKey(id: DrugId, [early, peak, ending]: Profile['windows'], hours: number): PhaseKey {
+  if (hours < early.start - EPS) return 'rising_1';
+  if (hours <= early.end + EPS) return 'peak_1';
+  // Ritalin LA's first window is a real peak, so the gap before the main peak is a dip, not a rise.
+  if (hours < peak.start - EPS) return id === 'ritalin_la' ? 'valley' : 'rising_2';
+  if (hours <= peak.end + EPS) return 'peak_2';
+  // Adderall XR has no release-end phase: the decline runs to the end of the last window.
+  if (id === 'adderall_xr') return hours < ending.end - EPS ? 'falling' : 'after';
+  if (hours < ending.start - EPS) return 'falling';
+  if (hours <= ending.end + EPS) return 'releaseEnd';
+  return 'after';
+}
+
+export interface PhaseState {
+  text: string;
+  /** The app's phase, or null before the dose (the web's own state). */
+  key: PhaseKey | null;
+  /** The app's status colour as an index into PHASE_COLORS; null is neutral (finished, before the dose). */
+  colorIndex: ColorIndex;
+}
+
+/// The status the app's chart header shows `elapsedHours` after the dose (default windows, no
+/// heart-rate fit). A negative time is the web's own "before the dose".
 export function phaseAt(lang: TimingLang, profile: Profile, elapsedHours: number): PhaseState {
-  const t = copy[lang];
-  const labels = windowLabels(lang, profile);
-  if (elapsedHours < 0) return { text: t.beforeDose, windowIndex: -1 };
-  if (elapsedHours > profile.displayEndHours + EPS) return { text: t.outside, windowIndex: -1 };
-  const w = profile.windows;
-  for (let i = 0; i < 3; i++) {
-    if (elapsedHours >= w[i].start - EPS && elapsedHours <= w[i].end + EPS) return { text: t.window(labels[i]), windowIndex: i };
-  }
-  if (elapsedHours < w[0].start) return { text: t.rising, windowIndex: -1 };
-  // After a first window that is itself a peak (Medikinet, Ritalin LA) the gap is a dip, not a rise.
-  if (elapsedHours < w[1].start) return { text: profile.sectionKinds[0] === 'peak' || profile.id === 'ritalin_la' ? t.middle : t.rising, windowIndex: -1 };
-  if (elapsedHours < w[2].start) return { text: t.wearingOff, windowIndex: -1 };
-  return { text: t.residual, windowIndex: -1 };
+  if (elapsedHours < 0) return { text: copy[lang].beforeDose, key: null, colorIndex: null };
+  const family = phaseFamily(profile.id);
+  const key =
+    family === 'concerta' || family === 'medikinet'
+      ? ownChartKey(profile.windows, elapsedHours)
+      : stimulantKey(profile.id, profile.windows, elapsedHours);
+  return { text: PHASE_TEXT[lang][family][key], key, colorIndex: STATUS_COLOR[key] };
 }
 
 // ── Rendering ───────────────────────────────────────────────────
@@ -449,15 +522,15 @@ function f(n: number): string {
 }
 
 /// Shapes only (preserveAspectRatio="none"): text and the marker dot are HTML so they never stretch.
-/// `ticks` are the axis positions in hours after the dose; a faint line marks each inside the chart.
-export function chartSvg(profile: Profile, nowHours: number | null | undefined, ticks: number[]): string {
+/// Like the app's chart there are no grid lines; the shades fade as PKChartPreset.phaseGradient (dark).
+export function chartSvg(profile: Profile, nowHours: number | null | undefined): string {
   const end = profile.chartEndHours;
   const pts = profile.curve.samples(0.05, end);
   const line = pts.map((p, i) => `${i ? 'L' : 'M'}${f(sx(p.hour, end))} ${f(sy(p.value))}`).join('');
   const area = `${line}L1000 1000L0 1000Z`;
   const grads = PHASE_COLORS.map(
     (c, i) =>
-      `<linearGradient id="pk-g${i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${c}" stop-opacity="0.62"/><stop offset="1" stop-color="${c}" stop-opacity="0.14"/></linearGradient>`,
+      `<linearGradient id="pk-g${i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${c}" stop-opacity="0.62"/><stop offset="1" stop-color="${c}" stop-opacity="0.06"/></linearGradient>`,
   );
   const shades = profile.windows
     .map((w, i) => {
@@ -465,10 +538,6 @@ export function chartSvg(profile: Profile, nowHours: number | null | undefined, 
       const width = sx(Math.min(w.end, end), end) - x;
       return width > 0 ? `<rect x="${f(x)}" y="0" width="${f(width)}" height="1000" fill="url(#pk-g${i})"/>` : '';
     })
-    .join('');
-  const grid = ticks
-    .filter((h) => h > 1e-9 && h < end - 1e-9)
-    .map((h) => `<line x1="${f(sx(h, end))}" y1="0" x2="${f(sx(h, end))}" y2="1000" class="pk-grid" vector-effect="non-scaling-stroke"/>`)
     .join('');
   let now = '';
   if (nowHours != null && nowHours >= 0 && nowHours <= end) {
@@ -481,7 +550,6 @@ export function chartSvg(profile: Profile, nowHours: number | null | undefined, 
     `<defs><clipPath id="pk-area"><path d="${area}"/></clipPath>${grads.join('')}</defs>` +
     `<path d="${area}" class="pk-fill"/>` +
     `<g clip-path="url(#pk-area)">${shades}</g>` +
-    grid +
     `<line x1="0" y1="1000" x2="1000" y2="1000" class="pk-base" vector-effect="non-scaling-stroke"/>` +
     `<path d="${line}" class="pk-line" vector-effect="non-scaling-stroke"/>` +
     now +
@@ -496,11 +564,14 @@ export function nowMarker(lang: TimingLang, profile: Profile, nowHours: number |
   const value = profile.curve.value(nowHours);
   const y = sy(value) / 1000;
   const style = `left:${(x * 100).toFixed(2)}%;top:${(y * 100).toFixed(2)}%`;
+  // The dot is the status colour, as in the app (the title above the chart has the same).
+  const color = statusColor(phaseAt(lang, profile, nowHours));
+  const dotStyle = color ? `${style};background:${color}` : style;
   // Near the peak the tag sits under the dot, as the app's dose marker does (PKDoseMarker,
-  // y >= 0.82 of the maximum); near the right edge it shifts left to stay inside the chart.
+  // y >= 0.82 of the maximum); near either edge it shifts inward, as the chart runs edge to edge.
   const place = value >= 0.82 ? ' below' : '';
-  const flip = x > 0.86 ? ' flip' : '';
-  return `<span class="pk-now-dot" style="${style}"></span><span class="pk-now-tag${place}${flip}" style="${style}">${esc(copy[lang].now)}</span>`;
+  const flip = x > 0.86 ? ' flip' : x < 0.1 ? ' start' : '';
+  return `<span class="pk-now-dot" style="${dotStyle}"></span><span class="pk-now-tag${place}${flip}" style="${style}">${esc(copy[lang].now)}</span>`;
 }
 
 export function render(input: RenderInput): Rendered {
@@ -518,7 +589,7 @@ export function render(input: RenderInput): Rendered {
   if (nowHours != null) {
     const phase = phaseAt(lang, profile, nowHours);
     title = phase.text;
-    if (phase.windowIndex >= 0) color = PHASE_COLORS[phase.windowIndex];
+    color = statusColor(phase);
     const whole = Math.abs(Math.floor(nowHours * 60));
     const h = Math.floor(whole / 60);
     const m = whole % 60;
@@ -537,7 +608,7 @@ export function render(input: RenderInput): Rendered {
 
   const end = profile.chartEndHours;
   const ticks = tickOffsets(minutes, end);
-  const chart = chartSvg(profile, nowHours, ticks) + nowMarker(lang, profile, nowHours);
+  const chart = chartSvg(profile, nowHours) + nowMarker(lang, profile, nowHours);
 
   // Labels sit on whole clock hours; the ones at the edges are aligned inward so they stay in the chart.
   const axis = ticks

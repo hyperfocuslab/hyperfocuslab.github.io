@@ -1152,10 +1152,10 @@ main > .section:first-child {
 
 .pk-controls {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 12px;
   align-items: end;
-  margin-top: 36px;
+  margin-top: clamp(20px, 4vw, 36px);
 }
 
 .pk-controls label {
@@ -1197,23 +1197,67 @@ main > .section:first-child {
   min-height: 1.4em;
 }
 
-.pk-controls .btn {
-  min-height: 48px;
-  padding-block: 10px;
-}
-
-/* The chart panel mirrors the app's card: name, legend, curve. */
+/* The chart panel mirrors the app's card: phase, legend, then the curve across the card's full
+   width (the app's chart bleeds through the card padding) at the app's 230 pt height. */
 .pk-panel {
+  --pad: clamp(18px, 3.5vw, 32px);
+  container-type: inline-size;
   margin-top: 20px;
-  padding: clamp(20px, 3.5vw, 32px);
+  padding: var(--pad);
   background: var(--paper-2);
   border: 1px solid var(--rule-soft);
   border-radius: 20px;
 }
 
+/* The button shares only the phase line; the line under it keeps the card's full width. The
+   status div is re-rendered each minute, so its two lines join this grid through display: contents. */
+.pk-panel-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 12px;
+  align-items: start;
+}
+
+.pk-status {
+  display: contents;
+}
+
+.pk-status .pk-phase {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.pk-status .pk-sub {
+  grid-column: 1 / -1;
+  grid-row: 2;
+}
+
+.pk-pill {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: center;
+}
+
+.pk-pill {
+  flex: none;
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(238, 238, 234, 0.08);
+  color: var(--ink-2);
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.pk-pill:hover {
+  color: var(--ink);
+}
+
 .pk-phase {
-  font-size: clamp(1.625rem, 4vw, 2.25rem);
-  font-weight: 680;
+  font-size: clamp(2rem, 4.5vw, 2.5rem);
+  font-weight: 700;
   line-height: 1.15;
   letter-spacing: -0.025em;
 }
@@ -1233,45 +1277,69 @@ main > .section:first-child {
   color: var(--ink);
 }
 
-/* A key, not column headings: the windows move with the drug and the dose time, so the items
-   are packed from the left instead of sitting in thirds that only sometimes line up with them. */
+/* The app's PKPhaseLegend: one line, first item at the left edge, last at the right, the space
+   between shared. When the three do not fit the page script adds .stacked, one row per window
+   (the app's ViewThatFits); until it runs, items wrap rather than overflow the card. */
 .pk-legend {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px 36px;
-  margin-top: 24px;
+  justify-content: space-between;
+  gap: 6px 12px;
+  margin-top: 22px;
+}
+
+.pk-legend.stacked {
+  flex-direction: column;
+}
+
+.pk-legend.stacked .pk-legend-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
 }
 
 .pk-legend-item {
   display: grid;
-  gap: 2px;
-  font-size: 0.9375rem;
+  gap: 3px;
+  font-size: 0.8125rem;
+  white-space: nowrap;
 }
 
 .pk-legend-name {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   font-weight: 640;
 }
 
 .pk-legend-name i {
   flex: none;
-  width: 10px;
-  height: 10px;
-  border-radius: 3px;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
 }
 
 .pk-legend-range {
   color: var(--ink-2);
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   font-variant-numeric: tabular-nums;
+}
+
+/* The app's 12/11 pt on a phone; a little larger on a wide card. */
+@container (min-width: 560px) {
+  .pk-legend-item {
+    font-size: 0.875rem;
+  }
+
+  .pk-legend-range {
+    font-size: 0.8125rem;
+  }
 }
 
 .pk-chart {
   position: relative;
-  height: clamp(170px, 42vw, 260px);
-  margin-top: 16px;
+  height: clamp(230px, 30vw, 280px);
+  margin: 12px calc(var(--pad) * -1) 0;
 }
 
 .pk-svg {
@@ -1289,14 +1357,9 @@ main > .section:first-child {
 .pk-line {
   fill: none;
   stroke: var(--ink);
-  stroke-width: 2.5;
+  stroke-width: 3;
   stroke-linejoin: round;
   stroke-linecap: round;
-}
-
-.pk-grid {
-  stroke: rgba(238, 238, 234, 0.1);
-  stroke-width: 1;
 }
 
 .pk-base {
@@ -1304,33 +1367,33 @@ main > .section:first-child {
   stroke-width: 1;
 }
 
+/* The app's dose marker: a dashed rule to the floor, a dot in the phase colour, a dark capsule. */
 .pk-now-line {
-  stroke: var(--ink);
-  stroke-width: 1.5;
-  stroke-dasharray: 4 4;
+  stroke: rgba(238, 238, 234, 0.9);
+  stroke-width: 2;
+  stroke-dasharray: 4 3;
 }
 
 .pk-now-dot {
   position: absolute;
-  width: 12px;
-  height: 12px;
-  margin: -6px 0 0 -6px;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
   border-radius: 50%;
-  background: var(--ink);
+  background: var(--ink-2);
   border: 2px solid var(--paper-2);
 }
 
 .pk-now-tag {
   position: absolute;
   transform: translate(-50%, calc(-100% - 12px));
-  padding: 3px 9px;
+  padding: 4px 9px;
   border-radius: 999px;
-  background: var(--ink);
-  color: var(--paper);
-  font-family: var(--mono);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  letter-spacing: 0.06em;
+  background: var(--paper);
+  border: 0.7px solid rgba(238, 238, 234, 0.28);
+  color: var(--ink);
+  font-size: 0.75rem;
+  font-weight: 640;
   white-space: nowrap;
 }
 
@@ -1346,10 +1409,19 @@ main > .section:first-child {
   transform: translate(-92%, 12px);
 }
 
+.pk-now-tag.start {
+  transform: translate(-8%, calc(-100% - 12px));
+}
+
+.pk-now-tag.below.start {
+  transform: translate(-8%, 12px);
+}
+
+/* Spans the same full width as the chart; the edge labels step inside the card. */
 .pk-axis {
   position: relative;
   height: 20px;
-  margin-top: 8px;
+  margin: 8px calc(var(--pad) * -1) 0;
   font-family: var(--mono);
   font-size: 0.75rem;
   color: var(--ink-3);
@@ -1363,11 +1435,11 @@ main > .section:first-child {
 }
 
 .pk-tick.start {
-  transform: none;
+  transform: translateX(10px);
 }
 
 .pk-tick.end {
-  transform: translateX(-100%);
+  transform: translateX(calc(-100% - 10px));
 }
 
 .pk-sources {
@@ -1443,31 +1515,6 @@ main > .section:first-child {
 }
 
 @media (max-width: 640px) {
-  .pk-controls {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  }
-
-  .pk-controls .btn {
-    grid-column: 1 / -1;
-  }
-
-  /* One row per window, name left and time right, as the app does when one line does not fit. */
-  .pk-legend {
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .pk-legend-item {
-    display: flex;
-    justify-content: space-between;
-    gap: 8px;
-    font-size: 0.875rem;
-  }
-
-  .pk-legend-range {
-    font-size: 0.8125rem;
-  }
-
   .pk-facts div {
     grid-template-columns: minmax(6.5em, max-content) 1fr;
   }
