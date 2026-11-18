@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>김가영 2027 신년운</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<style>/* 사주노트. 토스 톤: 흰 바탕, 회색 면, 파랑(좋음)·빨강(조심), 그림자 없음 */
+:root {
+  --bg: #ffffff;
+  --surface: #f2f4f6;
+  --line: #e5e8eb;
+  --text: #191f28;
+  --body: #333d4b;
+  --text2: #6b7684;
+  --text3: #8b95a1;
+  --good: #3182f6;
+  --good-bg: #e8f3ff;
+  --care: #f04452;
+  --care-bg: #ffeeee;
+  --on-accent: #ffffff;
+  --el0: #2f9e5b;
+  --el1: #e0453a;
+  --el2: #9c6b3f;
+  --el3: #d4a017;
+  --el4: #1f5fbf;
+  --r: 12px;
+  --r-s: 6px;
+  --sans: 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Hiragino Sans', 'PingFang TC', 'Noto Sans KR', 'Noto Sans JP', 'Noto Sans TC', system-ui, sans-serif;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+    --bg: #17171c;
+    --surface: #2c2c35;
+    --line: #34343e;
+    --text: #f2f4f6;
+    --body: #d6dae0;
+    --text2: #9ea7b3;
+    --text3: #7e8794;
+    --good: #4593fc;
+    --good-bg: #1d2b44;
+    --care: #f25866;
+    --care-bg: #3d2226;
+    --el0: #4cbb7a;
+    --el1: #f06a5f;
+    --el2: #c08a5a;
+    --el3: #e8bb3a;
+    --el4: #5b93e6;
+   color-scheme: dark; }
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+}
+:lang(ja) body, body:lang(ja) { line-height: 1.75; }
+p { margin: 0; }
+button, input, select { font: inherit; color: inherit; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--good); outline-offset: 2px; }
+[hidden] { display: none !important; }
+
+.top, main, .foot { max-width: 480px; margin: 0 auto; padding-left: 20px; padding-right: 20px; }
+
+/* 머리 */
+.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 56px; }
+.brand { font-weight: 700; font-size: 17px; text-decoration: none; }
+.langs { display: flex; gap: 2px; }
+.langs a { font-size: 14px; color: var(--text3); text-decoration: none; padding: 6px 8px; border-radius: var(--r-s); }
+.langs a[aria-current='true'] { color: var(--text); font-weight: 600; background: var(--surface); }
+
+main { padding-top: 4px; padding-bottom: 48px; }
+.foot { color: var(--text3); font-size: 13px; padding-top: 20px; padding-bottom: 32px; border-top: 1px solid var(--line); }
+.foot p + p { margin-top: 4px; }
+
+h1 { font-size: 26px; line-height: 1.38; font-weight: 700; margin: 12px 0 0; }
+h2 { font-size: 20px; line-height: 1.4; font-weight: 700; margin: 0; }
+h3 { font-size: 17px; line-height: 1.45; font-weight: 700; margin: 0; }
+h4 { font-size: 17px; line-height: 1.45; font-weight: 700; margin: 0; }
+.lede { color: var(--text2); margin: 8px 0 24px; font-size: 16px; }
+.muted { color: var(--text3); font-size: 14px; margin-top: 6px; }
+.sub { font-size: 15px; color: var(--text2); margin-top: 4px; line-height: 1.5; }
+
+/* 칸과 띠 */
+.sec { padding: 28px 0 32px; }
+.band { height: 12px; background: var(--surface); margin: 0 -20px; }
+.block { padding: 28px 0 0; }
+.block > h2 { margin-bottom: 8px; }
+
+/* 폼 */
+.form { padding-top: 4px; }
+.field { margin: 0 0 20px; border: 0; padding: 0; min-width: 0; }
+.field > legend, .lab { display: block; font-size: 15px; font-weight: 600; color: var(--text2); margin-bottom: 8px; padding: 0; }
+.input, select.input { width: 100%; height: 52px; padding: 0 14px; border: 0; border-radius: var(--r); background: var(--surface); appearance: none; font-size: 17px; }
+.input:disabled { color: var(--text3); }
+textarea.input { height: auto; min-height: 96px; padding: 14px; line-height: 1.5; resize: vertical; font: inherit; font-size: 17px; }
+select.input { background-image: linear-gradient(45deg, transparent 50%, var(--text3) 50%), linear-gradient(135deg, var(--text3) 50%, transparent 50%); background-position: calc(100% - 19px) 50%, calc(100% - 14px) 50%; background-size: 5px 5px; background-repeat: no-repeat; padding-right: 32px; }
+.row { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1fr); gap: 8px; }
+
+.seg { display: flex; gap: 4px; padding: 4px; border-radius: var(--r); background: var(--surface); }
+.seg label { flex: 1; position: relative; }
+.seg input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.seg span { display: block; text-align: center; padding: 10px 6px; font-size: 16px; color: var(--text2); border-radius: 9px; }
+.seg input:checked + span { background: var(--bg); color: var(--text); font-weight: 600; }
+.seg input:focus-visible + span { outline: 2px solid var(--good); outline-offset: -2px; }
+
+.check { display: inline-flex; align-items: center; gap: 8px; font-size: 15px; color: var(--text2); margin-top: 10px; }
+.check input { width: 20px; height: 20px; accent-color: var(--good); }
+.radio-list label { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; padding: 7px 0; color: var(--body); }
+.radio-list input { margin-top: 4px; width: 18px; height: 18px; accent-color: var(--good); }
+
+details.adv { border-top: 1px solid var(--line); padding-top: 14px; margin-bottom: 20px; }
+details.adv summary { cursor: pointer; font-size: 15px; color: var(--text2); padding: 4px 0; }
+details.adv[open] summary { margin-bottom: 12px; }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 52px; padding: 0 18px; border-radius: var(--r); border: 0; background: var(--surface); color: var(--text); font-weight: 600; font-size: 16px; cursor: pointer; text-decoration: none; }
+.btn.primary, .btn.pay { background: var(--good); color: var(--on-accent); }
+.btn.ghost { color: var(--body); }
+.btn.block-btn { width: 100%; }
+.btn[disabled] { opacity: 0.45; cursor: default; }
+.link-btn { background: none; border: 0; padding: 6px 0; font-size: 15px; font-weight: 600; color: var(--good); cursor: pointer; text-decoration: none; display: inline-block; }
+.error { color: var(--care); font-size: 15px; margin: 10px 0 0; min-height: 1em; }
+
+.saved { list-style: none; padding: 0; margin: 0; }
+.saved li { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 16px; }
+.saved li:last-child { border-bottom: 0; }
+.saved a { text-decoration: none; font-weight: 600; }
+.saved .del { background: none; border: 0; color: var(--text3); font-size: 14px; cursor: pointer; padding: 6px; }
+
+/* 프로필 */
+.profile { padding-top: 8px; }
+.profile h1 { margin: 6px 0 6px; }
+.who { font-size: 15px; color: var(--text2); line-height: 1.5; }
+.notes { margin: 12px 0 0; padding: 12px 14px; list-style: none; background: var(--surface); border-radius: var(--r); }
+.notes li { font-size: 14px; color: var(--text2); line-height: 1.55; }
+.notes li + li { margin-top: 4px; }
+
+/* 원국 4칸 */
+.pillars { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 18px; border-top: 1px solid var(--line); }
+.pillars > div { text-align: center; padding: 12px 2px; border-bottom: 1px solid var(--line); }
+.pillars .k { font-size: 13px; color: var(--text3); }
+.pillars .h { font-size: 22px; font-weight: 600; margin-top: 4px; line-height: 1.3; }
+.pillars .r { font-size: 13px; color: var(--text2); margin-top: 2px; }
+.pillars .g { font-size: 12px; color: var(--text3); margin-top: 6px; line-height: 1.4; }
+.pillars .g + .g { margin-top: 2px; }
+.pillars .h .e0, ol.dw b .e0 { color: var(--el0); } .pillars .h .e1, ol.dw b .e1 { color: var(--el1); } .pillars .h .e2, ol.dw b .e2 { color: var(--el2); } .pillars .h .e3, ol.dw b .e3 { color: var(--el3); } .pillars .h .e4, ol.dw b .e4 { color: var(--el4); }
+.pillars .me { background: var(--surface); border-radius: var(--r-s); }
+
+/* 오행 막대 */
+.bars { list-style: none; margin: 16px 0 0; padding: 0; }
+.bars li { display: grid; grid-template-columns: 64px 1fr 24px; align-items: center; gap: 10px; font-size: 15px; padding: 5px 0; }
+.bar { height: 8px; background: var(--surface); border-radius: 4px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--text2); border-radius: 4px; }
+.bars li:nth-child(1) .bar i { background: var(--el0); }
+.bars li:nth-child(2) .bar i { background: var(--el1); }
+.bars li:nth-child(3) .bar i { background: var(--el2); }
+.bars li:nth-child(4) .bar i { background: var(--el3); }
+.bars li:nth-child(5) .bar i { background: var(--el4); }
+.bars .n { text-align: right; color: var(--text2); font-variant-numeric: tabular-nums; }
+
+.facts { margin: 12px 0 0; padding: 0; list-style: none; }
+.facts li { padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 16px; line-height: 1.65; color: var(--body); word-break: keep-all; overflow-wrap: anywhere; }
+.facts li:last-child { border-bottom: 0; }
+.facts b { font-weight: 700; color: var(--text); }
+
+/* 원국 화면 대운 줄 */
+ol.dw { display: flex; gap: 0; overflow-x: auto; margin: 16px -20px 0; padding: 0 20px; scrollbar-width: none; }
+ol.dw::-webkit-scrollbar { display: none; }
+ol.dw li { list-style: none; flex: 0 0 80px; text-align: center; padding: 10px 0; }
+ol.dw b { display: block; font-size: 20px; font-weight: 600; }
+ol.dw .r { display: block; font-size: 13px; color: var(--text2); }
+ol.dw .age { display: block; font-size: 12px; color: var(--text3); margin-top: 4px; line-height: 1.35; }
+ol.dw .now { background: var(--surface); border-radius: var(--r-s); }
+ol.dw .now .age { color: var(--text); font-weight: 700; }
+
+/* 리포트 목록 */
+.reports > h2 { margin-bottom: 4px; }
+.intro-note { margin-bottom: 8px; }
+.product { padding: 24px 0 8px; border-top: 1px solid var(--line); }
+.product:first-of-type { border-top: 0; }
+.product .head { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+.product .price { font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; color: var(--text2); }
+.product p.desc { margin: 4px 0 14px; color: var(--text2); font-size: 15px; word-break: keep-all; overflow-wrap: anywhere; }
+.state { font-size: 15px; color: var(--text2); margin: 8px 0; }
+.state.gen::before { content: ''; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--good); margin-right: 8px; vertical-align: 1px; animation: blink 1.2s ease-in-out infinite; }
+@keyframes blink { 50% { opacity: 0.25; } }
+@media (prefers-reduced-motion: reduce) { .state.gen::before { animation: none; } }
+.partner { margin-top: 4px; }
+.partner > h3 { margin: 0 0 14px; }
+.rep-tools { display: flex; justify-content: flex-end; }
+
+/* 리포트 본문 */
+.report, .preview { font-size: 17px; line-height: 1.7; }
+.report p, .preview p { word-break: keep-all; overflow-wrap: anywhere; }
+:lang(ja) .report p, :lang(zh-Hant) .report p, :lang(ja) .preview p, :lang(zh-Hant) .preview p { word-break: normal; line-break: strict; }
+.pad-head { padding: 8px 0 28px; }
+.eyebrow { font-size: 15px; color: var(--text2); line-height: 1.5; }
+.rep-title { font-size: 24px; line-height: 1.4; font-weight: 700; margin-top: 6px; }
+p.body { font-size: 17px; line-height: 1.7; margin-top: 14px; color: var(--body); }
+.item { margin-top: 24px; }
+.item:first-of-type { margin-top: 18px; }
+.item h4 { margin-bottom: 4px; }
+.kw { font-size: 14px; color: var(--text3); margin-top: 14px; }
+.closing { font-size: 17px; font-weight: 600; line-height: 1.65; }
+
+/* 한눈에 보기·할 일 */
+ol.glance { list-style: none; margin: 16px 0 0; padding: 0; }
+ol.glance li { display: flex; gap: 12px; font-size: 17px; line-height: 1.6; padding: 12px 0; border-bottom: 1px solid var(--line); }
+ol.glance li:last-child { border-bottom: 0; }
+ol.glance i { font-style: normal; font-weight: 700; color: var(--text3); width: 16px; flex: none; font-variant-numeric: tabular-nums; }
+
+/* 10년 표(네이버 날씨 시간별 표 방식) */
+.strip { margin: 18px -20px 0; overflow-x: auto; scrollbar-width: none; }
+.strip::-webkit-scrollbar { display: none; }
+.strip table { border-collapse: collapse; margin: 0 20px; }
+.strip td, .strip th { width: 62px; min-width: 62px; text-align: center; padding: 0 2px; vertical-align: top; }
+.strip th { font-size: 15px; font-weight: 700; padding-bottom: 4px; font-variant-numeric: tabular-nums; }
+.strip tr:first-child th:first-child { color: var(--good); }
+.strip td.gz { font-size: 13px; color: var(--text3); padding-bottom: 10px; }
+.strip .mark td { height: 38px; }
+.dot { display: inline-block; width: 14px; height: 14px; border-radius: 50%; margin-top: 12px; }
+.dot.g { background: var(--good); }
+.dot.c { background: var(--care); }
+.dot.n { background: var(--line); }
+.strip td.v { font-size: 13px; font-weight: 600; padding-top: 2px; }
+.strip td.v.g { color: var(--good); }
+.strip td.v.c { color: var(--care); }
+.strip td.v.n { color: var(--text3); }
+.strip td.tag { font-size: 12px; color: var(--text2); padding-top: 8px; line-height: 1.35; }
+.legend { font-size: 13px; color: var(--text3); margin-top: 14px; }
+
+/* 해·달 목록 */
+ul.rows { list-style: none; margin: 8px 0 0; padding: 0; }
+ul.rows li { padding: 18px 0; border-bottom: 1px solid var(--line); }
+ul.rows li:last-child { border-bottom: 0; }
+.row-top { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; }
+.row-top b { font-size: 17px; font-weight: 700; }
+.row-top .gz { font-size: 15px; color: var(--text3); }
+.row-top .meter { align-self: center; margin-left: auto; }
+.pill { font-size: 13px; font-weight: 600; line-height: 1.5; padding: 2px 8px; border-radius: var(--r-s); white-space: nowrap; }
+.pill.g { background: var(--good-bg); color: var(--good); }
+.pill.c { background: var(--care-bg); color: var(--care); }
+.pill.s { background: var(--surface); color: var(--text2); }
+.why { font-size: 15px; color: var(--text2); margin-top: 6px; line-height: 1.55; }
+.why + .why { margin-top: 2px; }
+p.do { font-size: 16px; line-height: 1.65; margin-top: 8px; color: var(--body); }
+.locked { display: inline-flex; align-items: center; gap: 6px; margin: 10px 0 0; padding: 6px 10px; border-radius: var(--r-s); background: var(--surface); color: var(--text2); font-size: 14px; font-weight: 500; }
+.locked svg { flex: none; }
+
+/* 영역별 좋은 달·조심할 달 */
+.outlook .eyebrow { font-size: 14px; color: var(--text3); font-weight: 600; }
+.outlook h4 { margin: 2px 0 10px; }
+.chips { display: flex; flex-wrap: wrap; gap: 4px 10px; font-size: 15px; line-height: 1.5; margin-top: 4px; color: var(--body); }
+.chips-l { font-weight: 600; }
+.chips.good .chips-l { color: var(--good); }
+.chips.care .chips-l { color: var(--care); }
+
+/* 12달 막대 */
+.tl { margin: 18px 0 0; }
+.tl-bars { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 4px; margin: 0; padding: 0; list-style: none; }
+.tl-bars li { display: flex; flex-direction: column; align-items: stretch; }
+.tl-col { display: flex; align-items: flex-end; height: 64px; background: var(--surface); border-radius: 4px; overflow: hidden; }
+.tl-col i { display: block; width: 100%; }
+.tl-m { font-size: 12px; color: var(--text2); text-align: center; margin-top: 4px; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.tl-legend { font-size: 13px; color: var(--text3); line-height: 1.55; margin-top: 10px; }
+.tl-col i.l1, .meter i.l1 { background: #c9d1da; }
+.tl-col i.l2, .meter i.l2 { background: #a2adb9; }
+.tl-col i.l3, .meter i.l3 { background: #8b95a1; }
+.tl-col i.l4, .meter i.l4 { background: #64a8ff; }
+.tl-col i.l5, .meter i.l5 { background: var(--good); }
+
+/* 5단계 작은 막대 */
+.meter { display: inline-flex; gap: 2px; vertical-align: middle; }
+.meter i { width: 6px; height: 12px; background: var(--line); border-radius: 2px; }
+
+/* 지난 대운 */
+.dw-item { padding: 20px 0; border-bottom: 1px solid var(--line); }
+.dw-item:last-child { border-bottom: 0; }
+.dw-top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 2px 8px; }
+.dw-top b { font-size: 17px; font-weight: 700; }
+.dw-top span { font-size: 13px; color: var(--text3); white-space: nowrap; }
+.dw-item.current .dw-top span { color: var(--good); font-weight: 600; }
+.fb { margin-top: 16px; }
+.fb-q { font-size: 14px; color: var(--text2); }
+.fb-btns { display: flex; gap: 8px; margin-top: 8px; }
+.fb-btn { flex: 1; height: 40px; border: 0; border-radius: var(--r-s); background: var(--surface); color: var(--body); font-size: 15px; font-weight: 600; cursor: pointer; }
+.fb-btn[aria-pressed='true'] { background: var(--good-bg); color: var(--good); }
+
+/* 미리보기 */
+ul.heads { list-style: none; margin: 0; padding: 0; }
+ul.heads li { font-size: 16px; color: var(--text2); padding: 12px 0; border-bottom: 1px solid var(--line); }
+ul.heads li:last-child { border-bottom: 0; }
+.paybar { position: sticky; bottom: 0; z-index: 2; background: var(--bg); margin: 0 -20px; padding: 12px 20px calc(20px + env(safe-area-inset-bottom)); border-top: 1px solid var(--line); }
+.paybar .btn { height: 56px; font-size: 17px; }
+.paybar small { display: block; text-align: center; font-size: 13px; color: var(--text3); margin-top: 8px; }
+
+.actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 0; }
+.actions .btn { flex: 1 1 140px; }
+
+/* 결제 창 */
+dialog { border: 0; border-radius: 16px; padding: 0; width: min(400px, calc(100% - 40px)); background: var(--bg); color: var(--text); }
+dialog::backdrop { background: rgba(0, 0, 0, 0.45); }
+.pay-box { padding: 24px 20px 20px; }
+.pay-box h2 { margin-bottom: 8px; }
+.pay-item { color: var(--text2); }
+.pay-price { font-size: 26px; font-weight: 700; margin: 6px 0 12px; font-variant-numeric: tabular-nums; }
+.pay-test { font-size: 14px; color: var(--text2); background: var(--surface); padding: 10px 12px; border-radius: var(--r-s); margin: 0 0 18px; }
+.pay-actions { display: flex; gap: 8px; }
+.pay-actions .btn { flex: 1; }
+
+/* 관리 화면 */
+.admin main, .admin .top { max-width: 1100px; }
+.admin table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.admin th, .admin td { border-bottom: 1px solid var(--line); padding: 6px 8px; text-align: left; vertical-align: top; }
+.admin th { color: var(--text3); font-weight: 500; }
+.admin td.num { text-align: right; font-variant-numeric: tabular-nums; }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; margin-bottom: 16px; }
+.kpis div { background: var(--surface); border-radius: var(--r); padding: 12px 14px; }
+.kpis b { display: block; font-size: 20px; font-variant-numeric: tabular-nums; }
+.kpis span { font-size: 12px; color: var(--text3); }
+.st-ok { color: var(--good); } .st-failed { color: var(--care); }
+.scroll-x { overflow-x: auto; }
+
+/* 인쇄·PDF
+   위쪽·아래쪽 여백 상자를 직접 채우면 Chrome이 기본 머리말(날짜·제목)과 꼬리말(주소·쪽수)을 찍지 않는다. */
+@page {
+  size: A5;
+  margin: 12mm 11mm 13mm;
+  @top-center { content: ''; }
+  @bottom-center { content: var(--print-brand, ''); font-family: var(--sans); font-size: 8pt; color: #8b95a1; }
+}
+@media print {
+  :root { --bg: #fff; --surface: #f2f4f6; --line: #e5e8eb; --text: #191f28; --body: #333d4b; --text2: #6b7684; --text3: #8b95a1; --good: #3182f6; --good-bg: #e8f3ff; --care: #f04452; --care-bg: #ffeeee; }
+  html, body { background: #fff; }
+  body { font-size: 11pt; line-height: 1.65; }
+  .top, .actions, .no-print, dialog, .btn, .partner, .product > .desc, .product .price, .reports > h2, .error, .foot > p:first-child { display: none !important; }
+  main, .top, .foot { max-width: none; padding-left: 0; padding-right: 0; margin: 0; }
+  main { padding-top: 0; padding-bottom: 0; }
+  .band { height: 0; margin: 0; border-top: 1px solid var(--line); }
+  .sec { padding: 14pt 0 16pt; }
+  .strip { overflow: visible; margin: 12pt 0 0; }
+  .strip table { margin: 0; width: 100%; }
+  .strip td, .strip th { width: auto; min-width: 0; }
+  .legend { display: none; }
+  ol.dw { flex-wrap: wrap; overflow: visible; margin: 10pt 0 0; padding: 0; }
+  .product:not(.has-paid) { display: none; }
+  .product.has-paid { break-before: page; border-top: 0; padding-top: 0; }
+  .product .head h3 { font-size: 11pt; color: #6b7684; font-weight: 600; margin-bottom: 4pt; }
+  .report { font-size: 10.5pt; line-height: 1.7; }
+  .rep-title { font-size: 17pt; }
+  h2 { font-size: 13pt; }
+  h1, h2, h3, h4, .eyebrow, .row-top, .dw-top, .tl { break-after: avoid; }
+  ul.rows li, .dw-item, ol.glance li, .tl, .strip, .pillars { break-inside: avoid; }
+  .report p { orphans: 3; widows: 3; }
+  .dot, .pill, .tl-col, .tl-col i, .meter i, .bar, .bar i, .band, .notes { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .foot { padding-bottom: 0; border-top: 0; }
+}
+
+:root[data-theme="dark"] {
+    --bg: #17171c;
+    --surface: #2c2c35;
+    --line: #34343e;
+    --text: #f2f4f6;
+    --body: #d6dae0;
+    --text2: #9ea7b3;
+    --text3: #7e8794;
+    --good: #4593fc;
+    --good-bg: #1d2b44;
+    --care: #f25866;
+    --care-bg: #3d2226;
+    --el0: #4cbb7a;
+    --el1: #f06a5f;
+    --el2: #c08a5a;
+    --el3: #e8bb3a;
+    --el4: #5b93e6;
+   color-scheme: dark; }
+
+body { background: var(--bg); color: var(--text); }
+</style>
+</head>
+<body>
+
+<header class="top" id="top">사주노트</header>
+<main id="app" aria-live="polite"><section class="sec profile"><h1>김가영</h1><p class="who">여성 · 양력 1988.08.11 · 음력 1988.6.29</p><p class="who">11:30 · 한국</p><p class="who">서머타임 -1시간 → 경도 보정 -30분 → 10:00 기준</p></section><section class="sec cover chart-sec"><h2>사주 원국</h2><div class="pillars"><div><p class="k">시주</p><p class="h"><span class="e1">丁</span><span class="e1">巳</span></p><p class="r">정사</p><p class="g">정인 · 편인</p><p class="g">戊 庚 丙</p></div><div class="me"><p class="k">일주</p><p class="h"><span class="e2">戊</span><span class="e2">戌</span></p><p class="r">무술</p><p class="g">일간 · 비견</p><p class="g">辛 丁 戊</p></div><div><p class="k">월주</p><p class="h"><span class="e3">庚</span><span class="e3">申</span></p><p class="r">경신</p><p class="g">식신 · 식신</p><p class="g">戊 壬 庚</p></div><div><p class="k">년주</p><p class="h"><span class="e2">戊</span><span class="e2">辰</span></p><p class="r">무진</p><p class="g">비견 · 비견</p><p class="g">乙 癸 戊</p></div></div></section><div class="band" aria-hidden="true"></div><section class="sec cover"><h2>오행 분포</h2><ul class="bars"><li><span>목(木)</span><div class="bar"><i style="width: 0%;"></i></div><span class="n">0</span></li><li><span>화(火)</span><div class="bar"><i style="width: 50%;"></i></div><span class="n">2</span></li><li><span>토(土)</span><div class="bar"><i style="width: 100%;"></i></div><span class="n">4</span></li><li><span>금(金)</span><div class="bar"><i style="width: 50%;"></i></div><span class="n">2</span></li><li><span>수(水)</span><div class="bar"><i style="width: 0%;"></i></div><span class="n">0</span></li></ul></section><div class="band" aria-hidden="true"></div><div class="band" aria-hidden="true"></div><section class="sec dw-sec"><h2>대운</h2><p class="sub">첫 대운 1세 · 10년 단위</p><ol class="dw"><li><b><span class="e2">己</span><span class="e2">未</span></b><span class="r">기미</span><span class="age">1~10세</span><span class="age">1989~1998</span></li><li><b><span class="e2">戊</span><span class="e1">午</span></b><span class="r">무오</span><span class="age">11~20세</span><span class="age">1999~2008</span></li><li><b><span class="e1">丁</span><span class="e1">巳</span></b><span class="r">정사</span><span class="age">21~30세</span><span class="age">2009~2018</span></li><li class="now"><b><span class="e1">丙</span><span class="e2">辰</span></b><span class="r">병진</span><span class="age">31~40세</span><span class="age">2019~2028</span></li><li><b><span class="e0">乙</span><span class="e0">卯</span></b><span class="r">을묘</span><span class="age">41~50세</span><span class="age">2029~2038</span></li><li><b><span class="e0">甲</span><span class="e0">寅</span></b><span class="r">갑인</span><span class="age">51~60세</span><span class="age">2039~2048</span></li><li><b><span class="e4">癸</span><span class="e2">丑</span></b><span class="r">계축</span><span class="age">61~70세</span><span class="age">2049~2058</span></li><li><b><span class="e4">壬</span><span class="e4">子</span></b><span class="r">임자</span><span class="age">71~80세</span><span class="age">2059~2068</span></li><li><b><span class="e3">辛</span><span class="e4">亥</span></b><span class="r">신해</span><span class="age">81~90세</span><span class="age">2069~2078</span></li><li><b><span class="e3">庚</span><span class="e2">戌</span></b><span class="r">경술</span><span class="age">91~100세</span><span class="age">2079~2088</span></li></ol></section><div class="band" aria-hidden="true"></div><section class="sec reports"><h2>자세한 리포트</h2><div class="product has-paid" data-type="year" data-status="ready" data-step=""><div class="head"><h3>2027 신년운</h3></div><p class="desc">앞으로 10년 해별 운과 삼재, 좋은 달과 조심할 달, 일·연애·돈·건강·인간관계 전망, 지금부터 달별 흐름, 지나온 대운</p><div class="p-body"><article class="report v2" lang="ko"><div class="pad-head"><header class="rep-head"><p class="eyebrow">2027 신년운 · 김가영 님</p><h3 class="rep-title">내 방식이 단단한 무술(戊戌) 일주, 덜어 내야 하는 2027년</h3><p class="body">김가영 님 사주는 토(土)가 네 개에 비겁도 셋이라, 내 기준과 취향이 아주 단단한 신강 사주예요. 그런데 돈의 흐름을 뜻하는 재성과 바깥의 틀을 뜻하는 관성은 하나도 없어서, 잘 만들고 잘 버티는 힘을 수입과 마감으로 잇는 길은 스스로 내야 해요. 2027년 정미(丁未)년은 천간 정인, 지지 겁재로 이미 많은 화(火)와 토(土)를 더 얹고, 미(未)가 일지 술(戌)을 형으로 건드려 혼자 감당할 일이 늘기 쉬운 해예요. 다만 3월과 12월에는 이 사주에 없던 기운이 들어와 일과 돈이 한결 잘 움직이는 달이 있어요.</p></header></div><section class="sec" id="r-hoqX5I_6aQg_-summary"><h2>한눈에 보기</h2><ol class="glance"><li><i>1</i><span>내 기준이 분명하고 혼자서도 끝까지 해내는 힘이 크지만, 돈과 마감의 틀은 스스로 세워야 하는 사주예요.</span></li><li><i>2</i><span>2019년부터 이어진 병진(丙辰) 대운은 편인과 비견이 겹쳐, 혼자 궁리하고 혼자 버틴 시간이 길었을 가능성이 커요.</span></li><li><i>3</i><span>2027년은 조심할 해로, 미(未)가 일지 술(戌)을 형으로 건드려 집과 일의 리듬이 자주 어긋나기 쉬운 해예요.</span></li></ol><p class="kw">덜어 내는 해 · 3월과 12월 · 내 속도 지키기</p></section><div class="band" aria-hidden="true"></div><section class="sec" id="r-hoqX5I_6aQg_-nature"><h2>타고난 기질</h2><div class="item"><h4>쉽게 흔들리지 않는 무(戊) 토(土) 일간</h4><p class="body">한번 마음을 정하면 잘 바꾸지 않고, 남이 뭐라 해도 내가 좋은 것을 끝까지 지키는 편이에요. 일간이 무(戊) 토(土)이고 사주 여덟 글자 중 토(土)가 네 개나 되는 신강 사주라, 기본적으로 버티는 힘이 큰 쪽이에요. 비겁이 셋인 것도 같은 방향이라 남의 기준보다 내 감각을 먼저 믿어요.</p><p class="body">반대로 목(木)과 수(水)는 하나도 없어요. 이 사주에서 수(水)는 재성, 곧 돈이 들고 나는 흐름이고, 목(木)은 관성, 곧 정해진 마감이나 바깥의 규칙이에요. 그래서 만든 것에 값을 매기거나 일정을 못 박는 순간에 유독 망설여지고, 누가 틀을 정해 주지 않으면 일이 끝없는 다듬기로 흘러갈 수 있어요. 용신이 목(木)이라는 건 이 빈자리가 채워질 때 사주가 가장 편해진다는 뜻이에요.</p><p class="body">인성과 식상은 둘씩 있어, 머릿속에서 오래 굴린 생각을 손으로 만들어 내는 데 강해요. 다만 인성이 생각을 계속 보태는 만큼, 작은 결정 앞에서 이것저것 따지느라 기운을 먼저 써 버리는 날도 있을 거예요.</p></div><div class="item"><h4>합과 형이 함께 걸린 월지 신(申)과 시지 사(巳)</h4><p class="body">만든 것을 몇 번이고 다시 손보다가, 막상 내놓을 때는 생각보다 빨리 결정하는 모습이 있을 거예요. 월지 신(申)은 식신, 곧 손으로 만들어 내는 힘이고, 시지 사(巳)는 편인, 곧 남다른 착상이에요. 두 자리가 육합으로 붙어 있어 떠오른 생각이 곧장 작업으로 이어지지만, 같은 두 자리가 형으로도 걸려 있어 마음에 들 때까지 고치고 또 고치는 일이 따라와요. 월지 신(申)에는 역마도 있어서, 앉아서 만드는 것만큼 직접 나가 사람을 만나고 자리를 옮겨 다니며 파는 일이 잘 맞아요.</p><p class="body">또 하나는 년지 진(辰)과 일지 술(戌)의 충이에요. 두 자리 모두 화개, 곧 혼자 몰두하고 정리하는 기운이 붙어 있는데 그 둘이 서로 부딪혀요. 그래서 바깥에서 기운을 쓰고 나면 혼자 조용히 추스르는 시간이 있어야 다시 움직일 수 있어요.</p><p class="body">일지 술(戌)은 배우자 자리이고 비견이라, 배우자와도 위아래보다는 각자 기준이 있는 나란한 관계로 지내기 쉬워요. 이 자리가 충을 안고 있어 생활 방식이나 돈 쓰는 기준을 두고 고집이 맞서는 날이 생길 수 있고, 그럴 때 혼자 가라앉힐 시간을 먼저 가진 뒤 이야기를 꺼내면 대화가 한결 수월할 수 있어요.</p></div></section><div class="band" aria-hidden="true"></div><section class="sec" id="r-hoqX5I_6aQg_-past"><h2>지나온 시간 맞춰 보기</h2><p class="sub">사주에서는 10년마다 운이 바뀌어요. 이 10년 단위를 대운이라고 해요. 실제 있었던 일과 비교해 보세요.</p><div class="dw-item"><div class="dw-top"><b>1~10세의 10년 · 1989~1998년</b><span>기미(己未) 대운</span></div><p class="body">겉으로는 또래 사이에서 씩씩하게 자기 몫을 챙겼지만, 속으로는 양보해야 하는 순간이 잦아 서운함을 혼자 삼켰을 거예요. 기미(己未) 대운은 천간과 지지 모두 겁재, 곧 내 몫을 나누거나 다투게 되는 기운이었거든요.</p><p class="body">초등학교에 들어갈 7~8세 무렵에는 용돈이나 장난감, 어른의 관심을 형제나 친척 아이와 나눠야 하는 일이 많았을 가능성이 커요. 겁재가 겹치면 내 것이 쉽게 남의 손을 타요.</p><p class="body">이 대운의 미(未)가 일지 술(戌)을 형으로 건드려, 집 안 분위기나 생활 순서가 자주 바뀌고 그 사이에서 눈치를 보며 맞춰 갔을 수 있어요.</p><p class="body">천을귀인도 함께 들어와 있어, 10세 전후에 담임 선생님이나 집안 어른 중 한 분이 유독 본인을 챙겨 준 기억이 있을 수 있어요.</p></div><div class="dw-item"><div class="dw-top"><b>11~20세의 10년 · 1999~2008년</b><span>무오(戊午) 대운</span></div><p class="body">겉으로는 고집 있고 자기 색이 분명한 아이로 보였겠지만, 속으로는 공부와 진로를 혼자 오래 붙잡고 고민했을 거예요. 무오(戊午) 대운은 천간 비견, 지지 정인이라 또래의 영향과 배우는 힘이 함께 들어왔고, 오(午)가 일지 술(戌)과 반합해 이미 부담되는 화(火)를 더 키웠어요.</p><p class="body">1999년 무렵 초등학교 고학년에서 중학교로 넘어가며, 친한 친구 무리 안에서 비교하고 견주는 일이 마음을 많이 차지했을 가능성이 커요. 비견이 들어온 영향이에요.</p><p class="body">17~19세 무렵에는 정인이 작용해 시험 결과나 진학 서류, 선생님의 한마디가 진로를 정하는 데 크게 영향을 줬을 수 있어요.</p><p class="body">2008년 가까이 처음 내 돈을 쓰기 시작할 즈음에는 친구들과 어울리며 나눠 내는 돈이 생각보다 컸을 수 있어요. 비견은 함께 쓰는 돈의 기운이기도 해요.</p></div><div class="dw-item"><div class="dw-top"><b>21~30세의 10년 · 2009~2018년</b><span>정사(丁巳) 대운</span></div><p class="body">겉으로는 꾸준히 무언가를 배우고 준비하는 사람으로 보였겠지만, 속으로는 이 길이 맞는지 하는 물음을 놓지 못했을 거예요. 정사(丁巳) 대운은 천간 정인, 지지 편인으로 생각하고 배우는 기운만 겹으로 들어왔고, 시주 정사(丁巳)와 같은 간지가 돌아오는 복음이라 오래 품어 온 관심이 다시 고개를 드는 시기였어요.</p><p class="body">20대 초중반에는 정해진 공부 밖에서 손으로 하는 기술이나 나만의 작업 방식을 따로 익히는 데 시간을 많이 들였을 가능성이 커요. 편인은 남이 정한 길보다 혼자 찾아가는 배움이에요.</p><p class="body">재성이 없는 사주에 인성만 더해져, 이 무렵 돈은 버는 쪽보다 재료나 수업, 책처럼 배우는 데로 먼저 나갔을 수 있어요.</p><p class="body">이 대운의 사(巳)가 역마가 붙은 월지 신(申)과 육합하면서 동시에 형으로 부딪혀, 20대 후반에는 하던 일의 방향이나 사는 곳을 바꾸는 문제로 마음이 여러 번 오갔을 수 있어요.</p></div><div class="dw-item current"><div class="dw-top"><b>31~40세의 10년 · 2019~2028년</b><span>병진(丙辰) 대운 · 지금</span></div><p class="body">2019년부터 겉으로는 내 방식대로 일을 꾸려 가며 단단해 보였겠지만, 속으로는 집과 일 사이에서 혼자 정리할 것이 계속 쌓였을 거예요. 병진(丙辰) 대운은 천간 편인, 지지 비견이라 혼자 궁리하고 혼자 해내는 힘이 커졌고, 진(辰)이 일지 술(戌)을 충으로 흔들고 년지 진(辰)과는 형으로 부딪혀요. 화개까지 들어와 혼자 있는 시간이 유독 필요한 10년이에요.</p><p class="body">30대 초반 이 대운에 들어서며, 일에서는 남들이 잘 하지 않는 방식이나 나만 알아보는 취향을 밀고 가는 쪽으로 기울었을 가능성이 커요. 편인의 영향이에요. 비견도 함께 있어 비슷한 것을 하는 사람들과 값이나 반응을 견주게 되는 순간이 잦았을 수 있어요.</p><p class="body">일지 술(戌)은 배우자 자리라, 35세 전후로 이 충이 생활 방식이나 돈 쓰는 기준을 두고 서로 맞춰 갈 일이 늘어나는 모습으로 나타났을 수 있어요.</p><p class="body">남은 2027년과 2028년은 둘 다 조심할 해로, 부담되는 기운이 더 얹혀요. 이 대운의 마지막 몇 해는 새 일을 크게 벌이기보다 쌓아 둔 작업과 재료를 추리는 쪽이 잘 맞고, 그 뒤 2029년 정관이 들어오는 을묘(乙卯) 대운으로 넘어가요.</p></div></section><div class="band" aria-hidden="true"></div><section class="sec" id="r-hoqX5I_6aQg_-months"><h2>2026년 11월~2028년 1월 달별 흐름</h2><figure class="tl"><ol class="tl-bars" style="grid-template-columns: repeat(15, minmax(0px, 1fr));"><li aria-label="2026년 11월 5단계 중 3"><span class="tl-col"><i class="l3" style="height: 60%;"></i></span><span class="tl-m">11</span></li><li aria-label="2026년 12월 5단계 중 4"><span class="tl-col"><i class="l4" style="height: 80%;"></i></span><span class="tl-m">12</span></li><li aria-label="2027년 1월 5단계 중 2"><span class="tl-col"><i class="l2" style="height: 40%;"></i></span><span class="tl-m">1</span></li><li aria-label="2월 5단계 중 4"><span class="tl-col"><i class="l4" style="height: 80%;"></i></span><span class="tl-m">2</span></li><li aria-label="3월 5단계 중 5"><span class="tl-col"><i class="l5" style="height: 100%;"></i></span><span class="tl-m">3</span></li><li aria-label="4월 5단계 중 2"><span class="tl-col"><i class="l2" style="height: 40%;"></i></span><span class="tl-m">4</span></li><li aria-label="5월 5단계 중 3"><span class="tl-col"><i class="l3" style="height: 60%;"></i></span><span class="tl-m">5</span></li><li aria-label="6월 5단계 중 2"><span class="tl-col"><i class="l2" style="height: 40%;"></i></span><span class="tl-m">6</span></li><li aria-label="7월 5단계 중 1"><span class="tl-col"><i class="l1" style="height: 20%;"></i></span><span class="tl-m">7</span></li><li aria-label="8월 5단계 중 2"><span class="tl-col"><i class="l2" style="height: 40%;"></i></span><span class="tl-m">8</span></li><li aria-label="9월 5단계 중 2"><span class="tl-col"><i class="l2" style="height: 40%;"></i></span><span class="tl-m">9</span></li><li aria-label="10월 5단계 중 2"><span class="tl-col"><i class="l2" style="height: 40%;"></i></span><span class="tl-m">10</span></li><li aria-label="2027년 11월 5단계 중 4"><span class="tl-col"><i class="l4" style="height: 80%;"></i></span><span class="tl-m">11</span></li><li aria-label="2027년 12월 5단계 중 5"><span class="tl-col"><i class="l5" style="height: 100%;"></i></span><span class="tl-m">12</span></li><li aria-label="2028년 1월 5단계 중 3"><span class="tl-col"><i class="l3" style="height: 60%;"></i></span><span class="tl-m">1</span></li></ol><figcaption class="tl-legend">막대가 높을수록 그 달의 기운이 내 사주와 잘 맞는 달이에요.</figcaption></figure><ul class="rows"><li><div class="row-top"><b>2026년 11월</b><span class="gz">11월 7일~12월 6일</span><span class="meter" role="img" aria-label="5단계 중 3"><i class="on l3"></i><i class="on l3"></i><i class="on l3"></i><i></i><i></i></span></div><p class="why">겁재 · 편재</p><p class="do">새로 팔 만한 자리 이야기가 들려오지만, 비슷한 물건을 내는 사람과 겹치거나 함께 내는 비용이 생기기 쉬운 달이에요. 돈이 들어올 길을 뜻하는 편재와 경쟁을 뜻하는 겁재가 함께 들어오거든요. 해(亥)가 시지 사(巳)를 충으로 건드려 마음도 들썩이니, 조건을 한 번 더 따져 보면 도움이 될 수 있어요.</p></li><li><div class="row-top"><b>2026년 12월</b><span class="gz">12월 7일~1월 4일</span><span class="meter" role="img" aria-label="5단계 중 4"><i class="on l4"></i><i class="on l4"></i><i class="on l4"></i><i class="on l4"></i><i></i></span></div><p class="why">식신 · 정재</p><p class="do">손에 익은 작품이 연말 판매에서 꾸준히 나가 주는 달이에요. 만드는 힘인 식신 아래로 차곡차곡 쌓이는 돈인 정재가 들어오고, 자(子)가 년지 진(辰), 월지 신(申)과 손잡아 이 사주에 없던 수(水)를 채워 주거든요. 잘 나간 품목을 따로 적어 보세요.</p></li><li><div class="row-top"><b>2027년 1월</b><span class="gz">1월 5일~2월 3일</span><span class="pill c">조심할 달</span><span class="meter" role="img" aria-label="5단계 중 2"><i class="on l2"></i><i class="on l2"></i><i></i><i></i><i></i></span></div><p class="why">생활 터전·가까운 관계가 마찰이 생기기 쉬움 · 일지 형</p><p class="why">말과 표현이 거칠어지기 쉬움 · 천간 상관(식상)</p><p class="why">경쟁과 나가는 돈이 늘기 쉬움 · 지지 겁재(비겁)</p><p class="do">작업 짐을 두는 자리나 살림 쓰는 방식을 두고 남편과 의견이 엇갈리기 쉬운 달이에요. 축(丑)가 생활 터전을 뜻하는 일지 술(戌)을 형으로 건드리고, 상관이 들어와 생각보다 말이 먼저 나가기 쉽거든요. 지출을 늘리는 겁재도 함께라, 새 재료는 꼭 필요한 것부터 골라 보면 도움이 될 수 있어요.</p></li><li><div class="row-top"><b>2월</b><span class="gz">2월 4일~3월 5일</span><span class="pill g">좋은 달</span><span class="meter" role="img" aria-label="5단계 중 4"><i class="on l4"></i><i class="on l4"></i><i class="on l4"></i><i class="on l4"></i><i></i></span></div><p class="why">자리와 책임이 또렷해짐 · 지지 편관(관성)</p><p class="why">이동·일의 변화·이사처럼 움직일 일이 생김 · 역마</p><p class="why">돈과 현실적인 성과가 따라옴 · 천간 편재(재성)</p><p class="do">언제까지 무엇을 내야 하는지가 분명한 주문이 생겨 들쭉날쭉하던 일정에 기준이 서는 달이에요. 마감과 책임을 뜻하는 편관이 지지로 들어오고, 움직임을 뜻하는 역마가 겹쳐 오가는 일도 늘어요. 수입을 뜻하는 편재가 따라오니, 받은 일과 마감 날짜를 한 장에 적어 보세요.</p></li><li><div class="row-top"><b>3월</b><span class="gz">3월 6일~4월 4일</span><span class="pill g">좋은 달</span><span class="meter" role="img" aria-label="5단계 중 5"><i class="on l5"></i><i class="on l5"></i><i class="on l5"></i><i class="on l5"></i><i class="on l5"></i></span></div><p class="why">자리와 책임이 또렷해짐 · 지지 정관(관성)</p><p class="why">생활 터전·가까운 관계가 잘 맞물림 · 일지 육합</p><p class="why">사람 눈에 띄고 인연이 늘어남 · 도화</p><p class="do">꾸준히 맡기겠다는 곳이 생기거나 내 작업의 쓰임새가 또렷해지기 좋은 달이에요. 바른 틀을 뜻하는 정관이 들어오고, 묘(卯)가 일지 술(戌)과 육합해 집안 분위기도 한결 부드러워져요. 사람 눈에 띄게 하는 도화도 함께라, 고마웠던 손님에게 짧은 안부를 보내 보세요.</p></li><li><div class="row-top"><b>4월</b><span class="gz">4월 5일~5월 5일</span><span class="meter" role="img" aria-label="5단계 중 2"><i class="on l2"></i><i class="on l2"></i><i></i><i></i><i></i></span></div><p class="why">편관 · 비견 · 일지 충 · 화개</p><p class="do">집 안 작업 자리나 생활 동선이 흔들리고, 같은 일을 하는 사람과 비교가 되기 쉬운 달이에요. 진(辰)이 일지 술(戌)을 충으로, 년지 진(辰)을 형으로 건드리고 이미 많은 토(土)가 더 쌓이거든요. 혼자 정리하게 만드는 화개가 들어오니, 식사 시간을 일정하게 잡아 속을 편하게 두면 도움이 될 수 있어요.</p></li><li><div class="row-top"><b>5월</b><span class="gz">5월 6일~6월 5일</span><span class="meter" role="img" aria-label="5단계 중 3"><i class="on l3"></i><i class="on l3"></i><i class="on l3"></i><i></i><i></i></span></div><p class="why">정관 · 편인</p><p class="do">일을 맡기는 쪽과 이야기가 매끄럽게 풀리고 함께하는 사람과 손발이 잘 맞는 달이에요. 정관이 천간으로 들어와 일의 틀을 잡아 주고, 사(巳)가 월지 신(申)과 육합해 일하는 바깥 환경이 맞물리거든요. 예전에 함께 판매했던 사람에게 먼저 연락해 보세요.</p></li><li><div class="row-top"><b>6월</b><span class="gz">6월 6일~7월 6일</span><span class="meter" role="img" aria-label="5단계 중 2"><i class="on l2"></i><i class="on l2"></i><i></i><i></i><i></i></span></div><p class="why">편인 · 정인 · 일지 반합</p><p class="do">새 디자인 구상은 길어지는데 손이 잘 안 움직여 완성품이 더디게 나오기 쉬운 달이에요. 생각과 궁리를 뜻하는 편인과 정인이 한꺼번에 들어오고, 오(午)가 일지 술(戌)과 반합해 이미 많은 화(火)를 더 키우거든요. 작은 것 하나를 먼저 끝내 보면 도움이 될 수 있어요.</p></li><li><div class="row-top"><b>7월</b><span class="gz">7월 7일~8월 7일</span><span class="pill c">조심할 달</span><span class="meter" role="img" aria-label="5단계 중 1"><i class="on l1"></i><i></i><i></i><i></i><i></i></span></div><p class="why">생활 터전·가까운 관계가 마찰이 생기기 쉬움 · 일지 형</p><p class="why">생각이 많아져 미루기 쉬움 · 천간 정인(인성)</p><p class="why">경쟁과 나가는 돈이 늘기 쉬움 · 지지 겁재(비겁)</p><p class="do">더운 날 집에서 쉬는 방식이나 살림 일을 두고 서로 원하는 게 달라 작은 마찰이 생기기 쉬운 달이에요. 미(未)가 일지 술(戌)을 형으로 건드리고, 생각을 키우는 정인이 겹쳐 작업도 미뤄지기 쉬워요. 돕는 사람을 뜻하는 천을귀인도 들어오니, 버거운 날은 물을 자주 챙기며 손을 내밀어 보세요.</p></li><li><div class="row-top"><b>8월</b><span class="gz">8월 8일~9월 7일</span><span class="meter" role="img" aria-label="5단계 중 2"><i class="on l2"></i><i class="on l2"></i><i></i><i></i><i></i></span></div><p class="why">비견 · 식신 · 역마</p><p class="do">손이 빨라져 만든 물건이 쌓이고, 다른 곳에서 팔아 볼 기회가 생기기 쉬운 달이에요. 만드는 힘인 식신이 들어오고, 신(申)이 시지 사(巳)와 육합해 돈의 기운인 수(水)로 이어지거든요. 역마도 함께라, 다른 지역 판매를 생각해 둔 게 있다면 고려해 볼 만한 때예요.</p></li><li><div class="row-top"><b>9월</b><span class="gz">9월 8일~10월 7일</span><span class="meter" role="img" aria-label="5단계 중 2"><i class="on l2"></i><i class="on l2"></i><i></i><i></i><i></i></span></div><p class="why">겁재 · 상관 · 도화</p><p class="do">처음 보는 사람이 먼저 말을 걸어오고 오래 못 본 사람과도 연락이 닿기 쉬운 달이에요. 유(酉)가 년지 진(辰)과 육합하고 시지 사(巳)와 반합해 사람 사이가 이어지고, 도화가 들어와 눈에 띄기 쉬워요. 감각과 말솜씨를 뜻하는 상관이 살아나니, 반가운 사람에게 안부를 건네 보세요.</p></li><li><div class="row-top"><b>10월</b><span class="gz">10월 8일~11월 7일</span><span class="meter" role="img" aria-label="5단계 중 2"><i class="on l2"></i><i class="on l2"></i><i></i><i></i><i></i></span></div><p class="why">식신 · 비견 · 일지 같은 글자 · 화개</p><p class="do">밖에 나가기보다 집에서 혼자 작업에 몰두하고 싶어지는 달이에요. 술(戌)이 일지 술(戌)과 같은 글자로 겹치고, 혼자 정리하는 시간을 뜻하는 화개가 들어오거든요. 술(戌)이 년지 진(辰)을 충으로 건드려 오래된 관계나 집안 일에 변화가 생기기 쉬우니, 해야 할 일을 적어 순서를 정해 보세요.</p></li><li><div class="row-top"><b>2027년 11월</b><span class="gz">11월 8일~12월 6일</span><span class="meter" role="img" aria-label="5단계 중 4"><i class="on l4"></i><i class="on l4"></i><i class="on l4"></i><i class="on l4"></i><i></i></span></div><p class="why">상관 · 편재</p><p class="do">새로 떠오른 디자인이 바로 판매로 이어지며 연말 주문이 움직이기 시작하는 달이에요. 감각을 뜻하는 상관 아래로 돈이 들어올 길인 편재가 들어오거든요. 해(亥)가 시지 사(巳)를 충으로 건드려 마음이 바빠지니, 연말 준비를 생각해 둔 게 있다면 이달부터 시작하면 잘 맞아 보여요.</p></li><li><div class="row-top"><b>2027년 12월</b><span class="gz">12월 7일~1월 5일</span><span class="pill g">좋은 달</span><span class="meter" role="img" aria-label="5단계 중 5"><i class="on l5"></i><i class="on l5"></i><i class="on l5"></i><i class="on l5"></i><i class="on l5"></i></span></div><p class="why">일터·사회 환경이 힘이 합쳐짐 · 월지 반합</p><p class="why">돈과 현실적인 성과가 따라옴 · 천간 편재(재성), 지지 정재(재성)</p><p class="do">함께 판매하는 사람들이나 일을 맡기는 쪽과 힘이 합쳐져 판이 커지기 쉬운 달이에요. 자(子)가 일하는 바깥 환경을 뜻하는 월지 신(申)과 반합해 사주에 없던 수(水)를 만들어 주거든요. 편재와 정재가 함께 들어와 돈도 따르니, 함께 해 보자는 제안이 오면 이야기를 들어 보기 좋아요.</p></li><li><div class="row-top"><b>2028년 1월</b><span class="gz">1월 6일~2월 3일</span><span class="meter" role="img" aria-label="5단계 중 3"><i class="on l3"></i><i class="on l3"></i><i class="on l3"></i><i></i><i></i></span></div><p class="why">정재 · 겁재 · 일지 형 · 일간 천간합 · 천을귀인</p><p class="do">지난달 들어온 돈이 손에 남지만 집안 일로 나가는 돈도 함께 생기기 쉬운 달이에요. 계(癸)가 일간 무(戊)와 천간합해 실속 있는 돈이 내 쪽으로 묶이는 대신, 축(丑)가 일지 술(戌)을 형으로 건드리거든요. 도와줄 사람을 뜻하는 천을귀인이 들어오니, 버거운 일은 도움을 청해 보세요.</p></li></ul></section><div class="band" aria-hidden="true"></div><section class="sec" id="r-hoqX5I_6aQg_-outlook"><h2>2027년 영역별 전망</h2><div class="item outlook"><p class="eyebrow">일·커리어</p><h4>2월과 3월, 들쭉날쭉하던 일에 틀이 잡히는 때예요</h4><p class="chips good"><span class="chips-l">좋은 달</span><span>2월 · 3월 · 5월</span></p><p class="chips care"><span class="chips-l">조심할 달</span><span>6월</span></p><p class="body">2월(2월 4일~3월 5일)에는 밖에서 들어오는 요청이 늘고, 판매 자리나 일 때문에 오가는 날이 많아지기 쉬워요. 이 사주에는 일의 틀과 마감을 뜻하는 관성이 하나도 없는데, 이 달 인(寅)이 편관으로 들어와 해야 할 일과 날짜를 바깥에서 정해 주거든요. 역마, 곧 이동과 움직임의 기운도 함께 들어와요. 다만 인(寅)이 월지 신(申)과 충을 이뤄 정해 둔 계획이 갑자기 바뀌는 일도 같이 올 수 있어요.</p><p class="body">3월(3월 6일~4월 4일)은 올해 일이 가장 잘 풀리는 달이에요. 묘(卯)가 정관, 곧 꾸준히 맡는 일로 들어와 들쭉날쭉하던 주문이 한결 일정해지기 쉬워요. 5월(5월 6일~6월 5일)에도 천간에 정관이 들어와요. 이 달 사(巳)가 월지 신(申)과 육합을 이뤄, 함께 일할 곳과 조건이 자연스럽게 맞아떨어지기 좋아요.</p><p class="body">6월(6월 6일~7월 6일)은 병오(丙午)가 편인과 정인으로 들어와, 손보다 머리가 먼저 바빠지는 달이에요. 구상은 많아지는데 마무리가 늦어지기 쉬우니, 떠오른 생각은 적어 두고 만드는 일은 하던 것 위주로 이어 가면 부담이 덜할 수 있어요.</p></div><div class="item outlook"><p class="eyebrow">연애</p><h4>3월, 남편과의 대화가 한결 부드러워지는 달이에요</h4><p class="chips good"><span class="chips-l">좋은 달</span><span>2월 · 3월 · 5월</span></p><p class="chips care"><span class="chips-l">조심할 달</span><span>2027년 1월 · 4월</span></p><p class="body">3월(3월 6일~4월 4일)에는 집에서 나누는 대화가 한결 편안해지기 쉬워요. 이 달 묘(卯)가 일지 술(戌)과 육합을 이루는데, 일지는 배우자 자리라 두 사람 사이가 다시 가까워지는 흐름이에요. 도화, 곧 다정한 분위기도 함께 들어와 둘이 외출하거나 소소한 시간을 보내기 좋은 달이에요.</p><p class="body">2월(2월 4일~3월 5일)에는 남편 쪽 생각이나 바람이 또렷하게 들리기 쉬워요. 여성에게 배우자를 뜻하는 관성이 이 사주에는 없다가, 이 달 편관으로 들어오거든요. 5월(5월 6일~6월 5일)엔 정관이 들어와 생활비나 집안 일정처럼 둘이 같이 정할 일을 차분히 맞추기 좋아요.</p><p class="body">일지 술(戌)이 비견이라, 본인은 배우자를 대등한 짝으로 여기고 각자의 방식을 지키고 싶어 하는 편이에요. 그래서 2027년 1월(1월 5일~2월 3일)에 축(丑)이 일지 술(戌)을 형으로 건드리면 사소한 생활 습관 차이가 쌓이기 쉬워요. 4월(4월 5일~5월 5일)엔 진(辰)이 일지 술(戌)과 충을 이뤄 집 안의 리듬이 흔들리기 쉬워요. 그럴 때 지금 마음이 어떤지 짧게라도 말로 전해 보면 오해가 덜 생길 수 있어요.</p></div><div class="item outlook"><p class="eyebrow">돈</p><h4>2026년 12월과 2027년 12월, 수입이 붙는 두 번의 연말이에요</h4><p class="chips good"><span class="chips-l">좋은 달</span><span>2026년 12월 · 8월 · 2027년 12월</span></p><p class="chips care"><span class="chips-l">조심할 달</span><span>4월 · 7월</span></p><p class="body">이 사주에는 돈의 흐름을 뜻하는 재성이 하나도 없어서, 수입이 저절로 고이기보다 만든 만큼 내놓아야 들어오는 구조예요. 그래서 재성인 수(水)가 들어오는 달이 특히 중요해요. 2026년 12월(12월 7일~1월 4일)은 자(子)가 년지 진(辰), 월지 신(申)과 반합을 이뤄 수(水)를 키우는 달이라, 연말 판매가 잘 이어지기 쉬워요. 2027년 12월(12월 7일~1월 5일)은 편재와 정재가 한꺼번에 들어와 올해 돈이 가장 잘 도는 달이에요.</p><p class="body">8월(8월 8일~9월 7일)에도 신(申)이 식신, 곧 손으로 만들어 내는 힘으로 들어와요. 이 신(申)이 시지 사(巳)와 육합해 수(水)를 만들어서, 만든 것이 돈으로 이어지기 쉬운 달이에요.</p><p class="body">반대로 4월(4월 5일~5월 5일)은 진(辰)이 비견으로 들어와 일지 술(戌)과 충을 이뤄, 같이 쓰는 돈이나 갑자기 생긴 일로 나가는 돈이 늘기 쉬워요. 7월(7월 7일~8월 7일)은 미(未)가 겁재, 곧 남과 나눠 쓰고 견주는 기운이라 모임이나 함께하는 일에 드는 비용이 겹치기 쉬워요. 큰 재료 구입을 생각하고 있다면 8월에 들어서 견적을 비교해 보는 것도 좋아요.</p></div><div class="item outlook"><p class="eyebrow">건강·컨디션</p><h4>2월과 3월, 굳은 목과 어깨를 풀기 좋은 때예요</h4><p class="chips good"><span class="chips-l">좋은 달</span><span>2월 · 3월 · 5월</span></p><p class="chips care"><span class="chips-l">조심할 달</span><span>4월 · 7월</span></p><p class="body">오래 앉아 눈과 손을 쓰다 보면 목과 어깨가 쉽게 뭉치는 편일 수 있어요. 이 사주에 목(木)이 하나도 없어서 그쪽 피로가 쌓이기 쉽거든요. 2월(2월 4일~3월 5일)과 3월(3월 6일~4월 4일)은 이 사주에 가장 필요한 목(木)이 들어오는 달이라, 몸이 한결 가볍게 느껴지기 쉬워요. 5월(5월 6일~6월 5일)에도 목(木)이 한 번 더 들어와요. 이 무렵 가벼운 스트레칭이나 산책을 하루 일과에 끼워 보세요.</p><p class="body">4월(4월 5일~5월 5일)과 7월(7월 7일~8월 7일)은 이미 많은 토(土)가 더 들어와 몸이 무겁고 속이 더부룩해지기 쉬운 달이에요. 토(土)가 넘치면 식사 시간이 들쭉날쭉해지기 쉬워서, 이때는 끼니를 거르지 않고 속이 편한 음식 위주로 먹으면 도움이 될 수 있어요. 수(水)도 비어 있는 사주라 7월 더위에는 물을 자주 마시고 잠을 넉넉히 챙기는 쪽이 컨디션을 지키기 쉬워요.</p></div><div class="item outlook"><p class="eyebrow">인간관계</p><h4>5월과 9월, 사람 사이가 자연스럽게 이어지는 때예요</h4><p class="chips good"><span class="chips-l">좋은 달</span><span>5월 · 8월 · 9월</span></p><p class="chips care"><span class="chips-l">조심할 달</span><span>2월 · 7월</span></p><p class="body">5월(5월 6일~6월 5일)에는 오래 알던 사람에게서 먼저 연락이 오거나, 함께 일할 사람과 손발이 맞기 쉬워요. 사(巳)가 월지 신(申)과 육합을 이루는데, 월지는 일과 바깥 사회의 자리라 그쪽 인연이 묶이는 흐름이에요. 8월(8월 8일~9월 7일)엔 신(申)이 시지 사(巳)와 육합해, 가까운 사람과 속 이야기를 나누기 편해져요. 9월(9월 8일~10월 7일)은 유(酉)가 년지 진(辰)과 육합하고 도화도 들어와, 처음 만난 사람에게도 호감을 얻기 쉬운 달이에요.</p><p class="body">2월(2월 4일~3월 5일)은 인(寅)이 월지 신(申)과 충을 이루고 시지 사(巳)와 형으로 얽혀, 약속이 엇갈리거나 서로 기대가 어긋나기 쉬워요. 7월(7월 7일~8월 7일)엔 미(未)가 겁재, 곧 나와 비슷한 사람과 견주는 기운으로 들어와 남과 비교하며 마음이 쓰이기 쉬워요. 그래도 이 달엔 천을귀인, 곧 도와주는 사람도 함께 들어오니 힘들 때 믿는 한 사람에게 안부를 전해 보세요.</p></div></section><div class="band" aria-hidden="true"></div><section class="sec" id="r-hoqX5I_6aQg_-luck"><h2>앞으로 10년</h2><p class="sub">2027~2036</p><div class="strip"><table><tr><th scope="col">2027</th><th scope="col">2028</th><th scope="col">2029</th><th scope="col">2030</th><th scope="col">2031</th><th scope="col">2032</th><th scope="col">2033</th><th scope="col">2034</th><th scope="col">2035</th><th scope="col">2036</th></tr><tr><td class="gz">정미</td><td class="gz">무신</td><td class="gz">기유</td><td class="gz">경술</td><td class="gz">신해</td><td class="gz">임자</td><td class="gz">계축</td><td class="gz">갑인</td><td class="gz">을묘</td><td class="gz">병진</td></tr><tr class="mark"><td><span class="dot c" role="img" aria-label="조심"></span></td><td><span class="dot c" role="img" aria-label="조심"></span></td><td><span class="dot g" role="img" aria-label="좋음"></span></td><td><span class="dot g" role="img" aria-label="좋음"></span></td><td><span class="dot g" role="img" aria-label="좋음"></span></td><td><span class="dot g" role="img" aria-label="좋음"></span></td><td><span class="dot g" role="img" aria-label="좋음"></span></td><td><span class="dot g" role="img" aria-label="좋음"></span></td><td><span class="dot g" role="img" aria-label="좋음"></span></td><td><span class="dot c" role="img" aria-label="조심"></span></td></tr><tr><td class="v c">조심</td><td class="v c">조심</td><td class="v g">좋음</td><td class="v g">좋음</td><td class="v g">좋음</td><td class="v g">좋음</td><td class="v g">좋음</td><td class="v g">좋음</td><td class="v g">좋음</td><td class="v c">조심</td></tr><tr><td class="tag"></td><td class="tag"></td><td class="tag"><div>대운 바뀜</div></td><td class="tag"></td><td class="tag"></td><td class="tag"></td><td class="tag"></td><td class="tag"><div>들삼재</div></td><td class="tag"><div>눌삼재</div></td><td class="tag"><div>날삼재</div></td></tr></table></div><p class="legend">옆으로 넘기면 2036년까지 보여요</p><ul class="rows"><li><div class="row-top"><b>2027년</b><span class="gz">정미(丁未)</span><span class="pill c">조심할 해</span></div><p class="why">생활 터전·가까운 관계가 마찰이 생기기 쉬움 · 일지 형</p><p class="why">생각이 많아져 미루기 쉬움 · 천간 정인(인성)</p><p class="why">경쟁과 나가는 돈이 늘기 쉬움 · 지지 겁재(비겁)</p><p class="do">혼자 맡는 일이 늘고 집안 일과 작업의 리듬이 자주 어긋나기 쉬운 해예요. 새 일을 늘리기보다 지금 하던 일의 양을 조금 덜어 보면 몸과 마음을 지키는 데 도움이 될 수 있어요.</p></li><li><div class="row-top"><b>2028년</b><span class="gz">무신(戊申)</span><span class="pill c">조심할 해</span></div><p class="why">경쟁과 나가는 돈이 늘기 쉬움 · 천간 비견(비겁)</p><p class="why">전체 흐름이 낮아 쉽게 지침 · 부담되는 오행이 겹침</p><p class="why">사람·일에서 마찰이 생기기 쉬움 · 원국과 형</p><p class="do">오가는 일정과 혼자 감당할 몫이 함께 늘기 쉬운 해예요. 자리를 옮기거나 일을 크게 바꿀 생각이 있다면, 서두르기보다 조건을 천천히 살펴보는 해로 삼는 것도 좋아요.</p></li><li><div class="row-top"><b>2029년</b><span class="gz">기유(己酉)</span><span class="pill g">좋은 해</span><span class="pill s">대운 바뀜</span></div><p class="why">사람 눈에 띄고 인연이 늘어남 · 도화</p><p class="why">표현하고 성과를 내기 좋음 · 지지 상관(식상)</p><p class="why">집안·바깥 배경이 잘 맞물림 · 년지 육합</p><p class="why">병진(丙辰)에서 을묘(乙卯) 대운으로 넘어가 흐름이 바뀜</p><p class="do">10년 흐름이 바뀌는 해라, 만든 것을 알아보는 사람이 늘고 바깥과 이어지는 일이 생기기 쉬워요. 미뤄 둔 새 작업을 사람들 앞에 내보일 생각이 있다면 이 해가 잘 맞아 보여요.</p></li><li><div class="row-top"><b>2030년</b><span class="gz">경술(庚戌)</span><span class="pill g">좋은 해</span></div><p class="why">표현하고 성과를 내기 좋음 · 천간 식신(식상)</p><p class="do">손에 익은 일을 꾸준히 만들어 내기 좋은 해로, 작업량이 한결 안정되기 쉬워요. 반응이 좋던 것을 조금 더 다듬어 보는 쪽이 도움이 될 수 있어요.</p></li><li><div class="row-top"><b>2031년</b><span class="gz">신해(辛亥)</span><span class="pill g">좋은 해</span></div><p class="why">표현하고 성과를 내기 좋음 · 천간 상관(식상)</p><p class="why">돈과 현실적인 성과가 따라옴 · 지지 편재(재성)</p><p class="do">새로운 방식으로 팔거나 다른 곳에서 돈이 들어오는 흐름이 생기기 쉬운 해예요. 해 보고 싶던 판매 방식이 있다면 작게 시험해 보기 좋은 때로 보여요.</p></li><li><div class="row-top"><b>2032년</b><span class="gz">임자(壬子)</span><span class="pill g">좋은 해</span></div><p class="why">일터·사회 환경이 힘이 합쳐짐 · 월지 반합</p><p class="why">돈과 현실적인 성과가 따라옴 · 천간 편재(재성), 지지 정재(재성)</p><p class="do">수입이 한결 넉넉하게 도는 해라, 들어오는 돈과 쓰는 돈을 함께 들여다볼 여유가 생겨요. 이 해에 모으는 습관을 다시 잡아 보면 도움이 될 수 있어요.</p></li><li><div class="row-top"><b>2033년</b><span class="gz">계축(癸丑)</span><span class="pill g">좋은 해</span></div><p class="why">돈과 현실적인 성과가 따라옴 · 천간 정재(재성)</p><p class="why">도와줄 사람이 나타남 · 천을귀인</p><p class="do">꾸준한 수입이 자리 잡기 쉽고, 필요할 때 손을 내미는 사람도 나타나기 쉬운 해예요. 도움을 받았다면 고마운 마음을 짧게라도 전해 보세요.</p></li><li><div class="row-top"><b>2034년</b><span class="gz">갑인(甲寅)</span><span class="pill g">좋은 해</span><span class="pill s">들삼재</span></div><p class="why">자리와 책임이 또렷해짐 · 천간 편관(관성), 지지 편관(관성)</p><p class="why">이동·일의 변화·이사처럼 움직일 일이 생김 · 역마</p><p class="why">삼재 첫 해, 변화가 시작되기 쉬움</p><p class="do">새 역할과 이동이 늘어 일이 넓어지기 좋은 해지만, 삼재가 시작되는 해라 생활의 흐름도 조금씩 바뀌기 시작해요. 큰 변화를 생각하고 있다면 일정과 돈 쓰는 습관을 한 번씩 점검하며 천천히 움직이는 쪽이 도움이 될 수 있어요.</p></li><li><div class="row-top"><b>2035년</b><span class="gz">을묘(乙卯)</span><span class="pill g">좋은 해</span><span class="pill s">눌삼재</span></div><p class="why">자리와 책임이 또렷해짐 · 천간 정관(관성), 지지 정관(관성)</p><p class="why">생활 터전·가까운 관계가 잘 맞물림 · 일지 육합</p><p class="why">삼재 가운데 해, 부담이 이어지기 쉬움</p><p class="do">맡은 일의 틀과 부부 사이가 함께 단단해지기 좋은 해이면서, 삼재의 한가운데라 바쁜 부담도 이어지기 쉬워요. 흐름이 좋을수록 일을 늘리는 속도를 조금 늦춰 보는 것도 좋아요.</p></li><li><div class="row-top"><b>2036년</b><span class="gz">병진(丙辰)</span><span class="pill c">조심할 해</span><span class="pill s">날삼재</span></div><p class="why">생활 터전·가까운 관계가 흔들리기 쉬움 · 일지 충</p><p class="why">생각이 많아져 미루기 쉬움 · 천간 편인(인성)</p><p class="why">경쟁과 나가는 돈이 늘기 쉬움 · 지지 비견(비겁)</p><p class="why">삼재 마지막 해, 정리되며 풀려 가는 해</p><p class="do">삼재가 마무리되는 해라 벌여 둔 일을 정리하고 나면 한결 홀가분해지기 쉽지만, 집과 일의 자리가 흔들리기 쉬운 해이기도 해요. 새로 시작하기보다 정리와 마무리에 힘을 두는 쪽이 잘 맞아 보여요.</p></li></ul></section><div class="band" aria-hidden="true"></div><section class="sec" id="r-hoqX5I_6aQg_-actions"><h2>올해 해 볼 세 가지</h2><ol class="glance"><li><i>1</i><span>5월에 함께 판매하거나 납품할 곳과 이야기가 오간다면, 조건을 차분히 맞춰 보기에 고려해 볼 만한 때예요.</span></li><li><i>2</i><span>2027년 1월에 집안 일로 마음이 상하는 날이 있다면, 짧은 산책으로 한 번 숨을 돌려 보세요.</span></li><li><i>3</i><span>2027년 12월 정산을 마친 뒤 한 해 들어오고 나간 돈을 적어 보면, 다음 해 흐름을 잡는 데 도움이 될 수 있어요.</span></li></ol></section><div class="band" aria-hidden="true"></div><section class="sec"><p class="closing">2027년은 이미 많은 화(火)와 토(土)가 더 쌓이는 해라 일을 늘리기보다 덜어 내는 쪽이 잘 맞고, 2029년부터는 을묘(乙卯) 대운이 들어와 이 사주에 없던 목(木)이 자리를 잡아요. 그 전까지는 3월과 12월처럼 흐름이 열리는 달에 힘을 모아 보는 것도 좋아요.</p></section></article></div></div></section></main>
+<footer class="foot" id="foot"></footer>
+
+
+
+
+</body>
+</html>
