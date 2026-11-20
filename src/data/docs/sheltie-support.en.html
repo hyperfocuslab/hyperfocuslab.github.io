@@ -14,7 +14,9 @@
           <li>Scan the QR code the installer shows with your iPhone camera.</li>
           <li>When Sheltie opens, allow notifications.</li>
         </ol>
-        <p>The install command will be posted here when the repository opens.</p>
+        <p>Install command (Mac Terminal):</p>
+        <pre class="cmd"><code>curl -fsSL https://raw.githubusercontent.com/hyperfocuslab/sheltie/main/install.sh | sh</code></pre>
+        <p>Requires macOS, python3, herdr-core (<code>hc</code>) and Tailscale. To show the QR code again, run <code>python3 ~/.local/share/herdr-remote/herdr_remote.py pair</code>. To uninstall, end the same command with <code>| sh -s -- --uninstall</code>. Source: <a href="https://github.com/hyperfocuslab/sheltie">github.com/hyperfocuslab/sheltie</a> (MIT).</p>
       </section>
       <section aria-labelledby="faq">
         <h2 id="faq">Common questions</h2>
@@ -23,7 +25,7 @@
         <h3>Does it work away from my Mac?</h3>
         <p>Yes, anywhere, as long as the Mac and the iPhone are on the same Tailscale network.</p>
         <h3>Where does my data go?</h3>
-        <p>See the <a href="/en/sheltie/privacy/">Privacy Policy</a>.</p>
+        <p>Conversations, prompts and terminal screens travel only between your Mac and your iPhone, over Tailscale. Only notifications pass through us: the notification (terminal name and a short status line) and your device push token go through our relay on Cloudflare straight to Apple, and are not stored or logged. There is no account and no analytics. Details are in the <a href="/en/sheltie/privacy/">Privacy Policy</a>.</p>
       </section>
       <section aria-labelledby="contact">
         <h2 id="contact">Contact</h2>
