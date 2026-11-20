@@ -1,22 +1,27 @@
 ---
 import '../styles/global.css';
 import Logo from '../components/Logo.astro';
-import { EMAIL, LANGS, LANG_CODE, LANG_LABEL, SITE, href, storeLinks, ui, type Lang, type Page } from '../i18n';
+import { EMAIL, LANGS, LANG_CODE, LANG_LABEL, SHELTIE_LANGS, SITE, href, sheltieHref, storeLinks, ui, type Lang, type Page, type Product } from '../i18n';
 
 interface Props {
   lang: Lang;
   page: Page;
   title: string;
   description: string;
+  // Sheltie pages (support, privacy) have their own links; the default is Peakly and the home.
+  product?: Product;
 }
 
-const { lang, page, title, description } = Astro.props;
+const { lang, page, title, description, product = 'peakly' } = Astro.props;
 const t = ui[lang];
+const isSheltie = product === 'sheltie';
+const langs: readonly Lang[] = isSheltie ? SHELTIE_LANGS : LANGS;
+const pageHref = (p: Page, l: Lang) => (isSheltie ? sheltieHref(p as 'support' | 'privacy', l) : href(p, l));
 // The company home is its own section; every other page belongs to Peakly.
 const inPeakly = page !== 'home';
 // First-visit language redirect runs only on the root home, which is English.
 const autoLang = lang === 'en' && page === 'home';
-const canonical = SITE + href(page, lang);
+const canonical = SITE + pageHref(page, lang);
 // Same family as the Peakly app (IBM Plex Sans KR), with the JP cut for Japanese.
 // IBM Plex has no Traditional Chinese cut, so zh-Hant uses Noto Sans TC.
 const plex = lang === 'ja' ? 'IBM+Plex+Sans+JP' : lang === 'zh-Hant' ? 'Noto+Sans+TC' : 'IBM+Plex+Sans+KR';
@@ -51,19 +56,27 @@ const GA_ID = 'G-96T0GRTD1R';
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    {LANGS.map((l) => <link rel="alternate" hreflang={l} href={SITE + href(page, l)} />)}
-    <link rel="alternate" hreflang="x-default" href={SITE + href(page, 'en')} />
+    {langs.map((l) => <link rel="alternate" hreflang={l} href={SITE + pageHref(page, l)} />)}
+    <link rel="alternate" hreflang="x-default" href={SITE + pageHref(page, 'en')} />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content={t.appName} />
+    <meta property="og:site_name" content={isSheltie ? 'Sheltie' : t.appName} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <!-- While Peakly is the only product, shared links preview the app (effect-curve screen).
          Bump ?v= when the card changes: KakaoTalk caches images by URL. -->
-    <meta property="og:image" content={`${SITE}/assets/og-${ogLang}.png?v=5`} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta name="twitter:card" content="summary_large_image" />
+    {
+      isSheltie ? (
+        <meta name="twitter:card" content="summary" />
+      ) : (
+        <>
+          <meta property="og:image" content={`${SITE}/assets/og-${ogLang}.png?v=5`} />
+          <meta property="og:image:width" content="1200" />
+          <meta property="og:image:height" content="630" />
+          <meta name="twitter:card" content="summary_large_image" />
+        </>
+      )
+    }
     <meta name="theme-color" content="#070708" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -94,18 +107,22 @@ const GA_ID = 'G-96T0GRTD1R';
         </a>
         {
           inPeakly && (
-            <a class="crumb" href={href('peakly', lang)} aria-current={page === 'peakly' ? 'page' : undefined}>
-              Peakly
+            <a
+              class="crumb"
+              href={isSheltie ? sheltieHref('support', lang) : href('peakly', lang)}
+              aria-current={page === 'peakly' ? 'page' : undefined}
+            >
+              {isSheltie ? 'Sheltie' : 'Peakly'}
             </a>
           )
         }
         <nav class="site-nav" aria-label={t.nav.main}>
-          {page !== 'support' && <a href={href('support', lang)}>{t.nav.contact}</a>}
+          {page !== 'support' && <a href={pageHref('support', lang)}>{t.nav.contact}</a>}
           <div class="langs" role="group" aria-label={t.nav.language}>
             {
-              LANGS.map((l) => (
+              langs.map((l) => (
                 <a
-                  href={href(page, l)}
+                  href={pageHref(page, l)}
                   lang={l}
                   hreflang={l}
                   title={LANG_LABEL[l]}
@@ -131,23 +148,27 @@ const GA_ID = 'G-96T0GRTD1R';
           <Logo size={22} />
           <span class="wordmark-text">Hyperfocus Lab</span>
         </a>
-        <nav aria-label={t.footer.products}>
-          <p class="footer-head">{t.footer.products}</p>
-          <a href={`${href('home', lang)}#products`}>{t.appName}</a>
-          <a href={storeLinks(lang).appStore} target="_blank" rel="noreferrer">App Store ↗</a>
-          <a href={storeLinks(lang).googlePlay} target="_blank" rel="noreferrer">Google Play ↗</a>
-        </nav>
-        <nav aria-label={t.appName}>
-          <p class="footer-head">{t.appName}</p>
-          <a href={href('support', lang)}>{t.docs.support}</a>
-          <a href={href('privacy', lang)}>{t.docs.privacy}</a>
-          <a href={href('terms', lang)}>{t.docs.terms}</a>
+        {
+          !isSheltie && (
+            <nav aria-label={t.footer.products}>
+              <p class="footer-head">{t.footer.products}</p>
+              <a href={`${href('home', lang)}#products`}>{t.appName}</a>
+              <a href={storeLinks(lang).appStore} target="_blank" rel="noreferrer">App Store ↗</a>
+              <a href={storeLinks(lang).googlePlay} target="_blank" rel="noreferrer">Google Play ↗</a>
+            </nav>
+          )
+        }
+        <nav aria-label={isSheltie ? 'Sheltie' : t.appName}>
+          <p class="footer-head">{isSheltie ? 'Sheltie' : t.appName}</p>
+          <a href={pageHref('support', lang)}>{t.docs.support}</a>
+          <a href={pageHref('privacy', lang)}>{t.docs.privacy}</a>
+          {!isSheltie && <a href={href('terms', lang)}>{t.docs.terms}</a>}
         </nav>
         <nav aria-label={t.footer.language}>
           <p class="footer-head">{t.footer.language}</p>
           {
-            LANGS.map((l) => (
-              <a href={href(page, l)} lang={l} hreflang={l} aria-current={l === lang ? 'page' : undefined}>
+            langs.map((l) => (
+              <a href={pageHref(page, l)} lang={l} hreflang={l} aria-current={l === lang ? 'page' : undefined}>
                 {LANG_LABEL[l]}
               </a>
             ))
