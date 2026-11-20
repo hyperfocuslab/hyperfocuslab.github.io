@@ -1139,3 +1139,17 @@ main > .section:first-child {
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+.prose code {
+  font-family: var(--mono);
+  font-size: 0.9em;
+}
+.prose pre.cmd {
+  margin: 0.75rem 0 1rem;
+  padding: 0.875rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  max-width: 100%;
+  box-sizing: border-box;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
