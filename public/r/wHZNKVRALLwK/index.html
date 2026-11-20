@@ -236,7 +236,7 @@ table.pillars { width: 100%; margin-top: 18px; border-collapse: collapse; table-
 .facts b { font-weight: 700; color: var(--text); }
 
 /* 원국 화면 대운 줄 */
-ol.dw { display: flex; gap: 0; overflow-x: auto; margin: 16px -20px 0; padding: 0 20px; scrollbar-width: none; }
+ol.dw { display: flex; gap: 0; overflow-x: auto; overflow-y: hidden; margin: 16px -20px 0; padding: 0 20px; scrollbar-width: none; }
 ol.dw::-webkit-scrollbar { display: none; }
 ol.dw li { list-style: none; flex: 0 0 80px; text-align: center; padding: 10px 0; }
 ol.dw b { display: block; height: 30px; font-family: var(--serif); font-size: 22px; font-weight: 600; line-height: 30px; }
@@ -257,7 +257,7 @@ ol.dw .now .age { color: var(--text); font-weight: 700; }
 .product .price { font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; color: var(--text2); }
 .product p.desc { margin: 4px 0 14px; color: var(--text2); font-size: 15px; word-break: keep-all; overflow-wrap: anywhere; }
 /* 맨 위 바로 가기 줄 */
-.jump { display: flex; gap: 18px; overflow-x: auto; margin: 0 -20px; padding: 12px 20px; scrollbar-width: none; }
+.jump { display: flex; gap: 18px; overflow-x: auto; overflow-y: hidden; margin: 0 -20px; padding: 12px 20px; scrollbar-width: none; }
 .jump::-webkit-scrollbar { display: none; }
 .jump-chip { flex: 0 0 auto; border: 0; font: inherit; font-size: 15px; color: var(--text2); background: transparent; padding: 6px 0; text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 6px; text-decoration-thickness: 1px; border-radius: var(--r-s); cursor: pointer; white-space: nowrap; }
 .jump-chip:hover { color: var(--text); }
@@ -327,7 +327,7 @@ ol.glance li:last-child { border-bottom: 0; }
 ol.glance i { font-style: normal; font-weight: 700; color: var(--text3); width: 16px; flex: none; font-variant-numeric: tabular-nums; }
 
 /* 10년 표(네이버 날씨 시간별 표 방식) */
-.strip { margin: 18px -20px 0; overflow-x: auto; scrollbar-width: none; }
+.strip { margin: 18px -20px 0; overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain; touch-action: pan-x pan-y; scrollbar-width: none; }
 .strip::-webkit-scrollbar { display: none; }
 .strip table { border-collapse: collapse; margin: 0 20px; }
 .strip td, .strip th { width: 62px; min-width: 62px; text-align: center; padding: 0 2px; vertical-align: top; }
@@ -468,7 +468,7 @@ dialog::backdrop { background: rgba(20, 19, 17, 0.55); }
 .kpis b { display: block; font-size: 20px; font-variant-numeric: tabular-nums; }
 .kpis span { font-size: 12px; color: var(--text3); }
 .st-ok { color: var(--good); } .st-failed { color: var(--care); }
-.scroll-x { overflow-x: auto; }
+.scroll-x { overflow-x: auto; overflow-y: hidden; }
 
 /* 인쇄·PDF
    위쪽·아래쪽 여백 상자를 직접 채우면 Chrome이 기본 머리말(날짜·제목)과 꼬리말(주소·쪽수)을 찍지 않는다. */
@@ -514,6 +514,7 @@ tr.sub td .term, .gm-line .term { line-height: 2; }
 .term rt { font-size: 0.5em; font-weight: 400; color: var(--text2); letter-spacing: 0; }
 .tip { display: none !important; position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); margin: 0 auto; max-width: 420px; z-index: 40; padding: 12px 14px; background: var(--bg); color: var(--body); border: 1px solid var(--line-strong); border-radius: var(--r); font-size: 14px; font-weight: 400; font-style: normal; line-height: 1.55; letter-spacing: 0; text-align: left; white-space: normal; cursor: auto; }
 .term:focus > .tip { display: block !important; }
+/* iOS Safari는 빈 곳을 탭해도 포커스를 안 옮긴다. body를 tabindex=-1로 두어 바깥 탭이 body로 포커스를 가져가 설명이 닫히게 한다(스크립트 없는 공유 페이지 포함). */
 body:focus { outline: none; }
 .tip .ti { display: block; }
 .tip .ti + .ti { margin-top: 6px; }
