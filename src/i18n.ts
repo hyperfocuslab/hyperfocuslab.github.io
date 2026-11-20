@@ -33,6 +33,15 @@ export function href(page: Page, lang: Lang): string {
   return `${PREFIX[lang]}/peakly/${page}/`;
 }
 
+// Sheltie (iPhone companion for coding agents) is not on the home page yet. It has only
+// support and privacy pages, in ko and en, under /sheltie/.
+export type Product = 'peakly' | 'sheltie';
+export const SHELTIE_LANGS = ['ko', 'en'] as const;
+export const SHELTIE_DOCS = ['support', 'privacy'] as const;
+export function sheltieHref(doc: (typeof SHELTIE_DOCS)[number], lang: Lang): string {
+  return `${PREFIX[lang]}/sheltie/${doc}/`;
+}
+
 // File names the previous Peakly site used (/privacy-en.html). They are kept
 // as redirects so old store and in-app links can be pointed here later.
 export function legacySlugs(): { slug: string; to: string }[] {
