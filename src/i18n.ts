@@ -22,6 +22,10 @@ export function sheltieLinks(lang: Lang) {
   return {
     appStore: `https://apps.apple.com/${APP_STORE_COUNTRY[lang]}app/id6837271201?ct=website-${lang}&mt=8`,
     github: 'https://github.com/hyperfocuslab/sheltie',
+    // Android is in closed testing: testers join the Google Group first, then opt in on Play.
+    testerGroup: 'https://groups.google.com/g/sheltie-testers',
+    testerOptIn: 'https://play.google.com/apps/testing/com.hyperfocuslab.sheltie',
+    play: 'https://play.google.com/store/apps/details?id=com.hyperfocuslab.sheltie',
   };
 }
 
@@ -88,7 +92,7 @@ export const ui = {
       sheltie: {
         title: 'Sheltie | 코딩 에이전트 승인 앱',
         tagline: '코딩 에이전트 승인 앱',
-        lead: 'PC에서 돌리는 코딩 에이전트가 권한이나 질문에서 멈추면 iPhone으로 알림이 옵니다. 잠금화면에서 바로 허용하거나 거부하고, 앱에서 대화를 읽고 새 작업을 시작합니다. 무료이고 PC 쪽 서버는 오픈소스입니다.',
+        lead: 'PC에서 돌리는 코딩 에이전트가 권한이나 질문에서 멈추면 iPhone으로 알림이 옵니다(Android는 비공개 테스트 중). 잠금화면에서 바로 허용하거나 거부하고, 앱에서 대화를 읽고 새 작업을 시작합니다. 무료이고 PC 쪽 서버는 오픈소스입니다.',
         rows: [
             { shot: 'lock', label: '잠금화면', title: '앱을 열지 않고 답합니다', body: '알림을 길게 누르면 허용, 이 세션 동안 허용, 거부가 나옵니다. 답하기 직전에 터미널 메뉴가 그대로인지 다시 확인합니다.', alt: '잠금화면 알림의 허용·거부 메뉴' },
             { shot: 'list', label: '목록', title: '막힌 에이전트가 맨 위에', body: 'PC별, 폴더별로 모든 세션을 한 목록에서 봅니다. 무엇을 기다리는지, 몇 분째인지 같이 보입니다.', alt: '에이전트 세션 목록' },
@@ -98,6 +102,12 @@ export const ui = {
         agentsLabel: '지원 에이전트',
         agents: 'Claude Code · Codex · Gemini CLI · Qwen Code · OpenCode · Grok · GitHub Copilot CLI · Cursor Agent · Amp',
         requirements: 'herdr-core에서 에이전트를 돌리는 Mac 또는 Windows PC와 Tailscale. 설치는 PC에서 명령 한 줄과 QR 스캔입니다.',
+        android: {
+          button: 'Android 테스트 참여',
+          label: 'Android 비공개 테스트',
+          steps: ['구글 그룹 가입', '테스트 참여', 'Google Play에서 설치'],
+          note: '그룹에 먼저 가입해야 테스트 참여 링크가 열립니다. 가입자 이메일은 개발자만 봅니다. 정식 출시하려면 테스터 12명이 14일 동안 설치해 두어야 합니다.',
+        },
       },
       peakly: {
         tagline: 'ADHD 복약 기록 앱',
@@ -188,7 +198,7 @@ export const ui = {
       sheltie: {
         title: 'Sheltie | Approve coding agents from your iPhone',
         tagline: 'Approve coding agents from your iPhone',
-        lead: 'When a coding agent on your computer stops for a permission or a question, your iPhone gets a notification. Allow or deny right from the Lock Screen, read the conversation, and start new tasks from the app. Free, with an open-source server.',
+        lead: 'When a coding agent on your computer stops for a permission or a question, your iPhone gets a notification (Android is in closed testing). Allow or deny right from the Lock Screen, read the conversation, and start new tasks from the app. Free, with an open-source server.',
         rows: [
             { shot: 'lock', label: 'Lock Screen', title: 'Answer without opening the app', body: 'Long-press the notification for Allow, Allow for this session, or Deny. Right before answering, Sheltie checks the terminal menu hasn\'t changed.', alt: 'Allow and deny menu on a Lock Screen notification' },
             { shot: 'list', label: 'List', title: 'Stuck agents on top', body: 'Every session from every computer and folder in one list, with what it\'s waiting for and for how long.', alt: 'List of agent sessions' },
@@ -198,6 +208,12 @@ export const ui = {
         agentsLabel: 'Supported agents',
         agents: 'Claude Code · Codex · Gemini CLI · Qwen Code · OpenCode · Grok · GitHub Copilot CLI · Cursor Agent · Amp',
         requirements: 'A Mac or Windows PC running agents in herdr-core, plus Tailscale. Setup is one command on the computer and a QR scan.',
+        android: {
+          button: 'Join the Android test',
+          label: 'Android closed test',
+          steps: ['Join the Google Group', 'Opt in to the test', 'Install from Google Play'],
+          note: 'Join the group first, or the opt-in link will not open. Only the developer sees member emails. A public release needs 12 testers keeping the app installed for 14 days.',
+        },
       },
       peakly: {
         tagline: 'ADHD medication tracker',
@@ -288,7 +304,7 @@ export const ui = {
       sheltie: {
         title: 'Sheltie | Approve coding agents from your iPhone',
         tagline: 'Approve coding agents from your iPhone',
-        lead: 'When a coding agent on your computer stops for a permission or a question, your iPhone gets a notification. Allow or deny right from the Lock Screen, read the conversation, and start new tasks from the app. Free, with an open-source server.',
+        lead: 'When a coding agent on your computer stops for a permission or a question, your iPhone gets a notification (Android is in closed testing). Allow or deny right from the Lock Screen, read the conversation, and start new tasks from the app. Free, with an open-source server.',
         rows: [
             { shot: 'lock', label: 'Lock Screen', title: 'Answer without opening the app', body: 'Long-press the notification for Allow, Allow for this session, or Deny. Right before answering, Sheltie checks the terminal menu hasn\'t changed.', alt: 'Allow and deny menu on a Lock Screen notification' },
             { shot: 'list', label: 'List', title: 'Stuck agents on top', body: 'Every session from every computer and folder in one list, with what it\'s waiting for and for how long.', alt: 'List of agent sessions' },
@@ -298,6 +314,12 @@ export const ui = {
         agentsLabel: 'Supported agents',
         agents: 'Claude Code · Codex · Gemini CLI · Qwen Code · OpenCode · Grok · GitHub Copilot CLI · Cursor Agent · Amp',
         requirements: 'A Mac or Windows PC running agents in herdr-core, plus Tailscale. Setup is one command on the computer and a QR scan.',
+        android: {
+          button: 'Join the Android test',
+          label: 'Android closed test',
+          steps: ['Join the Google Group', 'Opt in to the test', 'Install from Google Play'],
+          note: 'Join the group first, or the opt-in link will not open. Only the developer sees member emails. A public release needs 12 testers keeping the app installed for 14 days.',
+        },
       },
       peakly: {
         tagline: 'ADHDの服薬記録アプリ',
@@ -388,7 +410,7 @@ export const ui = {
       sheltie: {
         title: 'Sheltie | Approve coding agents from your iPhone',
         tagline: 'Approve coding agents from your iPhone',
-        lead: 'When a coding agent on your computer stops for a permission or a question, your iPhone gets a notification. Allow or deny right from the Lock Screen, read the conversation, and start new tasks from the app. Free, with an open-source server.',
+        lead: 'When a coding agent on your computer stops for a permission or a question, your iPhone gets a notification (Android is in closed testing). Allow or deny right from the Lock Screen, read the conversation, and start new tasks from the app. Free, with an open-source server.',
         rows: [
             { shot: 'lock', label: 'Lock Screen', title: 'Answer without opening the app', body: 'Long-press the notification for Allow, Allow for this session, or Deny. Right before answering, Sheltie checks the terminal menu hasn\'t changed.', alt: 'Allow and deny menu on a Lock Screen notification' },
             { shot: 'list', label: 'List', title: 'Stuck agents on top', body: 'Every session from every computer and folder in one list, with what it\'s waiting for and for how long.', alt: 'List of agent sessions' },
@@ -398,6 +420,12 @@ export const ui = {
         agentsLabel: 'Supported agents',
         agents: 'Claude Code · Codex · Gemini CLI · Qwen Code · OpenCode · Grok · GitHub Copilot CLI · Cursor Agent · Amp',
         requirements: 'A Mac or Windows PC running agents in herdr-core, plus Tailscale. Setup is one command on the computer and a QR scan.',
+        android: {
+          button: 'Join the Android test',
+          label: 'Android closed test',
+          steps: ['Join the Google Group', 'Opt in to the test', 'Install from Google Play'],
+          note: 'Join the group first, or the opt-in link will not open. Only the developer sees member emails. A public release needs 12 testers keeping the app installed for 14 days.',
+        },
       },
       peakly: {
         tagline: 'ADHD 服藥紀錄 App',

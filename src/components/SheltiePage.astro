@@ -29,6 +29,7 @@ const sheltieLinkSet = sheltieLinks(lang);
         <div class="actions store">
           <a class="btn" href={sheltieLinkSet.appStore} target="_blank" rel="noreferrer">App Store ↗</a>
           <a class="btn btn-ghost" href={sheltieLinkSet.github} target="_blank" rel="noreferrer">GitHub ↗</a>
+          <a class="btn btn-ghost" href="#android">{sheltie.android.button}</a>
         </div>
       </div>
 
@@ -52,6 +53,14 @@ const sheltieLinkSet = sheltieLinks(lang);
       <h3 class="label p-sub">{sheltie.agentsLabel}</h3>
       <p class="lead">{sheltie.agents}</p>
       <p class="row-note p-req">{sheltie.requirements}</p>
+
+      <h3 class="label p-sub" id="android">{sheltie.android.label}</h3>
+      <ol class="lead steps">
+        <li>1. <a href={sheltieLinkSet.testerGroup} target="_blank" rel="noreferrer">{sheltie.android.steps[0]} ↗</a></li>
+        <li>2. <a href={sheltieLinkSet.testerOptIn} target="_blank" rel="noreferrer">{sheltie.android.steps[1]} ↗</a></li>
+        <li>3. <a href={sheltieLinkSet.play} target="_blank" rel="noreferrer">{sheltie.android.steps[2]} ↗</a></li>
+      </ol>
+      <p class="row-note p-req">{sheltie.android.note}</p>
     </div>
   </section>
 
