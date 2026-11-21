@@ -1,31 +1,34 @@
-<p class="intro">맥의 herdr-core 위에서 돌아가는 Claude Code 에이전트가 멈추면, 아이폰 잠금화면 알림으로 바로 답하는 무료 앱입니다.</p>
+<p class="intro">맥이나 윈도우 PC의 herdr-core 위에서 돌아가는 Claude Code 에이전트가 멈추면, 아이폰 잠금화면 알림으로 바로 답하는 무료 앱입니다.</p>
       <section aria-labelledby="needs">
         <h2 id="needs">필요한 것</h2>
         <ul>
-          <li>herdr-core 안에서 Claude Code를 돌리는 맥</li>
-          <li>맥과 아이폰에 설치한 Tailscale</li>
-          <li>맥에 설치하는 Sheltie 서버</li>
+          <li>herdr-core 안에서 Claude Code를 돌리는 맥이나 윈도우 PC</li>
+          <li>컴퓨터와 아이폰에 설치한 Tailscale</li>
+          <li>컴퓨터에 설치하는 Sheltie 서버</li>
         </ul>
       </section>
       <section aria-labelledby="connect">
         <h2 id="connect">연결 방법</h2>
         <ol>
-          <li>맥 터미널에서 설치 명령을 실행합니다.</li>
+          <li>맥 터미널이나 윈도우 PowerShell에서 설치 명령을 실행합니다.</li>
           <li>설치기가 보여 주는 QR을 아이폰 카메라로 찍습니다.</li>
           <li>Sheltie가 열리면 알림을 허용합니다.</li>
         </ol>
         <p>설치 명령(맥 터미널):</p>
         <pre class="cmd"><code>curl -fsSL https://raw.githubusercontent.com/hyperfocuslab/sheltie/main/install.sh | sh</code></pre>
-        <p>필요한 것: macOS, python3, herdr-core(<code>hc</code>), Tailscale. QR을 다시 보려면 <code>python3 ~/.local/share/herdr-remote/herdr_remote.py pair</code>, 지우려면 같은 명령 끝을 <code>| sh -s -- --uninstall</code>로 바꿉니다. 소스: <a href="https://github.com/hyperfocuslab/sheltie">github.com/hyperfocuslab/sheltie</a>(MIT).</p>
+        <p>필요한 것: macOS, python3, herdr-core(<code>hc</code>), Tailscale. QR을 다시 보려면 <code>python3 ~/.local/share/herdr-remote/herdr_remote.py pair</code>, 지우려면 같은 명령 끝을 <code>| sh -s -- --uninstall</code>로 바꿉니다. </p>
+        <p>설치 명령(윈도우 PowerShell, 관리자 권한 아님):</p>
+        <pre class="cmd"><code>irm https://raw.githubusercontent.com/hyperfocuslab/sheltie/main/install.ps1 | iex</code></pre>
+        <p>필요한 것: Windows, Python 3.9 이상, herdr-core(<code>hc</code>), Tailscale. 서버는 로그인할 때 작업 스케줄러로 자동 시작됩니다. QR을 다시 보려면 <code>python "$env:LOCALAPPDATA\herdr-remote\herdr_remote.py" pair</code>, 지우려면 <code>$env:HERDR_REMOTE_UNINSTALL=1; irm https://raw.githubusercontent.com/hyperfocuslab/sheltie/main/install.ps1 | iex</code>. 소스: <a href="https://github.com/hyperfocuslab/sheltie">github.com/hyperfocuslab/sheltie</a>(MIT).</p>
       </section>
       <section aria-labelledby="faq">
         <h2 id="faq">자주 묻는 것</h2>
         <h3>알림이 안 와요.</h3>
-        <p>아이폰 설정 → 알림 → Sheltie에서 알림이 켜져 있는지 확인하세요. 그다음 맥이 켜져 있고 Sheltie 서버가 돌고 있는지 봅니다.</p>
-        <h3>맥 밖에서도 되나요?</h3>
-        <p>맥과 아이폰이 같은 Tailscale 네트워크에 있으면 어디서나 됩니다.</p>
+        <p>아이폰 설정 → 알림 → Sheltie에서 알림이 켜져 있는지 확인하세요. 그다음 컴퓨터가 켜져 있고 Sheltie 서버가 돌고 있는지 봅니다.</p>
+        <h3>집 밖에서도 되나요?</h3>
+        <p>컴퓨터와 아이폰이 같은 Tailscale 네트워크에 있으면 어디서나 됩니다.</p>
         <h3>내 데이터는 어디로 가나요?</h3>
-        <p>대화, 질문, 터미널 화면은 Tailscale을 거쳐 내 맥과 아이폰 사이에서만 오갑니다. 저희 서버를 거치는 건 알림뿐입니다. 알림(터미널 이름과 짧은 상태 문구)과 기기 푸시 토큰은 Cloudflare에 있는 저희 중계를 지나 Apple로 바로 넘어가고, 저장하거나 로그에 남기지 않습니다. 계정이나 분석 도구는 없습니다. 자세한 내용은 <a href="/sheltie/privacy/">개인정보 처리방침</a>에 있습니다.</p>
+        <p>대화, 질문, 터미널 화면은 Tailscale을 거쳐 내 컴퓨터와 아이폰 사이에서만 오갑니다. 저희 서버를 거치는 건 알림뿐입니다. 알림(터미널 이름과 짧은 상태 문구)과 기기 푸시 토큰은 Cloudflare에 있는 저희 중계를 지나 Apple로 바로 넘어가고, 저장하거나 로그에 남기지 않습니다. 계정이나 분석 도구는 없습니다. 자세한 내용은 <a href="/sheltie/privacy/">개인정보 처리방침</a>에 있습니다.</p>
       </section>
       <section aria-labelledby="contact">
         <h2 id="contact">문의</h2>
