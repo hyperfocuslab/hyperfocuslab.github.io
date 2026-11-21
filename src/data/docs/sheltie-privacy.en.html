@@ -1,9 +1,9 @@
-<p class="muted">Effective date: November 20, 2026</p>
-      <p>Sheltie is an iPhone app by Hyperfocus Lab. It connects to a server you install on your own Mac and shows you the coding agents running there. This policy says what data the app handles and where it goes.</p>
+<p class="muted">Effective date: November 21, 2026</p>
+      <p>Sheltie is an iPhone and Android app by Hyperfocus Lab. It connects to a server you install on your own Mac and shows you the coding agents running there. This policy says what data the app handles and where it goes.</p>
 
-      <h2>What stays on your iPhone</h2>
+      <h2>What stays on your phone</h2>
       <ul>
-        <li>The address of your Mac’s server and its access token. The token is kept in the iOS Keychain.</li>
+        <li>The address of your Mac’s server and its access token. The token is kept in the iOS Keychain, or on Android encrypted with a key in the Android Keystore.</li>
         <li>App settings.</li>
       </ul>
       <p>Conversations, prompts and terminal screens are loaded from your Mac only while you look at them and are not saved by the app.</p>
@@ -12,13 +12,13 @@
       <p>Everything you do in the app (answers, messages, new tasks) goes to the server on your own Mac over your Tailscale network. That server is software you run; we have no access to it or to anything on your Mac.</p>
 
       <h2>What goes through our push relay</h2>
-      <p>To send notifications, Apple requires a key that only we hold, so notifications pass through a small relay we run on Cloudflare Workers:</p>
+      <p>To send notifications, Apple and Google require a key that only we hold, so notifications pass through a small relay we run on Cloudflare Workers:</p>
       <ul>
-        <li><strong>Your device’s push token</strong>, which Apple issues so a notification can reach your iPhone.</li>
+        <li><strong>Your device’s push token</strong>, which Apple (iPhone) or Firebase Cloud Messaging (Android) issues so a notification can reach your phone.</li>
         <li><strong>The notification itself</strong>: the terminal’s name and a short status line such as “approve Write: index.html” or “done”.</li>
       </ul>
-      <p>The relay takes the device push token and the notification your Mac server sends and passes them straight on to Apple Push Notification service. It does not store the token or the notification text, and does not write either to logs.</p>
-      <p>Cloudflare (hosting the relay) and Apple (delivering the notification) process this data only to deliver notifications.</p>
+      <p>The relay takes the device push token and the notification your Mac server sends and passes them straight on to Apple Push Notification service or Google’s Firebase Cloud Messaging. It does not store the token or the notification text, and does not write either to logs.</p>
+      <p>Cloudflare (hosting the relay), Apple and Google (delivering the notification) process this data only to deliver notifications.</p>
 
       <h2>What we do not do</h2>
       <ul>
@@ -33,11 +33,14 @@
       <h2>Camera</h2>
       <p>The camera is used only to scan the pairing QR code your Mac shows. Images are not saved or sent.</p>
 
+      <h2>Microphone</h2>
+      <p>The microphone is used only when you dictate a reply. Your phone’s speech recognition service (Apple or Google) turns it into text; the app does not save or send the audio itself.</p>
+
       <h2>Children</h2>
       <p>Sheltie is a developer tool and is not directed at children under 13.</p>
 
       <h2>Deleting your data</h2>
-      <p>Clear the server address and token in the app’s settings, or delete the app, to erase what it stores on your iPhone. On your Mac, <code>install.sh --uninstall</code> stops the server; deleting the folder <code>~/.config/herdr-remote</code> then removes its settings and the list of registered devices.</p>
+      <p>Clear the server address and token in the app’s settings, or delete the app, to erase what it stores on your phone. On your Mac, <code>install.sh --uninstall</code> stops the server; deleting the folder <code>~/.config/herdr-remote</code> then removes its settings and the list of registered devices.</p>
 
       <h2>Changes</h2>
       <p>We will post changes on this page with a new effective date.</p>
