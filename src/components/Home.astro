@@ -3,7 +3,7 @@ import { existsSync } from 'node:fs';
 import Base from '../layouts/Base.astro';
 import AppShot from './AppShot.astro';
 import StoreBadges from './StoreBadges.astro';
-import { ui, type Lang } from '../i18n';
+import { sheltieLinks, ui, type Lang } from '../i18n';
 
 interface Props {
   lang: Lang;
@@ -21,6 +21,11 @@ const hasDark = (shot: string) => existsSync(`public/assets/peakly/${shotLang}-$
 const sections = t.peakly.sections
   .map((section) => ({ ...section, rows: section.rows.filter((row) => hasShot(row.shot)) }))
   .filter((section) => section.rows.length > 0);
+// Sheltie only has ko and en captures (public/assets/sheltie/{ko,en}-{shot}.webp); ja and zh-Hant show en.
+const sheltieLang = lang === 'ko' ? 'ko' : 'en';
+const sheltie = t.sheltie;
+const sheltieRows = sheltie.rows.filter((row) => existsSync(`public/assets/sheltie/${sheltieLang}-${row.shot}.webp`));
+const sheltieLinkSet = sheltieLinks(lang);
 const rows = sections.flatMap((section) => section.rows);
 ---
 
@@ -94,6 +99,46 @@ const rows = sections.flatMap((section) => section.rows);
         <StoreBadges lang={lang} />
       </div>
 
+    </div>
+  </section>
+
+  <section class="section" id="sheltie">
+    <div class="wrap">
+      <div class="p-intro">
+        <div class="product-name">
+          <img class="app-icon" src="/assets/sheltie-icon.webp" alt="" width="72" height="72" loading="lazy" />
+          <div>
+            <h2 class="h2">Sheltie</h2>
+            <p class="muted">{sheltie.tagline}</p>
+          </div>
+        </div>
+        <p class="lead">{sheltie.lead}</p>
+        <div class="actions store">
+          <a class="btn" href={sheltieLinkSet.appStore} target="_blank" rel="noreferrer">App Store ↗</a>
+          <a class="btn btn-ghost" href={sheltieLinkSet.github} target="_blank" rel="noreferrer">GitHub ↗</a>
+        </div>
+      </div>
+
+      <div class="rows-feature">
+        {
+          sheltieRows.map((row, index) => (
+            <div class:list={['feature-row', { flip: index % 2 === 1 }]}>
+              <div class="feature-copy">
+                <p class="label">{row.label}</p>
+                <h3 class="h2">{row.title}</h3>
+                <p class="lead">{row.body}</p>
+              </div>
+              <div class="feature-visual">
+                <AppShot src={`/assets/sheltie/${sheltieLang}-${row.shot}.webp`} alt={row.alt} lang={lang} />
+              </div>
+            </div>
+          ))
+        }
+      </div>
+
+      <h3 class="label p-sub">{sheltie.agentsLabel}</h3>
+      <p class="lead">{sheltie.agents}</p>
+      <p class="row-note p-req">{sheltie.requirements}</p>
     </div>
   </section>
 
