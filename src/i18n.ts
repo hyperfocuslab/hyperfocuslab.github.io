@@ -41,7 +41,7 @@ export function href(page: Page, lang: Lang): string {
   return `${PREFIX[lang]}/peakly/${page}/`;
 }
 
-// Sheltie (phone companion for coding agents) is the second product, with its own page.
+// Sheltie (iPhone companion for coding agents) is the second product, with its own page.
 // Its product, support and privacy pages exist in ko and en only, under /sheltie/.
 export type Product = 'peakly' | 'sheltie';
 export const SHELTIE_LANGS = ['ko', 'en'] as const;
@@ -72,7 +72,7 @@ export const ui = {
     footer: { products: '제품', language: '언어', legal: '© Hyperfocus Lab · 대표 이예준' },
     home: {
       title: 'Hyperfocus Lab | 피클리 · Sheltie',
-      description: '피클리는 복용 시각을 기록하면 하루 동안의 예상 약효 곡선을 그려 주는 ADHD 복약 기록 앱입니다. Sheltie는 PC의 코딩 에이전트가 멈추면 폰 잠금화면에서 바로 허용하는 앱입니다.',
+      description: '피클리는 복용 시각을 기록하면 하루 동안의 예상 약효 곡선을 그려 주는 ADHD 복약 기록 앱입니다. Sheltie는 PC의 코딩 에이전트가 멈추면 iPhone 잠금화면에서 바로 허용하는 앱입니다.',
       company: 'Hyperfocus Lab은 자체 소프트웨어 제품을 만들고 운영하는 스튜디오입니다.',
       more: '자세히 보기 →',
       peaklyTitle: '피클리 | ADHD 복약 기록 앱',
@@ -88,7 +88,7 @@ export const ui = {
       sheltie: {
         title: 'Sheltie | 코딩 에이전트 승인 앱',
         tagline: '코딩 에이전트 승인 앱',
-        lead: 'PC에서 돌리는 코딩 에이전트가 권한이나 질문에서 멈추면 폰(iPhone·Android)으로 알림이 옵니다. 잠금화면에서 바로 허용하거나 거부하고, 앱에서 대화를 읽고 새 작업을 시작합니다. 무료이고 PC 쪽 서버는 오픈소스입니다.',
+        lead: 'PC에서 돌리는 코딩 에이전트가 권한이나 질문에서 멈추면 iPhone으로 알림이 옵니다. 잠금화면에서 바로 허용하거나 거부하고, 앱에서 대화를 읽고 새 작업을 시작합니다. 무료이고 PC 쪽 서버는 오픈소스입니다.',
         rows: [
             { shot: 'lock', label: '잠금화면', title: '앱을 열지 않고 답합니다', body: '알림을 길게 누르면 허용, 이 세션 동안 허용, 거부가 나옵니다. 답하기 직전에 터미널 메뉴가 그대로인지 다시 확인합니다.', alt: '잠금화면 알림의 허용·거부 메뉴' },
             { shot: 'list', label: '목록', title: '막힌 에이전트가 맨 위에', body: 'PC별, 폴더별로 모든 세션을 한 목록에서 봅니다. 무엇을 기다리는지, 몇 분째인지 같이 보입니다.', alt: '에이전트 세션 목록' },
@@ -172,7 +172,7 @@ export const ui = {
     footer: { products: 'Products', language: 'Language', legal: '© Hyperfocus Lab · Representative: Yejun Lee' },
     home: {
       title: 'Hyperfocus Lab | Peakly · Sheltie',
-      description: "Peakly is an ADHD medication tracker that draws the day's estimated effect curve from your dose times. Sheltie lets you approve coding agents on your computer from your phone's Lock Screen.",
+      description: "Peakly is an ADHD medication tracker that draws the day's estimated effect curve from your dose times. Sheltie lets you approve coding agents on your computer from the iPhone Lock Screen.",
       company: 'Hyperfocus Lab is a studio that builds and runs its own software products.',
       more: 'Learn more →',
       peaklyTitle: 'Peakly | ADHD medication tracker',
@@ -186,9 +186,9 @@ export const ui = {
         more: 'Go to Peakly',
       },
       sheltie: {
-        title: 'Sheltie | Approve coding agents from your phone',
-        tagline: 'Approve coding agents from your phone',
-        lead: 'When a coding agent on your computer stops for a permission or a question, your phone (iPhone or Android) gets a notification. Allow or deny right from the Lock Screen, read the conversation, and start new tasks from the app. Free, with an open-source server.',
+        title: 'Sheltie | Approve coding agents from your iPhone',
+        tagline: 'Approve coding agents from your iPhone',
+        lead: 'When a coding agent on your computer stops for a permission or a question, your iPhone gets a notification. Allow or deny right from the Lock Screen, read the conversation, and start new tasks from the app. Free, with an open-source server.',
         rows: [
             { shot: 'lock', label: 'Lock Screen', title: 'Answer without opening the app', body: 'Long-press the notification for Allow, Allow for this session, or Deny. Right before answering, Sheltie checks the terminal menu hasn\'t changed.', alt: 'Allow and deny menu on a Lock Screen notification' },
             { shot: 'list', label: 'List', title: 'Stuck agents on top', body: 'Every session from every computer and folder in one list, with what it\'s waiting for and for how long.', alt: 'List of agent sessions' },
@@ -286,9 +286,9 @@ export const ui = {
         more: 'ピークリーのページへ',
       },
       sheltie: {
-        title: 'Sheltie | Approve coding agents from your phone',
-        tagline: 'Approve coding agents from your phone',
-        lead: 'When a coding agent on your computer stops for a permission or a question, your phone (iPhone or Android) gets a notification. Allow or deny right from the Lock Screen, read the conversation, and start new tasks from the app. Free, with an open-source server.',
+        title: 'Sheltie | Approve coding agents from your iPhone',
+        tagline: 'Approve coding agents from your iPhone',
+        lead: 'When a coding agent on your computer stops for a permission or a question, your iPhone gets a notification. Allow or deny right from the Lock Screen, read the conversation, and start new tasks from the app. Free, with an open-source server.',
         rows: [
             { shot: 'lock', label: 'Lock Screen', title: 'Answer without opening the app', body: 'Long-press the notification for Allow, Allow for this session, or Deny. Right before answering, Sheltie checks the terminal menu hasn\'t changed.', alt: 'Allow and deny menu on a Lock Screen notification' },
             { shot: 'list', label: 'List', title: 'Stuck agents on top', body: 'Every session from every computer and folder in one list, with what it\'s waiting for and for how long.', alt: 'List of agent sessions' },
@@ -386,9 +386,9 @@ export const ui = {
         more: '前往 Peakly 頁面',
       },
       sheltie: {
-        title: 'Sheltie | Approve coding agents from your phone',
-        tagline: 'Approve coding agents from your phone',
-        lead: 'When a coding agent on your computer stops for a permission or a question, your phone (iPhone or Android) gets a notification. Allow or deny right from the Lock Screen, read the conversation, and start new tasks from the app. Free, with an open-source server.',
+        title: 'Sheltie | Approve coding agents from your iPhone',
+        tagline: 'Approve coding agents from your iPhone',
+        lead: 'When a coding agent on your computer stops for a permission or a question, your iPhone gets a notification. Allow or deny right from the Lock Screen, read the conversation, and start new tasks from the app. Free, with an open-source server.',
         rows: [
             { shot: 'lock', label: 'Lock Screen', title: 'Answer without opening the app', body: 'Long-press the notification for Allow, Allow for this session, or Deny. Right before answering, Sheltie checks the terminal menu hasn\'t changed.', alt: 'Allow and deny menu on a Lock Screen notification' },
             { shot: 'list', label: 'List', title: 'Stuck agents on top', body: 'Every session from every computer and folder in one list, with what it\'s waiting for and for how long.', alt: 'List of agent sessions' },
