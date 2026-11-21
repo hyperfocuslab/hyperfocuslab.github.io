@@ -64,6 +64,9 @@ export function legacySlugs(): { slug: string; to: string }[] {
   return [...docs, { slug: 'index-en', to: href('home', 'en') }, { slug: 'index-ja', to: href('home', 'ja') }];
 }
 
+// DEAD DISTRICT is a browser game served from its own repository's Pages site (hyperfocuslab/dead-district).
+export const GAME_URL = '/dead-district/';
+
 export const LANG_LABEL: Record<Lang, string> = { ko: '한국어', en: 'English', ja: '日本語', 'zh-Hant': '繁體中文' };
 // Short code shown in the header switch.
 export const LANG_CODE: Record<Lang, string> = { ko: 'KO', en: 'EN', ja: 'JA', 'zh-Hant': 'ZH' };
@@ -108,6 +111,12 @@ export const ui = {
           steps: ['구글 그룹 가입', '테스트 참여', 'Google Play에서 설치'],
           note: '그룹에 먼저 가입해야 테스트 참여 링크가 열립니다. 가입자 이메일은 개발자만 봅니다. 정식 출시하려면 테스터 12명이 14일 동안 설치해 두어야 합니다.',
         },
+      },
+      game: {
+        tagline: 'PC 브라우저 좀비 슈터',
+        lead: '폐허가 된 도시 블록에서 좀비를 피해 탈출 지점까지 가는 3인칭 슈팅 게임입니다. 소총·산탄총·권총·도끼와 화염병·파이프 폭탄을 쓰고, 총소리는 좀비를 불러옵니다. 설치 없이 브라우저에서 바로 실행되며 키보드와 마우스가 필요합니다.',
+        play: '바로 플레이 ↗',
+        alt: 'DEAD DISTRICT 게임 화면: 비 오는 폐허 거리에서 소총을 든 플레이어와 좀비들',
       },
       peakly: {
         tagline: 'ADHD 복약 기록 앱',
@@ -215,6 +224,12 @@ export const ui = {
           note: 'Join the group first, or the opt-in link will not open. Only the developer sees member emails. A public release needs 12 testers keeping the app installed for 14 days.',
         },
       },
+      game: {
+        tagline: 'Zombie shooter for desktop browsers',
+        lead: 'A third-person shooter in a ruined city block: get past the zombies to the extraction point. Rifle, shotgun, pistol, axe, molotovs and pipe bombs, and every shot draws the horde. Runs in the browser with no install. Needs a keyboard and mouse.',
+        play: 'Play now ↗',
+        alt: 'DEAD DISTRICT gameplay: a player with a rifle and zombies on a ruined street',
+      },
       peakly: {
         tagline: 'ADHD medication tracker',
         lead: 'Log when you take your medication, and Peakly shows whether it is rising, at its strongest, or wearing off. Goals, routines, and to-dos are in the same app.',
@@ -321,6 +336,12 @@ export const ui = {
           note: 'Join the group first, or the opt-in link will not open. Only the developer sees member emails. A public release needs 12 testers keeping the app installed for 14 days.',
         },
       },
+      game: {
+        tagline: 'PCブラウザのゾンビシューター',
+        lead: '廃墟になった街区でゾンビをかわしながら脱出地点を目指す三人称シューティングです。ライフル・ショットガン・ピストル・斧、火炎瓶とパイプ爆弾を使い、銃声はゾンビを呼び寄せます。インストール不要でブラウザで動きます。キーボードとマウスが必要です。',
+        play: '今すぐプレイ ↗',
+        alt: 'DEAD DISTRICTのゲーム画面：廃墟の通りでライフルを構えるプレイヤーとゾンビ',
+      },
       peakly: {
         tagline: 'ADHDの服薬記録アプリ',
         lead: '薬を飲んだ時刻を記録すると、いま作用が上がっている途中か、いちばん強い時間か、弱まってきているかを表示します。目標やルーティン、タスクも同じアプリで管理できます。',
@@ -426,6 +447,12 @@ export const ui = {
           steps: ['Join the Google Group', 'Opt in to the test', 'Install from Google Play'],
           note: 'Join the group first, or the opt-in link will not open. Only the developer sees member emails. A public release needs 12 testers keeping the app installed for 14 days.',
         },
+      },
+      game: {
+        tagline: '電腦瀏覽器殭屍射擊遊戲',
+        lead: '在成為廢墟的城市街區躲開殭屍、前往撤離點的第三人稱射擊遊戲。可使用步槍、霰彈槍、手槍、斧頭，以及汽油彈和管狀炸彈，槍聲會引來殭屍。無需安裝，直接在瀏覽器執行，需要鍵盤和滑鼠。',
+        play: '立即遊玩 ↗',
+        alt: 'DEAD DISTRICT 遊戲畫面：廢墟街道上持步槍的玩家與殭屍',
       },
       peakly: {
         tagline: 'ADHD 服藥紀錄 App',
