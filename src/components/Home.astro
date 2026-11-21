@@ -10,7 +10,7 @@ interface Props {
 }
 const { lang } = Astro.props;
 const t = ui[lang].home;
-// The home is the company page: one line about the studio, then the products as a list.
+// The home is the company page: the name, then the products as a list (no tagline: the products say it).
 // Each product shows one capture and links to its own page.
 // Traditional Chinese has no Peakly captures of its own yet, so it shows the English ones;
 // Sheltie has ko and en captures only, so ja and zh-Hant show en.
@@ -25,7 +25,6 @@ const sheltieLinkSet = sheltieLinks(lang);
     <div class="wrap">
       <div class="p-intro">
         <h1 class="h2">Hyperfocus Lab</h1>
-        <p class="lead">{t.company}</p>
       </div>
     </div>
   </section>
