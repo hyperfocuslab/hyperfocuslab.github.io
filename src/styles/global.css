@@ -766,7 +766,7 @@ main > .section:first-child {
 
 .footer-grid {
   display: grid;
-  grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 2fr) repeat(4, minmax(0, 1fr));
   gap: 40px 24px;
 }
 
