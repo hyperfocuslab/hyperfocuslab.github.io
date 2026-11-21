@@ -1,6 +1,6 @@
 export const LANGS = ['ko', 'en', 'ja', 'zh-Hant'] as const;
 export type Lang = (typeof LANGS)[number];
-export type Page = 'home' | 'peakly' | 'privacy' | 'terms' | 'support';
+export type Page = 'home' | 'peakly' | 'sheltie' | 'privacy' | 'terms' | 'support';
 
 export const SITE = 'https://hyperfocuslab.app';
 export const EMAIL = 'support@hyperfocuslab.app';
@@ -35,18 +35,19 @@ const SUFFIX: Partial<Record<Lang, string>> = { ko: '', en: '-en', ja: '-ja' };
 // policies and support pages live under /peakly/.
 export function href(page: Page, lang: Lang): string {
   if (page === 'home') return HOME[lang];
-  // Peakly is introduced on the home page; /peakly/ itself redirects there.
-  if (page === 'peakly') return `${HOME[lang]}#products`;
+  // The home lists the products; each has its own page (Sheltie: ko and en only, see sheltieHref).
+  if (page === 'peakly') return `${PREFIX[lang]}/peakly/`;
+  if (page === 'sheltie') return sheltieHref('product', SHELTIE_LANGS.includes(lang as 'ko' | 'en') ? (lang as 'ko' | 'en') : 'en');
   return `${PREFIX[lang]}/peakly/${page}/`;
 }
 
-// Sheltie (iPhone companion for coding agents) is the second product on the home page (#sheltie).
-// Its support and privacy pages exist in ko and en only, under /sheltie/.
+// Sheltie (iPhone companion for coding agents) is the second product, with its own page.
+// Its product, support and privacy pages exist in ko and en only, under /sheltie/.
 export type Product = 'peakly' | 'sheltie';
 export const SHELTIE_LANGS = ['ko', 'en'] as const;
 export const SHELTIE_DOCS = ['support', 'privacy'] as const;
-export function sheltieHref(doc: (typeof SHELTIE_DOCS)[number], lang: Lang): string {
-  return `${PREFIX[lang]}/sheltie/${doc}/`;
+export function sheltieHref(doc: 'product' | (typeof SHELTIE_DOCS)[number], lang: Lang): string {
+  return doc === 'product' ? `${PREFIX[lang]}/sheltie/` : `${PREFIX[lang]}/sheltie/${doc}/`;
 }
 
 // File names the previous Peakly site used (/privacy-en.html). They are kept
@@ -72,6 +73,10 @@ export const ui = {
     home: {
       title: 'Hyperfocus Lab | 피클리 · Sheltie',
       description: '피클리는 복용 시각을 기록하면 하루 동안의 예상 약효 곡선을 그려 주는 ADHD 복약 기록 앱입니다. Sheltie는 PC의 코딩 에이전트가 멈추면 iPhone 잠금화면에서 바로 허용하는 앱입니다.',
+      company: 'Hyperfocus Lab은 자체 소프트웨어 제품을 만들고 운영하는 스튜디오입니다.',
+      more: '자세히 보기 →',
+      peaklyTitle: '피클리 | ADHD 복약 기록 앱',
+      peaklyDescription: '복용 시각을 기록하면 하루 동안의 예상 약효 곡선을 그려 줍니다. 기분과 목표, 할 일도 같은 앱에서 기록합니다. iPhone · iPad · Android.',
       products: {
         title: '제품',
         facts: [
@@ -81,6 +86,7 @@ export const ui = {
         more: '피클리 페이지로',
       },
       sheltie: {
+        title: 'Sheltie | 코딩 에이전트 승인 앱',
         tagline: '코딩 에이전트 승인 앱',
         lead: 'PC에서 돌리는 코딩 에이전트가 권한이나 질문에서 멈추면 iPhone으로 알림이 옵니다. 잠금화면에서 바로 허용하거나 거부하고, 앱에서 대화를 읽고 새 작업을 시작합니다. 무료이고 PC 쪽 서버는 오픈소스입니다.',
         rows: [
@@ -167,6 +173,10 @@ export const ui = {
     home: {
       title: 'Hyperfocus Lab | Peakly · Sheltie',
       description: "Peakly is an ADHD medication tracker that draws the day's estimated effect curve from your dose times. Sheltie lets you approve coding agents on your computer from the iPhone Lock Screen.",
+      company: 'Hyperfocus Lab is a studio that builds and runs its own software products.',
+      more: 'Learn more →',
+      peaklyTitle: 'Peakly | ADHD medication tracker',
+      peaklyDescription: "Log when you take your medication and Peakly draws the day's estimated effect curve. Mood, goals, and to-dos are in the same app. iPhone, iPad, Android.",
       products: {
         title: 'Products',
         facts: [
@@ -176,6 +186,7 @@ export const ui = {
         more: 'Go to Peakly',
       },
       sheltie: {
+        title: 'Sheltie | Approve coding agents from your iPhone',
         tagline: 'Approve coding agents from your iPhone',
         lead: 'When a coding agent on your computer stops for a permission or a question, your iPhone gets a notification. Allow or deny right from the Lock Screen, read the conversation, and start new tasks from the app. Free, with an open-source server.',
         rows: [
@@ -262,6 +273,10 @@ export const ui = {
     home: {
       title: 'Hyperfocus Lab | ピークリー · Sheltie',
       description: '服用時刻を記録すると、1日の作用の予測グラフを表示します。気分や目標、タスクも同じアプリで記録できます。iPhone・iPad・Android対応。',
+      company: 'Hyperfocus Labは、自社のソフトウェアプロダクトを開発・運営するスタジオです。',
+      more: '詳しく見る →',
+      peaklyTitle: 'ピークリー | ADHDの服薬記録アプリ',
+      peaklyDescription: '服用時刻を記録すると、1日の作用の予測グラフを表示します。気分や目標、タスクも同じアプリで記録できます。iPhone・iPad・Android対応。',
       products: {
         title: 'プロダクト',
         facts: [
@@ -271,6 +286,7 @@ export const ui = {
         more: 'ピークリーのページへ',
       },
       sheltie: {
+        title: 'Sheltie | Approve coding agents from your iPhone',
         tagline: 'Approve coding agents from your iPhone',
         lead: 'When a coding agent on your computer stops for a permission or a question, your iPhone gets a notification. Allow or deny right from the Lock Screen, read the conversation, and start new tasks from the app. Free, with an open-source server.',
         rows: [
@@ -357,6 +373,10 @@ export const ui = {
     home: {
       title: 'Hyperfocus Lab | Peakly · Sheltie',
       description: '記錄服藥時間，Peakly 就會畫出一天中的預估藥效曲線。心情、目標與待辦事項也能在同一個 App 裡記錄。支援 iPhone、iPad、Android。',
+      company: 'Hyperfocus Lab 是一間開發並營運自家軟體產品的工作室。',
+      more: '了解更多 →',
+      peaklyTitle: 'Peakly | ADHD 服藥紀錄 App',
+      peaklyDescription: '記錄服藥時間，Peakly 就會畫出一天中的預估藥效曲線。心情、目標與待辦事項也能在同一個 App 裡記錄。支援 iPhone、iPad、Android。',
       products: {
         title: '產品',
         facts: [
@@ -366,6 +386,7 @@ export const ui = {
         more: '前往 Peakly 頁面',
       },
       sheltie: {
+        title: 'Sheltie | Approve coding agents from your iPhone',
         tagline: 'Approve coding agents from your iPhone',
         lead: 'When a coding agent on your computer stops for a permission or a question, your iPhone gets a notification. Allow or deny right from the Lock Screen, read the conversation, and start new tasks from the app. Free, with an open-source server.',
         rows: [

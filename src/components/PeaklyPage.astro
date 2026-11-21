@@ -1,0 +1,100 @@
+---
+import { existsSync } from 'node:fs';
+import Base from '../layouts/Base.astro';
+import AppShot from './AppShot.astro';
+import StoreBadges from './StoreBadges.astro';
+import { ui, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = ui[lang].home;
+// Each feature row shows one capture: public/assets/peakly/{lang}-{shot}.webp.
+// Rows alternate sides across the whole page, not per section.
+// A row is shown only when its capture exists, so a missing screenshot never ships as a broken image.
+// Traditional Chinese has no captures of its own yet, so it shows the English ones.
+const shotLang = lang === 'zh-Hant' ? 'en' : lang;
+const hasShot = (shot: string) => existsSync(`public/assets/peakly/${shotLang}-${shot}.webp`);
+// A dark twin ({lang}-{shot}-dark.webp) turns the phone into a light/dark swipe strip.
+const hasDark = (shot: string) => existsSync(`public/assets/peakly/${shotLang}-${shot}-dark.webp`);
+const sections = t.peakly.sections
+  .map((section) => ({ ...section, rows: section.rows.filter((row) => hasShot(row.shot)) }))
+  .filter((section) => section.rows.length > 0);
+const rows = sections.flatMap((section) => section.rows);
+---
+
+<Base lang={lang} page="peakly" title={t.peaklyTitle} description={t.peaklyDescription}>
+  <!-- Visitors scroll rather than click, so the product is introduced here in full. -->
+  <section class="section" id="products">
+    <div class="wrap">
+      <div class="p-intro">
+        <div class="product-name">
+          <img class="app-icon" src="/assets/peakly-icon.webp" alt="" width="72" height="72" />
+          <div>
+            <h1 class="h2">{ui[lang].appName}</h1>
+            <p class="muted">{t.peakly.tagline}</p>
+          </div>
+        </div>
+        <p class="lead">{t.peakly.lead}</p>
+        <StoreBadges lang={lang} />
+      </div>
+
+      <div class="rows-feature">
+        {
+          sections.map((section) => (
+            <div class="feature-group">
+              <header class="group-head">
+                <p class="label">{String(sections.indexOf(section) + 1).padStart(2, '0')}</p>
+                <h3 class="group-title">{section.tab}</h3>
+                <p class="lead">{section.intro}</p>
+              </header>
+              {section.rows.map((row) => {
+                const index = rows.findIndex((r) => r.shot === row.shot);
+                return (
+                  <div class:list={['feature-row', { flip: index % 2 === 1 }]}>
+                    <div class="feature-copy">
+                      <p class="label">{row.label}</p>
+                      <h3 class="h2">{row.title}</h3>
+                      <p class="lead">{row.body}</p>
+                      {row.note && <p class="row-note">{row.note}</p>}
+                    </div>
+                    <div class="feature-visual">
+                      <AppShot
+                        src={`/assets/peakly/${shotLang}-${row.shot}.webp`}
+                        darkSrc={hasDark(row.shot) ? `/assets/peakly/${shotLang}-${row.shot}-dark.webp` : undefined}
+                        alt={row.alt}
+                        lang={lang}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          ))
+        }
+      </div>
+
+      <h3 class="label p-sub">{t.peakly.featuresTitle}</h3>
+      <ul class="feature-cards">
+        {
+          t.peakly.features.map((f) => (
+            <li>
+              <h4 class="h3">{f.title}</h4>
+              <p class="tags">{f.platforms.map((pl) => <span class="only">{pl}</span>)}</p>
+              <p>{f.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="p-closing">
+        <img class="app-icon" src="/assets/peakly-icon.webp" alt="" width="72" height="72" loading="lazy" />
+        <h2 class="h2">{t.peakly.closing.title}</h2>
+        <StoreBadges lang={lang} />
+      </div>
+
+    </div>
+  </section>
+
+</Base>

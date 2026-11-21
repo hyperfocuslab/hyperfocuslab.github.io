@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css';
 import Logo from '../components/Logo.astro';
-import { EMAIL, LANGS, LANG_CODE, LANG_LABEL, SHELTIE_LANGS, SITE, href, sheltieHref, storeLinks, ui, type Lang, type Page, type Product } from '../i18n';
+import { EMAIL, LANGS, LANG_CODE, LANG_LABEL, SHELTIE_LANGS, SITE, href, sheltieHref, ui, type Lang, type Page, type Product } from '../i18n';
 
 interface Props {
   lang: Lang;
@@ -16,8 +16,9 @@ const { lang, page, title, description, product = 'peakly' } = Astro.props;
 const t = ui[lang];
 const isSheltie = product === 'sheltie';
 const langs: readonly Lang[] = isSheltie ? SHELTIE_LANGS : LANGS;
-const pageHref = (p: Page, l: Lang) => (isSheltie ? sheltieHref(p as 'support' | 'privacy', l) : href(p, l));
-// The company home is its own section; every other page belongs to Peakly.
+const pageHref = (p: Page, l: Lang) =>
+  isSheltie ? sheltieHref(p === 'sheltie' ? 'product' : (p as 'support' | 'privacy'), l) : href(p, l);
+// The company home is its own section; every other page belongs to a product (Peakly or Sheltie).
 const inPeakly = page !== 'home';
 // First-visit language redirect runs only on the root home, which is English.
 const autoLang = lang === 'en' && page === 'home';
@@ -63,14 +64,14 @@ const GA_ID = 'G-96T0GRTD1R';
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <!-- While Peakly is the only product, shared links preview the app (effect-curve screen).
-         Bump ?v= when the card changes: KakaoTalk caches images by URL. -->
+    <!-- Shared links preview the page's own card: the company card on the home, the app's effect-curve
+         screen on Peakly pages. Bump ?v= when a card changes: KakaoTalk caches images by URL. -->
     {
       isSheltie ? (
         <meta name="twitter:card" content="summary" />
       ) : (
         <>
-          <meta property="og:image" content={`${SITE}/assets/og-${ogLang}.png?v=5`} />
+          <meta property="og:image" content={page === 'home' ? `${SITE}/assets/og-home.png?v=1` : `${SITE}/assets/og-${ogLang}.png?v=5`} />
           <meta property="og:image:width" content="1200" />
           <meta property="og:image:height" content="630" />
           <meta name="twitter:card" content="summary_large_image" />
@@ -109,8 +110,8 @@ const GA_ID = 'G-96T0GRTD1R';
           inPeakly && (
             <a
               class="crumb"
-              href={isSheltie ? sheltieHref('support', lang) : href('peakly', lang)}
-              aria-current={page === 'peakly' ? 'page' : undefined}
+              href={isSheltie ? sheltieHref('product', lang) : href('peakly', lang)}
+              aria-current={page === 'peakly' || page === 'sheltie' ? 'page' : undefined}
             >
               {isSheltie ? 'Sheltie' : 'Peakly'}
             </a>
@@ -152,10 +153,8 @@ const GA_ID = 'G-96T0GRTD1R';
           !isSheltie && (
             <nav aria-label={t.footer.products}>
               <p class="footer-head">{t.footer.products}</p>
-              <a href={`${href('home', lang)}#products`}>{t.appName}</a>
-              <a href={`${href('home', lang)}#sheltie`}>Sheltie</a>
-              <a href={storeLinks(lang).appStore} target="_blank" rel="noreferrer">App Store ↗</a>
-              <a href={storeLinks(lang).googlePlay} target="_blank" rel="noreferrer">Google Play ↗</a>
+              <a href={href('peakly', lang)}>{t.appName}</a>
+              <a href={href('sheltie', lang)}>Sheltie</a>
             </nav>
           )
         }

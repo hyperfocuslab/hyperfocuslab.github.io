@@ -1,0 +1,58 @@
+---
+import { existsSync } from 'node:fs';
+import Base from '../layouts/Base.astro';
+import AppShot from './AppShot.astro';
+import { sheltieLinks, ui, type Lang } from '../i18n';
+
+interface Props {
+  lang: 'ko' | 'en';
+}
+const { lang } = Astro.props;
+const sheltie = ui[lang].home.sheltie;
+// Sheltie has ko and en captures only (public/assets/sheltie/{ko,en}-{shot}.webp).
+const sheltieRows = sheltie.rows.filter((row) => existsSync(`public/assets/sheltie/${lang}-${row.shot}.webp`));
+const sheltieLinkSet = sheltieLinks(lang);
+---
+
+<Base lang={lang} page="sheltie" product="sheltie" title={sheltie.title} description={sheltie.lead}>
+  <section class="section" id="sheltie">
+    <div class="wrap">
+      <div class="p-intro">
+        <div class="product-name">
+          <img class="app-icon" src="/assets/sheltie-icon.webp" alt="" width="72" height="72" loading="lazy" />
+          <div>
+            <h1 class="h2">Sheltie</h1>
+            <p class="muted">{sheltie.tagline}</p>
+          </div>
+        </div>
+        <p class="lead">{sheltie.lead}</p>
+        <div class="actions store">
+          <a class="btn" href={sheltieLinkSet.appStore} target="_blank" rel="noreferrer">App Store ↗</a>
+          <a class="btn btn-ghost" href={sheltieLinkSet.github} target="_blank" rel="noreferrer">GitHub ↗</a>
+        </div>
+      </div>
+
+      <div class="rows-feature">
+        {
+          sheltieRows.map((row, index) => (
+            <div class:list={['feature-row', { flip: index % 2 === 1 }]}>
+              <div class="feature-copy">
+                <p class="label">{row.label}</p>
+                <h3 class="h2">{row.title}</h3>
+                <p class="lead">{row.body}</p>
+              </div>
+              <div class="feature-visual">
+                <AppShot src={`/assets/sheltie/${lang}-${row.shot}.webp`} alt={row.alt} lang={lang} />
+              </div>
+            </div>
+          ))
+        }
+      </div>
+
+      <h3 class="label p-sub">{sheltie.agentsLabel}</h3>
+      <p class="lead">{sheltie.agents}</p>
+      <p class="row-note p-req">{sheltie.requirements}</p>
+    </div>
+  </section>
+
+</Base>
