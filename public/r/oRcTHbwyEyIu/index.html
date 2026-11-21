@@ -658,6 +658,37 @@ details.adv[open] > summary::before { transform: rotate(45deg); }
 /* 일본어·번체는 낱말 사이 띄어쓰기가 없어 keep-all이면 문장부호에서만 끊긴다 */
 :lang(ja) :is(h1, h2, .rep-title, .legal p, .legal li, .pay-agree), :lang(zh-Hant) :is(h1, h2, .rep-title, .legal p, .legal li, .pay-agree) { word-break: normal; line-break: strict; }
 
+/* 넓은 화면(PC). 390px 모바일은 위 규칙 그대로. 읽기 폭 680px, 입력 폼 560px */
+@media screen and (min-width: 1024px) {
+  .top, main, .foot { max-width: 720px; }
+  .admin main, .admin .top { max-width: 1100px; }
+  .report, .preview, p.body, ol.glance li { font-size: 18px; }
+  .lede { font-size: 17px; }
+  .legal p, .legal li { font-size: 16px; }
+  .legal h2 { font-size: 19px; }
+  .form, .legal-meta { max-width: 560px; }
+  .pillars .c { font-size: 32px; }
+  .pillars th, .pillars td { padding: 14px 2px; }
+  .pillars .rd { font-size: 13px; }
+  .ox-fig { max-width: 500px; }
+  ol.dw li { flex: 1 1 62px; min-width: 62px; }
+  ol.dw li.rowlab { flex: 0 0 56px; min-width: 0; }
+  ol.dw .age { font-size: 11px; letter-spacing: -0.02em; white-space: nowrap; }
+  .strip { margin-left: 0; margin-right: 0; }
+  .strip table { margin: 0; width: 100%; }
+  .strip td, .strip th { width: auto; min-width: 62px; }
+  .scroll-hint { display: none; }
+  .tl-col { height: 88px; }
+  .tl-n, .tl-m { font-size: 13px; }
+}
+
+/* 1100px 이상 리포트 화면: 바로 가기 줄을 본문 왼쪽 열의 고정 목차로. 폭을 0으로 만든 float라 본문 줄바꿈에 영향이 없다 */
+@media screen and (min-width: 1100px) {
+  .jump { float: left; position: sticky; top: 28px; flex-direction: column; align-items: flex-start; gap: 2px; overflow: visible; width: 160px; margin: 0 32px 0 -192px; padding: 0; }
+  .jump-chip { padding: 5px 0 5px 14px; border-left: 1px solid var(--line); text-decoration: none; font-size: 15px; line-height: 1.4; text-align: left; white-space: normal; border-radius: 0; margin-left: 0; }
+  .jump-chip[aria-current="true"] { color: var(--text); border-left-color: var(--text); font-weight: 600; }
+}
+
 body { background: var(--bg); color: var(--text); }
 </style>
 </head>
