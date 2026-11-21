@@ -18,6 +18,13 @@ export function storeLinks(lang: Lang) {
   };
 }
 
+export function sheltieLinks(lang: Lang) {
+  return {
+    appStore: `https://apps.apple.com/${APP_STORE_COUNTRY[lang]}app/id6837271201?ct=website-${lang}&mt=8`,
+    github: 'https://github.com/hyperfocuslab/sheltie',
+  };
+}
+
 const PREFIX: Record<Lang, string> = { ko: '', en: '/en', ja: '/ja', 'zh-Hant': '/zh-Hant' };
 // The root home is English. Peakly documents keep PREFIX: the apps and stores link to those URLs.
 const HOME: Record<Lang, string> = { ko: '/ko/', en: '/', ja: '/ja/', 'zh-Hant': '/zh-Hant/' };
@@ -33,8 +40,8 @@ export function href(page: Page, lang: Lang): string {
   return `${PREFIX[lang]}/peakly/${page}/`;
 }
 
-// Sheltie (iPhone companion for coding agents) is not on the home page yet. It has only
-// support and privacy pages, in ko and en, under /sheltie/.
+// Sheltie (iPhone companion for coding agents) is the second product on the home page (#sheltie).
+// Its support and privacy pages exist in ko and en only, under /sheltie/.
 export type Product = 'peakly' | 'sheltie';
 export const SHELTIE_LANGS = ['ko', 'en'] as const;
 export const SHELTIE_DOCS = ['support', 'privacy'] as const;
@@ -63,8 +70,8 @@ export const ui = {
     docs: { privacy: '개인정보처리방침', terms: '서비스 이용약관', support: '고객지원' },
     footer: { products: '제품', language: '언어', legal: '© Hyperfocus Lab · 대표 이예준' },
     home: {
-      title: '피클리 | ADHD 복약 기록 앱',
-      description: '복용 시각을 기록하면 하루 동안의 예상 약효 곡선을 그려 줍니다. 기분과 목표, 할 일도 같은 앱에서 기록합니다. iPhone · iPad · Android.',
+      title: 'Hyperfocus Lab | 피클리 · Sheltie',
+      description: '피클리는 복용 시각을 기록하면 하루 동안의 예상 약효 곡선을 그려 주는 ADHD 복약 기록 앱입니다. Sheltie는 PC의 코딩 에이전트가 멈추면 iPhone 잠금화면에서 바로 허용하는 앱입니다.',
       products: {
         title: '제품',
         facts: [
@@ -72,6 +79,19 @@ export const ui = {
           ['언어', '한국어 · English · 日本語'],
         ],
         more: '피클리 페이지로',
+      },
+      sheltie: {
+        tagline: '코딩 에이전트 승인 앱',
+        lead: 'PC에서 돌리는 코딩 에이전트가 권한이나 질문에서 멈추면 iPhone으로 알림이 옵니다. 잠금화면에서 바로 허용하거나 거부하고, 앱에서 대화를 읽고 새 작업을 시작합니다. 무료이고 PC 쪽 서버는 오픈소스입니다.',
+        rows: [
+            { shot: 'lock', label: '잠금화면', title: '앱을 열지 않고 답합니다', body: '알림을 길게 누르면 허용, 이 세션 동안 허용, 거부가 나옵니다. 답하기 직전에 터미널 메뉴가 그대로인지 다시 확인합니다.', alt: '잠금화면 알림의 허용·거부 메뉴' },
+            { shot: 'list', label: '목록', title: '막힌 에이전트가 맨 위에', body: 'PC별, 폴더별로 모든 세션을 한 목록에서 봅니다. 무엇을 기다리는지, 몇 분째인지 같이 보입니다.', alt: '에이전트 세션 목록' },
+            { shot: 'question', label: '질문', title: '선택지를 고르거나 직접 적습니다', body: '에이전트가 묻는 질문, 계획 승인, 여러 질문을 한 번에 묻는 화면도 카드로 답합니다.', alt: '질문 선택지 카드' },
+            { shot: 'chat', label: '대화', title: '폰에서 이어서 일합니다', body: '지금까지의 대화를 읽고 메시지를 보냅니다. 폴더를 골라 새 에이전트를 시작할 수도 있습니다.', alt: '에이전트와의 대화 화면' },
+        ],
+        agentsLabel: '지원 에이전트',
+        agents: 'Claude Code · Codex · Gemini CLI · Qwen Code · OpenCode · Grok · GitHub Copilot CLI · Cursor Agent · Amp',
+        requirements: 'herdr-core에서 에이전트를 돌리는 Mac 또는 Windows PC와 Tailscale. 설치는 PC에서 명령 한 줄과 QR 스캔입니다.',
       },
       peakly: {
         tagline: 'ADHD 복약 기록 앱',
@@ -145,8 +165,8 @@ export const ui = {
     docs: { privacy: 'Privacy Policy', terms: 'Terms of Service', support: 'Support' },
     footer: { products: 'Products', language: 'Language', legal: '© Hyperfocus Lab · Representative: Yejun Lee' },
     home: {
-      title: 'Peakly | ADHD medication tracker',
-      description: "Log when you take your medication and Peakly draws the day's estimated effect curve. Mood, goals, and to-dos are in the same app. iPhone, iPad, Android.",
+      title: 'Hyperfocus Lab | Peakly · Sheltie',
+      description: "Peakly is an ADHD medication tracker that draws the day's estimated effect curve from your dose times. Sheltie lets you approve coding agents on your computer from the iPhone Lock Screen.",
       products: {
         title: 'Products',
         facts: [
@@ -154,6 +174,19 @@ export const ui = {
           ['Languages', '한국어 · English · 日本語'],
         ],
         more: 'Go to Peakly',
+      },
+      sheltie: {
+        tagline: 'Approve coding agents from your iPhone',
+        lead: 'When a coding agent on your computer stops for a permission or a question, your iPhone gets a notification. Allow or deny right from the Lock Screen, read the conversation, and start new tasks from the app. Free, with an open-source server.',
+        rows: [
+            { shot: 'lock', label: 'Lock Screen', title: 'Answer without opening the app', body: 'Long-press the notification for Allow, Allow for this session, or Deny. Right before answering, Sheltie checks the terminal menu hasn\'t changed.', alt: 'Allow and deny menu on a Lock Screen notification' },
+            { shot: 'list', label: 'List', title: 'Stuck agents on top', body: 'Every session from every computer and folder in one list, with what it\'s waiting for and for how long.', alt: 'List of agent sessions' },
+            { shot: 'question', label: 'Questions', title: 'Pick an option or type your own', body: 'Answer agent questions, plan approvals, and multi-question forms as cards.', alt: 'Question card with options' },
+            { shot: 'chat', label: 'Conversation', title: 'Keep working from your phone', body: 'Read the conversation so far and send messages. Pick a folder to start a new agent.', alt: 'Conversation with an agent' },
+        ],
+        agentsLabel: 'Supported agents',
+        agents: 'Claude Code · Codex · Gemini CLI · Qwen Code · OpenCode · Grok · GitHub Copilot CLI · Cursor Agent · Amp',
+        requirements: 'A Mac or Windows PC running agents in herdr-core, plus Tailscale. Setup is one command on the computer and a QR scan.',
       },
       peakly: {
         tagline: 'ADHD medication tracker',
@@ -227,7 +260,7 @@ export const ui = {
     docs: { privacy: 'プライバシーポリシー', terms: '利用規約', support: 'サポート' },
     footer: { products: 'プロダクト', language: '言語', legal: '© Hyperfocus Lab · 代表 Yejun Lee' },
     home: {
-      title: 'ピークリー | ADHDの服薬記録アプリ',
+      title: 'Hyperfocus Lab | ピークリー · Sheltie',
       description: '服用時刻を記録すると、1日の作用の予測グラフを表示します。気分や目標、タスクも同じアプリで記録できます。iPhone・iPad・Android対応。',
       products: {
         title: 'プロダクト',
@@ -236,6 +269,19 @@ export const ui = {
           ['言語', '한국어 · English · 日本語'],
         ],
         more: 'ピークリーのページへ',
+      },
+      sheltie: {
+        tagline: 'Approve coding agents from your iPhone',
+        lead: 'When a coding agent on your computer stops for a permission or a question, your iPhone gets a notification. Allow or deny right from the Lock Screen, read the conversation, and start new tasks from the app. Free, with an open-source server.',
+        rows: [
+            { shot: 'lock', label: 'Lock Screen', title: 'Answer without opening the app', body: 'Long-press the notification for Allow, Allow for this session, or Deny. Right before answering, Sheltie checks the terminal menu hasn\'t changed.', alt: 'Allow and deny menu on a Lock Screen notification' },
+            { shot: 'list', label: 'List', title: 'Stuck agents on top', body: 'Every session from every computer and folder in one list, with what it\'s waiting for and for how long.', alt: 'List of agent sessions' },
+            { shot: 'question', label: 'Questions', title: 'Pick an option or type your own', body: 'Answer agent questions, plan approvals, and multi-question forms as cards.', alt: 'Question card with options' },
+            { shot: 'chat', label: 'Conversation', title: 'Keep working from your phone', body: 'Read the conversation so far and send messages. Pick a folder to start a new agent.', alt: 'Conversation with an agent' },
+        ],
+        agentsLabel: 'Supported agents',
+        agents: 'Claude Code · Codex · Gemini CLI · Qwen Code · OpenCode · Grok · GitHub Copilot CLI · Cursor Agent · Amp',
+        requirements: 'A Mac or Windows PC running agents in herdr-core, plus Tailscale. Setup is one command on the computer and a QR scan.',
       },
       peakly: {
         tagline: 'ADHDの服薬記録アプリ',
@@ -309,7 +355,7 @@ export const ui = {
     docs: { privacy: '隱私權政策', terms: '服務條款', support: '客戶支援' },
     footer: { products: '產品', language: '語言', legal: '© Hyperfocus Lab · 代表 Yejun Lee' },
     home: {
-      title: 'Peakly | ADHD 服藥紀錄 App',
+      title: 'Hyperfocus Lab | Peakly · Sheltie',
       description: '記錄服藥時間，Peakly 就會畫出一天中的預估藥效曲線。心情、目標與待辦事項也能在同一個 App 裡記錄。支援 iPhone、iPad、Android。',
       products: {
         title: '產品',
@@ -318,6 +364,19 @@ export const ui = {
           ['語言', '한국어 · English · 日本語 · 繁體中文'],
         ],
         more: '前往 Peakly 頁面',
+      },
+      sheltie: {
+        tagline: 'Approve coding agents from your iPhone',
+        lead: 'When a coding agent on your computer stops for a permission or a question, your iPhone gets a notification. Allow or deny right from the Lock Screen, read the conversation, and start new tasks from the app. Free, with an open-source server.',
+        rows: [
+            { shot: 'lock', label: 'Lock Screen', title: 'Answer without opening the app', body: 'Long-press the notification for Allow, Allow for this session, or Deny. Right before answering, Sheltie checks the terminal menu hasn\'t changed.', alt: 'Allow and deny menu on a Lock Screen notification' },
+            { shot: 'list', label: 'List', title: 'Stuck agents on top', body: 'Every session from every computer and folder in one list, with what it\'s waiting for and for how long.', alt: 'List of agent sessions' },
+            { shot: 'question', label: 'Questions', title: 'Pick an option or type your own', body: 'Answer agent questions, plan approvals, and multi-question forms as cards.', alt: 'Question card with options' },
+            { shot: 'chat', label: 'Conversation', title: 'Keep working from your phone', body: 'Read the conversation so far and send messages. Pick a folder to start a new agent.', alt: 'Conversation with an agent' },
+        ],
+        agentsLabel: 'Supported agents',
+        agents: 'Claude Code · Codex · Gemini CLI · Qwen Code · OpenCode · Grok · GitHub Copilot CLI · Cursor Agent · Amp',
+        requirements: 'A Mac or Windows PC running agents in herdr-core, plus Tailscale. Setup is one command on the computer and a QR scan.',
       },
       peakly: {
         tagline: 'ADHD 服藥紀錄 App',

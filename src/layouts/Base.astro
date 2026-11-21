@@ -59,7 +59,7 @@ const GA_ID = 'G-96T0GRTD1R';
     {langs.map((l) => <link rel="alternate" hreflang={l} href={SITE + pageHref(page, l)} />)}
     <link rel="alternate" hreflang="x-default" href={SITE + pageHref(page, 'en')} />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content={isSheltie ? 'Sheltie' : t.appName} />
+    <meta property="og:site_name" content={isSheltie ? 'Sheltie' : page === 'home' ? 'Hyperfocus Lab' : t.appName} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
@@ -153,6 +153,7 @@ const GA_ID = 'G-96T0GRTD1R';
             <nav aria-label={t.footer.products}>
               <p class="footer-head">{t.footer.products}</p>
               <a href={`${href('home', lang)}#products`}>{t.appName}</a>
+              <a href={`${href('home', lang)}#sheltie`}>Sheltie</a>
               <a href={storeLinks(lang).appStore} target="_blank" rel="noreferrer">App Store ↗</a>
               <a href={storeLinks(lang).googlePlay} target="_blank" rel="noreferrer">Google Play ↗</a>
             </nav>
