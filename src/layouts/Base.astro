@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css';
 import Logo from '../components/Logo.astro';
-import { EMAIL, LANGS, LANG_CODE, LANG_LABEL, SHELTIE_LANGS, SITE, href, sheltieHref, ui, type Lang, type Page, type Product } from '../i18n';
+import { EMAIL, GAME_URL, LANGS, LANG_CODE, LANG_LABEL, SHELTIE_LANGS, SITE, href, sheltieHref, ui, type Lang, type Page, type Product } from '../i18n';
 
 interface Props {
   lang: Lang;
@@ -157,6 +157,7 @@ const GA_ID = 'G-96T0GRTD1R';
               <p class="footer-head">{t.footer.products}</p>
               <a href={href('peakly', lang)}>{t.appName}</a>
               <a href={href('sheltie', lang)}>Sheltie</a>
+              <a href={GAME_URL} target="_blank" rel="noreferrer">DEAD DISTRICT</a>
             </nav>
           )
         }

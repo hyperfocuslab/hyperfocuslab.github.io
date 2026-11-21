@@ -1176,3 +1176,16 @@ main > .section:first-child {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+
+/* Landscape game capture (DEAD DISTRICT): no device frame, the frame is the game itself. */
+.game-shot {
+  display: block;
+  width: 100%;
+}
+
+.game-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
