@@ -15,6 +15,8 @@ interface Props {
 const { lang, page, title, description, product = 'peakly' } = Astro.props;
 const t = ui[lang];
 const isSheltie = product === 'sheltie';
+// Sheltie documents exist in ko and en only; other languages link to the English ones.
+const sheltieLang = (SHELTIE_LANGS as readonly string[]).includes(lang) ? (lang as 'ko' | 'en') : 'en';
 const langs: readonly Lang[] = isSheltie ? SHELTIE_LANGS : LANGS;
 const pageHref = (p: Page, l: Lang) =>
   isSheltie ? sheltieHref(p === 'sheltie' ? 'product' : (p as 'support' | 'privacy'), l) : href(p, l);
@@ -164,6 +166,15 @@ const GA_ID = 'G-96T0GRTD1R';
           <a href={pageHref('privacy', lang)}>{t.docs.privacy}</a>
           {!isSheltie && <a href={href('terms', lang)}>{t.docs.terms}</a>}
         </nav>
+        {
+          !isSheltie && (
+            <nav aria-label="Sheltie">
+              <p class="footer-head">Sheltie</p>
+              <a href={sheltieHref('support', sheltieLang)}>{t.docs.support}</a>
+              <a href={sheltieHref('privacy', sheltieLang)}>{t.docs.privacy}</a>
+            </nav>
+          )
+        }
         <nav aria-label={t.footer.language}>
           <p class="footer-head">{t.footer.language}</p>
           {
