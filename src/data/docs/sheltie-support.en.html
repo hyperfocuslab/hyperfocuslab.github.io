@@ -1,31 +1,34 @@
-<p class="intro">A free app that lets you answer a stopped Claude Code agent from your iPhone Lock Screen. The agent runs on your Mac, on top of herdr-core.</p>
+<p class="intro">A free app that lets you answer a stopped Claude Code agent from your iPhone Lock Screen. The agent runs on your Mac or Windows PC, on top of herdr-core.</p>
       <section aria-labelledby="needs">
         <h2 id="needs">What you need</h2>
         <ul>
-          <li>A Mac running Claude Code inside herdr-core</li>
-          <li>Tailscale on both the Mac and the iPhone</li>
-          <li>The Sheltie server, installed on the Mac</li>
+          <li>A Mac or Windows PC running Claude Code inside herdr-core</li>
+          <li>Tailscale on both the computer and the iPhone</li>
+          <li>The Sheltie server, installed on the computer</li>
         </ul>
       </section>
       <section aria-labelledby="connect">
         <h2 id="connect">Connect</h2>
         <ol>
-          <li>Run the install command in a terminal on your Mac.</li>
+          <li>Run the install command in Terminal on your Mac or in PowerShell on Windows.</li>
           <li>Scan the QR code the installer shows with your iPhone camera.</li>
           <li>When Sheltie opens, allow notifications.</li>
         </ol>
         <p>Install command (Mac Terminal):</p>
         <pre class="cmd"><code>curl -fsSL https://raw.githubusercontent.com/hyperfocuslab/sheltie/main/install.sh | sh</code></pre>
-        <p>Requires macOS, python3, herdr-core (<code>hc</code>) and Tailscale. To show the QR code again, run <code>python3 ~/.local/share/herdr-remote/herdr_remote.py pair</code>. To uninstall, end the same command with <code>| sh -s -- --uninstall</code>. Source: <a href="https://github.com/hyperfocuslab/sheltie">github.com/hyperfocuslab/sheltie</a> (MIT).</p>
+        <p>Requires macOS, python3, herdr-core (<code>hc</code>) and Tailscale. To show the QR code again, run <code>python3 ~/.local/share/herdr-remote/herdr_remote.py pair</code>. To uninstall, end the same command with <code>| sh -s -- --uninstall</code>. </p>
+        <p>Install command (Windows PowerShell, not as administrator):</p>
+        <pre class="cmd"><code>irm https://raw.githubusercontent.com/hyperfocuslab/sheltie/main/install.ps1 | iex</code></pre>
+        <p>Requires Windows, Python 3.9+, herdr-core (<code>hc</code>) and Tailscale. The server starts at sign-in through Task Scheduler. To show the QR code again, run <code>python "$env:LOCALAPPDATA\herdr-remote\herdr_remote.py" pair</code>. To uninstall, run <code>$env:HERDR_REMOTE_UNINSTALL=1; irm https://raw.githubusercontent.com/hyperfocuslab/sheltie/main/install.ps1 | iex</code>. Source: <a href="https://github.com/hyperfocuslab/sheltie">github.com/hyperfocuslab/sheltie</a> (MIT).</p>
       </section>
       <section aria-labelledby="faq">
         <h2 id="faq">Common questions</h2>
         <h3>Notifications are not arriving.</h3>
-        <p>Check that notifications are on in iPhone Settings → Notifications → Sheltie. Then check that your Mac is on and the Sheltie server is running.</p>
-        <h3>Does it work away from my Mac?</h3>
-        <p>Yes, anywhere, as long as the Mac and the iPhone are on the same Tailscale network.</p>
+        <p>Check that notifications are on in iPhone Settings → Notifications → Sheltie. Then check that your computer is on and the Sheltie server is running.</p>
+        <h3>Does it work away from home?</h3>
+        <p>Yes, anywhere, as long as the computer and the iPhone are on the same Tailscale network.</p>
         <h3>Where does my data go?</h3>
-        <p>Conversations, prompts and terminal screens travel only between your Mac and your iPhone, over Tailscale. Only notifications pass through us: the notification (terminal name and a short status line) and your device push token go through our relay on Cloudflare straight to Apple, and are not stored or logged. There is no account and no analytics. Details are in the <a href="/en/sheltie/privacy/">Privacy Policy</a>.</p>
+        <p>Conversations, prompts and terminal screens travel only between your computer and your iPhone, over Tailscale. Only notifications pass through us: the notification (terminal name and a short status line) and your device push token go through our relay on Cloudflare straight to Apple, and are not stored or logged. There is no account and no analytics. Details are in the <a href="/en/sheltie/privacy/">Privacy Policy</a>.</p>
       </section>
       <section aria-labelledby="contact">
         <h2 id="contact">Contact</h2>
