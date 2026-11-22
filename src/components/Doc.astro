@@ -1,10 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
-import { PRODUCT_NAME, ui, type Lang, type Product } from '../i18n';
+import { HARUBOX_UI, PRODUCT_NAME, haruboxName, ui, type HaruboxLang, type Lang, type Product } from '../i18n';
 
 interface Props {
   doc: 'privacy' | 'terms' | 'support';
-  lang: Lang;
+  lang: Lang | HaruboxLang;
   product?: Product;
 }
 const { doc, lang, product = 'peakly' } = Astro.props;
@@ -19,12 +19,17 @@ const metas = import.meta.glob<{ title: string; description: string; heading: st
 });
 const body = bodies[`../data/docs/${key}.${lang}.html`];
 const meta = metas[`../data/docs/${key}.${lang}.json`];
+// Harubox has no terms page and eight languages of its own.
+const label =
+  product === 'harubox'
+    ? `${haruboxName(lang as HaruboxLang)} · ${HARUBOX_UI[lang as HaruboxLang].docs[doc as 'privacy' | 'support']}`
+    : `${product === 'peakly' ? ui[lang as Lang].appName : PRODUCT_NAME[product]} · ${ui[lang as Lang].docs[doc]}`;
 ---
 
 <Base lang={lang} page={doc} product={product} title={meta.title} description={meta.description}>
   <article class="wrap doc">
     <header class="doc-head">
-      <p class="label">{product === 'peakly' ? ui[lang].appName : PRODUCT_NAME[product]} · {ui[lang].docs[doc]}</p>
+      <p class="label">{label}</p>
       <h1>{meta.heading}</h1>
     </header>
     <div class="prose" set:html={body} />

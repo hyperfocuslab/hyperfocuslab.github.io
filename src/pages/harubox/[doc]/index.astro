@@ -1,0 +1,11 @@
+---
+import Doc from '../../../components/Doc.astro';
+import { HARUBOX_DOCS } from '../../../i18n';
+
+export function getStaticPaths() {
+  return HARUBOX_DOCS.map((doc) => ({ params: { doc } }));
+}
+const doc = Astro.params.doc as (typeof HARUBOX_DOCS)[number];
+---
+
+<Doc doc={doc} lang="ko" product="harubox" />

@@ -1,0 +1,13 @@
+---
+import Doc from '../../../../components/Doc.astro';
+import { HARUBOX_DOCS, HARUBOX_LANGS, type HaruboxLang } from '../../../../i18n';
+
+// Harubox languages other than ko (which lives at /harubox/).
+export function getStaticPaths() {
+  return HARUBOX_LANGS.filter((lang) => lang !== 'ko').flatMap((lang) => HARUBOX_DOCS.map((doc) => ({ params: { lang, doc } })));
+}
+const lang = Astro.params.lang as HaruboxLang;
+const doc = Astro.params.doc as (typeof HARUBOX_DOCS)[number];
+---
+
+<Doc doc={doc} lang={lang} product="harubox" />

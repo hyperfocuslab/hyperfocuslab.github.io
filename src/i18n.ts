@@ -1,6 +1,6 @@
 export const LANGS = ['ko', 'en', 'ja', 'zh-Hant'] as const;
 export type Lang = (typeof LANGS)[number];
-export type Page = 'home' | 'peakly' | 'sheltie' | 'cockatoo' | 'privacy' | 'terms' | 'support';
+export type Page = 'home' | 'peakly' | 'sheltie' | 'cockatoo' | 'harubox' | 'privacy' | 'terms' | 'support';
 
 export const SITE = 'https://hyperfocuslab.app';
 export const EMAIL = 'support@hyperfocuslab.app';
@@ -54,7 +54,7 @@ export function href(page: Page, lang: Lang): string {
 
 // Sheltie (iPhone companion for coding agents) is the second product, with its own page.
 // Its product, support and privacy pages exist in ko and en only, under /sheltie/.
-export type Product = 'peakly' | 'sheltie' | 'cockatoo';
+export type Product = 'peakly' | 'sheltie' | 'cockatoo' | 'harubox';
 export const SHELTIE_LANGS = ['ko', 'en'] as const;
 export const SHELTIE_DOCS = ['support', 'privacy'] as const;
 export function sheltieHref(doc: 'product' | (typeof SHELTIE_DOCS)[number], lang: Lang): string {
@@ -68,7 +68,48 @@ export function cockatooHref(doc: 'product' | (typeof COCKATOO_DOCS)[number]): s
   return doc === 'product' ? '/cockatoo/' : `/cockatoo/${doc}/`;
 }
 // Product name shown in the header crumb, footer and document label of the non-Peakly products.
+// Harubox has a per-language name: see haruboxName.
 export const PRODUCT_NAME = { sheltie: 'Sheltie', cockatoo: '코카투' } as const;
+
+// Harubox (all-day recorder, the fourth product) has support and privacy pages only, in eight
+// languages. The site's own Lang covers four of them, so Harubox has its own language type,
+// labels, UI strings and href function. ko lives at /harubox/, the others at /<lang>/harubox/.
+export const HARUBOX_LANGS = ['ko', 'en', 'ja', 'zh-Hant', 'de', 'es', 'fr', 'pt-BR'] as const;
+export type HaruboxLang = (typeof HARUBOX_LANGS)[number];
+export const HARUBOX_DOCS = ['support', 'privacy'] as const;
+export type HaruboxDoc = (typeof HARUBOX_DOCS)[number];
+// There is no product page: the product home is the support page.
+export function haruboxHref(doc: HaruboxDoc, lang: HaruboxLang): string {
+  return `${lang === 'ko' ? '' : `/${lang}`}/harubox/${doc}/`;
+}
+export const HARUBOX_LANG_LABEL: Record<HaruboxLang, string> = {
+  ko: '한국어',
+  en: 'English',
+  ja: '日本語',
+  'zh-Hant': '繁體中文',
+  de: 'Deutsch',
+  es: 'Español',
+  fr: 'Français',
+  'pt-BR': 'Português (Brasil)',
+};
+export const HARUBOX_LANG_CODE: Record<HaruboxLang, string> = { ko: 'KO', en: 'EN', ja: 'JA', 'zh-Hant': 'ZH', de: 'DE', es: 'ES', fr: 'FR', 'pt-BR': 'PT' };
+export function haruboxName(lang: HaruboxLang): string {
+  return lang === 'ko' ? '하루박스' : 'Harubox';
+}
+// The company home exists in ko, en, ja and zh-Hant; the other languages link to the English one.
+export function haruboxHomeLang(lang: HaruboxLang): Lang {
+  return (LANGS as readonly string[]).includes(lang) ? (lang as Lang) : 'en';
+}
+export const HARUBOX_UI: Record<HaruboxLang, { nav: { contact: string; language: string; main: string }; docs: { privacy: string; support: string }; legal: string }> = {
+  ko: { nav: { contact: '문의', language: '언어 선택', main: '주요 메뉴' }, docs: { privacy: '개인정보처리방침', support: '고객지원' }, legal: '© Hyperfocus Lab · 대표 이예준' },
+  en: { nav: { contact: 'Contact', language: 'Language', main: 'Main' }, docs: { privacy: 'Privacy Policy', support: 'Support' }, legal: '© Hyperfocus Lab · Representative: Yejun Lee' },
+  ja: { nav: { contact: 'お問い合わせ', language: '言語', main: 'メインメニュー' }, docs: { privacy: 'プライバシーポリシー', support: 'サポート' }, legal: '© Hyperfocus Lab · 代表 Yejun Lee' },
+  'zh-Hant': { nav: { contact: '聯絡我們', language: '選擇語言', main: '主要選單' }, docs: { privacy: '隱私權政策', support: '客戶支援' }, legal: '© Hyperfocus Lab · 代表 Yejun Lee' },
+  de: { nav: { contact: 'Kontakt', language: 'Sprache', main: 'Hauptmenü' }, docs: { privacy: 'Datenschutzerklärung', support: 'Support' }, legal: '© Hyperfocus Lab · Vertreter: Yejun Lee' },
+  es: { nav: { contact: 'Contacto', language: 'Idioma', main: 'Menú principal' }, docs: { privacy: 'Política de privacidad', support: 'Soporte' }, legal: '© Hyperfocus Lab · Representante: Yejun Lee' },
+  fr: { nav: { contact: 'Contact', language: 'Langue', main: 'Menu principal' }, docs: { privacy: 'Politique de confidentialité', support: 'Assistance' }, legal: '© Hyperfocus Lab · Représentant : Yejun Lee' },
+  'pt-BR': { nav: { contact: 'Contato', language: 'Idioma', main: 'Menu principal' }, docs: { privacy: 'Política de Privacidade', support: 'Suporte' }, legal: '© Hyperfocus Lab · Representante: Yejun Lee' },
+};
 
 // File names the previous Peakly site used (/privacy-en.html). They are kept
 // as redirects so old store and in-app links can be pointed here later.
