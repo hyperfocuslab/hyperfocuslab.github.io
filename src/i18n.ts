@@ -64,8 +64,8 @@ export function legacySlugs(): { slug: string; to: string }[] {
   return [...docs, { slug: 'index-en', to: href('home', 'en') }, { slug: 'index-ja', to: href('home', 'ja') }];
 }
 
-// DEAD DISTRICT is a browser game hosted on Cloudflare (zombie-web server/site); /dead-district/ redirects there.
-export const GAME_URL = 'https://dead-district.hyperfocuslab.app/';
+// DEAD DISTRICT is served from its own repository's Pages site (hyperfocuslab/dead-district); dead-district.hyperfocuslab.app redirects here.
+export const GAME_URL = '/dead-district/';
 
 export const LANG_LABEL: Record<Lang, string> = { ko: '한국어', en: 'English', ja: '日本語', 'zh-Hant': '繁體中文' };
 // Short code shown in the header switch.
