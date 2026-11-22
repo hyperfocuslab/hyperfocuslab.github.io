@@ -3,7 +3,7 @@ import { existsSync } from 'node:fs';
 import Base from '../layouts/Base.astro';
 import AppShot from './AppShot.astro';
 import StoreBadges from './StoreBadges.astro';
-import { GAME_URL, href, sheltieLinks, ui, type Lang } from '../i18n';
+import { GAME_URL, haruboxHref, haruboxName, href, sheltieLinks, ui, type Lang } from '../i18n';
 
 interface Props {
   lang: Lang;
@@ -77,6 +77,36 @@ const sheltieLinkSet = sheltieLinks(lang);
         </div>
         <div class="feature-visual">
           <AppShot src={`/assets/sheltie/${sheltieLang}-question.webp`} alt={t.sheltie.rows[2].alt} lang={lang} />
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="wrap">
+      <div class="feature-row">
+        <div class="feature-copy">
+          <div class="product-name">
+            <img class="app-icon" src="/assets/cockatoo-icon.webp" alt="" width="72" height="72" loading="lazy" />
+            <div>
+              <h2 class="h2">{lang === 'ko' ? '코카투' : 'Cockatoo'}</h2>
+              <p class="muted">{t.cockatoo.tagline}</p>
+            </div>
+          </div>
+          <p class="lead">{t.cockatoo.lead}</p>
+          <p class="muted">{t.soon}</p>
+          <a class="arrow-link" href={href('cockatoo', lang)}>{t.more}</a>
+        </div>
+        <div class="feature-copy">
+          <div class="product-name">
+            <img class="app-icon" src="/assets/harubox-icon.webp" alt="" width="72" height="72" loading="lazy" />
+            <div>
+              <h2 class="h2">{haruboxName(lang)}</h2>
+              <p class="muted">{t.harubox.tagline}</p>
+            </div>
+          </div>
+          <p class="lead">{t.harubox.lead}</p>
+          <p class="muted">{t.soon}</p>
+          <a class="arrow-link" href={haruboxHref('support', lang)}>{ui[lang].docs.support} →</a>
         </div>
       </div>
     </div>

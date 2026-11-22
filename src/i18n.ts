@@ -287,6 +287,15 @@ export const ui = {
           note: '그룹에 먼저 가입해야 테스트 참여 링크가 열립니다. 가입자 이메일은 개발자만 봅니다. 정식 출시하려면 테스터 12명이 14일 동안 설치해 두어야 합니다.',
         },
       },
+      soon: 'App Store 출시 준비 중',
+      cockatoo: {
+        tagline: '말하면 고쳐 주고, 다시 말해 익히기',
+        lead: 'AI와 영어로 대화하면 어색한 문장은 자연스럽게 고쳐 주고, 고친 문장을 따라 말하면 틀린 발음을 단어별로 짚어 줍니다. 35개 상황에서 연습하고, 녹음은 기기 밖으로 나가지 않습니다.',
+      },
+      harubox: {
+        tagline: '종일 녹음·받아쓰기·요약',
+        lead: '낮말도 밤말도 하루박스가 들어 둬요. 녹음 버튼을 한 번 누르면 화면을 꺼도 계속 녹음하고, 받아쓰기·화자 분리·요약은 아이폰 안에서 합니다. 녹음 시간 한도가 없습니다.',
+      },
       game: {
         tagline: '브라우저 좀비 슈터',
         lead: '폐허가 된 도시 블록에서 연구물질을 회수해 헬기 탈출 지점까지 가는 3인칭 슈팅 게임입니다. 소총·산탄총·권총·도끼와 화염병·파이프 폭탄을 쓰고, 총소리는 좀비를 불러옵니다. 탈출하면 처치 수로 온라인 랭킹에 오릅니다. 설치 없이 PC(키보드·마우스)와 폰(터치) 브라우저에서 바로 실행됩니다.',
@@ -398,6 +407,15 @@ export const ui = {
           steps: ['Join the Google Group', 'Opt in to the test', 'Install from Google Play'],
           note: 'Join the group first, or the opt-in link will not open. Only the developer sees member emails. A public release needs 12 testers keeping the app installed for 14 days.',
         },
+      },
+      soon: 'Coming soon to the App Store',
+      cockatoo: {
+        tagline: 'Conversation & pronunciation',
+        lead: 'Talk with an AI in English: it rewrites awkward sentences into natural ones, and when you read the corrected sentence aloud it marks mispronounced words one by one. 35 practice situations, and recordings never leave your iPhone.',
+      },
+      harubox: {
+        tagline: 'All-day recorder with on-device transcription',
+        lead: 'Press record once and it keeps going with the screen off. Transcripts, speaker labels and summaries are made on your iPhone, with no time limit on recording.',
       },
       game: {
         tagline: 'Browser zombie shooter',
@@ -511,6 +529,15 @@ export const ui = {
           note: 'Join the group first, or the opt-in link will not open. Only the developer sees member emails. A public release needs 12 testers keeping the app installed for 14 days.',
         },
       },
+      soon: 'App Store 公開準備中',
+      cockatoo: {
+        tagline: '話すと添削、言い直して身につく',
+        lead: 'AIと英語で会話すると、不自然な文は自然な英語に添削され、添削された文を読み上げると間違えた発音を単語ごとに示します。35の場面で練習でき、録音は端末の外に出ません。',
+      },
+      harubox: {
+        tagline: '終日録音・文字起こし・要約',
+        lead: '録音ボタンを一度押せば、画面を消しても録音を続けます。文字起こし、話者分離、要約はiPhone内で処理し、録音時間の上限はありません。',
+      },
       game: {
         tagline: 'PCブラウザのゾンビシューター',
         lead: '廃墟になった街区でゾンビをかわしながら脱出地点を目指す三人称シューティングです。ライフル・ショットガン・ピストル・斧、火炎瓶とパイプ爆弾を使い、銃声はゾンビを呼び寄せます。インストール不要でブラウザで動きます。キーボードとマウスが必要です。',
@@ -622,6 +649,15 @@ export const ui = {
           steps: ['Join the Google Group', 'Opt in to the test', 'Install from Google Play'],
           note: 'Join the group first, or the opt-in link will not open. Only the developer sees member emails. A public release needs 12 testers keeping the app installed for 14 days.',
         },
+      },
+      soon: 'App Store 準備上架中',
+      cockatoo: {
+        tagline: '開口說英文，句子修正、發音逐字檢查',
+        lead: '用英文和 AI 對話，不自然的句子會改得更道地；跟著唸修正後的句子，會逐字指出唸錯的地方。35 種情境可練習，錄音不會離開手機。',
+      },
+      harubox: {
+        tagline: '全天錄音、逐字稿、摘要',
+        lead: '按一下錄音鈕，關掉螢幕也會持續錄音。逐字稿、講者辨識和摘要都在 iPhone 上完成，錄音時間沒有上限。',
       },
       game: {
         tagline: '電腦瀏覽器殭屍射擊遊戲',
