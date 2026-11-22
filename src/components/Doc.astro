@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { ui, type Lang, type Product } from '../i18n';
+import { PRODUCT_NAME, ui, type Lang, type Product } from '../i18n';
 
 interface Props {
   doc: 'privacy' | 'terms' | 'support';
@@ -8,8 +8,8 @@ interface Props {
   product?: Product;
 }
 const { doc, lang, product = 'peakly' } = Astro.props;
-// Sheltie documents sit in the same folder with a sheltie- prefix.
-const key = `${product === 'sheltie' ? 'sheltie-' : ''}${doc}`;
+// Sheltie and Cockatoo documents sit in the same folder with a product prefix.
+const key = `${product === 'peakly' ? '' : `${product}-`}${doc}`;
 
 // Body HTML is the Peakly policy text, imported verbatim from the previous site.
 const bodies = import.meta.glob<string>('../data/docs/*.html', { query: '?raw', import: 'default', eager: true });
@@ -24,7 +24,7 @@ const meta = metas[`../data/docs/${key}.${lang}.json`];
 <Base lang={lang} page={doc} product={product} title={meta.title} description={meta.description}>
   <article class="wrap doc">
     <header class="doc-head">
-      <p class="label">{product === 'sheltie' ? 'Sheltie' : ui[lang].appName} · {ui[lang].docs[doc]}</p>
+      <p class="label">{product === 'peakly' ? ui[lang].appName : PRODUCT_NAME[product]} · {ui[lang].docs[doc]}</p>
       <h1>{meta.heading}</h1>
     </header>
     <div class="prose" set:html={body} />

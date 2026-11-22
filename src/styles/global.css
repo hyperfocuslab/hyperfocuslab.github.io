@@ -877,6 +877,7 @@ main > .section:first-child {
 /* Let the first block start inside the first screen so it invites a scroll. */
 #products,
 #sheltie,
+#cockatoo,
 #company {
   padding-top: clamp(48px, 6vw, 80px);
 }

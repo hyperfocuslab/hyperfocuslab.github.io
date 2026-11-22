@@ -1,0 +1,55 @@
+---
+import { existsSync } from 'node:fs';
+import Base from '../layouts/Base.astro';
+import AppShot from './AppShot.astro';
+import { cockatooLinks, ui } from '../i18n';
+
+const lang = 'ko';
+const cockatoo = ui.ko.home.cockatoo;
+// Screenshots are drawn only when public/assets/cockatoo/ko-{shot}.webp exists.
+const rows = cockatoo.rows.filter((row) => existsSync(`public/assets/cockatoo/${lang}-${row.shot}.webp`));
+const links = cockatooLinks(lang);
+---
+
+<Base lang={lang} page="cockatoo" product="cockatoo" title={cockatoo.title} description={cockatoo.lead}>
+  <section class="section" id="cockatoo">
+    <div class="wrap">
+      <div class="p-intro">
+        <div class="product-name">
+          <img class="app-icon" src="/assets/cockatoo-icon.webp" alt="" width="72" height="72" loading="lazy" />
+          <div>
+            <h1 class="h2">코카투</h1>
+            <p class="muted">{cockatoo.tagline}</p>
+          </div>
+        </div>
+        <p class="lead">{cockatoo.lead}</p>
+        {
+          links.appStore && (
+            <div class="actions store">
+              <a class="btn" href={links.appStore} target="_blank" rel="noreferrer">App Store ↗</a>
+            </div>
+          )
+        }
+      </div>
+
+      <div class="rows-feature">
+        {
+          rows.map((row, index) => (
+            <div class:list={['feature-row', { flip: index % 2 === 1 }]}>
+              <div class="feature-copy">
+                <p class="label">{row.label}</p>
+                <h3 class="h2">{row.title}</h3>
+                <p class="lead">{row.body}</p>
+              </div>
+              <div class="feature-visual">
+                <AppShot src={`/assets/cockatoo/${lang}-${row.shot}.webp`} alt={row.alt} lang={lang} />
+              </div>
+            </div>
+          ))
+        }
+      </div>
+
+      <p class="row-note p-req">{cockatoo.requirements}</p>
+    </div>
+  </section>
+</Base>

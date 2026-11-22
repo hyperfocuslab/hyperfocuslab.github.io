@@ -1,6 +1,6 @@
 export const LANGS = ['ko', 'en', 'ja', 'zh-Hant'] as const;
 export type Lang = (typeof LANGS)[number];
-export type Page = 'home' | 'peakly' | 'sheltie' | 'privacy' | 'terms' | 'support';
+export type Page = 'home' | 'peakly' | 'sheltie' | 'cockatoo' | 'privacy' | 'terms' | 'support';
 
 export const SITE = 'https://hyperfocuslab.app';
 export const EMAIL = 'support@hyperfocuslab.app';
@@ -29,6 +29,12 @@ export function sheltieLinks(lang: Lang) {
   };
 }
 
+// Cockatoo (AI English conversation app) is not on the App Store yet: the link is empty, and
+// the product page draws the App Store button only when it has a value.
+export function cockatooLinks(_lang: Lang) {
+  return { appStore: '' };
+}
+
 const PREFIX: Record<Lang, string> = { ko: '', en: '/en', ja: '/ja', 'zh-Hant': '/zh-Hant' };
 // The root home is English. Peakly documents keep PREFIX: the apps and stores link to those URLs.
 const HOME: Record<Lang, string> = { ko: '/ko/', en: '/', ja: '/ja/', 'zh-Hant': '/zh-Hant/' };
@@ -41,18 +47,28 @@ export function href(page: Page, lang: Lang): string {
   if (page === 'home') return HOME[lang];
   // The home lists the products; each has its own page (Sheltie: ko and en only, see sheltieHref).
   if (page === 'peakly') return `${PREFIX[lang]}/peakly/`;
+  if (page === 'cockatoo') return cockatooHref('product');
   if (page === 'sheltie') return sheltieHref('product', SHELTIE_LANGS.includes(lang as 'ko' | 'en') ? (lang as 'ko' | 'en') : 'en');
   return `${PREFIX[lang]}/peakly/${page}/`;
 }
 
 // Sheltie (iPhone companion for coding agents) is the second product, with its own page.
 // Its product, support and privacy pages exist in ko and en only, under /sheltie/.
-export type Product = 'peakly' | 'sheltie';
+export type Product = 'peakly' | 'sheltie' | 'cockatoo';
 export const SHELTIE_LANGS = ['ko', 'en'] as const;
 export const SHELTIE_DOCS = ['support', 'privacy'] as const;
 export function sheltieHref(doc: 'product' | (typeof SHELTIE_DOCS)[number], lang: Lang): string {
   return doc === 'product' ? `${PREFIX[lang]}/sheltie/` : `${PREFIX[lang]}/sheltie/${doc}/`;
 }
+
+// Cockatoo (AI English conversation for Korean speakers) is the third product: Korean only, under /cockatoo/.
+export const COCKATOO_LANGS = ['ko'] as const;
+export const COCKATOO_DOCS = ['support', 'privacy'] as const;
+export function cockatooHref(doc: 'product' | (typeof COCKATOO_DOCS)[number]): string {
+  return doc === 'product' ? '/cockatoo/' : `/cockatoo/${doc}/`;
+}
+// Product name shown in the header crumb, footer and document label of the non-Peakly products.
+export const PRODUCT_NAME = { sheltie: 'Sheltie', cockatoo: '코카투' } as const;
 
 // File names the previous Peakly site used (/privacy-en.html). They are kept
 // as redirects so old store and in-app links can be pointed here later.
@@ -111,6 +127,19 @@ export const ui = {
           steps: ['구글 그룹 가입', '테스트 참여', 'Google Play에서 설치'],
           note: '그룹에 먼저 가입해야 테스트 참여 링크가 열립니다. 가입자 이메일은 개발자만 봅니다. 정식 출시하려면 테스터 12명이 14일 동안 설치해 두어야 합니다.',
         },
+      },
+      cockatoo: {
+        title: '코카투 | AI 영어회화·발음 교정',
+        tagline: '말하면 고쳐 주고, 다시 말해 익히기',
+        lead: '영어로 말할 상대가 없고, 내 발음이 어디서 틀리는지 모를 때 쓰는 앱이에요. 버튼을 누른 채 영어로 말하면 AI가 답하고, 어색한 문장은 자연스럽게 고쳐 주고, 고친 문장을 따라 말하면 틀린 발음을 단어별로 짚어 줘요. 녹음은 기기에만 저장하고 밖으로 보내지 않아요.',
+        rows: [
+          { shot: 'situations', label: '상황', title: '35개 상황에서 영어로 말해요', body: '카페 주문, 회사 스몰토크, 거래처 협상, 영어 면접, 입국 심사 같은 상황과 자유 대화. 버튼을 누르는 동안 말하고 떼면 바로 글로 받아써요.', alt: '상황 목록 화면' },
+          { shot: 'chat', label: '대화', title: '어색한 문장은 바로 고쳐 줘요', body: '내 말 아래에 더 자연스러운 문장과 한국어 설명 한 줄이 붙어요. 모르는 말은 눌러서 한국어 해석을 봐요.', alt: '내 말 아래 고친 문장이 붙은 대화 화면' },
+          { shot: 'speak', label: '따라 말하기', title: '틀린 발음을 단어별로 짚어요', body: '고친 문장을 따라 말하면 단어마다 발음을 판정해요. "this의 th를 d처럼 읽음"처럼 무엇이 틀렸는지 한국어로 짚고, 다시 말해 통과하면 표시가 바뀌어요.', alt: '발음을 단어별로 짚은 따라 말하기 화면' },
+          { shot: 'review', label: '복습', title: '고친 표현이 복습에 쌓여요', body: '고친 표현과 틀린 발음이 복습 목록에 쌓여요.', alt: '복습 목록 화면' },
+          { shot: 'habit', label: '발음 버릇', title: '자주 틀리는 소리를 횟수로 봐요', body: '"내 발음 버릇"에서 th → d 12번처럼 자주 틀리는 소리를 횟수로 봐요.', alt: '발음 버릇 상세 화면' },
+        ],
+        requirements: 'Apple Intelligence를 지원하는 iPhone, iOS 27 이상.',
       },
       game: {
         tagline: '브라우저 좀비 슈터',

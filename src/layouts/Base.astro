@@ -1,25 +1,32 @@
 ---
 import '../styles/global.css';
 import Logo from '../components/Logo.astro';
-import { EMAIL, GAME_URL, LANGS, LANG_CODE, LANG_LABEL, SHELTIE_LANGS, SITE, href, sheltieHref, ui, type Lang, type Page, type Product } from '../i18n';
+import { COCKATOO_LANGS, EMAIL, GAME_URL, LANGS, LANG_CODE, LANG_LABEL, PRODUCT_NAME, SHELTIE_LANGS, SITE, cockatooHref, href, sheltieHref, ui, type Lang, type Page, type Product } from '../i18n';
 
 interface Props {
   lang: Lang;
   page: Page;
   title: string;
   description: string;
-  // Sheltie pages (support, privacy) have their own links; the default is Peakly and the home.
+  // Sheltie and Cockatoo pages have their own links; the default is Peakly and the home.
   product?: Product;
 }
 
 const { lang, page, title, description, product = 'peakly' } = Astro.props;
 const t = ui[lang];
-const isSheltie = product === 'sheltie';
+// Every product other than Peakly has its own languages, name and links.
+const isOther = product !== 'peakly';
+const productName = product === 'peakly' ? t.appName : PRODUCT_NAME[product];
 // Sheltie documents exist in ko and en only; other languages link to the English ones.
 const sheltieLang = (SHELTIE_LANGS as readonly string[]).includes(lang) ? (lang as 'ko' | 'en') : 'en';
-const langs: readonly Lang[] = isSheltie ? SHELTIE_LANGS : LANGS;
+const langs: readonly Lang[] = product === 'cockatoo' ? COCKATOO_LANGS : isOther ? SHELTIE_LANGS : LANGS;
 const pageHref = (p: Page, l: Lang) =>
-  isSheltie ? sheltieHref(p === 'sheltie' ? 'product' : (p as 'support' | 'privacy'), l) : href(p, l);
+  product === 'cockatoo'
+    ? cockatooHref(p === 'cockatoo' ? 'product' : (p as 'support' | 'privacy'))
+    : product === 'sheltie'
+      ? sheltieHref(p === 'sheltie' ? 'product' : (p as 'support' | 'privacy'), l)
+      : href(p, l);
+const productHome = product === 'cockatoo' ? cockatooHref('product') : sheltieHref('product', lang);
 // The company home is its own section; every other page belongs to a product (Peakly or Sheltie).
 const inPeakly = page !== 'home';
 // First-visit language redirect runs only on the root home, which is English.
@@ -62,14 +69,14 @@ const GA_ID = 'G-96T0GRTD1R';
     {langs.map((l) => <link rel="alternate" hreflang={l} href={SITE + pageHref(page, l)} />)}
     <link rel="alternate" hreflang="x-default" href={SITE + pageHref(page, 'en')} />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content={isSheltie ? 'Sheltie' : page === 'home' ? 'Hyperfocus Lab' : t.appName} />
+    <meta property="og:site_name" content={isOther ? productName : page === 'home' ? 'Hyperfocus Lab' : t.appName} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <!-- Shared links preview the page's own card: the company card on the home, the app's effect-curve
          screen on Peakly pages. Bump ?v= when a card changes: KakaoTalk caches images by URL. -->
     {
-      isSheltie ? (
+      isOther ? (
         <meta name="twitter:card" content="summary" />
       ) : (
         <>
@@ -112,10 +119,10 @@ const GA_ID = 'G-96T0GRTD1R';
           inPeakly && (
             <a
               class="crumb"
-              href={isSheltie ? sheltieHref('product', lang) : href('peakly', lang)}
-              aria-current={page === 'peakly' || page === 'sheltie' ? 'page' : undefined}
+              href={isOther ? productHome : href('peakly', lang)}
+              aria-current={page === 'peakly' || page === 'sheltie' || page === 'cockatoo' ? 'page' : undefined}
             >
-              {isSheltie ? 'Sheltie' : 'Peakly'}
+              {isOther ? productName : 'Peakly'}
             </a>
           )
         }
@@ -152,7 +159,7 @@ const GA_ID = 'G-96T0GRTD1R';
           <span class="wordmark-text">Hyperfocus Lab</span>
         </a>
         {
-          !isSheltie && (
+          !isOther && (
             <nav aria-label={t.footer.products}>
               <p class="footer-head">{t.footer.products}</p>
               <a href={href('peakly', lang)}>{t.appName}</a>
@@ -161,18 +168,28 @@ const GA_ID = 'G-96T0GRTD1R';
             </nav>
           )
         }
-        <nav aria-label={isSheltie ? 'Sheltie' : t.appName}>
-          <p class="footer-head">{isSheltie ? 'Sheltie' : t.appName}</p>
+        <nav aria-label={isOther ? productName : t.appName}>
+          <p class="footer-head">{isOther ? productName : t.appName}</p>
           <a href={pageHref('support', lang)}>{t.docs.support}</a>
           <a href={pageHref('privacy', lang)}>{t.docs.privacy}</a>
-          {!isSheltie && <a href={href('terms', lang)}>{t.docs.terms}</a>}
+          {!isOther && <a href={href('terms', lang)}>{t.docs.terms}</a>}
         </nav>
         {
-          !isSheltie && (
+          !isOther && (
             <nav aria-label="Sheltie">
               <p class="footer-head">Sheltie</p>
               <a href={sheltieHref('support', sheltieLang)}>{t.docs.support}</a>
               <a href={sheltieHref('privacy', sheltieLang)}>{t.docs.privacy}</a>
+            </nav>
+          )
+        }
+        {
+          // Cockatoo is Korean only: its footer links appear on the Korean pages.
+          !isOther && lang === 'ko' && (
+            <nav aria-label={PRODUCT_NAME.cockatoo}>
+              <p class="footer-head">{PRODUCT_NAME.cockatoo}</p>
+              <a href={cockatooHref('support')}>{t.docs.support}</a>
+              <a href={cockatooHref('privacy')}>{t.docs.privacy}</a>
             </nav>
           )
         }

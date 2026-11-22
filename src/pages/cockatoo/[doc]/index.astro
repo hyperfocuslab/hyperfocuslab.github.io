@@ -1,0 +1,11 @@
+---
+import Doc from '../../../components/Doc.astro';
+import { COCKATOO_DOCS } from '../../../i18n';
+
+export function getStaticPaths() {
+  return COCKATOO_DOCS.map((doc) => ({ params: { doc } }));
+}
+const doc = Astro.params.doc as (typeof COCKATOO_DOCS)[number];
+---
+
+<Doc doc={doc} lang="ko" product="cockatoo" />
