@@ -132,7 +132,7 @@ export const COCKATOO_PAGE: Record<CockatooLang, { title: string; tagline: strin
       { shot: 'chat', label: '대화', title: '어색한 문장은 바로 고쳐 줘요', body: '내 말 아래에 더 자연스러운 문장과 내 언어로 된 설명 한 줄이 붙어요. 모르는 말은 눌러서 내 언어로 해석을 봐요.', alt: '내 말 아래 고친 문장이 붙은 대화 화면' },
       { shot: 'speak', label: '따라 말하기', title: '틀린 발음을 단어별로 짚어요', body: '고친 문장을 따라 말하면 단어마다 발음을 판정해요. "this의 th를 d처럼 읽음"처럼 무엇이 틀렸는지 내 언어로 짚고, 다시 말해 통과하면 표시가 바뀌어요.', alt: '발음을 단어별로 짚은 따라 말하기 화면' },
       { shot: 'review', label: '복습', title: '고친 표현이 복습에 쌓여요', body: '고친 표현과 틀린 발음이 복습 목록에 쌓여요.', alt: '복습 목록 화면' },
-      { shot: 'habit', label: '발음 버릇', title: '자주 틀리는 소리를 횟수로 봐요', body: '"내 발음 버릇"에서 th → d 12번처럼 자주 틀리는 소리를 횟수로 봐요.', alt: '발음 버릇 상세 화면' },
+      { shot: 'habit', label: '발음 버릇', title: '자주 틀리는 소리를 횟수로 봐요', body: '"발음 버릇"에서 th → d 12번처럼 자주 틀리는 소리를 횟수로 봐요.', alt: '발음 버릇 상세 화면' },
     ],
     requirements: 'Apple Intelligence를 지원하는 iPhone, iOS 27 이상. 설명과 해석은 iPhone 언어로 나와요.',
   },
@@ -143,7 +143,7 @@ export const COCKATOO_PAGE: Record<CockatooLang, { title: string; tagline: strin
     rows: [
       { shot: 'situations', label: 'Situations', title: 'Speak English in 35 situations', body: 'Ordering coffee, small talk at work, negotiating with a client, a job interview, passport control and free conversation. Talk while you hold the button; let go and it becomes text.', alt: 'Situation list screen' },
       { shot: 'chat', label: 'Conversation', title: 'Awkward sentences, fixed on the spot', body: 'Under what you said: a more natural sentence and a one-line explanation.', alt: 'Conversation screen with a corrected sentence under the user’s message' },
-      { shot: 'speak', label: 'Say it again', title: 'Pronunciation checked word by word', body: 'Read the corrected sentence aloud and every word is scored. It names the problem, like “th in ‘this’ said as d”, and the mark changes once you get it right.', alt: 'Say-it-again screen with mispronounced words marked' },
+      { shot: 'speak', label: 'Practice', title: 'Pronunciation checked word by word', body: 'Read the corrected sentence aloud and every word is scored. It names the problem, like “th in ‘this’ said as d”, and the mark changes once you get it right.', alt: 'Practice screen with mispronounced words marked' },
       { shot: 'review', label: 'Review', title: 'Corrections collect for review', body: 'Corrected phrases and mispronounced words collect in your review list.', alt: 'Review list screen' },
       { shot: 'habit', label: 'Pronunciation habits', title: 'See the sounds you miss most', body: '“Pronunciation habits” counts the sounds you miss most, such as th → d, 12 times.', alt: 'Pronunciation habit detail screen' },
     ],
@@ -156,7 +156,7 @@ export const COCKATOO_PAGE: Record<CockatooLang, { title: string; tagline: strin
     rows: [
       { shot: 'situations', label: '場面', title: '35の場面で英語を話す', body: 'カフェでの注文、職場の雑談、取引先との交渉、英語面接、入国審査などの場面とフリートーク。ボタンを押している間に話し、離すとすぐに文字になります。', alt: '場面一覧の画面' },
       { shot: 'chat', label: '会話', title: '不自然な文はその場で添削', body: '自分の発言の下に、より自然な文と日本語の説明が1行つきます。わからない表現はタップすると日本語訳が見られます。', alt: '発言の下に添削された文がついた会話画面' },
-      { shot: 'speak', label: '言い直す', title: '発音を単語ごとにチェック', body: '添削された文を読み上げると、単語ごとに発音を判定します。「this の th が d になっている」のように何が違うのかを示し、言い直して合格すると表示が変わります。', alt: '発音を単語ごとに示した言い直し画面' },
+      { shot: 'speak', label: 'リピート練習', title: '発音を単語ごとにチェック', body: '添削された文を読み上げると、単語ごとに発音を判定します。「this の th が d になっている」のように何が違うのかを示し、言い直して合格すると表示が変わります。', alt: '発音を単語ごとに示したリピート練習の画面' },
       { shot: 'review', label: '復習', title: '添削された表現が復習にたまる', body: '添削された表現と間違えた発音が復習リストにたまります。', alt: '復習リストの画面' },
       { shot: 'habit', label: '発音のクセ', title: 'よく間違える音を回数で確認', body: '「発音のクセ」で、th → d が12回のように、よく間違える音を回数で確認できます。', alt: '発音のクセの詳細画面' },
     ],
@@ -169,7 +169,7 @@ export const COCKATOO_PAGE: Record<CockatooLang, { title: string; tagline: strin
     rows: [
       { shot: 'situations', label: '情境', title: '在 35 個情境用英文開口說', body: '點咖啡、職場閒聊、和客戶談判、英文面試、入境審查等情境，以及自由對話。按住按鈕說話，放開就轉成文字。', alt: '情境清單畫面' },
       { shot: 'chat', label: '對話', title: '不自然的句子，當場幫你改', body: '你說的話下面，會出現更自然的句子和一行中文說明。看不懂的地方點一下就能看中文翻譯。', alt: '使用者句子下方出現修正句的對話畫面' },
-      { shot: 'speak', label: '再說一次', title: '逐字指出發音問題', body: '跟著唸修正後的句子，每個單字都會評分。像「this 的 th 唸成 d」這樣指出哪裡不對，重說通過後標示就會改變。', alt: '逐字標出發音問題的再說一次畫面' },
+      { shot: 'speak', label: '跟讀', title: '逐字指出發音問題', body: '跟著唸修正後的句子，每個單字都會評分。像「this 的 th 唸成 d」這樣指出哪裡不對，重說通過後標示就會改變。', alt: '逐字標出發音問題的跟讀畫面' },
       { shot: 'review', label: '複習', title: '修正過的說法累積成複習', body: '修正過的說法和唸錯的發音會累積在複習清單。', alt: '複習清單畫面' },
       { shot: 'habit', label: '發音習慣', title: '用次數看最常唸錯的音', body: '在「發音習慣」用次數看你最常唸錯的音，例如 th → d 12 次。', alt: '發音習慣詳細畫面' },
     ],
@@ -182,9 +182,9 @@ export const COCKATOO_PAGE: Record<CockatooLang, { title: string; tagline: strin
     rows: [
       { shot: 'situations', label: 'Situationen', title: 'Englisch sprechen in 35 Situationen', body: 'Bestellung im Café, Smalltalk im Büro, Verhandlungen mit Kunden, Vorstellungsgespräch, Passkontrolle und freies Gespräch. Sprich, solange du die Taste hältst; lass los, und es steht als Text da.', alt: 'Liste der Situationen' },
       { shot: 'chat', label: 'Gespräch', title: 'Holprige Sätze sofort verbessert', body: 'Unter deinem Satz steht eine natürlichere Version mit einer Zeile Erklärung auf Deutsch. Tippe auf Unbekanntes für die deutsche Übersetzung.', alt: 'Gespräch mit verbessertem Satz unter der eigenen Nachricht' },
-      { shot: 'speak', label: 'Nochmal sagen', title: 'Aussprache Wort für Wort geprüft', body: 'Lies den verbesserten Satz vor, und jedes Wort wird bewertet. Die App sagt, was nicht gepasst hat, etwa „th in ‚this‘ wie d gesprochen“, und die Markierung wechselt, sobald es klappt.', alt: 'Nochmal-sagen-Bildschirm mit markierten Wörtern' },
+      { shot: 'speak', label: 'Nachsprechen', title: 'Aussprache Wort für Wort geprüft', body: 'Lies den verbesserten Satz vor, und jedes Wort wird bewertet. Die App sagt, was nicht gepasst hat, etwa „th in ‚this‘ wie d gesprochen“, und die Markierung wechselt, sobald es klappt.', alt: 'Nachsprechen-Bildschirm mit markierten Wörtern' },
       { shot: 'review', label: 'Wiederholen', title: 'Verbessertes landet im Wiederholen', body: 'Verbesserte Ausdrücke und falsch ausgesprochene Wörter landen in deiner Wiederholungsliste.', alt: 'Wiederholungsliste' },
-      { shot: 'habit', label: 'Aussprachegewohnheiten', title: 'Sieh, welche Laute du oft verfehlst', body: 'Unter „Aussprachegewohnheiten“ siehst du, welche Laute du wie oft verfehlst, etwa th → d, 12-mal.', alt: 'Detailansicht einer Aussprachegewohnheit' },
+      { shot: 'habit', label: 'Aussprache-Gewohnheiten', title: 'Sieh, welche Laute du oft verfehlst', body: 'Unter „Aussprache-Gewohnheiten“ siehst du, welche Laute du wie oft verfehlst, etwa th → d, 12-mal.', alt: 'Detailansicht einer Aussprachegewohnheit' },
     ],
     requirements: 'iPhone mit Apple Intelligence, iOS 27 oder neuer. Erklärungen erscheinen in der Sprache deines iPhone.',
   },
@@ -195,7 +195,7 @@ export const COCKATOO_PAGE: Record<CockatooLang, { title: string; tagline: strin
     rows: [
       { shot: 'situations', label: 'Situaciones', title: 'Habla inglés en 35 situaciones', body: 'Pedir en una cafetería, charlar en el trabajo, negociar con un cliente, una entrevista de trabajo, el control de inmigración y conversación libre. Habla mientras mantienes pulsado el botón; al soltarlo, aparece el texto.', alt: 'Pantalla con la lista de situaciones' },
       { shot: 'chat', label: 'Conversación', title: 'Tus frases, corregidas al momento', body: 'Debajo de lo que dices aparece una frase más natural con una explicación de una línea en español. Toca lo que no entiendas para ver la traducción.', alt: 'Conversación con una frase corregida debajo del mensaje' },
-      { shot: 'speak', label: 'Repítelo', title: 'Pronunciación revisada palabra por palabra', body: 'Lee en voz alta la frase corregida y se evalúa cada palabra. Te dice qué falló, como “la th de ‘this’ suena como d”, y la marca cambia cuando lo dices bien.', alt: 'Pantalla para repetir con palabras marcadas' },
+      { shot: 'speak', label: 'Repetir', title: 'Pronunciación revisada palabra por palabra', body: 'Lee en voz alta la frase corregida y se evalúa cada palabra. Te dice qué falló, como “la th de ‘this’ suena como d”, y la marca cambia cuando lo dices bien.', alt: 'Pantalla Repetir con palabras marcadas' },
       { shot: 'review', label: 'Repaso', title: 'Lo corregido se guarda para repasar', body: 'Las expresiones corregidas y las palabras mal pronunciadas se guardan en tu lista de repaso.', alt: 'Pantalla de la lista de repaso' },
       { shot: 'habit', label: 'Hábitos de pronunciación', title: 'Los sonidos que más fallas, contados', body: 'En “Hábitos de pronunciación” ves cuántas veces fallas cada sonido, por ejemplo th → d, 12 veces.', alt: 'Detalle de un hábito de pronunciación' },
     ],
@@ -208,7 +208,7 @@ export const COCKATOO_PAGE: Record<CockatooLang, { title: string; tagline: strin
     rows: [
       { shot: 'situations', label: 'Situations', title: 'Parlez anglais dans 35 situations', body: 'Commander au café, discuter entre collègues, négocier avec un client, un entretien d’embauche, le contrôle aux frontières et la conversation libre. Parlez en maintenant le bouton ; relâchez et le texte s’affiche.', alt: 'Écran de la liste des situations' },
       { shot: 'chat', label: 'Conversation', title: 'Vos phrases corrigées sur-le-champ', body: 'Sous ce que vous dites : une version plus naturelle et une ligne d’explication en français. Touchez ce que vous ne comprenez pas pour voir la traduction.', alt: 'Conversation avec une phrase corrigée sous le message' },
-      { shot: 'speak', label: 'Redites-le', title: 'Prononciation vérifiée mot par mot', body: 'Lisez la phrase corrigée à voix haute : chaque mot est évalué. L’app indique ce qui ne va pas, par exemple « le th de “this” prononcé comme un d », et le repère change quand c’est juste.', alt: 'Écran « Redites-le » avec les mots signalés' },
+      { shot: 'speak', label: 'Répéter', title: 'Prononciation vérifiée mot par mot', body: 'Lisez la phrase corrigée à voix haute : chaque mot est évalué. L’app indique ce qui ne va pas, par exemple « le th de “this” prononcé comme un d », et le repère change quand c’est juste.', alt: 'Écran « Répéter » avec les mots signalés' },
       { shot: 'review', label: 'Révision', title: 'Les corrections s’ajoutent à la révision', body: 'Les tournures corrigées et les mots mal prononcés s’ajoutent à votre liste de révision.', alt: 'Écran de la liste de révision' },
       { shot: 'habit', label: 'Habitudes de prononciation', title: 'Les sons que vous ratez le plus, comptés', body: '« Habitudes de prononciation » compte les sons que vous ratez le plus, par exemple th → d, 12 fois.', alt: 'Détail d’une habitude de prononciation' },
     ],
@@ -221,7 +221,7 @@ export const COCKATOO_PAGE: Record<CockatooLang, { title: string; tagline: strin
     rows: [
       { shot: 'situations', label: 'Situações', title: 'Fale inglês em 35 situações', body: 'Pedir num café, bater papo no trabalho, negociar com um cliente, entrevista de emprego, imigração no aeroporto e conversa livre. Fale enquanto segura o botão; ao soltar, vira texto.', alt: 'Tela com a lista de situações' },
       { shot: 'chat', label: 'Conversa', title: 'Suas frases corrigidas na hora', body: 'Embaixo do que você disse aparece uma frase mais natural com uma explicação de uma linha em português. Toque no que não entender para ver a tradução.', alt: 'Conversa com uma frase corrigida embaixo da mensagem' },
-      { shot: 'speak', label: 'Fale de novo', title: 'Pronúncia conferida palavra por palavra', body: 'Leia a frase corrigida em voz alta e cada palavra é avaliada. Ele diz o que saiu errado, como “o th de ‘this’ saiu como d”, e a marcação muda quando você acerta.', alt: 'Tela para falar de novo com palavras marcadas' },
+      { shot: 'speak', label: 'Repetir', title: 'Pronúncia conferida palavra por palavra', body: 'Leia a frase corrigida em voz alta e cada palavra é avaliada. Ele diz o que saiu errado, como “o th de ‘this’ saiu como d”, e a marcação muda quando você acerta.', alt: 'Tela Repetir com palavras marcadas' },
       { shot: 'review', label: 'Revisão', title: 'O que foi corrigido vira revisão', body: 'Expressões corrigidas e palavras pronunciadas errado vão para a sua lista de revisão.', alt: 'Tela da lista de revisão' },
       { shot: 'habit', label: 'Hábitos de pronúncia', title: 'Os sons que você mais erra, contados', body: 'Em “Hábitos de pronúncia” você vê quantas vezes erra cada som, por exemplo th → d, 12 vezes.', alt: 'Detalhe de um hábito de pronúncia' },
     ],
