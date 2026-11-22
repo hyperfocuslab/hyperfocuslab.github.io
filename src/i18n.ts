@@ -126,7 +126,7 @@ export const COCKATOO_PAGE: Record<CockatooLang, { title: string; tagline: strin
   ko: {
     title: '코카투 | AI 영어회화·발음 교정',
     tagline: '말하면 고쳐 주고, 다시 말해 익히기',
-    lead: '영어로 말할 상대가 없고, 내 발음이 어디서 틀리는지 모를 때 쓰는 앱이에요. 버튼을 누른 채 영어로 말하면 AI가 답하고, 어색한 문장은 자연스럽게 고쳐 주고, 고친 문장을 따라 말하면 틀린 발음을 단어별로 짚어 줘요. 녹음은 기기에만 저장하고 밖으로 보내지 않아요.',
+    lead: '영어로 말할 상대가 없고, 내 발음이 어디서 틀리는지 모를 때 쓰는 앱이에요. 버튼을 누른 채 영어로 말하면 AI가 답하고, 어색한 문장은 자연스럽게 고쳐 주고, 고친 문장을 따라 말하면 틀린 발음을 단어별로 짚어 줘요. 녹음은 개발자나 외부 서버로 보내지 않아요.',
     rows: [
       { shot: 'situations', label: '상황', title: '35개 상황에서 영어로 말해요', body: '카페 주문, 회사 스몰토크, 거래처 협상, 영어 면접, 입국 심사 같은 상황과 자유 대화. 버튼을 누르는 동안 말하고 떼면 바로 글로 받아써요.', alt: '상황 목록 화면' },
       { shot: 'chat', label: '대화', title: '어색한 문장은 바로 고쳐 줘요', body: '내 말 아래에 더 자연스러운 문장과 내 언어로 된 설명 한 줄이 붙어요. 모르는 말은 눌러서 내 언어로 해석을 봐요.', alt: '내 말 아래 고친 문장이 붙은 대화 화면' },
@@ -139,7 +139,7 @@ export const COCKATOO_PAGE: Record<CockatooLang, { title: string; tagline: strin
   en: {
     title: 'Cockatoo | AI English Speaking and Pronunciation',
     tagline: 'Conversation & pronunciation',
-    lead: 'For when you have no one to speak English with and can’t tell where your pronunciation goes wrong. Hold the button and speak English: the AI replies, rewrites awkward sentences into natural ones, and when you read the corrected sentence aloud it points out mispronounced words one by one. Recordings stay on your device.',
+    lead: 'For when you have no one to speak English with and can’t tell where your pronunciation goes wrong. Hold the button and speak English: the AI replies, rewrites awkward sentences into natural ones, and when you read the corrected sentence aloud it points out mispronounced words one by one. Recordings are never sent to the developer or any outside server.',
     rows: [
       { shot: 'situations', label: 'Situations', title: 'Speak English in 35 situations', body: 'Ordering coffee, small talk at work, negotiating with a client, a job interview, passport control and free conversation. Talk while you hold the button; let go and it becomes text.', alt: 'Situation list screen' },
       { shot: 'chat', label: 'Conversation', title: 'Awkward sentences, fixed on the spot', body: 'Under what you said: a more natural sentence and a one-line explanation.', alt: 'Conversation screen with a corrected sentence under the user’s message' },
@@ -152,7 +152,7 @@ export const COCKATOO_PAGE: Record<CockatooLang, { title: string; tagline: strin
   ja: {
     title: 'Cockatoo | AI英会話・発音矯正',
     tagline: '話すと添削、言い直して身につく',
-    lead: '英語で話す相手がいない、自分の発音のどこが違うのかわからない。そんなときのためのアプリです。ボタンを押しながら英語で話すとAIが返事をし、不自然な文は自然な英語に添削。添削された文を読み上げると、間違えた発音を単語ごとに示します。録音は端末にだけ保存し、外部に送りません。',
+    lead: '英語で話す相手がいない、自分の発音のどこが違うのかわからない。そんなときのためのアプリです。ボタンを押しながら英語で話すとAIが返事をし、不自然な文は自然な英語に添削。添削された文を読み上げると、間違えた発音を単語ごとに示します。録音は開発者や外部のサーバーには送信しません。',
     rows: [
       { shot: 'situations', label: '場面', title: '35の場面で英語を話す', body: 'カフェでの注文、職場の雑談、取引先との交渉、英語面接、入国審査などの場面とフリートーク。ボタンを押している間に話し、離すとすぐに文字になります。', alt: '場面一覧の画面' },
       { shot: 'chat', label: '会話', title: '不自然な文はその場で添削', body: '自分の発言の下に、より自然な文と日本語の説明が1行つきます。わからない表現はタップすると日本語訳が見られます。', alt: '発言の下に添削された文がついた会話画面' },
@@ -165,7 +165,7 @@ export const COCKATOO_PAGE: Record<CockatooLang, { title: string; tagline: strin
   'zh-Hant': {
     title: 'Cockatoo | AI 英文口說・發音矯正',
     tagline: '開口說英文，句子修正、發音逐字檢查',
-    lead: '沒有人可以練英文口說，也不知道自己的發音哪裡不對時，就用這個 App。按住按鈕用英文說話，AI 會回覆你，把不自然的句子改得更道地；跟著唸修正後的句子，會逐字指出唸錯的地方。錄音只存在裝置上，不會傳出去。',
+    lead: '沒有人可以練英文口說，也不知道自己的發音哪裡不對時，就用這個 App。按住按鈕用英文說話，AI 會回覆你，把不自然的句子改得更道地；跟著唸修正後的句子，會逐字指出唸錯的地方。錄音不會傳送給開發者或外部伺服器。',
     rows: [
       { shot: 'situations', label: '情境', title: '在 35 個情境用英文開口說', body: '點咖啡、職場閒聊、和客戶談判、英文面試、入境審查等情境，以及自由對話。按住按鈕說話，放開就轉成文字。', alt: '情境清單畫面' },
       { shot: 'chat', label: '對話', title: '不自然的句子，當場幫你改', body: '你說的話下面，會出現更自然的句子和一行中文說明。看不懂的地方點一下就能看中文翻譯。', alt: '使用者句子下方出現修正句的對話畫面' },
@@ -178,7 +178,7 @@ export const COCKATOO_PAGE: Record<CockatooLang, { title: string; tagline: strin
   de: {
     title: 'Cockatoo | Englisch sprechen, Aussprache mit KI üben',
     tagline: 'Sätze & Aussprache mit KI üben',
-    lead: 'Für alle, die niemanden zum Englischsprechen haben und nicht wissen, wo ihre Aussprache danebenliegt. Halte die Taste gedrückt und sprich Englisch: Die KI antwortet, macht holprige Sätze natürlich, und wenn du den verbesserten Satz vorliest, zeigt sie Wort für Wort, was du falsch aussprichst. Aufnahmen bleiben auf deinem Gerät.',
+    lead: 'Für alle, die niemanden zum Englischsprechen haben und nicht wissen, wo ihre Aussprache danebenliegt. Halte die Taste gedrückt und sprich Englisch: Die KI antwortet, macht holprige Sätze natürlich, und wenn du den verbesserten Satz vorliest, zeigt sie Wort für Wort, was du falsch aussprichst. Aufnahmen werden nie an den Entwickler oder an externe Server gesendet.',
     rows: [
       { shot: 'situations', label: 'Situationen', title: 'Englisch sprechen in 35 Situationen', body: 'Bestellung im Café, Smalltalk im Büro, Verhandlungen mit Kunden, Vorstellungsgespräch, Passkontrolle und freies Gespräch. Sprich, solange du die Taste hältst; lass los, und es steht als Text da.', alt: 'Liste der Situationen' },
       { shot: 'chat', label: 'Gespräch', title: 'Holprige Sätze sofort verbessert', body: 'Unter deinem Satz steht eine natürlichere Version mit einer Zeile Erklärung auf Deutsch. Tippe auf Unbekanntes für die deutsche Übersetzung.', alt: 'Gespräch mit verbessertem Satz unter der eigenen Nachricht' },
@@ -191,7 +191,7 @@ export const COCKATOO_PAGE: Record<CockatooLang, { title: string; tagline: strin
   es: {
     title: 'Cockatoo | Habla inglés con IA y corrige tu pronunciación',
     tagline: 'Corrige frases y pronunciación',
-    lead: 'Para cuando no tienes con quién hablar inglés y no sabes en qué fallas al pronunciar. Mantén pulsado el botón y habla en inglés: la IA responde, convierte las frases raras en naturales y, cuando lees en voz alta la frase corregida, te marca palabra por palabra lo que pronunciaste mal. Las grabaciones se quedan en tu dispositivo.',
+    lead: 'Para cuando no tienes con quién hablar inglés y no sabes en qué fallas al pronunciar. Mantén pulsado el botón y habla en inglés: la IA responde, convierte las frases raras en naturales y, cuando lees en voz alta la frase corregida, te marca palabra por palabra lo que pronunciaste mal. Las grabaciones nunca se envían al desarrollador ni a servidores externos.',
     rows: [
       { shot: 'situations', label: 'Situaciones', title: 'Habla inglés en 35 situaciones', body: 'Pedir en una cafetería, charlar en el trabajo, negociar con un cliente, una entrevista de trabajo, el control de inmigración y conversación libre. Habla mientras mantienes pulsado el botón; al soltarlo, aparece el texto.', alt: 'Pantalla con la lista de situaciones' },
       { shot: 'chat', label: 'Conversación', title: 'Tus frases, corregidas al momento', body: 'Debajo de lo que dices aparece una frase más natural con una explicación de una línea en español. Toca lo que no entiendas para ver la traducción.', alt: 'Conversación con una frase corregida debajo del mensaje' },
@@ -204,7 +204,7 @@ export const COCKATOO_PAGE: Record<CockatooLang, { title: string; tagline: strin
   fr: {
     title: 'Cockatoo | Parler anglais avec l’IA et corriger sa prononciation',
     tagline: 'Corrigez votre prononciation',
-    lead: 'Pour quand vous n’avez personne avec qui parler anglais et ne savez pas où votre prononciation coince. Maintenez le bouton et parlez anglais : l’IA répond, rend vos phrases plus naturelles, et quand vous lisez la phrase corrigée à voix haute, elle signale mot par mot ce qui est mal prononcé. Les enregistrements restent sur votre appareil.',
+    lead: 'Pour quand vous n’avez personne avec qui parler anglais et ne savez pas où votre prononciation coince. Maintenez le bouton et parlez anglais : l’IA répond, rend vos phrases plus naturelles, et quand vous lisez la phrase corrigée à voix haute, elle signale mot par mot ce qui est mal prononcé. Les enregistrements ne sont jamais envoyés au développeur ni à un serveur externe.',
     rows: [
       { shot: 'situations', label: 'Situations', title: 'Parlez anglais dans 35 situations', body: 'Commander au café, discuter entre collègues, négocier avec un client, un entretien d’embauche, le contrôle aux frontières et la conversation libre. Parlez en maintenant le bouton ; relâchez et le texte s’affiche.', alt: 'Écran de la liste des situations' },
       { shot: 'chat', label: 'Conversation', title: 'Vos phrases corrigées sur-le-champ', body: 'Sous ce que vous dites : une version plus naturelle et une ligne d’explication en français. Touchez ce que vous ne comprenez pas pour voir la traduction.', alt: 'Conversation avec une phrase corrigée sous le message' },
@@ -217,7 +217,7 @@ export const COCKATOO_PAGE: Record<CockatooLang, { title: string; tagline: strin
   'pt-BR': {
     title: 'Cockatoo | Fale inglês com IA e corrija a pronúncia',
     tagline: 'Corrige frases e pronúncia',
-    lead: 'Para quando você não tem com quem falar inglês e não sabe onde está errando na pronúncia. Segure o botão e fale em inglês: a IA responde, deixa as frases estranhas mais naturais e, quando você lê a frase corrigida em voz alta, mostra palavra por palavra o que saiu errado. As gravações ficam no seu aparelho.',
+    lead: 'Para quando você não tem com quem falar inglês e não sabe onde está errando na pronúncia. Segure o botão e fale em inglês: a IA responde, deixa as frases estranhas mais naturais e, quando você lê a frase corrigida em voz alta, mostra palavra por palavra o que saiu errado. As gravações nunca são enviadas ao desenvolvedor nem a servidores externos.',
     rows: [
       { shot: 'situations', label: 'Situações', title: 'Fale inglês em 35 situações', body: 'Pedir num café, bater papo no trabalho, negociar com um cliente, entrevista de emprego, imigração no aeroporto e conversa livre. Fale enquanto segura o botão; ao soltar, vira texto.', alt: 'Tela com a lista de situações' },
       { shot: 'chat', label: 'Conversa', title: 'Suas frases corrigidas na hora', body: 'Embaixo do que você disse aparece uma frase mais natural com uma explicação de uma linha em português. Toque no que não entender para ver a tradução.', alt: 'Conversa com uma frase corrigida embaixo da mensagem' },
