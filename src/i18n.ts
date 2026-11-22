@@ -113,8 +113,8 @@ export const ui = {
         },
       },
       game: {
-        tagline: 'PC 브라우저 좀비 슈터',
-        lead: '폐허가 된 도시 블록에서 좀비를 피해 탈출 지점까지 가는 3인칭 슈팅 게임입니다. 소총·산탄총·권총·도끼와 화염병·파이프 폭탄을 쓰고, 총소리는 좀비를 불러옵니다. 설치 없이 브라우저에서 바로 실행되며 키보드와 마우스가 필요합니다.',
+        tagline: '브라우저 좀비 슈터',
+        lead: '폐허가 된 도시 블록에서 연구물질을 회수해 헬기 탈출 지점까지 가는 3인칭 슈팅 게임입니다. 소총·산탄총·권총·도끼와 화염병·파이프 폭탄을 쓰고, 총소리는 좀비를 불러옵니다. 탈출하면 처치 수로 온라인 랭킹에 오릅니다. 설치 없이 PC(키보드·마우스)와 폰(터치) 브라우저에서 바로 실행됩니다.',
         play: '바로 플레이 ↗',
         alt: 'DEAD DISTRICT 게임 화면: 비 오는 폐허 거리에서 소총을 든 플레이어와 좀비들',
       },
@@ -225,8 +225,8 @@ export const ui = {
         },
       },
       game: {
-        tagline: 'Zombie shooter for desktop browsers',
-        lead: 'A third-person shooter in a ruined city block: get past the zombies to the extraction point. Rifle, shotgun, pistol, axe, molotovs and pipe bombs, and every shot draws the horde. Runs in the browser with no install. Needs a keyboard and mouse.',
+        tagline: 'Browser zombie shooter',
+        lead: 'A third-person shooter in a ruined city block: recover the sample and reach the helicopter. Rifle, shotgun, pistol, axe, molotovs and pipe bombs, and every shot draws the horde. Escape and your kill count goes on the online leaderboard. Runs in the browser with no install, on PC (keyboard and mouse) or phone (touch).',
         play: 'Play now ↗',
         alt: 'DEAD DISTRICT gameplay: a player with a rifle and zombies on a ruined street',
       },
