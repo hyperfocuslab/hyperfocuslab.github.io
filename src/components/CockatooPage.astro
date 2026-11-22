@@ -2,11 +2,14 @@
 import { existsSync } from 'node:fs';
 import Base from '../layouts/Base.astro';
 import AppShot from './AppShot.astro';
-import { cockatooLinks, ui } from '../i18n';
+import { COCKATOO_PAGE, cockatooLinks, cockatooName, haruboxHomeLang, type CockatooLang } from '../i18n';
 
-const lang = 'ko';
-const cockatoo = ui.ko.home.cockatoo;
-// Screenshots are drawn only when public/assets/cockatoo/ko-{shot}.webp exists.
+interface Props {
+  lang: CockatooLang;
+}
+const { lang } = Astro.props;
+const cockatoo = COCKATOO_PAGE[lang];
+// Screenshots are drawn only when public/assets/cockatoo/{lang}-{shot}.webp exists.
 const rows = cockatoo.rows.filter((row) => existsSync(`public/assets/cockatoo/${lang}-${row.shot}.webp`));
 const links = cockatooLinks(lang);
 ---
@@ -18,7 +21,7 @@ const links = cockatooLinks(lang);
         <div class="product-name">
           <img class="app-icon" src="/assets/cockatoo-icon.webp" alt="" width="72" height="72" loading="lazy" />
           <div>
-            <h1 class="h2">코카투</h1>
+            <h1 class="h2">{cockatooName(lang)}</h1>
             <p class="muted">{cockatoo.tagline}</p>
           </div>
         </div>
@@ -42,7 +45,7 @@ const links = cockatooLinks(lang);
                 <p class="lead">{row.body}</p>
               </div>
               <div class="feature-visual">
-                <AppShot src={`/assets/cockatoo/${lang}-${row.shot}.webp`} alt={row.alt} lang={lang} />
+                <AppShot src={`/assets/cockatoo/${lang}-${row.shot}.webp`} alt={row.alt} lang={haruboxHomeLang(lang)} />
               </div>
             </div>
           ))

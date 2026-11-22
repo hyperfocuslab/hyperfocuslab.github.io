@@ -1,0 +1,13 @@
+---
+import Doc from '../../../../components/Doc.astro';
+import { COCKATOO_DOCS, COCKATOO_LANGS, type CockatooLang } from '../../../../i18n';
+
+// Cockatoo languages other than ko (which lives at /cockatoo/).
+export function getStaticPaths() {
+  return COCKATOO_LANGS.filter((lang) => lang !== 'ko').flatMap((lang) => COCKATOO_DOCS.map((doc) => ({ params: { lang, doc } })));
+}
+const lang = Astro.params.lang as CockatooLang;
+const doc = Astro.params.doc as (typeof COCKATOO_DOCS)[number];
+---
+
+<Doc doc={doc} lang={lang} product="cockatoo" />

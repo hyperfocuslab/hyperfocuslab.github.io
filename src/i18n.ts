@@ -31,7 +31,7 @@ export function sheltieLinks(lang: Lang) {
 
 // Cockatoo (AI English conversation app) is not on the App Store yet: the link is empty, and
 // the product page draws the App Store button only when it has a value.
-export function cockatooLinks(_lang: Lang) {
+export function cockatooLinks(_lang: CockatooLang) {
   return { appStore: '' };
 }
 
@@ -47,7 +47,7 @@ export function href(page: Page, lang: Lang): string {
   if (page === 'home') return HOME[lang];
   // The home lists the products; each has its own page (Sheltie: ko and en only, see sheltieHref).
   if (page === 'peakly') return `${PREFIX[lang]}/peakly/`;
-  if (page === 'cockatoo') return cockatooHref('product');
+  if (page === 'cockatoo') return cockatooHref('product', lang);
   if (page === 'sheltie') return sheltieHref('product', SHELTIE_LANGS.includes(lang as 'ko' | 'en') ? (lang as 'ko' | 'en') : 'en');
   return `${PREFIX[lang]}/peakly/${page}/`;
 }
@@ -61,15 +61,21 @@ export function sheltieHref(doc: 'product' | (typeof SHELTIE_DOCS)[number], lang
   return doc === 'product' ? `${PREFIX[lang]}/sheltie/` : `${PREFIX[lang]}/sheltie/${doc}/`;
 }
 
-// Cockatoo (AI English conversation for Korean speakers) is the third product: Korean only, under /cockatoo/.
-export const COCKATOO_LANGS = ['ko'] as const;
+// Cockatoo (AI English conversation app) is the third product: product, support and privacy pages
+// in the same eight languages as Harubox (CockatooLang = HaruboxLang, so it shares Harubox's labels
+// and UI strings). ko lives at /cockatoo/, the others at /<lang>/cockatoo/.
+export type CockatooLang = HaruboxLang;
 export const COCKATOO_DOCS = ['support', 'privacy'] as const;
-export function cockatooHref(doc: 'product' | (typeof COCKATOO_DOCS)[number]): string {
-  return doc === 'product' ? '/cockatoo/' : `/cockatoo/${doc}/`;
+export function cockatooHref(doc: 'product' | (typeof COCKATOO_DOCS)[number], lang: CockatooLang): string {
+  const base = `${lang === 'ko' ? '' : `/${lang}`}/cockatoo/`;
+  return doc === 'product' ? base : `${base}${doc}/`;
+}
+export function cockatooName(lang: CockatooLang): string {
+  return lang === 'ko' ? '코카투' : 'Cockatoo';
 }
 // Product name shown in the header crumb, footer and document label of the non-Peakly products.
-// Harubox has a per-language name: see haruboxName.
-export const PRODUCT_NAME = { sheltie: 'Sheltie', cockatoo: '코카투' } as const;
+// Harubox and Cockatoo have per-language names: see haruboxName and cockatooName.
+export const PRODUCT_NAME = { sheltie: 'Sheltie' } as const;
 
 // Harubox (all-day recorder, the fourth product) has support and privacy pages only, in eight
 // languages. The site's own Lang covers four of them, so Harubox has its own language type,
@@ -92,6 +98,7 @@ export const HARUBOX_LANG_LABEL: Record<HaruboxLang, string> = {
   fr: 'Français',
   'pt-BR': 'Português (Brasil)',
 };
+export const COCKATOO_LANGS = HARUBOX_LANGS;
 export const HARUBOX_LANG_CODE: Record<HaruboxLang, string> = { ko: 'KO', en: 'EN', ja: 'JA', 'zh-Hant': 'ZH', de: 'DE', es: 'ES', fr: 'FR', 'pt-BR': 'PT' };
 export function haruboxName(lang: HaruboxLang): string {
   return lang === 'ko' ? '하루박스' : 'Harubox';
@@ -109,6 +116,117 @@ export const HARUBOX_UI: Record<HaruboxLang, { nav: { contact: string; language:
   es: { nav: { contact: 'Contacto', language: 'Idioma', main: 'Menú principal' }, docs: { privacy: 'Política de privacidad', support: 'Soporte' }, legal: '© Hyperfocus Lab · Representante: Yejun Lee' },
   fr: { nav: { contact: 'Contact', language: 'Langue', main: 'Menu principal' }, docs: { privacy: 'Politique de confidentialité', support: 'Assistance' }, legal: '© Hyperfocus Lab · Représentant : Yejun Lee' },
   'pt-BR': { nav: { contact: 'Contato', language: 'Idioma', main: 'Menu principal' }, docs: { privacy: 'Política de Privacidade', support: 'Suporte' }, legal: '© Hyperfocus Lab · Representante: Yejun Lee' },
+};
+
+// Cockatoo product page copy, one entry per Cockatoo language. Row titles match the App Store
+// screenshot captions (english-pronunciation docs/store/<lang>.md). Screenshot rows are drawn only
+// when public/assets/cockatoo/<lang>-<shot>.webp exists.
+type CockatooRow = { shot: string; label: string; title: string; body: string; alt: string };
+export const COCKATOO_PAGE: Record<CockatooLang, { title: string; tagline: string; lead: string; rows: CockatooRow[]; requirements: string }> = {
+  ko: {
+    title: '코카투 | AI 영어회화·발음 교정',
+    tagline: '말하면 고쳐 주고, 다시 말해 익히기',
+    lead: '영어로 말할 상대가 없고, 내 발음이 어디서 틀리는지 모를 때 쓰는 앱이에요. 버튼을 누른 채 영어로 말하면 AI가 답하고, 어색한 문장은 자연스럽게 고쳐 주고, 고친 문장을 따라 말하면 틀린 발음을 단어별로 짚어 줘요. 녹음은 기기에만 저장하고 밖으로 보내지 않아요.',
+    rows: [
+      { shot: 'situations', label: '상황', title: '35개 상황에서 영어로 말해요', body: '카페 주문, 회사 스몰토크, 거래처 협상, 영어 면접, 입국 심사 같은 상황과 자유 대화. 버튼을 누르는 동안 말하고 떼면 바로 글로 받아써요.', alt: '상황 목록 화면' },
+      { shot: 'chat', label: '대화', title: '어색한 문장은 바로 고쳐 줘요', body: '내 말 아래에 더 자연스러운 문장과 내 언어로 된 설명 한 줄이 붙어요. 모르는 말은 눌러서 내 언어로 해석을 봐요.', alt: '내 말 아래 고친 문장이 붙은 대화 화면' },
+      { shot: 'speak', label: '따라 말하기', title: '틀린 발음을 단어별로 짚어요', body: '고친 문장을 따라 말하면 단어마다 발음을 판정해요. "this의 th를 d처럼 읽음"처럼 무엇이 틀렸는지 내 언어로 짚고, 다시 말해 통과하면 표시가 바뀌어요.', alt: '발음을 단어별로 짚은 따라 말하기 화면' },
+      { shot: 'review', label: '복습', title: '고친 표현이 복습에 쌓여요', body: '고친 표현과 틀린 발음이 복습 목록에 쌓여요.', alt: '복습 목록 화면' },
+      { shot: 'habit', label: '발음 버릇', title: '자주 틀리는 소리를 횟수로 봐요', body: '"내 발음 버릇"에서 th → d 12번처럼 자주 틀리는 소리를 횟수로 봐요.', alt: '발음 버릇 상세 화면' },
+    ],
+    requirements: 'Apple Intelligence를 지원하는 iPhone, iOS 27 이상. 설명과 해석은 iPhone 언어로 나와요.',
+  },
+  en: {
+    title: 'Cockatoo | AI English Speaking and Pronunciation',
+    tagline: 'Conversation & pronunciation',
+    lead: 'For when you have no one to speak English with and can’t tell where your pronunciation goes wrong. Hold the button and speak English: the AI replies, rewrites awkward sentences into natural ones, and when you read the corrected sentence aloud it points out mispronounced words one by one. Recordings stay on your device.',
+    rows: [
+      { shot: 'situations', label: 'Situations', title: 'Speak English in 35 situations', body: 'Ordering coffee, small talk at work, negotiating with a client, a job interview, passport control and free conversation. Talk while you hold the button; let go and it becomes text.', alt: 'Situation list screen' },
+      { shot: 'chat', label: 'Conversation', title: 'Awkward sentences, fixed on the spot', body: 'Under what you said: a more natural sentence and a one-line explanation.', alt: 'Conversation screen with a corrected sentence under the user’s message' },
+      { shot: 'speak', label: 'Say it again', title: 'Pronunciation checked word by word', body: 'Read the corrected sentence aloud and every word is scored. It names the problem, like “th in ‘this’ said as d”, and the mark changes once you get it right.', alt: 'Say-it-again screen with mispronounced words marked' },
+      { shot: 'review', label: 'Review', title: 'Corrections collect for review', body: 'Corrected phrases and mispronounced words collect in your review list.', alt: 'Review list screen' },
+      { shot: 'habit', label: 'Pronunciation habits', title: 'See the sounds you miss most', body: '“Pronunciation habits” counts the sounds you miss most, such as th → d, 12 times.', alt: 'Pronunciation habit detail screen' },
+    ],
+    requirements: 'iPhone that supports Apple Intelligence, iOS 27 or later. Explanations follow your iPhone language.',
+  },
+  ja: {
+    title: 'Cockatoo | AI英会話・発音矯正',
+    tagline: '話すと添削、言い直して身につく',
+    lead: '英語で話す相手がいない、自分の発音のどこが違うのかわからない。そんなときのためのアプリです。ボタンを押しながら英語で話すとAIが返事をし、不自然な文は自然な英語に添削。添削された文を読み上げると、間違えた発音を単語ごとに示します。録音は端末にだけ保存し、外部に送りません。',
+    rows: [
+      { shot: 'situations', label: '場面', title: '35の場面で英語を話す', body: 'カフェでの注文、職場の雑談、取引先との交渉、英語面接、入国審査などの場面とフリートーク。ボタンを押している間に話し、離すとすぐに文字になります。', alt: '場面一覧の画面' },
+      { shot: 'chat', label: '会話', title: '不自然な文はその場で添削', body: '自分の発言の下に、より自然な文と日本語の説明が1行つきます。わからない表現はタップすると日本語訳が見られます。', alt: '発言の下に添削された文がついた会話画面' },
+      { shot: 'speak', label: '言い直す', title: '発音を単語ごとにチェック', body: '添削された文を読み上げると、単語ごとに発音を判定します。「this の th が d になっている」のように何が違うのかを示し、言い直して合格すると表示が変わります。', alt: '発音を単語ごとに示した言い直し画面' },
+      { shot: 'review', label: '復習', title: '添削された表現が復習にたまる', body: '添削された表現と間違えた発音が復習リストにたまります。', alt: '復習リストの画面' },
+      { shot: 'habit', label: '発音のクセ', title: 'よく間違える音を回数で確認', body: '「発音のクセ」で、th → d が12回のように、よく間違える音を回数で確認できます。', alt: '発音のクセの詳細画面' },
+    ],
+    requirements: 'Apple Intelligenceに対応したiPhone、iOS 27以降。説明と翻訳はiPhoneの言語で表示されます。',
+  },
+  'zh-Hant': {
+    title: 'Cockatoo | AI 英文口說・發音矯正',
+    tagline: '開口說英文，句子修正、發音逐字檢查',
+    lead: '沒有人可以練英文口說，也不知道自己的發音哪裡不對時，就用這個 App。按住按鈕用英文說話，AI 會回覆你，把不自然的句子改得更道地；跟著唸修正後的句子，會逐字指出唸錯的地方。錄音只存在裝置上，不會傳出去。',
+    rows: [
+      { shot: 'situations', label: '情境', title: '在 35 個情境用英文開口說', body: '點咖啡、職場閒聊、和客戶談判、英文面試、入境審查等情境，以及自由對話。按住按鈕說話，放開就轉成文字。', alt: '情境清單畫面' },
+      { shot: 'chat', label: '對話', title: '不自然的句子，當場幫你改', body: '你說的話下面，會出現更自然的句子和一行中文說明。看不懂的地方點一下就能看中文翻譯。', alt: '使用者句子下方出現修正句的對話畫面' },
+      { shot: 'speak', label: '再說一次', title: '逐字指出發音問題', body: '跟著唸修正後的句子，每個單字都會評分。像「this 的 th 唸成 d」這樣指出哪裡不對，重說通過後標示就會改變。', alt: '逐字標出發音問題的再說一次畫面' },
+      { shot: 'review', label: '複習', title: '修正過的說法累積成複習', body: '修正過的說法和唸錯的發音會累積在複習清單。', alt: '複習清單畫面' },
+      { shot: 'habit', label: '發音習慣', title: '用次數看最常唸錯的音', body: '在「發音習慣」用次數看你最常唸錯的音，例如 th → d 12 次。', alt: '發音習慣詳細畫面' },
+    ],
+    requirements: '支援 Apple Intelligence 的 iPhone，iOS 27 或以上版本。說明與翻譯會以 iPhone 的語言顯示。',
+  },
+  de: {
+    title: 'Cockatoo | Englisch sprechen, Aussprache mit KI üben',
+    tagline: 'Sätze & Aussprache mit KI üben',
+    lead: 'Für alle, die niemanden zum Englischsprechen haben und nicht wissen, wo ihre Aussprache danebenliegt. Halte die Taste gedrückt und sprich Englisch: Die KI antwortet, macht holprige Sätze natürlich, und wenn du den verbesserten Satz vorliest, zeigt sie Wort für Wort, was du falsch aussprichst. Aufnahmen bleiben auf deinem Gerät.',
+    rows: [
+      { shot: 'situations', label: 'Situationen', title: 'Englisch sprechen in 35 Situationen', body: 'Bestellung im Café, Smalltalk im Büro, Verhandlungen mit Kunden, Vorstellungsgespräch, Passkontrolle und freies Gespräch. Sprich, solange du die Taste hältst; lass los, und es steht als Text da.', alt: 'Liste der Situationen' },
+      { shot: 'chat', label: 'Gespräch', title: 'Holprige Sätze sofort verbessert', body: 'Unter deinem Satz steht eine natürlichere Version mit einer Zeile Erklärung auf Deutsch. Tippe auf Unbekanntes für die deutsche Übersetzung.', alt: 'Gespräch mit verbessertem Satz unter der eigenen Nachricht' },
+      { shot: 'speak', label: 'Nochmal sagen', title: 'Aussprache Wort für Wort geprüft', body: 'Lies den verbesserten Satz vor, und jedes Wort wird bewertet. Die App sagt, was nicht gepasst hat, etwa „th in ‚this‘ wie d gesprochen“, und die Markierung wechselt, sobald es klappt.', alt: 'Nochmal-sagen-Bildschirm mit markierten Wörtern' },
+      { shot: 'review', label: 'Wiederholen', title: 'Verbessertes landet im Wiederholen', body: 'Verbesserte Ausdrücke und falsch ausgesprochene Wörter landen in deiner Wiederholungsliste.', alt: 'Wiederholungsliste' },
+      { shot: 'habit', label: 'Aussprachegewohnheiten', title: 'Sieh, welche Laute du oft verfehlst', body: 'Unter „Aussprachegewohnheiten“ siehst du, welche Laute du wie oft verfehlst, etwa th → d, 12-mal.', alt: 'Detailansicht einer Aussprachegewohnheit' },
+    ],
+    requirements: 'iPhone mit Apple Intelligence, iOS 27 oder neuer. Erklärungen erscheinen in der Sprache deines iPhone.',
+  },
+  es: {
+    title: 'Cockatoo | Habla inglés con IA y corrige tu pronunciación',
+    tagline: 'Corrige frases y pronunciación',
+    lead: 'Para cuando no tienes con quién hablar inglés y no sabes en qué fallas al pronunciar. Mantén pulsado el botón y habla en inglés: la IA responde, convierte las frases raras en naturales y, cuando lees en voz alta la frase corregida, te marca palabra por palabra lo que pronunciaste mal. Las grabaciones se quedan en tu dispositivo.',
+    rows: [
+      { shot: 'situations', label: 'Situaciones', title: 'Habla inglés en 35 situaciones', body: 'Pedir en una cafetería, charlar en el trabajo, negociar con un cliente, una entrevista de trabajo, el control de inmigración y conversación libre. Habla mientras mantienes pulsado el botón; al soltarlo, aparece el texto.', alt: 'Pantalla con la lista de situaciones' },
+      { shot: 'chat', label: 'Conversación', title: 'Tus frases, corregidas al momento', body: 'Debajo de lo que dices aparece una frase más natural con una explicación de una línea en español. Toca lo que no entiendas para ver la traducción.', alt: 'Conversación con una frase corregida debajo del mensaje' },
+      { shot: 'speak', label: 'Repítelo', title: 'Pronunciación revisada palabra por palabra', body: 'Lee en voz alta la frase corregida y se evalúa cada palabra. Te dice qué falló, como “la th de ‘this’ suena como d”, y la marca cambia cuando lo dices bien.', alt: 'Pantalla para repetir con palabras marcadas' },
+      { shot: 'review', label: 'Repaso', title: 'Lo corregido se guarda para repasar', body: 'Las expresiones corregidas y las palabras mal pronunciadas se guardan en tu lista de repaso.', alt: 'Pantalla de la lista de repaso' },
+      { shot: 'habit', label: 'Hábitos de pronunciación', title: 'Los sonidos que más fallas, contados', body: 'En “Hábitos de pronunciación” ves cuántas veces fallas cada sonido, por ejemplo th → d, 12 veces.', alt: 'Detalle de un hábito de pronunciación' },
+    ],
+    requirements: 'iPhone compatible con Apple Intelligence, iOS 27 o posterior. Las explicaciones salen en el idioma de tu iPhone.',
+  },
+  fr: {
+    title: 'Cockatoo | Parler anglais avec l’IA et corriger sa prononciation',
+    tagline: 'Corrigez votre prononciation',
+    lead: 'Pour quand vous n’avez personne avec qui parler anglais et ne savez pas où votre prononciation coince. Maintenez le bouton et parlez anglais : l’IA répond, rend vos phrases plus naturelles, et quand vous lisez la phrase corrigée à voix haute, elle signale mot par mot ce qui est mal prononcé. Les enregistrements restent sur votre appareil.',
+    rows: [
+      { shot: 'situations', label: 'Situations', title: 'Parlez anglais dans 35 situations', body: 'Commander au café, discuter entre collègues, négocier avec un client, un entretien d’embauche, le contrôle aux frontières et la conversation libre. Parlez en maintenant le bouton ; relâchez et le texte s’affiche.', alt: 'Écran de la liste des situations' },
+      { shot: 'chat', label: 'Conversation', title: 'Vos phrases corrigées sur-le-champ', body: 'Sous ce que vous dites : une version plus naturelle et une ligne d’explication en français. Touchez ce que vous ne comprenez pas pour voir la traduction.', alt: 'Conversation avec une phrase corrigée sous le message' },
+      { shot: 'speak', label: 'Redites-le', title: 'Prononciation vérifiée mot par mot', body: 'Lisez la phrase corrigée à voix haute : chaque mot est évalué. L’app indique ce qui ne va pas, par exemple « le th de “this” prononcé comme un d », et le repère change quand c’est juste.', alt: 'Écran « Redites-le » avec les mots signalés' },
+      { shot: 'review', label: 'Révision', title: 'Les corrections s’ajoutent à la révision', body: 'Les tournures corrigées et les mots mal prononcés s’ajoutent à votre liste de révision.', alt: 'Écran de la liste de révision' },
+      { shot: 'habit', label: 'Habitudes de prononciation', title: 'Les sons que vous ratez le plus, comptés', body: '« Habitudes de prononciation » compte les sons que vous ratez le plus, par exemple th → d, 12 fois.', alt: 'Détail d’une habitude de prononciation' },
+    ],
+    requirements: 'iPhone compatible avec Apple Intelligence, iOS 27 ou version ultérieure. Les explications s’affichent dans la langue de votre iPhone.',
+  },
+  'pt-BR': {
+    title: 'Cockatoo | Fale inglês com IA e corrija a pronúncia',
+    tagline: 'Corrige frases e pronúncia',
+    lead: 'Para quando você não tem com quem falar inglês e não sabe onde está errando na pronúncia. Segure o botão e fale em inglês: a IA responde, deixa as frases estranhas mais naturais e, quando você lê a frase corrigida em voz alta, mostra palavra por palavra o que saiu errado. As gravações ficam no seu aparelho.',
+    rows: [
+      { shot: 'situations', label: 'Situações', title: 'Fale inglês em 35 situações', body: 'Pedir num café, bater papo no trabalho, negociar com um cliente, entrevista de emprego, imigração no aeroporto e conversa livre. Fale enquanto segura o botão; ao soltar, vira texto.', alt: 'Tela com a lista de situações' },
+      { shot: 'chat', label: 'Conversa', title: 'Suas frases corrigidas na hora', body: 'Embaixo do que você disse aparece uma frase mais natural com uma explicação de uma linha em português. Toque no que não entender para ver a tradução.', alt: 'Conversa com uma frase corrigida embaixo da mensagem' },
+      { shot: 'speak', label: 'Fale de novo', title: 'Pronúncia conferida palavra por palavra', body: 'Leia a frase corrigida em voz alta e cada palavra é avaliada. Ele diz o que saiu errado, como “o th de ‘this’ saiu como d”, e a marcação muda quando você acerta.', alt: 'Tela para falar de novo com palavras marcadas' },
+      { shot: 'review', label: 'Revisão', title: 'O que foi corrigido vira revisão', body: 'Expressões corrigidas e palavras pronunciadas errado vão para a sua lista de revisão.', alt: 'Tela da lista de revisão' },
+      { shot: 'habit', label: 'Hábitos de pronúncia', title: 'Os sons que você mais erra, contados', body: 'Em “Hábitos de pronúncia” você vê quantas vezes erra cada som, por exemplo th → d, 12 vezes.', alt: 'Detalhe de um hábito de pronúncia' },
+    ],
+    requirements: 'iPhone compatível com a Apple Intelligence, iOS 27 ou posterior. As explicações aparecem no idioma do seu iPhone.',
+  },
 };
 
 // File names the previous Peakly site used (/privacy-en.html). They are kept
@@ -168,19 +286,6 @@ export const ui = {
           steps: ['구글 그룹 가입', '테스트 참여', 'Google Play에서 설치'],
           note: '그룹에 먼저 가입해야 테스트 참여 링크가 열립니다. 가입자 이메일은 개발자만 봅니다. 정식 출시하려면 테스터 12명이 14일 동안 설치해 두어야 합니다.',
         },
-      },
-      cockatoo: {
-        title: '코카투 | AI 영어회화·발음 교정',
-        tagline: '말하면 고쳐 주고, 다시 말해 익히기',
-        lead: '영어로 말할 상대가 없고, 내 발음이 어디서 틀리는지 모를 때 쓰는 앱이에요. 버튼을 누른 채 영어로 말하면 AI가 답하고, 어색한 문장은 자연스럽게 고쳐 주고, 고친 문장을 따라 말하면 틀린 발음을 단어별로 짚어 줘요. 녹음은 기기에만 저장하고 밖으로 보내지 않아요.',
-        rows: [
-          { shot: 'situations', label: '상황', title: '35개 상황에서 영어로 말해요', body: '카페 주문, 회사 스몰토크, 거래처 협상, 영어 면접, 입국 심사 같은 상황과 자유 대화. 버튼을 누르는 동안 말하고 떼면 바로 글로 받아써요.', alt: '상황 목록 화면' },
-          { shot: 'chat', label: '대화', title: '어색한 문장은 바로 고쳐 줘요', body: '내 말 아래에 더 자연스러운 문장과 한국어 설명 한 줄이 붙어요. 모르는 말은 눌러서 한국어 해석을 봐요.', alt: '내 말 아래 고친 문장이 붙은 대화 화면' },
-          { shot: 'speak', label: '따라 말하기', title: '틀린 발음을 단어별로 짚어요', body: '고친 문장을 따라 말하면 단어마다 발음을 판정해요. "this의 th를 d처럼 읽음"처럼 무엇이 틀렸는지 한국어로 짚고, 다시 말해 통과하면 표시가 바뀌어요.', alt: '발음을 단어별로 짚은 따라 말하기 화면' },
-          { shot: 'review', label: '복습', title: '고친 표현이 복습에 쌓여요', body: '고친 표현과 틀린 발음이 복습 목록에 쌓여요.', alt: '복습 목록 화면' },
-          { shot: 'habit', label: '발음 버릇', title: '자주 틀리는 소리를 횟수로 봐요', body: '"내 발음 버릇"에서 th → d 12번처럼 자주 틀리는 소리를 횟수로 봐요.', alt: '발음 버릇 상세 화면' },
-        ],
-        requirements: 'Apple Intelligence를 지원하는 iPhone, iOS 27 이상.',
       },
       game: {
         tagline: '브라우저 좀비 슈터',

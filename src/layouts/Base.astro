@@ -1,10 +1,10 @@
 ---
 import '../styles/global.css';
 import Logo from '../components/Logo.astro';
-import { COCKATOO_LANGS, EMAIL, GAME_URL, HARUBOX_LANGS, HARUBOX_LANG_CODE, HARUBOX_LANG_LABEL, HARUBOX_UI, LANGS, LANG_CODE, LANG_LABEL, PRODUCT_NAME, SHELTIE_LANGS, SITE, cockatooHref, haruboxHomeLang, haruboxHref, haruboxName, href, sheltieHref, ui, type HaruboxLang, type Lang, type Page, type Product } from '../i18n';
+import { EMAIL, GAME_URL, HARUBOX_LANGS, HARUBOX_LANG_CODE, HARUBOX_LANG_LABEL, HARUBOX_UI, LANGS, LANG_CODE, LANG_LABEL, PRODUCT_NAME, SHELTIE_LANGS, SITE, cockatooHref, cockatooName, haruboxHomeLang, haruboxHref, haruboxName, href, sheltieHref, ui, type HaruboxLang, type Lang, type Page, type Product } from '../i18n';
 
 interface Props {
-  // Harubox pages use eight languages, four more than the rest of the site.
+  // Harubox and Cockatoo pages use eight languages, four more than the rest of the site.
   lang: Lang | HaruboxLang;
   page: Page;
   title: string;
@@ -15,31 +15,34 @@ interface Props {
 
 const { lang, page, title, description, product = 'peakly' } = Astro.props;
 const isHarubox = product === 'harubox';
-// The company home and the other products exist in four languages; Harubox pages in other
-// languages show the company home of their nearest language (English).
-const siteLang: Lang = isHarubox ? haruboxHomeLang(lang as HaruboxLang) : (lang as Lang);
-const t = isHarubox
+// Cockatoo shares Harubox's eight languages, labels and header/footer strings.
+const isCockatoo = product === 'cockatoo';
+const isWide = isHarubox || isCockatoo;
+// The company home and the other products exist in four languages; Harubox and Cockatoo pages in
+// other languages show the company home of their nearest language (English).
+const siteLang: Lang = isWide ? haruboxHomeLang(lang as HaruboxLang) : (lang as Lang);
+const t = isWide
   ? { ...ui[siteLang], nav: HARUBOX_UI[lang as HaruboxLang].nav, docs: { ...ui[siteLang].docs, ...HARUBOX_UI[lang as HaruboxLang].docs }, footer: { ...ui[siteLang].footer, legal: HARUBOX_UI[lang as HaruboxLang].legal } }
   : ui[lang as Lang];
 // Every product other than Peakly has its own languages, name and links.
 const isOther = product !== 'peakly';
-const productName = isHarubox ? haruboxName(lang as HaruboxLang) : product === 'peakly' ? t.appName : PRODUCT_NAME[product];
+const productName = isHarubox ? haruboxName(lang as HaruboxLang) : isCockatoo ? cockatooName(lang as HaruboxLang) : product === 'peakly' ? t.appName : PRODUCT_NAME[product];
 // Sheltie documents exist in ko and en only; other languages link to the English ones.
 const sheltieLang = (SHELTIE_LANGS as readonly string[]).includes(lang) ? (lang as 'ko' | 'en') : 'en';
 const haruboxLangs: readonly HaruboxLang[] = HARUBOX_LANGS;
-const langs: readonly (Lang | HaruboxLang)[] = isHarubox ? haruboxLangs : product === 'cockatoo' ? COCKATOO_LANGS : isOther ? SHELTIE_LANGS : LANGS;
-const langLabel = (l: Lang | HaruboxLang) => (isHarubox ? HARUBOX_LANG_LABEL[l as HaruboxLang] : LANG_LABEL[l as Lang]);
-const langCode = (l: Lang | HaruboxLang) => (isHarubox ? HARUBOX_LANG_CODE[l as HaruboxLang] : LANG_CODE[l as Lang]);
+const langs: readonly (Lang | HaruboxLang)[] = isWide ? haruboxLangs : isOther ? SHELTIE_LANGS : LANGS;
+const langLabel = (l: Lang | HaruboxLang) => (isWide ? HARUBOX_LANG_LABEL[l as HaruboxLang] : LANG_LABEL[l as Lang]);
+const langCode = (l: Lang | HaruboxLang) => (isWide ? HARUBOX_LANG_CODE[l as HaruboxLang] : LANG_CODE[l as Lang]);
 const pageHref = (p: Page, l: Lang | HaruboxLang) =>
   isHarubox
     ? haruboxHref(p === 'harubox' ? 'support' : (p as 'support' | 'privacy'), l as HaruboxLang)
     : product === 'cockatoo'
-      ? cockatooHref(p === 'cockatoo' ? 'product' : (p as 'support' | 'privacy'))
+      ? cockatooHref(p === 'cockatoo' ? 'product' : (p as 'support' | 'privacy'), l as HaruboxLang)
       : product === 'sheltie'
         ? sheltieHref(p === 'sheltie' ? 'product' : (p as 'support' | 'privacy'), l as Lang)
         : href(p, l as Lang);
 // Harubox has no product page, so its crumb opens the support page.
-const productHome = isHarubox ? haruboxHref('support', lang as HaruboxLang) : product === 'cockatoo' ? cockatooHref('product') : sheltieHref('product', lang as Lang);
+const productHome = isHarubox ? haruboxHref('support', lang as HaruboxLang) : isCockatoo ? cockatooHref('product', lang as HaruboxLang) : sheltieHref('product', lang as Lang);
 // The company home is its own section; every other page belongs to a product (Peakly or Sheltie).
 const inPeakly = page !== 'home';
 // First-visit language redirect runs only on the root home, which is English.
@@ -197,12 +200,12 @@ const GA_ID = 'G-96T0GRTD1R';
           )
         }
         {
-          // Cockatoo is Korean only: its footer links appear on the Korean pages.
-          !isOther && lang === 'ko' && (
-            <nav aria-label={PRODUCT_NAME.cockatoo}>
-              <p class="footer-head">{PRODUCT_NAME.cockatoo}</p>
-              <a href={cockatooHref('support')}>{t.docs.support}</a>
-              <a href={cockatooHref('privacy')}>{t.docs.privacy}</a>
+          // Cockatoo pages exist in every site language: each page links to its own language.
+          !isOther && (
+            <nav aria-label={cockatooName(lang as Lang)}>
+              <p class="footer-head">{cockatooName(lang as Lang)}</p>
+              <a href={cockatooHref('support', lang as Lang)}>{t.docs.support}</a>
+              <a href={cockatooHref('privacy', lang as Lang)}>{t.docs.privacy}</a>
             </nav>
           )
         }

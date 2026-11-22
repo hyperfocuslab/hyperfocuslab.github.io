@@ -1,0 +1,12 @@
+---
+import CockatooPage from '../../../components/CockatooPage.astro';
+import { COCKATOO_LANGS, type CockatooLang } from '../../../i18n';
+
+// Cockatoo languages other than ko (which lives at /cockatoo/).
+export function getStaticPaths() {
+  return COCKATOO_LANGS.filter((lang) => lang !== 'ko').map((lang) => ({ params: { lang } }));
+}
+const lang = Astro.params.lang as CockatooLang;
+---
+
+<CockatooPage lang={lang} />

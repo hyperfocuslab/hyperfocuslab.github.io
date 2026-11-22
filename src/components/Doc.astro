@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { HARUBOX_UI, PRODUCT_NAME, haruboxName, ui, type HaruboxLang, type Lang, type Product } from '../i18n';
+import { HARUBOX_UI, PRODUCT_NAME, cockatooName, haruboxName, ui, type HaruboxLang, type Lang, type Product } from '../i18n';
 
 interface Props {
   doc: 'privacy' | 'terms' | 'support';
@@ -19,10 +19,10 @@ const metas = import.meta.glob<{ title: string; description: string; heading: st
 });
 const body = bodies[`../data/docs/${key}.${lang}.html`];
 const meta = metas[`../data/docs/${key}.${lang}.json`];
-// Harubox has no terms page and eight languages of its own.
+// Harubox and Cockatoo have no terms page and eight languages of their own.
 const label =
-  product === 'harubox'
-    ? `${haruboxName(lang as HaruboxLang)} · ${HARUBOX_UI[lang as HaruboxLang].docs[doc as 'privacy' | 'support']}`
+  product === 'harubox' || product === 'cockatoo'
+    ? `${(product === 'harubox' ? haruboxName : cockatooName)(lang as HaruboxLang)} · ${HARUBOX_UI[lang as HaruboxLang].docs[doc as 'privacy' | 'support']}`
     : `${product === 'peakly' ? ui[lang as Lang].appName : PRODUCT_NAME[product]} · ${ui[lang as Lang].docs[doc]}`;
 ---
 
