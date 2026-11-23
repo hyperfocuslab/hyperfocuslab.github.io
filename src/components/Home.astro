@@ -19,6 +19,10 @@ const peaklyDark = `public/assets/peakly/${peaklyShotLang}-chart-dark.webp`;
 const sheltieLang = lang === 'ko' ? 'ko' : 'en';
 const sheltieLinkSet = sheltieLinks(lang);
 // Harubox transcript capture per home language; a language without one shows the copy alone.
+// Korean has card-only copy for Peakly and Sheltie (their pages keep the plain lead).
+const peaklyLead = 'cardLead' in t.peakly ? t.peakly.cardLead : t.peakly.lead;
+const sheltieLead = 'cardLead' in t.sheltie ? t.sheltie.cardLead : t.sheltie.lead;
+const sheltieNote = 'cardNote' in t.sheltie ? t.sheltie.cardNote : undefined;
 const haruboxShot = existsSync(`public/assets/harubox/${lang}-transcript.webp`) ? `/assets/harubox/${lang}-transcript.webp` : undefined;
 ---
 
@@ -42,7 +46,7 @@ const haruboxShot = existsSync(`public/assets/harubox/${lang}-transcript.webp`) 
               <p class="muted">{t.peakly.tagline}</p>
             </div>
           </div>
-          <p class="lead">{t.peakly.lead}</p>
+          <p class="lead">{peaklyLead}</p>
           <StoreBadges lang={lang} />
           <a class="arrow-link" href={href('peakly', lang)}>{t.more}</a>
         </div>
@@ -69,7 +73,8 @@ const haruboxShot = existsSync(`public/assets/harubox/${lang}-transcript.webp`) 
               <p class="muted">{t.sheltie.tagline}</p>
             </div>
           </div>
-          <p class="lead">{t.sheltie.lead}</p>
+          <p class="lead">{sheltieLead}</p>
+          {sheltieNote && <p class="muted">{sheltieNote}</p>}
           <div class="actions store">
             <a class="btn" href={sheltieLinkSet.appStore} target="_blank" rel="noreferrer">App Store ↗</a>
             <a class="btn btn-ghost" href={sheltieLinkSet.github} target="_blank" rel="noreferrer">GitHub ↗</a>
