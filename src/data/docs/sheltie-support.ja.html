@@ -1,8 +1,8 @@
-<p class="intro">MacやWindows PCのherdr-core上で動くClaude Codeエージェントが止まったとき、iPhoneのロック画面の通知からそのまま答えられる無料アプリです。</p>
+<p class="intro">MacやWindows PCで動くClaude CodeやCodexのエージェントが止まったとき、iPhoneのロック画面の通知からそのまま答えられる無料アプリです。</p>
       <section aria-labelledby="needs">
         <h2 id="needs">必要なもの</h2>
         <ul>
-          <li>herdr-coreの中でClaude Codeを動かしているMacまたはWindows PC</li>
+          <li>Claude CodeかCodexを動かしているMacまたはWindows PC。承認と質問への回答はいつものターミナルのままで使えます。リアルタイムのターミナル画面、メッセージ送信、スマホからの新しい作業はherdr-core（<code>hc</code>）で動かすときに使えます。</li>
           <li>PCとiPhoneの両方にインストールしたTailscale</li>
           <li>PCにインストールするSheltieサーバー</li>
         </ul>
@@ -16,10 +16,10 @@
         </ol>
         <p>インストールコマンド（Macのターミナル）:</p>
         <pre class="cmd"><code>curl -fsSL https://raw.githubusercontent.com/hyperfocuslab/sheltie/main/install.sh | sh</code></pre>
-        <p>macOS、python3、herdr-core（<code>hc</code>）、Tailscaleが必要です。QRコードをもう一度表示するには <code>python3 ~/.local/share/sheltie/sheltie.py pair</code> を実行します。アンインストールするには、同じコマンドの末尾を <code>| sh -s -- --uninstall</code> にして実行します。</p>
+        <p>macOS、python3、Tailscaleが必要です。QRコードをもう一度表示するには <code>python3 ~/.local/share/sheltie/sheltie.py pair</code> を実行します。アンインストールするには、同じコマンドの末尾を <code>| sh -s -- --uninstall</code> にして実行します。</p>
         <p>インストールコマンド（WindowsのPowerShell、管理者としてではなく実行）:</p>
         <pre class="cmd"><code>irm https://raw.githubusercontent.com/hyperfocuslab/sheltie/main/install.ps1 | iex</code></pre>
-        <p>Windows、Python 3.9以上、herdr-core（<code>hc</code>）、Tailscaleが必要です。サーバーはサインイン時にタスクスケジューラで自動的に起動します。QRコードをもう一度表示するには <code>python "$env:LOCALAPPDATA\sheltie\sheltie.py" pair</code>、アンインストールするには <code>$env:SHELTIE_UNINSTALL=1; irm https://raw.githubusercontent.com/hyperfocuslab/sheltie/main/install.ps1 | iex</code> を実行します。ソース: <a href="https://github.com/hyperfocuslab/sheltie">github.com/hyperfocuslab/sheltie</a>（MIT）</p>
+        <p>Windows、Python 3.9以上、Tailscaleが必要です。サーバーはサインイン時にタスクスケジューラで自動的に起動します。QRコードをもう一度表示するには <code>python "$env:LOCALAPPDATA\sheltie\sheltie.py" pair</code>、アンインストールするには <code>$env:SHELTIE_UNINSTALL=1; irm https://raw.githubusercontent.com/hyperfocuslab/sheltie/main/install.ps1 | iex</code> を実行します。ソース: <a href="https://github.com/hyperfocuslab/sheltie">github.com/hyperfocuslab/sheltie</a>（MIT）</p>
       </section>
       <section aria-labelledby="faq">
         <h2 id="faq">よくある質問</h2>

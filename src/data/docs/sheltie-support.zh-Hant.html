@@ -1,8 +1,8 @@
-<p class="intro">在 Mac 或 Windows PC 的 herdr-core 上執行的 Claude Code 代理停下來時，可以直接從 iPhone 鎖定畫面的通知回覆的免費 App。</p>
+<p class="intro">在 Mac 或 Windows PC 上執行的 Claude Code 或 Codex 代理停下來時，可以直接從 iPhone 鎖定畫面的通知回覆的免費 App。</p>
       <section aria-labelledby="needs">
         <h2 id="needs">需要準備</h2>
         <ul>
-          <li>在 herdr-core 中執行 Claude Code 的 Mac 或 Windows PC</li>
+          <li>執行 Claude Code 或 Codex 的 Mac 或 Windows PC。核准與回答問題可直接在原本的終端機使用；即時終端機畫面、傳送訊息、從手機開始新工作，需要在 herdr-core（<code>hc</code>）中執行。</li>
           <li>電腦與 iPhone 都安裝 Tailscale</li>
           <li>安裝在電腦上的 Sheltie 伺服器</li>
         </ul>
@@ -16,10 +16,10 @@
         </ol>
         <p>安裝指令（Mac 終端機）：</p>
         <pre class="cmd"><code>curl -fsSL https://raw.githubusercontent.com/hyperfocuslab/sheltie/main/install.sh | sh</code></pre>
-        <p>需要 macOS、python3、herdr-core（<code>hc</code>）與 Tailscale。要再次顯示 QR 碼，請執行 <code>python3 ~/.local/share/sheltie/sheltie.py pair</code>。要解除安裝，請把同一行指令的結尾改成 <code>| sh -s -- --uninstall</code> 再執行。</p>
+        <p>需要 macOS、python3 與 Tailscale。要再次顯示 QR 碼，請執行 <code>python3 ~/.local/share/sheltie/sheltie.py pair</code>。要解除安裝，請把同一行指令的結尾改成 <code>| sh -s -- --uninstall</code> 再執行。</p>
         <p>安裝指令（Windows PowerShell，不要以系統管理員身分執行）：</p>
         <pre class="cmd"><code>irm https://raw.githubusercontent.com/hyperfocuslab/sheltie/main/install.ps1 | iex</code></pre>
-        <p>需要 Windows、Python 3.9 以上、herdr-core（<code>hc</code>）與 Tailscale。伺服器會在登入時由工作排程器自動啟動。要再次顯示 QR 碼，請執行 <code>python "$env:LOCALAPPDATA\sheltie\sheltie.py" pair</code>；要解除安裝，請執行 <code>$env:SHELTIE_UNINSTALL=1; irm https://raw.githubusercontent.com/hyperfocuslab/sheltie/main/install.ps1 | iex</code>。原始碼：<a href="https://github.com/hyperfocuslab/sheltie">github.com/hyperfocuslab/sheltie</a>（MIT）</p>
+        <p>需要 Windows、Python 3.9 以上與 Tailscale。伺服器會在登入時由工作排程器自動啟動。要再次顯示 QR 碼，請執行 <code>python "$env:LOCALAPPDATA\sheltie\sheltie.py" pair</code>；要解除安裝，請執行 <code>$env:SHELTIE_UNINSTALL=1; irm https://raw.githubusercontent.com/hyperfocuslab/sheltie/main/install.ps1 | iex</code>。原始碼：<a href="https://github.com/hyperfocuslab/sheltie">github.com/hyperfocuslab/sheltie</a>（MIT）</p>
       </section>
       <section aria-labelledby="faq">
         <h2 id="faq">常見問題</h2>

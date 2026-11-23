@@ -389,7 +389,7 @@ export const ui = {
         tagline: '코딩 에이전트 승인 앱',
         lead: 'PC에서 돌리는 코딩 에이전트가 권한이나 질문에서 멈추면 iPhone으로 알림이 옵니다. 잠금화면에서 바로 허용하거나 거부하고, 앱에서 대화를 읽고 새 작업을 시작합니다. Android 앱은 비공개 테스트 중입니다. 무료이고 PC 쪽 서버는 오픈소스입니다.',
         // Home card only (ko): the detail page keeps the lead above.
-        cardLead: 'Claude Code 돌려 놓고 자리 비웠다가, "이 파일 만들어도 될까요?" 하나에 20분째 멈춰 있던 적 있죠. 에이전트가 멈추면 바로 폰으로 알림이 와요. 잠금화면에서 허용만 누르면 다시 돌아가요. 다음에 에이전트 돌려 놓고 자리 비울 때 써 보세요.',
+        cardLead: 'Claude Code나 Codex 돌려 놓고 자리 비웠다가, "이 파일 만들어도 될까요?" 하나에 20분째 멈춰 있던 적 있죠. 에이전트가 멈추면 바로 폰으로 알림이 와요. 잠금화면에서 허용만 누르면 다시 돌아가요. 다음에 에이전트 돌려 놓고 자리 비울 때 써 보세요.',
         cardNote: '무료예요. PC 쪽 서버는 오픈소스고, Android는 비공개 테스트 중이에요.',
         rows: [
             { shot: 'notif', label: '알림', title: '앱을 열지 않고 답합니다', body: '알림을 길게 누르면 허용, 이 세션 동안 허용, 거부가 나옵니다. 답하기 직전에 터미널 메뉴가 그대로인지 다시 확인합니다.', alt: '알림을 길게 눌러 나온 허용·거부 메뉴' },
@@ -520,7 +520,7 @@ export const ui = {
         tagline: 'Approve coding agents from your iPhone',
         lead: 'When a coding agent on your computer stops for a permission or a question, your iPhone gets a notification. Allow or deny right from the Lock Screen, read the conversation, and start new tasks from the app. The Android app is in closed testing. Free, with an open-source server.',
         // Home card only (en): the Sheltie page keeps the lead above.
-        cardLead: 'You leave Claude Code running, step away, and come back to find it stuck for 20 minutes on "Can I create this file?" With Sheltie, your phone buzzes the moment an agent stops. Tap Allow on the Lock Screen and it gets back to work. Try it the next time you leave an agent running.',
+        cardLead: 'You leave Claude Code or Codex running, step away, and come back to find it stuck for 20 minutes on "Can I create this file?" With Sheltie, your phone buzzes the moment an agent stops. Tap Allow on the Lock Screen and it gets back to work. Try it the next time you leave an agent running.',
         cardNote: 'It\'s free, and the server on your computer is open source. Android is in closed testing.',
         rows: [
             { shot: 'notif', label: 'Notifications', title: 'Answer without opening the app', body: 'Long-press the notification for Allow, Allow for this session, or Deny. Right before answering, Sheltie checks the terminal menu hasn\'t changed.', alt: 'Allow and deny menu on a long-pressed notification' },

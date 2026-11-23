@@ -1,8 +1,8 @@
-<p class="intro">맥이나 윈도우 PC의 herdr-core 위에서 돌아가는 Claude Code 에이전트가 멈추면, 아이폰 잠금화면 알림으로 바로 답하는 무료 앱입니다.</p>
+<p class="intro">맥이나 윈도우 PC에서 돌아가는 Claude Code나 Codex 에이전트가 멈추면, 아이폰 잠금화면 알림으로 바로 답하는 무료 앱입니다.</p>
       <section aria-labelledby="needs">
         <h2 id="needs">필요한 것</h2>
         <ul>
-          <li>herdr-core 안에서 Claude Code를 돌리는 맥이나 윈도우 PC</li>
+          <li>Claude Code나 Codex를 돌리는 맥이나 윈도우 PC. 평소 쓰는 터미널 그대로 승인·질문에 답할 수 있고, 실시간 터미널 화면·메시지·폰에서 새 작업은 herdr-core(<code>hc</code>)로 돌릴 때 됩니다.</li>
           <li>컴퓨터와 아이폰에 설치한 Tailscale</li>
           <li>컴퓨터에 설치하는 Sheltie 서버</li>
         </ul>
@@ -16,10 +16,10 @@
         </ol>
         <p>설치 명령(맥 터미널):</p>
         <pre class="cmd"><code>curl -fsSL https://raw.githubusercontent.com/hyperfocuslab/sheltie/main/install.sh | sh</code></pre>
-        <p>필요한 것: macOS, python3, herdr-core(<code>hc</code>), Tailscale. QR을 다시 보려면 <code>python3 ~/.local/share/sheltie/sheltie.py pair</code>, 지우려면 같은 명령 끝을 <code>| sh -s -- --uninstall</code>로 바꿉니다. </p>
+        <p>필요한 것: macOS, python3, Tailscale. QR을 다시 보려면 <code>python3 ~/.local/share/sheltie/sheltie.py pair</code>, 지우려면 같은 명령 끝을 <code>| sh -s -- --uninstall</code>로 바꿉니다. </p>
         <p>설치 명령(윈도우 PowerShell, 관리자 권한 아님):</p>
         <pre class="cmd"><code>irm https://raw.githubusercontent.com/hyperfocuslab/sheltie/main/install.ps1 | iex</code></pre>
-        <p>필요한 것: Windows, Python 3.9 이상, herdr-core(<code>hc</code>), Tailscale. 서버는 로그인할 때 작업 스케줄러로 자동 시작됩니다. QR을 다시 보려면 <code>python "$env:LOCALAPPDATA\sheltie\sheltie.py" pair</code>, 지우려면 <code>$env:SHELTIE_UNINSTALL=1; irm https://raw.githubusercontent.com/hyperfocuslab/sheltie/main/install.ps1 | iex</code>. 소스: <a href="https://github.com/hyperfocuslab/sheltie">github.com/hyperfocuslab/sheltie</a>(MIT).</p>
+        <p>필요한 것: Windows, Python 3.9 이상, Tailscale. 서버는 로그인할 때 작업 스케줄러로 자동 시작됩니다. QR을 다시 보려면 <code>python "$env:LOCALAPPDATA\sheltie\sheltie.py" pair</code>, 지우려면 <code>$env:SHELTIE_UNINSTALL=1; irm https://raw.githubusercontent.com/hyperfocuslab/sheltie/main/install.ps1 | iex</code>. 소스: <a href="https://github.com/hyperfocuslab/sheltie">github.com/hyperfocuslab/sheltie</a>(MIT).</p>
       </section>
       <section aria-labelledby="faq">
         <h2 id="faq">자주 묻는 것</h2>

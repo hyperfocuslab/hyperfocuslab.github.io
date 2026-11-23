@@ -1,8 +1,8 @@
-<p class="intro">A free app that lets you answer a stopped Claude Code agent from your iPhone Lock Screen. The agent runs on your Mac or Windows PC, on top of herdr-core.</p>
+<p class="intro">A free app that lets you answer a stopped Claude Code or Codex agent from your iPhone Lock Screen. The agent runs on your Mac or Windows PC.</p>
       <section aria-labelledby="needs">
         <h2 id="needs">What you need</h2>
         <ul>
-          <li>A Mac or Windows PC running Claude Code inside herdr-core</li>
+          <li>A Mac or Windows PC running Claude Code or Codex. Approvals and questions work from any terminal; the live terminal, messages and new tasks from your phone need herdr-core (<code>hc</code>).</li>
           <li>Tailscale on both the computer and the iPhone</li>
           <li>The Sheltie server, installed on the computer</li>
         </ul>
@@ -16,10 +16,10 @@
         </ol>
         <p>Install command (Mac Terminal):</p>
         <pre class="cmd"><code>curl -fsSL https://raw.githubusercontent.com/hyperfocuslab/sheltie/main/install.sh | sh</code></pre>
-        <p>Requires macOS, python3, herdr-core (<code>hc</code>) and Tailscale. To show the QR code again, run <code>python3 ~/.local/share/sheltie/sheltie.py pair</code>. To uninstall, end the same command with <code>| sh -s -- --uninstall</code>. </p>
+        <p>Requires macOS, python3 and Tailscale. To show the QR code again, run <code>python3 ~/.local/share/sheltie/sheltie.py pair</code>. To uninstall, end the same command with <code>| sh -s -- --uninstall</code>. </p>
         <p>Install command (Windows PowerShell, not as administrator):</p>
         <pre class="cmd"><code>irm https://raw.githubusercontent.com/hyperfocuslab/sheltie/main/install.ps1 | iex</code></pre>
-        <p>Requires Windows, Python 3.9+, herdr-core (<code>hc</code>) and Tailscale. The server starts at sign-in through Task Scheduler. To show the QR code again, run <code>python "$env:LOCALAPPDATA\sheltie\sheltie.py" pair</code>. To uninstall, run <code>$env:SHELTIE_UNINSTALL=1; irm https://raw.githubusercontent.com/hyperfocuslab/sheltie/main/install.ps1 | iex</code>. Source: <a href="https://github.com/hyperfocuslab/sheltie">github.com/hyperfocuslab/sheltie</a> (MIT).</p>
+        <p>Requires Windows, Python 3.9+ and Tailscale. The server starts at sign-in through Task Scheduler. To show the QR code again, run <code>python "$env:LOCALAPPDATA\sheltie\sheltie.py" pair</code>. To uninstall, run <code>$env:SHELTIE_UNINSTALL=1; irm https://raw.githubusercontent.com/hyperfocuslab/sheltie/main/install.ps1 | iex</code>. Source: <a href="https://github.com/hyperfocuslab/sheltie">github.com/hyperfocuslab/sheltie</a> (MIT).</p>
       </section>
       <section aria-labelledby="faq">
         <h2 id="faq">Common questions</h2>
