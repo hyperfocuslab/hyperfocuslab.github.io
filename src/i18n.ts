@@ -402,6 +402,9 @@ export const ui = {
         title: 'Sheltie | Approve coding agents from your iPhone',
         tagline: 'Approve coding agents from your iPhone',
         lead: 'When a coding agent on your computer stops for a permission or a question, your iPhone gets a notification. Allow or deny right from the Lock Screen, read the conversation, and start new tasks from the app. The Android app is in closed testing. Free, with an open-source server.',
+        // Home card only (en): the Sheltie page keeps the lead above.
+        cardLead: 'You leave Claude Code running, step away, and come back to find it stuck for 20 minutes on "Can I create this file?" With Sheltie, your phone buzzes the moment an agent stops. Tap Allow on the Lock Screen and it gets back to work. Try it the next time you leave an agent running.',
+        cardNote: 'It\'s free, and the server on your computer is open source. Android is in closed testing.',
         rows: [
             { shot: 'notif', label: 'Notifications', title: 'Answer without opening the app', body: 'Long-press the notification for Allow, Allow for this session, or Deny. Right before answering, Sheltie checks the terminal menu hasn\'t changed.', alt: 'Allow and deny menu on a long-pressed notification' },
             { shot: 'lock', label: 'Lock Screen', title: 'Stuck agents on your Lock Screen', body: 'A Live Activity shows how many agents are stuck and what they\'re waiting for. It also sits in the Dynamic Island.', alt: 'Live Activity and notification on the Lock Screen' },
@@ -423,24 +426,26 @@ export const ui = {
           note: 'Join the group first, or the opt-in link will not open. Only the developer sees member emails. A public release needs 12 testers keeping the app installed for 14 days.',
         },
       },
-      soon: 'In App Store review',
+      soon: 'In App Store review now.',
       cockatoo: {
         tagline: 'Conversation & pronunciation',
-        lead: 'Talk with an AI in English: it rewrites awkward sentences into natural ones, and when you read the corrected sentence aloud it marks mispronounced words one by one. 35 practice situations.',
+        lead: 'Say something in English and it hands back a more natural way to say it. Read that sentence aloud and it shows which words you mispronounced, one by one. Pick one of 35 situations, from ordering coffee to a job interview, and start talking.',
       },
       harubox: {
         tagline: 'All-day recorder with on-device transcription',
-        lead: 'Press record once and it keeps going with the screen off. Transcripts, speaker labels and summaries are made on your iPhone, with no time limit on recording.',
+        lead: 'Start recording in the morning and put your phone in your pocket. By the commute home, the day\'s conversations are already written down. Meeting, class or phone call, it runs all day without cutting out, and transcripts and summaries are made on the phone. Turn it on tomorrow morning and go about your day.',
       },
       game: {
         tagline: 'Browser zombie shooter',
-        lead: 'A third-person shooter in a ruined city block: recover the sample and reach the helicopter. Rifle, shotgun, pistol, axe, molotovs and pipe bombs, and every shot draws the horde. Escape and your kill count goes on the online leaderboard. Runs in the browser with no install, on PC (keyboard and mouse) or phone (touch).',
+        lead: 'A third-person shooter in a ruined city: grab the sample and make it to the helicopter. You have everything from rifles to axes and molotovs, but every shot pulls in more zombies. Escape and your kill count goes on the online leaderboard. Nothing to install, so play a round in your PC or phone browser right now.',
         play: 'Play now ↗',
         alt: 'DEAD DISTRICT gameplay: a player with a rifle and zombies on a ruined street',
       },
       peakly: {
         tagline: 'ADHD medication tracker',
         lead: 'Log when you take your medication, and Peakly shows whether it is rising, at its strongest, or wearing off. Goals, routines, and to-dos are in the same app.',
+        // Home card only (en): the Peakly page keeps the lead above.
+        cardLead: 'All it asks for is the time you took your pill. A curve shows whether it\'s kicking in, at its strongest, or wearing off. Goals, routines and to-dos live in the same app. Start by logging today\'s dose.',
         sections: [
           {
             tab: 'Medication',
