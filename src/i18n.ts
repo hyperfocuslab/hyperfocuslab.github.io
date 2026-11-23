@@ -270,7 +270,7 @@ export const ui = {
       sheltie: {
         title: 'Sheltie | 코딩 에이전트 승인 앱',
         tagline: '코딩 에이전트 승인 앱',
-        lead: 'PC에서 돌리는 코딩 에이전트가 권한이나 질문에서 멈추면 iPhone으로 알림이 옵니다(Android는 비공개 테스트 중). 잠금화면에서 바로 허용하거나 거부하고, 앱에서 대화를 읽고 새 작업을 시작합니다. 무료이고 PC 쪽 서버는 오픈소스입니다.',
+        lead: 'PC에서 돌리는 코딩 에이전트가 권한이나 질문에서 멈추면 iPhone으로 알림이 옵니다. 잠금화면에서 바로 허용하거나 거부하고, 앱에서 대화를 읽고 새 작업을 시작합니다. Android 앱은 비공개 테스트 중입니다. 무료이고 PC 쪽 서버는 오픈소스입니다.',
         rows: [
             { shot: 'notif', label: '알림', title: '앱을 열지 않고 답합니다', body: '알림을 길게 누르면 허용, 이 세션 동안 허용, 거부가 나옵니다. 답하기 직전에 터미널 메뉴가 그대로인지 다시 확인합니다.', alt: '알림을 길게 눌러 나온 허용·거부 메뉴' },
             { shot: 'lock', label: '잠금화면', title: '막힌 수가 잠금화면에 떠 있습니다', body: 'Live Activity가 지금 몇 개가 막혀 있고 무엇을 기다리는지 보여 줍니다. 다이나믹 아일랜드에도 뜹니다.', alt: '잠금화면의 Live Activity와 알림' },
@@ -284,7 +284,7 @@ export const ui = {
         ],
         agentsLabel: '지원 에이전트',
         agents: 'Claude Code · Codex · Gemini CLI · Qwen Code · OpenCode · Grok · GitHub Copilot CLI · Cursor Agent · Amp',
-        requirements: 'herdr-core에서 에이전트를 돌리는 Mac 또는 Windows PC와 Tailscale. 설치는 PC에서 명령 한 줄과 QR 스캔입니다.',
+        requirements: 'Claude Code나 Codex를 돌리는 Mac 또는 Windows PC와 Tailscale. 승인과 질문 답은 평소 쓰던 터미널에서도 되고, 실시간 터미널·메시지 보내기·폰에서 새 작업·다른 에이전트는 herdr로 돌릴 때 됩니다. 설치는 PC에서 명령 한 줄과 QR 스캔입니다.',
         android: {
           button: 'Android 테스트 참여',
           label: 'Android 비공개 테스트',
@@ -292,14 +292,14 @@ export const ui = {
           note: '그룹에 먼저 가입해야 테스트 참여 링크가 열립니다. 가입자 이메일은 개발자만 봅니다. 정식 출시하려면 테스터 12명이 14일 동안 설치해 두어야 합니다.',
         },
       },
-      soon: 'App Store 출시 준비 중',
+      soon: 'App Store 심사 중',
       cockatoo: {
         tagline: '말하면 고쳐 주고, 다시 말해 익히기',
         lead: 'AI와 영어로 대화하면 어색한 문장은 자연스럽게 고쳐 주고, 고친 문장을 따라 말하면 틀린 발음을 단어별로 짚어 줍니다. 35개 상황에서 연습합니다.',
       },
       harubox: {
         tagline: '종일 녹음·받아쓰기·요약',
-        lead: '낮말도 밤말도 하루박스가 들어 둬요. 녹음 버튼을 한 번 누르면 화면을 꺼도 계속 녹음하고, 받아쓰기·화자 분리·요약은 아이폰 안에서 합니다. 녹음 시간 한도가 없습니다.',
+        lead: '낮말도 밤말도 하루박스가 들어 둡니다. 녹음 버튼을 한 번 누르면 화면을 꺼도 계속 녹음하고, 받아쓰기·화자 분리·요약은 iPhone 안에서 합니다. 녹음 시간 한도가 없습니다.',
       },
       game: {
         tagline: '브라우저 좀비 슈터',
@@ -396,7 +396,7 @@ export const ui = {
       sheltie: {
         title: 'Sheltie | Approve coding agents from your iPhone',
         tagline: 'Approve coding agents from your iPhone',
-        lead: 'When a coding agent on your computer stops for a permission or a question, your iPhone gets a notification (Android is in closed testing). Allow or deny right from the Lock Screen, read the conversation, and start new tasks from the app. Free, with an open-source server.',
+        lead: 'When a coding agent on your computer stops for a permission or a question, your iPhone gets a notification. Allow or deny right from the Lock Screen, read the conversation, and start new tasks from the app. The Android app is in closed testing. Free, with an open-source server.',
         rows: [
             { shot: 'notif', label: 'Notifications', title: 'Answer without opening the app', body: 'Long-press the notification for Allow, Allow for this session, or Deny. Right before answering, Sheltie checks the terminal menu hasn\'t changed.', alt: 'Allow and deny menu on a long-pressed notification' },
             { shot: 'lock', label: 'Lock Screen', title: 'Stuck agents on your Lock Screen', body: 'A Live Activity shows how many agents are stuck and what they\'re waiting for. It also sits in the Dynamic Island.', alt: 'Live Activity and notification on the Lock Screen' },
@@ -410,7 +410,7 @@ export const ui = {
         ],
         agentsLabel: 'Supported agents',
         agents: 'Claude Code · Codex · Gemini CLI · Qwen Code · OpenCode · Grok · GitHub Copilot CLI · Cursor Agent · Amp',
-        requirements: 'A Mac or Windows PC running agents in herdr-core, plus Tailscale. Setup is one command on the computer and a QR scan.',
+        requirements: 'A Mac or Windows PC running Claude Code or Codex, plus Tailscale. Approvals and questions work from any terminal; the live terminal, sending messages, new tasks from your phone and the other agents need herdr. Setup is one command on the computer and a QR scan.',
         android: {
           button: 'Join the Android test',
           label: 'Android closed test',
@@ -418,7 +418,7 @@ export const ui = {
           note: 'Join the group first, or the opt-in link will not open. Only the developer sees member emails. A public release needs 12 testers keeping the app installed for 14 days.',
         },
       },
-      soon: 'Coming soon to the App Store',
+      soon: 'In App Store review',
       cockatoo: {
         tagline: 'Conversation & pronunciation',
         lead: 'Talk with an AI in English: it rewrites awkward sentences into natural ones, and when you read the corrected sentence aloud it marks mispronounced words one by one. 35 practice situations.',
@@ -521,8 +521,8 @@ export const ui = {
       },
       sheltie: {
         title: 'Sheltie | Approve coding agents from your iPhone',
-        tagline: 'Approve coding agents from your iPhone',
-        lead: 'When a coding agent on your computer stops for a permission or a question, your iPhone gets a notification (Android is in closed testing). Allow or deny right from the Lock Screen, read the conversation, and start new tasks from the app. Free, with an open-source server.',
+        tagline: 'コーディングエージェント承認アプリ',
+        lead: 'PCで動かしているコーディングエージェントが権限の確認や質問で止まると、iPhoneに通知が届きます。ロック画面からそのまま許可・拒否し、アプリで会話を読んで新しい作業を始められます。Android版はクローズドテスト中です。無料で、PC側のサーバーはオープンソースです。',
         rows: [
             { shot: 'lock', label: 'Lock Screen', title: 'Answer without opening the app', body: 'Long-press the notification for Allow, Allow for this session, or Deny. Right before answering, Sheltie checks the terminal menu hasn\'t changed.', alt: 'Allow and deny menu on a Lock Screen notification' },
             { shot: 'list', label: 'List', title: 'Stuck agents on top', body: 'Every session from every computer and folder in one list, with what it\'s waiting for and for how long.', alt: 'List of agent sessions' },
@@ -531,15 +531,15 @@ export const ui = {
         ],
         agentsLabel: 'Supported agents',
         agents: 'Claude Code · Codex · Gemini CLI · Qwen Code · OpenCode · Grok · GitHub Copilot CLI · Cursor Agent · Amp',
-        requirements: 'A Mac or Windows PC running agents in herdr-core, plus Tailscale. Setup is one command on the computer and a QR scan.',
+        requirements: 'A Mac or Windows PC running Claude Code or Codex, plus Tailscale. Approvals and questions work from any terminal; the live terminal, sending messages, new tasks from your phone and the other agents need herdr. Setup is one command on the computer and a QR scan.',
         android: {
-          button: 'Join the Android test',
+          button: 'Androidテストに参加',
           label: 'Android closed test',
           steps: ['Join the Google Group', 'Opt in to the test', 'Install from Google Play'],
           note: 'Join the group first, or the opt-in link will not open. Only the developer sees member emails. A public release needs 12 testers keeping the app installed for 14 days.',
         },
       },
-      soon: 'App Store 公開準備中',
+      soon: 'App Store 審査中',
       cockatoo: {
         tagline: '話すと添削、言い直して身につく',
         lead: 'AIと英語で会話すると、不自然な文は自然な英語に添削され、添削された文を読み上げると間違えた発音を単語ごとに示します。35の場面で練習できます。',
@@ -642,8 +642,8 @@ export const ui = {
       },
       sheltie: {
         title: 'Sheltie | Approve coding agents from your iPhone',
-        tagline: 'Approve coding agents from your iPhone',
-        lead: 'When a coding agent on your computer stops for a permission or a question, your iPhone gets a notification (Android is in closed testing). Allow or deny right from the Lock Screen, read the conversation, and start new tasks from the app. Free, with an open-source server.',
+        tagline: '程式代理核准 App',
+        lead: '電腦上執行的程式代理因權限或提問而停下時，iPhone 會收到通知。在鎖定畫面直接允許或拒絕，也能在 App 裡閱讀對話、開始新工作。Android 版正在封閉測試。免費，電腦端伺服器為開放原始碼。',
         rows: [
             { shot: 'lock', label: 'Lock Screen', title: 'Answer without opening the app', body: 'Long-press the notification for Allow, Allow for this session, or Deny. Right before answering, Sheltie checks the terminal menu hasn\'t changed.', alt: 'Allow and deny menu on a Lock Screen notification' },
             { shot: 'list', label: 'List', title: 'Stuck agents on top', body: 'Every session from every computer and folder in one list, with what it\'s waiting for and for how long.', alt: 'List of agent sessions' },
@@ -652,15 +652,15 @@ export const ui = {
         ],
         agentsLabel: 'Supported agents',
         agents: 'Claude Code · Codex · Gemini CLI · Qwen Code · OpenCode · Grok · GitHub Copilot CLI · Cursor Agent · Amp',
-        requirements: 'A Mac or Windows PC running agents in herdr-core, plus Tailscale. Setup is one command on the computer and a QR scan.',
+        requirements: 'A Mac or Windows PC running Claude Code or Codex, plus Tailscale. Approvals and questions work from any terminal; the live terminal, sending messages, new tasks from your phone and the other agents need herdr. Setup is one command on the computer and a QR scan.',
         android: {
-          button: 'Join the Android test',
+          button: '參加 Android 測試',
           label: 'Android closed test',
           steps: ['Join the Google Group', 'Opt in to the test', 'Install from Google Play'],
           note: 'Join the group first, or the opt-in link will not open. Only the developer sees member emails. A public release needs 12 testers keeping the app installed for 14 days.',
         },
       },
-      soon: 'App Store 準備上架中',
+      soon: 'App Store 審核中',
       cockatoo: {
         tagline: '開口說英文，句子修正、發音逐字檢查',
         lead: '用英文和 AI 對話，不自然的句子會改得更道地；跟著唸修正後的句子，會逐字指出唸錯的地方。35 種情境可練習。',
