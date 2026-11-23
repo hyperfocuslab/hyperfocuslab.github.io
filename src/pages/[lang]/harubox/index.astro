@@ -1,0 +1,12 @@
+---
+import HaruboxPage from '../../../components/HaruboxPage.astro';
+import { HARUBOX_LANGS, type HaruboxLang } from '../../../i18n';
+
+// Harubox languages other than ko (which lives at /harubox/).
+export function getStaticPaths() {
+  return HARUBOX_LANGS.filter((lang) => lang !== 'ko').map((lang) => ({ params: { lang } }));
+}
+const lang = Astro.params.lang as HaruboxLang;
+---
+
+<HaruboxPage lang={lang} />

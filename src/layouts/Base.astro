@@ -35,14 +35,13 @@ const langLabel = (l: Lang | HaruboxLang) => (isWide ? HARUBOX_LANG_LABEL[l as H
 const langCode = (l: Lang | HaruboxLang) => (isWide ? HARUBOX_LANG_CODE[l as HaruboxLang] : LANG_CODE[l as Lang]);
 const pageHref = (p: Page, l: Lang | HaruboxLang) =>
   isHarubox
-    ? haruboxHref(p === 'harubox' ? 'support' : (p as 'support' | 'privacy'), l as HaruboxLang)
+    ? haruboxHref(p === 'harubox' ? 'product' : (p as 'support' | 'privacy'), l as HaruboxLang)
     : product === 'cockatoo'
       ? cockatooHref(p === 'cockatoo' ? 'product' : (p as 'support' | 'privacy'), l as HaruboxLang)
       : product === 'sheltie'
         ? sheltieHref(p === 'sheltie' ? 'product' : (p as 'support' | 'privacy'), l as Lang)
         : href(p, l as Lang);
-// Harubox has no product page, so its crumb opens the support page.
-const productHome = isHarubox ? haruboxHref('support', lang as HaruboxLang) : isCockatoo ? cockatooHref('product', lang as HaruboxLang) : sheltieHref('product', lang as Lang);
+const productHome = isHarubox ? haruboxHref('product', lang as HaruboxLang) : isCockatoo ? cockatooHref('product', lang as HaruboxLang) : sheltieHref('product', lang as Lang);
 // The company home is its own section; every other page belongs to a product (Peakly or Sheltie).
 const inPeakly = page !== 'home';
 // First-visit language redirect runs only on the root home, which is English.
@@ -136,7 +135,7 @@ const GA_ID = 'G-96T0GRTD1R';
             <a
               class="crumb"
               href={isOther ? productHome : href('peakly', siteLang)}
-              aria-current={page === 'peakly' || page === 'sheltie' || page === 'cockatoo' ? 'page' : undefined}
+              aria-current={page === 'peakly' || page === 'sheltie' || page === 'cockatoo' || page === 'harubox' ? 'page' : undefined}
             >
               {isOther ? productName : 'Peakly'}
             </a>
@@ -181,7 +180,7 @@ const GA_ID = 'G-96T0GRTD1R';
               <a href={href('peakly', siteLang)}>{t.appName}</a>
               <a href={href('sheltie', siteLang)}>Sheltie</a>
               <a href={cockatooHref('product', siteLang)}>{cockatooName(siteLang)}</a>
-              <a href={haruboxHref('support', siteLang)}>{haruboxName(siteLang)}</a>
+              <a href={haruboxHref('product', siteLang)}>{haruboxName(siteLang)}</a>
               <a href={GAME_URL} target="_blank" rel="noreferrer">DEAD DISTRICT</a>
             </nav>
           )

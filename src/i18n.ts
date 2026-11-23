@@ -35,6 +35,12 @@ export function cockatooLinks(_lang: CockatooLang) {
   return { appStore: '' };
 }
 
+// Harubox is in App Store review: the link is empty until it is approved, and the product page
+// draws the App Store button only when it has a value.
+export function haruboxLinks(_lang: HaruboxLang) {
+  return { appStore: '' };
+}
+
 const PREFIX: Record<Lang, string> = { ko: '', en: '/en', ja: '/ja', 'zh-Hant': '/zh-Hant' };
 // The root home is English. Peakly documents keep PREFIX: the apps and stores link to those URLs.
 const HOME: Record<Lang, string> = { ko: '/ko/', en: '/', ja: '/ja/', 'zh-Hant': '/zh-Hant/' };
@@ -77,16 +83,16 @@ export function cockatooName(lang: CockatooLang): string {
 // Harubox and Cockatoo have per-language names: see haruboxName and cockatooName.
 export const PRODUCT_NAME = { sheltie: 'Sheltie' } as const;
 
-// Harubox (all-day recorder, the fourth product) has support and privacy pages only, in eight
+// Harubox (all-day recorder, the fourth product) has product, support and privacy pages in eight
 // languages. The site's own Lang covers four of them, so Harubox has its own language type,
 // labels, UI strings and href function. ko lives at /harubox/, the others at /<lang>/harubox/.
 export const HARUBOX_LANGS = ['ko', 'en', 'ja', 'zh-Hant', 'de', 'es', 'fr', 'pt-BR'] as const;
 export type HaruboxLang = (typeof HARUBOX_LANGS)[number];
 export const HARUBOX_DOCS = ['support', 'privacy'] as const;
 export type HaruboxDoc = (typeof HARUBOX_DOCS)[number];
-// There is no product page: the product home is the support page.
-export function haruboxHref(doc: HaruboxDoc, lang: HaruboxLang): string {
-  return `${lang === 'ko' ? '' : `/${lang}`}/harubox/${doc}/`;
+export function haruboxHref(doc: 'product' | HaruboxDoc, lang: HaruboxLang): string {
+  const base = `${lang === 'ko' ? '' : `/${lang}`}/harubox/`;
+  return doc === 'product' ? base : `${base}${doc}/`;
 }
 export const HARUBOX_LANG_LABEL: Record<HaruboxLang, string> = {
   ko: '한국어',
@@ -226,6 +232,117 @@ export const COCKATOO_PAGE: Record<CockatooLang, { title: string; tagline: strin
       { shot: 'habit', label: 'Hábitos de pronúncia', title: 'Os sons que você mais erra, contados', body: 'Em “Hábitos de pronúncia” você vê quantas vezes erra cada som, por exemplo th → d, 12 vezes.', alt: 'Detalhe de um hábito de pronúncia' },
     ],
     requirements: 'iPhone compatível com a Apple Intelligence, iOS 27 ou posterior. As explicações aparecem no idioma do seu iPhone.',
+  },
+};
+
+// Harubox product page copy, one entry per Harubox language. Text follows the App Store listing
+// (malhaedum docs/store/<locale>.md). Screenshot rows are drawn only when
+// public/assets/harubox/<lang>-<shot>.webp exists.
+type HaruboxRow = { shot: string; label: string; title: string; body: string; alt: string };
+export const HARUBOX_PAGE: Record<HaruboxLang, { title: string; tagline: string; lead: string; rows: HaruboxRow[]; requirements: string }> = {
+  ko: {
+    title: '하루박스 | 종일 녹음·받아쓰기·요약',
+    tagline: '종일 녹음·받아쓰기·요약',
+    lead: '아침에 녹음 켜 두고 폰은 주머니에. 퇴근길에 열어 보면 오늘 오간 말이 글로 정리돼 있어요. 회의든 수업이든 통화든 하루 종일 켜 둬도 안 끊기고, 받아쓰기랑 요약은 폰 안에서 끝나요.',
+    rows: [
+      { shot: 'record', label: '녹음', title: '화면을 꺼도 하루 종일 녹음해요', body: '녹음 버튼을 한 번 누르면 다른 앱을 써도 계속 녹음해요. 시간 한도가 없고, 전화나 알람에 끊기면 끝난 뒤 저절로 이어서 녹음해요. 녹음하면서 북마크와 메모도 남겨요.', alt: '녹음 중 화면' },
+      { shot: 'conversation', label: '받아쓰기', title: '받아쓴 대화를 구간별로 봐요', body: '받아쓰기는 iPhone 안에서 해요. 구간마다 시간과 말한 사람이 나뉘어 보이고, 문장을 누르면 그 자리부터 다시 들어요.', alt: '구간별 시간과 화자가 나뉜 받아쓰기 화면' },
+      { shot: 'summary', label: '요약', title: '요약과 할 일을 정리해요', body: '녹음마다 요약, 주제, 다음 할 일을 정리해요. 할 일은 미리알림에, 일정은 캘린더에 넣고, 넣기 전에 항목마다 확인해요.', alt: '요약과 할 일 화면' },
+      { shot: 'speakers', label: '화자', title: '화자 이름을 바꾸고 합쳐요', body: '나뉜 화자에 실제 이름을 붙이고, 같은 사람이 둘로 나뉘었으면 합쳐요. 문장별로 고치는 것도 돼요.', alt: '화자 목록 화면' },
+      { shot: 'list', label: '녹음 목록', title: '모든 녹음에서 검색해요', body: '모든 녹음에서 검색하고, 찾은 문장을 누르면 그 자리부터 들어요. 받아쓰기는 녹음이 끝나면 바로, 또는 충전 중일 때만 하도록 고를 수 있어요.', alt: '녹음 목록 화면' },
+    ],
+    requirements: '모든 기능이 무료예요. 시간 제한도 인앱 구매도 없어요. iOS 26 이상, 요약에는 Apple Intelligence가 필요해요. Apple Watch 녹음은 watchOS 26 이상.',
+  },
+  en: {
+    title: 'Harubox | All-Day Recorder with On-Device Transcription',
+    tagline: 'All-day recorder with on-device transcription',
+    lead: 'Start recording in the morning and put your phone in your pocket. By the commute home, the day\'s conversations are already written down. Meeting, class or phone call, it runs all day without cutting out, and transcripts and summaries are made on the phone.',
+    rows: [
+      { shot: 'record', label: 'Recording', title: 'Keeps recording with the screen off', body: 'Tap record once and it keeps going while you use other apps. There is no time limit, and if a call or an alarm interrupts, it picks up again by itself. Add bookmarks and notes as you record.', alt: 'Recording screen' },
+      { shot: 'conversation', label: 'Transcript', title: 'Read the conversation by segment', body: 'Transcription runs on your iPhone. Each segment shows its time and who spoke, and tapping a sentence plays from that spot.', alt: 'Transcript screen with time and speaker for each segment' },
+      { shot: 'summary', label: 'Summary', title: 'Summary and to-dos for each recording', body: 'Each recording gets a summary, topics and next steps. To-dos go to Reminders and events to Calendar, and you confirm each item before it is added.', alt: 'Summary and to-dos screen' },
+      { shot: 'speakers', label: 'Speakers', title: 'Rename and merge speakers', body: 'Give each speaker a real name, and merge two speakers that are the same person. You can also edit sentence by sentence.', alt: 'Speakers screen' },
+      { shot: 'list', label: 'Recordings', title: 'Search across all recordings', body: 'Search every recording and tap a result to play from that spot. Transcribe right after recording, or only while charging.', alt: 'Recordings list screen' },
+    ],
+    requirements: 'Everything is free, with no time limits and no in-app purchases. Requires iOS 26 or later. Summaries need Apple Intelligence. Apple Watch recording needs watchOS 26 or later.',
+  },
+  ja: {
+    title: 'Harubox | 終日録音・文字起こし・要約',
+    tagline: '終日録音・文字起こし・要約',
+    lead: '朝に録音を始めれば、止めるまで録り続けます。会議、講義、通話、一日まるごと。文字起こし、話者分離、要約はすべてiPhone内で処理し、録音時間の上限はありません。',
+    rows: [
+      { shot: 'record', label: '録音', title: '画面を消しても一日中録音', body: '録音ボタンを一度押せば、ほかのアプリを使っていても録音を続けます。時間制限はなく、電話やアラームで中断されても、終わると自動で再開します。録音しながらブックマークとメモも残せます。', alt: '録音中の画面' },
+      { shot: 'conversation', label: '文字起こし', title: '会話を区間ごとに読める', body: '文字起こしはiPhone内で行います。区間ごとに時間と話者が分かれて表示され、文をタップするとその位置から再生します。', alt: '区間ごとに時間と話者が分かれた文字起こし画面' },
+      { shot: 'summary', label: '要約', title: '要約とやることをまとめる', body: '録音ごとに、要約、話題、次にやることをまとめます。やることはリマインダーへ、予定はカレンダーへ入れ、追加する前に項目ごとに確認します。', alt: '要約とやることの画面' },
+      { shot: 'speakers', label: '話者', title: '話者名の変更と統合', body: '分けられた話者に名前をつけ、同じ人が二人に分かれていれば統合します。文ごとの修正もできます。', alt: '話者の画面' },
+      { shot: 'list', label: '録音一覧', title: 'すべての録音から検索', body: 'すべての録音から検索し、見つかった文をタップするとその位置から再生します。文字起こしは録音の直後か、充電中だけかを選べます。', alt: '録音一覧の画面' },
+    ],
+    requirements: 'すべて無料で、時間制限もアプリ内課金もありません。iOS 26以降が必要です。要約はApple Intelligenceをオンにした機種で使えます。Apple Watchでの録音はwatchOS 26以降。',
+  },
+  'zh-Hant': {
+    title: 'Harubox | 整天錄音、逐字稿、摘要',
+    tagline: '整天錄音、逐字稿、摘要',
+    lead: '早上開始錄音，到你按停止為止都會持續錄。會議、上課、通話，或是一整天。逐字稿、講者辨識和摘要都在 iPhone 上完成，錄音時間沒有上限。',
+    rows: [
+      { shot: 'record', label: '錄音', title: '關掉螢幕也能整天錄音', body: '按一下錄音，使用其他 App 時也會繼續錄。沒有時間限制，被來電或鬧鈴打斷時，結束後會自動接著錄。錄音時也能加書籤和備註。', alt: '錄音中的畫面' },
+      { shot: 'conversation', label: '逐字稿', title: '依區段閱讀對話', body: '逐字稿在 iPhone 上產生。每個區段都顯示時間和說話的人，點一下句子就從那裡開始播放。', alt: '依區段顯示時間與講者的逐字稿畫面' },
+      { shot: 'summary', label: '摘要', title: '整理摘要與待辦', body: '每段錄音都會整理出摘要、主題和接下來要做的事。待辦加入「提醒事項」，行程加入「行事曆」，加入前會逐項請你確認。', alt: '摘要與待辦畫面' },
+      { shot: 'speakers', label: '講者', title: '重新命名並合併講者', body: '替分開的講者取真實名字，同一個人被分成兩位時可以合併。也能逐句修改。', alt: '講者畫面' },
+      { shot: 'list', label: '錄音列表', title: '在所有錄音中搜尋', body: '在所有錄音中搜尋，點一下結果就從那一句開始播放。逐字稿可選擇錄完立刻處理，或只在充電時處理。', alt: '錄音列表畫面' },
+    ],
+    requirements: '全部免費，沒有時間限制，也沒有 App 內購買。需要 iOS 26 以上。摘要需在開啟 Apple Intelligence 的裝置上使用。Apple Watch 錄音需要 watchOS 26 以上。',
+  },
+  de: {
+    title: 'Harubox | Ganztägig aufnehmen mit Transkription auf dem iPhone',
+    tagline: 'Transkription auf dem iPhone',
+    lead: 'Morgens starten, abends stoppen: Harubox nimmt durch. Besprechungen, Vorlesungen, Telefonate oder ein ganzer Arbeitstag. Transkript, Sprechertrennung und Zusammenfassung laufen auf deinem iPhone, gratis und ohne Limit.',
+    rows: [
+      { shot: 'record', label: 'Aufnahme', title: 'Nimmt auch bei ausgeschaltetem Bildschirm auf', body: 'Einmal auf Aufnahme tippen, und es läuft weiter, auch in anderen Apps. Keine Zeitgrenze. Unterbricht ein Anruf oder ein Wecker, geht die Aufnahme danach von selbst weiter. Lesezeichen und Notizen setzt du während der Aufnahme.', alt: 'Aufnahmebildschirm' },
+      { shot: 'conversation', label: 'Transkript', title: 'Das Gespräch Abschnitt für Abschnitt lesen', body: 'Das Transkript entsteht auf dem iPhone. Jeder Abschnitt zeigt Zeit und Sprecher, und ein Tipp auf einen Satz spielt ab dieser Stelle ab.', alt: 'Transkript mit Zeit und Sprecher pro Abschnitt' },
+      { shot: 'summary', label: 'Zusammenfassung', title: 'Zusammenfassung und Aufgaben je Aufnahme', body: 'Zu jeder Aufnahme gibt es eine Zusammenfassung, Themen und nächste Schritte. Aufgaben gehen in Erinnerungen, Termine in den Kalender. Jeden Eintrag bestätigst du vorher.', alt: 'Bildschirm mit Zusammenfassung und Aufgaben' },
+      { shot: 'speakers', label: 'Sprecher', title: 'Sprecher umbenennen und zusammenführen', body: 'Gib jedem Sprecher einen echten Namen und führe zwei Sprecher zusammen, die dieselbe Person sind. Auch Satz für Satz lässt sich bearbeiten.', alt: 'Sprecherbildschirm' },
+      { shot: 'list', label: 'Aufnahmen', title: 'Suche über alle Aufnahmen', body: 'Durchsuche alle Aufnahmen und spiele ab einem Treffer ab. Transkribiert wird direkt nach der Aufnahme oder nur beim Laden.', alt: 'Aufnahmenliste' },
+    ],
+    requirements: 'Alles ist gratis, ohne Zeitlimit und ohne In-App-Käufe. Erfordert iOS 26 oder neuer. Zusammenfassungen brauchen ein Gerät mit aktivierter Apple Intelligence. Aufnahmen mit der Apple Watch brauchen watchOS 26 oder neuer.',
+  },
+  es: {
+    title: 'Harubox | Grabadora todo el día con transcripción en tu iPhone',
+    tagline: 'Transcripción en tu iPhone',
+    lead: 'Empieza a grabar por la mañana y sigue hasta que la pares. Reuniones, clases, llamadas o una jornada entera. Transcripción, hablantes y resumen se hacen en tu iPhone, gratis y sin límites.',
+    rows: [
+      { shot: 'record', label: 'Grabación', title: 'Sigue grabando con la pantalla apagada', body: 'Pulsa grabar una vez y sigue mientras usas otras apps. Sin límite de tiempo. Si una llamada o una alarma la interrumpe, continúa sola al terminar. Añade marcadores y notas mientras grabas.', alt: 'Pantalla de grabación' },
+      { shot: 'conversation', label: 'Transcripción', title: 'Lee la conversación por tramos', body: 'La transcripción se hace en tu iPhone. Cada tramo muestra la hora y quién habla, y al tocar una frase se reproduce desde ahí.', alt: 'Transcripción con hora y hablante por tramo' },
+      { shot: 'summary', label: 'Resumen', title: 'Resumen y tareas de cada grabación', body: 'Cada grabación tiene resumen, temas y próximos pasos. Las tareas van a Recordatorios y los eventos a Calendario. Confirmas cada elemento antes de añadirlo.', alt: 'Pantalla de resumen y tareas' },
+      { shot: 'speakers', label: 'Hablantes', title: 'Renombra y une hablantes', body: 'Ponle un nombre real a cada hablante y une los que son la misma persona. También puedes corregir frase por frase.', alt: 'Pantalla de hablantes' },
+      { shot: 'list', label: 'Grabaciones', title: 'Busca en todas las grabaciones', body: 'Busca en todas las grabaciones y toca un resultado para reproducir desde ahí. Transcribe nada más grabar, o solo mientras carga.', alt: 'Lista de grabaciones' },
+    ],
+    requirements: 'Todo es gratis, sin límites de tiempo ni compras dentro de la app. Requiere iOS 26 o posterior. El resumen necesita un dispositivo con Apple Intelligence activada. Grabar con el Apple Watch requiere watchOS 26 o posterior.',
+  },
+  fr: {
+    title: 'Harubox | Dictaphone illimité avec transcription sur l\'iPhone',
+    tagline: 'Transcription sur l\'iPhone',
+    lead: 'Lancez l\'enregistrement le matin, il continue jusqu\'à l\'arrêt. Réunions, cours, appels ou toute une journée de travail. Transcription, locuteurs et résumé se font sur votre iPhone, gratuitement et sans limite.',
+    rows: [
+      { shot: 'record', label: 'Enregistrement', title: 'Continue d\'enregistrer écran éteint', body: 'Appuyez une fois sur enregistrer, et il continue pendant que vous utilisez d\'autres apps. Pas de limite de durée. Si un appel ou une alarme l\'interrompt, il reprend seul ensuite. Ajoutez des repères et des notes pendant l\'enregistrement.', alt: 'Écran d\'enregistrement' },
+      { shot: 'conversation', label: 'Transcription', title: 'Lisez la conversation par segment', body: 'La transcription se fait sur votre iPhone. Chaque segment affiche l\'heure et qui parle, et toucher une phrase lance la lecture à partir de là.', alt: 'Transcription avec heure et locuteur par segment' },
+      { shot: 'summary', label: 'Résumé', title: 'Résumé et tâches pour chaque enregistrement', body: 'Chaque enregistrement reçoit un résumé, des sujets et les prochaines étapes. Les tâches vont dans Rappels, les événements dans Calendrier. Vous confirmez chaque élément avant l\'ajout.', alt: 'Écran du résumé et des tâches' },
+      { shot: 'speakers', label: 'Locuteurs', title: 'Renommez et fusionnez les locuteurs', body: 'Donnez un vrai nom à chaque locuteur et fusionnez ceux qui sont la même personne. Vous pouvez aussi corriger phrase par phrase.', alt: 'Écran des locuteurs' },
+      { shot: 'list', label: 'Enregistrements', title: 'Recherche dans tous les enregistrements', body: 'Recherchez dans tous les enregistrements et touchez un résultat pour lire à partir de là. Transcrivez juste après l\'enregistrement, ou seulement pendant la charge.', alt: 'Liste des enregistrements' },
+    ],
+    requirements: 'Tout est gratuit, sans limite de temps ni achat intégré. Nécessite iOS 26 ou plus récent. Le résumé demande un appareil avec Apple Intelligence activée. L\'enregistrement sur Apple Watch nécessite watchOS 26 ou plus récent.',
+  },
+  'pt-BR': {
+    title: 'Harubox | Gravador o dia todo com transcrição no iPhone',
+    tagline: 'Transcrição no seu iPhone',
+    lead: 'Comece a gravar de manhã e ele segue até você parar. Reuniões, aulas, ligações ou um dia de trabalho inteiro. Transcrição, falantes e resumo rodam no seu iPhone, grátis e sem limites.',
+    rows: [
+      { shot: 'record', label: 'Gravação', title: 'Continua gravando com a tela apagada', body: 'Toque em gravar uma vez e ele segue enquanto você usa outros apps. Sem limite de tempo. Se uma ligação ou um alarme interromper, a gravação continua sozinha depois. Adicione marcadores e notas enquanto grava.', alt: 'Tela de gravação' },
+      { shot: 'conversation', label: 'Transcrição', title: 'Leia a conversa por trechos', body: 'A transcrição é feita no seu iPhone. Cada trecho mostra o horário e quem falou, e tocar em uma frase reproduz a partir dali.', alt: 'Transcrição com horário e falante por trecho' },
+      { shot: 'summary', label: 'Resumo', title: 'Resumo e tarefas de cada gravação', body: 'Cada gravação ganha resumo, tópicos e próximos passos. As tarefas vão para Lembretes e os eventos para Calendário. Você confirma cada item antes de adicionar.', alt: 'Tela de resumo e tarefas' },
+      { shot: 'speakers', label: 'Falantes', title: 'Renomeie e junte falantes', body: 'Dê um nome real a cada falante e junte os que são a mesma pessoa. Também dá para corrigir frase por frase.', alt: 'Tela de falantes' },
+      { shot: 'list', label: 'Gravações', title: 'Pesquise em todas as gravações', body: 'Pesquise em todas as gravações e toque em um resultado para ouvir a partir dali. Transcreva logo após gravar, ou só durante o carregamento.', alt: 'Lista de gravações' },
+    ],
+    requirements: 'Tudo é grátis, sem limite de tempo e sem compras no app. Requer iOS 26 ou posterior. O resumo precisa de um aparelho com Apple Intelligence ativada. Gravar com o Apple Watch requer watchOS 26 ou posterior.',
   },
 };
 

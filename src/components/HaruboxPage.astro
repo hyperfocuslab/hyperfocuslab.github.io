@@ -1,0 +1,58 @@
+---
+import { existsSync } from 'node:fs';
+import Base from '../layouts/Base.astro';
+import AppShot from './AppShot.astro';
+import { HARUBOX_PAGE, haruboxLinks, haruboxName, haruboxHomeLang, type HaruboxLang } from '../i18n';
+
+interface Props {
+  lang: HaruboxLang;
+}
+const { lang } = Astro.props;
+const harubox = HARUBOX_PAGE[lang];
+// Screenshots are drawn only when public/assets/harubox/{lang}-{shot}.webp exists.
+const rows = harubox.rows.filter((row) => existsSync(`public/assets/harubox/${lang}-${row.shot}.webp`));
+const links = haruboxLinks(lang);
+---
+
+<Base lang={lang} page="harubox" product="harubox" title={harubox.title} description={harubox.lead}>
+  <section class="section" id="harubox">
+    <div class="wrap">
+      <div class="p-intro">
+        <div class="product-name">
+          <img class="app-icon" src="/assets/harubox-icon.webp" alt="" width="72" height="72" loading="lazy" />
+          <div>
+            <h1 class="h2">{haruboxName(lang)}</h1>
+            <p class="muted">{harubox.tagline}</p>
+          </div>
+        </div>
+        <p class="lead">{harubox.lead}</p>
+        {
+          links.appStore && (
+            <div class="actions store">
+              <a class="btn" href={links.appStore} target="_blank" rel="noreferrer">App Store ↗</a>
+            </div>
+          )
+        }
+      </div>
+
+      <div class="rows-feature">
+        {
+          rows.map((row, index) => (
+            <div class:list={['feature-row', { flip: index % 2 === 1 }]}>
+              <div class="feature-copy">
+                <p class="label">{row.label}</p>
+                <h3 class="h2">{row.title}</h3>
+                <p class="lead">{row.body}</p>
+              </div>
+              <div class="feature-visual">
+                <AppShot src={`/assets/harubox/${lang}-${row.shot}.webp`} alt={row.alt} lang={haruboxHomeLang(lang)} />
+              </div>
+            </div>
+          ))
+        }
+      </div>
+
+      <p class="row-note p-req">{harubox.requirements}</p>
+    </div>
+  </section>
+</Base>
