@@ -13,10 +13,10 @@ const t = ui[lang].home;
 // The home is the company page: the name, then the products as a list (no tagline: the products say it).
 // Each product shows one capture and links to its own page.
 // Traditional Chinese has no Peakly captures of its own yet, so it shows the English ones;
-// Sheltie has ko and en captures only, so ja and zh-Hant show en.
+// Sheltie captures exist in ko, en, ja and zh-Hant; any other language shows en.
 const peaklyShotLang = lang === 'zh-Hant' ? 'en' : lang;
 const peaklyDark = `public/assets/peakly/${peaklyShotLang}-chart-dark.webp`;
-const sheltieLang = lang === 'ko' ? 'ko' : 'en';
+const sheltieLang = existsSync(`public/assets/sheltie/${lang}-question.webp`) ? lang : 'en';
 const sheltieLinkSet = sheltieLinks(lang);
 // Harubox transcript capture per home language; a language without one shows the copy alone.
 // Korean has card-only copy for Peakly and Sheltie (their pages keep the plain lead).

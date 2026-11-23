@@ -10,7 +10,8 @@ interface Props {
 const { lang } = Astro.props;
 const sheltie = ui[lang].home.sheltie;
 // Sheltie has ko and en captures only (public/assets/sheltie/{ko,en}-{shot}.webp); ja and zh-Hant show en.
-const shotLang = lang === 'ko' ? 'ko' : 'en';
+// Captures exist per language (ko, en, ja, zh-Hant); a language without them shows en.
+const shotLang = existsSync(`public/assets/sheltie/${lang}-list.webp`) ? lang : 'en';
 const sheltieRows = sheltie.rows.filter((row) => existsSync(`public/assets/sheltie/${shotLang}-${row.shot}.webp`));
 const sheltieLinkSet = sheltieLinks(lang);
 ---
