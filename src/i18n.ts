@@ -51,17 +51,17 @@ const SUFFIX: Partial<Record<Lang, string>> = { ko: '', en: '-en', ja: '-ja' };
 // policies and support pages live under /peakly/.
 export function href(page: Page, lang: Lang): string {
   if (page === 'home') return HOME[lang];
-  // The home lists the products; each has its own page (Sheltie: ko and en only, see sheltieHref).
+  // The home lists the products; each has its own page.
   if (page === 'peakly') return `${PREFIX[lang]}/peakly/`;
   if (page === 'cockatoo') return cockatooHref('product', lang);
-  if (page === 'sheltie') return sheltieHref('product', SHELTIE_LANGS.includes(lang as 'ko' | 'en') ? (lang as 'ko' | 'en') : 'en');
+  if (page === 'sheltie') return sheltieHref('product', lang);
   return `${PREFIX[lang]}/peakly/${page}/`;
 }
 
 // Sheltie (iPhone companion for coding agents) is the second product, with its own page.
-// Its product, support and privacy pages exist in ko and en only, under /sheltie/.
+// Its product, support and privacy pages exist in the four site languages, under /<prefix>/sheltie/.
 export type Product = 'peakly' | 'sheltie' | 'cockatoo' | 'harubox';
-export const SHELTIE_LANGS = ['ko', 'en'] as const;
+export const SHELTIE_LANGS = ['ko', 'en', 'ja', 'zh-Hant'] as const;
 export const SHELTIE_DOCS = ['support', 'privacy'] as const;
 export function sheltieHref(doc: 'product' | (typeof SHELTIE_DOCS)[number], lang: Lang): string {
   return doc === 'product' ? `${PREFIX[lang]}/sheltie/` : `${PREFIX[lang]}/sheltie/${doc}/`;
@@ -647,23 +647,28 @@ export const ui = {
         more: 'ピークリーのページへ',
       },
       sheltie: {
-        title: 'Sheltie | Approve coding agents from your iPhone',
+        title: 'Sheltie | コーディングエージェント承認アプリ',
         tagline: 'コーディングエージェント承認アプリ',
         lead: 'PCで動かしているコーディングエージェントが権限の確認や質問で止まると、iPhoneに通知が届きます。ロック画面からそのまま許可・拒否し、アプリで会話を読んで新しい作業を始められます。Android版はクローズドテスト中です。無料で、PC側のサーバーはオープンソースです。',
         rows: [
-            { shot: 'lock', label: 'Lock Screen', title: 'Answer without opening the app', body: 'Long-press the notification for Allow, Allow for this session, or Deny. Right before answering, Sheltie checks the terminal menu hasn\'t changed.', alt: 'Allow and deny menu on a Lock Screen notification' },
-            { shot: 'list', label: 'List', title: 'Stuck agents on top', body: 'Every session from every computer and folder in one list, with what it\'s waiting for and for how long.', alt: 'List of agent sessions' },
-            { shot: 'question', label: 'Questions', title: 'Pick an option or type your own', body: 'Answer agent questions, plan approvals, and multi-question forms as cards.', alt: 'Question card with options' },
-            { shot: 'chat', label: 'Conversation', title: 'Keep working from your phone', body: 'Read the conversation so far and send messages. Pick a folder to start a new agent.', alt: 'Conversation with an agent' },
+            { shot: 'notif', label: '通知', title: 'アプリを開かずに答える', body: '通知を長押しすると、許可・このセッション中は許可・拒否が出ます。答える直前に、ターミナルのメニューが変わっていないかもう一度確かめます。', alt: '長押しした通知の許可・拒否メニュー' },
+            { shot: 'lock', label: 'ロック画面', title: '止まっている数をロック画面に', body: 'ライブアクティビティが、いま何件止まっていて何を待っているかを表示します。Dynamic Islandにも出ます。', alt: 'ロック画面のライブアクティビティと通知' },
+            { shot: 'approve', label: '承認', title: '何を許可するか見てから押す', body: '作成するファイルの内容や実行するコマンドをカードで表示し、ターミナルに出た選択肢をそのままボタンにします。', alt: 'ファイル作成の承認カード' },
+            { shot: 'list', label: '一覧', title: '複数のPCを1つの一覧に', body: 'PCごと、フォルダごとに、すべてのセッションを1つの一覧で見られます。止まっているエージェントが一番上に来て、何を待っているか、何分たったかも表示されます。', alt: 'MacBookとMac miniのエージェントセッション一覧' },
+            { shot: 'question', label: '質問', title: '選択肢を選ぶか、自分で入力する', body: 'エージェントからの質問、プランの承認、複数の質問をまとめて聞く画面にも、カードで答えられます。', alt: '質問の選択肢カード' },
+            { shot: 'term', label: 'ターミナル', title: 'PCのターミナルをリアルタイムで', body: 'ターミナル画面をそのまま見ながら、数字・矢印・Enterキーを送れます。カードで答えられないメニューにも、ここから答えます。', alt: 'リアルタイムのターミナル画面とキーボタン' },
+            { shot: 'files', label: 'ファイル', title: 'PCのフォルダをスマートフォンで開く', body: 'エージェントが作業しているフォルダのファイルとサブフォルダを、サイズと更新日時つきで見られます。', alt: 'PCのフォルダのファイル一覧' },
+            { shot: 'chat', label: '会話', title: 'スマートフォンから作業を続ける', body: 'これまでの会話を読み、メッセージを送れます。ファイルや写真を添付したり、フォルダを選んで新しいエージェントを起動したりもできます。', alt: '会話画面のファイル・写真添付メニュー' },
+            { shot: 'usage', label: '使用量', title: '上限とコストをPCごとに', body: 'Claude Codeの5時間・週間の使用上限とリセットまでの時間、日別・モデル別のコストを確認できます。', alt: '使用上限と日別コストのグラフ' },
         ],
-        agentsLabel: 'Supported agents',
+        agentsLabel: '対応エージェント',
         agents: 'Claude Code · Codex · Gemini CLI · Qwen Code · OpenCode · Grok · GitHub Copilot CLI · Cursor Agent · Amp',
-        requirements: 'A Mac or Windows PC running Claude Code or Codex, plus Tailscale. Approvals and questions work from any terminal; the live terminal, sending messages, new tasks from your phone and the other agents need herdr. Setup is one command on the computer and a QR scan.',
+        requirements: 'Claude CodeかCodexを動かしているMacまたはWindows PCと、Tailscaleがあれば使えます。承認と質問への回答は、いつものターミナルのままで動きます。リアルタイムのターミナル、メッセージ送信、スマートフォンからの新しい作業、ほかのエージェントにはherdrが必要です。セットアップは、PCにコマンドを1行貼り付けてQRコードを読み取るだけです。',
         android: {
           button: 'Androidテストに参加',
-          label: 'Android closed test',
-          steps: ['Join the Google Group', 'Opt in to the test', 'Install from Google Play'],
-          note: 'Join the group first, or the opt-in link will not open. Only the developer sees member emails. A public release needs 12 testers keeping the app installed for 14 days.',
+          label: 'Androidクローズドテスト',
+          steps: ['Googleグループに参加', 'テストに参加', 'Google Playからインストール'],
+          note: '先にグループに参加しないと、テスト参加のリンクが開きません。メールアドレスは開発者だけが見られます。正式公開には、テスター12人が14日間アプリを入れたままにしておく必要があります。',
         },
       },
       soon: 'App Store 審査中',
@@ -768,23 +773,28 @@ export const ui = {
         more: '前往 Peakly 頁面',
       },
       sheltie: {
-        title: 'Sheltie | Approve coding agents from your iPhone',
+        title: 'Sheltie | 程式代理核准 App',
         tagline: '程式代理核准 App',
         lead: '電腦上執行的程式代理因權限或提問而停下時，iPhone 會收到通知。在鎖定畫面直接允許或拒絕，也能在 App 裡閱讀對話、開始新工作。Android 版正在封閉測試。免費，電腦端伺服器為開放原始碼。',
         rows: [
-            { shot: 'lock', label: 'Lock Screen', title: 'Answer without opening the app', body: 'Long-press the notification for Allow, Allow for this session, or Deny. Right before answering, Sheltie checks the terminal menu hasn\'t changed.', alt: 'Allow and deny menu on a Lock Screen notification' },
-            { shot: 'list', label: 'List', title: 'Stuck agents on top', body: 'Every session from every computer and folder in one list, with what it\'s waiting for and for how long.', alt: 'List of agent sessions' },
-            { shot: 'question', label: 'Questions', title: 'Pick an option or type your own', body: 'Answer agent questions, plan approvals, and multi-question forms as cards.', alt: 'Question card with options' },
-            { shot: 'chat', label: 'Conversation', title: 'Keep working from your phone', body: 'Read the conversation so far and send messages. Pick a folder to start a new agent.', alt: 'Conversation with an agent' },
+            { shot: 'notif', label: '通知', title: '不用開啟 App 就能回覆', body: '長按通知會出現「允許」、「本次工作階段允許」和「拒絕」。回覆前會再確認一次終端機選單有沒有變。', alt: '長按通知後出現的允許與拒絕選單' },
+            { shot: 'lock', label: '鎖定畫面', title: '卡住幾個，鎖定畫面就看得到', body: '即時動態會顯示目前有幾個代理卡住、各自在等什麼。動態島上也看得到。', alt: '鎖定畫面上的即時動態與通知' },
+            { shot: 'approve', label: '核准', title: '看清楚要允許什麼再按', body: '以卡片顯示要建立的檔案內容或要執行的指令，並把終端機上的選項直接做成按鈕。', alt: '建立檔案的核准卡片' },
+            { shot: 'list', label: '清單', title: '多台電腦，一份清單', body: '依電腦、依資料夾，在同一份清單查看所有工作階段。卡住的代理排在最上面，也會顯示在等什麼、已經等了幾分鐘。', alt: 'MacBook 與 Mac mini 的代理工作階段清單' },
+            { shot: 'question', label: '提問', title: '選一個選項，或自己輸入', body: '代理提出的問題、計畫核准，以及一次問多個問題的畫面，都能用卡片回答。', alt: '提問選項卡片' },
+            { shot: 'term', label: '終端機', title: '即時查看電腦的終端機', body: '直接看終端機畫面，並送出數字、方向鍵與 Enter 鍵。卡片處理不了的選單，也能在這裡回答。', alt: '即時終端機畫面與按鍵按鈕' },
+            { shot: 'files', label: '檔案', title: '用手機打開電腦裡的資料夾', body: '查看代理工作中資料夾裡的檔案與子資料夾，以及大小和修改時間。', alt: '電腦資料夾的檔案清單' },
+            { shot: 'chat', label: '對話', title: '在手機上繼續工作', body: '閱讀目前為止的對話並傳送訊息。可以附加檔案或照片，也能選擇資料夾啟動新的代理。', alt: '對話畫面的檔案與照片附加選單' },
+            { shot: 'usage', label: '用量', title: '每台電腦的上限與費用', body: '查看 Claude Code 的 5 小時與每週用量上限、距離重置的時間，以及依日期、依模型的費用。', alt: '用量上限與每日費用圖表' },
         ],
-        agentsLabel: 'Supported agents',
+        agentsLabel: '支援的代理',
         agents: 'Claude Code · Codex · Gemini CLI · Qwen Code · OpenCode · Grok · GitHub Copilot CLI · Cursor Agent · Amp',
-        requirements: 'A Mac or Windows PC running Claude Code or Codex, plus Tailscale. Approvals and questions work from any terminal; the live terminal, sending messages, new tasks from your phone and the other agents need herdr. Setup is one command on the computer and a QR scan.',
+        requirements: '只要有執行 Claude Code 或 Codex 的 Mac 或 Windows PC，再加上 Tailscale 就能使用。核准與回答問題可直接在原本的終端機運作；即時終端機、傳送訊息、從手機開始新工作，以及其他代理，都需要 herdr。設定只要在電腦貼上一行指令，再掃描 QR 碼。',
         android: {
           button: '參加 Android 測試',
-          label: 'Android closed test',
-          steps: ['Join the Google Group', 'Opt in to the test', 'Install from Google Play'],
-          note: 'Join the group first, or the opt-in link will not open. Only the developer sees member emails. A public release needs 12 testers keeping the app installed for 14 days.',
+          label: 'Android 封閉測試',
+          steps: ['加入 Google 群組', '加入測試', '從 Google Play 安裝'],
+          note: '要先加入群組，加入測試的連結才會打開。群組成員的電子郵件只有開發者看得到。正式上架前，需要 12 位測試人員把 App 保留安裝 14 天。',
         },
       },
       soon: 'App Store 審核中',

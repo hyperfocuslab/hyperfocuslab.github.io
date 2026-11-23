@@ -1,0 +1,38 @@
+<p class="intro">MacやWindows PCのherdr-core上で動くClaude Codeエージェントが止まったとき、iPhoneのロック画面の通知からそのまま答えられる無料アプリです。</p>
+      <section aria-labelledby="needs">
+        <h2 id="needs">必要なもの</h2>
+        <ul>
+          <li>herdr-coreの中でClaude Codeを動かしているMacまたはWindows PC</li>
+          <li>PCとiPhoneの両方にインストールしたTailscale</li>
+          <li>PCにインストールするSheltieサーバー</li>
+        </ul>
+      </section>
+      <section aria-labelledby="connect">
+        <h2 id="connect">接続する</h2>
+        <ol>
+          <li>MacのターミナルまたはWindowsのPowerShellでインストールコマンドを実行します。</li>
+          <li>インストーラーが表示するQRコードをiPhoneのカメラで読み取ります。</li>
+          <li>Sheltieが開いたら、通知を許可します。</li>
+        </ol>
+        <p>インストールコマンド（Macのターミナル）:</p>
+        <pre class="cmd"><code>curl -fsSL https://raw.githubusercontent.com/hyperfocuslab/sheltie/main/install.sh | sh</code></pre>
+        <p>macOS、python3、herdr-core（<code>hc</code>）、Tailscaleが必要です。QRコードをもう一度表示するには <code>python3 ~/.local/share/sheltie/sheltie.py pair</code> を実行します。アンインストールするには、同じコマンドの末尾を <code>| sh -s -- --uninstall</code> にして実行します。</p>
+        <p>インストールコマンド（WindowsのPowerShell、管理者としてではなく実行）:</p>
+        <pre class="cmd"><code>irm https://raw.githubusercontent.com/hyperfocuslab/sheltie/main/install.ps1 | iex</code></pre>
+        <p>Windows、Python 3.9以上、herdr-core（<code>hc</code>）、Tailscaleが必要です。サーバーはサインイン時にタスクスケジューラで自動的に起動します。QRコードをもう一度表示するには <code>python "$env:LOCALAPPDATA\sheltie\sheltie.py" pair</code>、アンインストールするには <code>$env:SHELTIE_UNINSTALL=1; irm https://raw.githubusercontent.com/hyperfocuslab/sheltie/main/install.ps1 | iex</code> を実行します。ソース: <a href="https://github.com/hyperfocuslab/sheltie">github.com/hyperfocuslab/sheltie</a>（MIT）</p>
+      </section>
+      <section aria-labelledby="faq">
+        <h2 id="faq">よくある質問</h2>
+        <h3>通知が届きません。</h3>
+        <p>iPhoneの設定 → 通知 → Sheltieで通知がオンになっているか確認してください。次に、PCの電源が入っていて、Sheltieサーバーが動いているか確認してください。</p>
+        <h3>外出先でも使えますか？</h3>
+        <p>はい。PCとiPhoneが同じTailscaleネットワークにあれば、どこからでも使えます。</p>
+        <h3>データはどこに送られますか？</h3>
+        <p>会話、プロンプト、ターミナル画面は、Tailscale経由でPCとiPhoneの間だけでやり取りされます。私たちを経由するのは通知だけです。通知（ターミナル名と短い状態の1行）と端末のプッシュトークンは、Cloudflare上の中継サーバーを通ってそのままAppleに渡され、保存もログ記録もされません。アカウントも分析もありません。詳しくは<a href="/ja/sheltie/privacy/">プライバシーポリシー</a>をご覧ください。</p>
+      </section>
+      <section aria-labelledby="contact">
+        <h2 id="contact">お問い合わせ</h2>
+        <div class="contact">
+          <a class="email" href="mailto:support@hyperfocuslab.app">support@hyperfocuslab.app</a>
+        </div>
+      </section>

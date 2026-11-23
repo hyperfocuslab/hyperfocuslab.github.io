@@ -83,7 +83,7 @@ const haruboxShot = existsSync(`public/assets/harubox/${lang}-transcript.webp`) 
           <a class="arrow-link" href={href('sheltie', lang)}>{t.more}</a>
         </div>
         <div class="feature-visual">
-          <AppShot src={`/assets/sheltie/${sheltieLang}-question.webp`} alt={t.sheltie.rows[2].alt} lang={lang} />
+          <AppShot src={`/assets/sheltie/${sheltieLang}-question.webp`} alt={t.sheltie.rows.find((row) => row.shot === 'question')?.alt ?? ''} lang={lang} />
         </div>
       </div>
     </div>

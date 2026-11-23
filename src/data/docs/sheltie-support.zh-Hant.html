@@ -1,0 +1,38 @@
+<p class="intro">在 Mac 或 Windows PC 的 herdr-core 上執行的 Claude Code 代理停下來時，可以直接從 iPhone 鎖定畫面的通知回覆的免費 App。</p>
+      <section aria-labelledby="needs">
+        <h2 id="needs">需要準備</h2>
+        <ul>
+          <li>在 herdr-core 中執行 Claude Code 的 Mac 或 Windows PC</li>
+          <li>電腦與 iPhone 都安裝 Tailscale</li>
+          <li>安裝在電腦上的 Sheltie 伺服器</li>
+        </ul>
+      </section>
+      <section aria-labelledby="connect">
+        <h2 id="connect">連線</h2>
+        <ol>
+          <li>在 Mac 的「終端機」或 Windows 的 PowerShell 執行安裝指令。</li>
+          <li>用 iPhone 相機掃描安裝程式顯示的 QR 碼。</li>
+          <li>Sheltie 開啟後，允許通知。</li>
+        </ol>
+        <p>安裝指令（Mac 終端機）：</p>
+        <pre class="cmd"><code>curl -fsSL https://raw.githubusercontent.com/hyperfocuslab/sheltie/main/install.sh | sh</code></pre>
+        <p>需要 macOS、python3、herdr-core（<code>hc</code>）與 Tailscale。要再次顯示 QR 碼，請執行 <code>python3 ~/.local/share/sheltie/sheltie.py pair</code>。要解除安裝，請把同一行指令的結尾改成 <code>| sh -s -- --uninstall</code> 再執行。</p>
+        <p>安裝指令（Windows PowerShell，不要以系統管理員身分執行）：</p>
+        <pre class="cmd"><code>irm https://raw.githubusercontent.com/hyperfocuslab/sheltie/main/install.ps1 | iex</code></pre>
+        <p>需要 Windows、Python 3.9 以上、herdr-core（<code>hc</code>）與 Tailscale。伺服器會在登入時由工作排程器自動啟動。要再次顯示 QR 碼，請執行 <code>python "$env:LOCALAPPDATA\sheltie\sheltie.py" pair</code>；要解除安裝，請執行 <code>$env:SHELTIE_UNINSTALL=1; irm https://raw.githubusercontent.com/hyperfocuslab/sheltie/main/install.ps1 | iex</code>。原始碼：<a href="https://github.com/hyperfocuslab/sheltie">github.com/hyperfocuslab/sheltie</a>（MIT）</p>
+      </section>
+      <section aria-labelledby="faq">
+        <h2 id="faq">常見問題</h2>
+        <h3>收不到通知。</h3>
+        <p>請到 iPhone 的「設定」→「通知」→「Sheltie」確認通知已開啟。接著確認電腦已開機，且 Sheltie 伺服器正在執行。</p>
+        <h3>不在家也能用嗎？</h3>
+        <p>可以。只要電腦與 iPhone 在同一個 Tailscale 網路上，在哪裡都能用。</p>
+        <h3>我的資料會傳到哪裡？</h3>
+        <p>對話、提示與終端機畫面只透過 Tailscale 在你的電腦與 iPhone 之間傳送。只有通知會經過我們：通知（終端機名稱與一行簡短狀態）和裝置的推播權杖，會經由我們在 Cloudflare 上的中繼直接交給 Apple，不會被儲存或寫入記錄。沒有帳號，也沒有分析工具。詳情請見<a href="/zh-Hant/sheltie/privacy/">隱私權政策</a>。</p>
+      </section>
+      <section aria-labelledby="contact">
+        <h2 id="contact">聯絡我們</h2>
+        <div class="contact">
+          <a class="email" href="mailto:support@hyperfocuslab.app">support@hyperfocuslab.app</a>
+        </div>
+      </section>

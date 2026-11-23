@@ -5,12 +5,13 @@ import AppShot from './AppShot.astro';
 import { sheltieLinks, ui, type Lang } from '../i18n';
 
 interface Props {
-  lang: 'ko' | 'en';
+  lang: Lang;
 }
 const { lang } = Astro.props;
 const sheltie = ui[lang].home.sheltie;
-// Sheltie has ko and en captures only (public/assets/sheltie/{ko,en}-{shot}.webp).
-const sheltieRows = sheltie.rows.filter((row) => existsSync(`public/assets/sheltie/${lang}-${row.shot}.webp`));
+// Sheltie has ko and en captures only (public/assets/sheltie/{ko,en}-{shot}.webp); ja and zh-Hant show en.
+const shotLang = lang === 'ko' ? 'ko' : 'en';
+const sheltieRows = sheltie.rows.filter((row) => existsSync(`public/assets/sheltie/${shotLang}-${row.shot}.webp`));
 const sheltieLinkSet = sheltieLinks(lang);
 ---
 
@@ -43,7 +44,7 @@ const sheltieLinkSet = sheltieLinks(lang);
                 <p class="lead">{row.body}</p>
               </div>
               <div class="feature-visual">
-                <AppShot src={`/assets/sheltie/${lang}-${row.shot}.webp`} alt={row.alt} lang={lang} />
+                <AppShot src={`/assets/sheltie/${shotLang}-${row.shot}.webp`} alt={row.alt} lang={lang} />
               </div>
             </div>
           ))

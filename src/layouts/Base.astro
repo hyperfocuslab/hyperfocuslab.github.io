@@ -27,7 +27,7 @@ const t = isWide
 // Every product other than Peakly has its own languages, name and links.
 const isOther = product !== 'peakly';
 const productName = isHarubox ? haruboxName(lang as HaruboxLang) : isCockatoo ? cockatooName(lang as HaruboxLang) : product === 'peakly' ? t.appName : PRODUCT_NAME[product];
-// Sheltie documents exist in ko and en only; other languages link to the English ones.
+// Sheltie pages exist in the four site languages (SHELTIE_LANGS).
 const haruboxLangs: readonly HaruboxLang[] = HARUBOX_LANGS;
 const langs: readonly (Lang | HaruboxLang)[] = isWide ? haruboxLangs : isOther ? SHELTIE_LANGS : LANGS;
 const langLabel = (l: Lang | HaruboxLang) => (isWide ? HARUBOX_LANG_LABEL[l as HaruboxLang] : LANG_LABEL[l as Lang]);

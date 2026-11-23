@@ -1,0 +1,10 @@
+---
+import Doc from '../../../../components/Doc.astro';
+
+export function getStaticPaths() {
+  return ['privacy', 'support'].map((doc) => ({ params: { doc } }));
+}
+const doc = Astro.params.doc as 'privacy' | 'support';
+---
+
+<Doc doc={doc} lang="zh-Hant" product="sheltie" />

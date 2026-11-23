@@ -1,0 +1,58 @@
+<p class="muted">生效日期：2026 年 11 月 23 日</p>
+      <p>Sheltie 是 Hyperfocus Lab 推出的 iPhone 與 Android App。它會連線到您安裝在自己電腦（Mac 或 Windows PC）上的伺服器，並顯示在該電腦上執行的程式代理。本政策說明 App 處理哪些資料，以及這些資料會傳送到哪裡。</p>
+
+      <h2>保存在手機上的資料</h2>
+      <ul>
+        <li>電腦伺服器的位址與存取權杖。權杖在 iOS 上保存在「鑰匙圈」中，在 Android 上則以 Android Keystore 中的金鑰加密保存。</li>
+        <li>App 設定。</li>
+      </ul>
+      <p>對話、提示與終端機畫面只會在您查看時從電腦載入，App 不會儲存。</p>
+
+      <h2>傳送到您電腦的資料</h2>
+      <p>您在 App 中的所有操作（回覆、訊息、新工作）都會透過您的 Tailscale 網路，傳送到您自己電腦上的伺服器。該伺服器是由您執行的軟體，我們無法存取該伺服器，也無法存取您電腦上的任何資料。</p>
+
+      <h2>經過我們推播中繼的資料</h2>
+      <p>Apple 與 Google 要求以只有我們持有的金鑰傳送通知，因此通知會經過我們在 Cloudflare Workers 上執行的小型中繼：</p>
+      <ul>
+        <li><strong>裝置的推播權杖</strong>：由 Apple（iPhone）或 Firebase Cloud Messaging（Android）核發，用來把通知送到您的手機。</li>
+        <li><strong>通知本身</strong>：終端機名稱，以及一行簡短狀態，例如「approve Write: index.html」或「done」。</li>
+      </ul>
+      <p>中繼會接收您電腦伺服器送出的裝置推播權杖與通知，並直接轉交給 Apple Push Notification service 或 Google 的 Firebase Cloud Messaging。中繼不會儲存權杖或通知文字，也不會將兩者寫入記錄。</p>
+      <p>Cloudflare（代管中繼）、Apple 與 Google（傳送通知）僅為傳送通知而處理這些資料。</p>
+
+      <h2>我們不會做的事</h2>
+      <ul>
+        <li>不需要帳號，也不需要登入。</li>
+        <li>App 不含任何分析、廣告或追蹤 SDK。</li>
+        <li>我們不會向任何人出售或分享資料。</li>
+      </ul>
+
+      <h2>本網站</h2>
+      <p>本網站（hyperfocuslab.app）使用 Google Analytics 統計造訪次數，與 App 無關。</p>
+
+      <h2>相機</h2>
+      <p>相機只用於掃描電腦顯示的配對 QR 碼。影像不會被儲存或傳送。</p>
+
+      <h2>麥克風</h2>
+      <p>麥克風只在您以語音輸入回覆時使用。由手機的語音辨識服務（Apple 或 Google）將語音轉為文字，App 本身不會儲存或傳送音訊。</p>
+
+      <h2>兒童</h2>
+      <p>Sheltie 是開發者工具，並非以未滿 13 歲的兒童為對象。</p>
+
+      <h2>刪除您的資料</h2>
+      <p>在 App 設定中清除伺服器位址與權杖，或刪除 App，即可清除保存在手機上的資料。在 Mac 上，執行 <code>install.sh --uninstall</code> 可停止伺服器，刪除 <code>~/.config/sheltie</code> 則會移除其設定與已註冊裝置清單。在 Windows 上，請先用安裝指令碼解除安裝（請參閱客戶支援頁面），再刪除 <code>%USERPROFILE%\.config\sheltie</code>。</p>
+
+      <h2>從 App 送出的詢問</h2>
+      <p>當您在 App 內送出詢問時，以下資料會傳送給 Hyperfocus Lab。</p>
+      <ul>
+        <li>傳送的內容：詢問內容、您填寫的回覆用電子郵件地址（如有）、App 版本、作業系統版本、裝置型號、語言，以及 App 為裝置建立的識別碼（iOS 為 identifierForVendor，Android 為 App 產生的隨機 ID）。</li>
+        <li>傳送去向：經由 Google Apps Script 伺服器，儲存在 Hyperfocus Lab 管理的 Google 試算表中，並以電子郵件轉寄到 support@hyperfocuslab.app。</li>
+        <li>使用目的：僅用於回覆您的詢問。</li>
+        <li>刪除：寄信至 support@hyperfocuslab.app，我們會刪除您的詢問。</li>
+      </ul>
+
+      <h2>變更</h2>
+      <p>本政策如有變更，我們會在此頁面公告，並更新生效日期。</p>
+
+      <h2>聯絡方式</h2>
+      <p>負責人：Yejun Lee<br>電子郵件：<a href="mailto:support@hyperfocuslab.app">support@hyperfocuslab.app</a></p>
