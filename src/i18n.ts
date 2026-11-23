@@ -126,7 +126,7 @@ export const COCKATOO_PAGE: Record<CockatooLang, { title: string; tagline: strin
   ko: {
     title: '코카투 | AI 영어회화·발음 교정',
     tagline: '말하면 고쳐 주고, 다시 말해 익히기',
-    lead: '영어로 말할 상대가 없고, 내 발음이 어디서 틀리는지 모를 때 쓰는 앱이에요. 버튼을 누른 채 영어로 말하면 AI가 답하고, 어색한 문장은 자연스럽게 고쳐 주고, 고친 문장을 따라 말하면 틀린 발음을 단어별로 짚어 줘요. 녹음은 개발자나 외부 서버로 보내지 않아요.',
+    lead: '영어로 말할 상대가 없고, 내 발음이 어디서 틀리는지 모를 때 쓰는 앱이에요. 버튼을 누른 채 영어로 말하면 AI가 답하고, 어색한 문장은 자연스럽게 고쳐 주고, 고친 문장을 따라 말하면 틀린 발음을 단어별로 짚어 줘요.',
     rows: [
       { shot: 'situations', label: '상황', title: '35개 상황에서 영어로 말해요', body: '카페 주문, 회사 스몰토크, 거래처 협상, 영어 면접, 입국 심사 같은 상황과 자유 대화. 버튼을 누르는 동안 말하고 떼면 바로 글로 받아써요.', alt: '상황 목록 화면' },
       { shot: 'chat', label: '대화', title: '어색한 문장은 바로 고쳐 줘요', body: '내 말 아래에 더 자연스러운 문장과 내 언어로 된 설명 한 줄이 붙어요. 모르는 말은 눌러서 내 언어로 해석을 봐요.', alt: '내 말 아래 고친 문장이 붙은 대화 화면' },
@@ -139,7 +139,7 @@ export const COCKATOO_PAGE: Record<CockatooLang, { title: string; tagline: strin
   en: {
     title: 'Cockatoo | AI English Speaking and Pronunciation',
     tagline: 'Conversation & pronunciation',
-    lead: 'For when you have no one to speak English with and can’t tell where your pronunciation goes wrong. Hold the button and speak English: the AI replies, rewrites awkward sentences into natural ones, and when you read the corrected sentence aloud it points out mispronounced words one by one. Recordings are never sent to the developer or any outside server.',
+    lead: 'For when you have no one to speak English with and can’t tell where your pronunciation goes wrong. Hold the button and speak English: the AI replies, rewrites awkward sentences into natural ones, and when you read the corrected sentence aloud it points out mispronounced words one by one.',
     rows: [
       { shot: 'situations', label: 'Situations', title: 'Speak English in 35 situations', body: 'Ordering coffee, small talk at work, negotiating with a client, a job interview, passport control and free conversation. Talk while you hold the button; let go and it becomes text.', alt: 'Situation list screen' },
       { shot: 'chat', label: 'Conversation', title: 'Awkward sentences, fixed on the spot', body: 'Under what you said: a more natural sentence and a one-line explanation.', alt: 'Conversation screen with a corrected sentence under the user’s message' },
@@ -152,7 +152,7 @@ export const COCKATOO_PAGE: Record<CockatooLang, { title: string; tagline: strin
   ja: {
     title: 'Cockatoo | AI英会話・発音矯正',
     tagline: '話すと添削、言い直して身につく',
-    lead: '英語で話す相手がいない、自分の発音のどこが違うのかわからない。そんなときのためのアプリです。ボタンを押しながら英語で話すとAIが返事をし、不自然な文は自然な英語に添削。添削された文を読み上げると、間違えた発音を単語ごとに示します。録音は開発者や外部のサーバーには送信しません。',
+    lead: '英語で話す相手がいない、自分の発音のどこが違うのかわからない。そんなときのためのアプリです。ボタンを押しながら英語で話すとAIが返事をし、不自然な文は自然な英語に添削。添削された文を読み上げると、間違えた発音を単語ごとに示します。',
     rows: [
       { shot: 'situations', label: '場面', title: '35の場面で英語を話す', body: 'カフェでの注文、職場の雑談、取引先との交渉、英語面接、入国審査などの場面とフリートーク。ボタンを押している間に話し、離すとすぐに文字になります。', alt: '場面一覧の画面' },
       { shot: 'chat', label: '会話', title: '不自然な文はその場で添削', body: '自分の発言の下に、より自然な文と日本語の説明が1行つきます。わからない表現はタップすると日本語訳が見られます。', alt: '発言の下に添削された文がついた会話画面' },
@@ -165,7 +165,7 @@ export const COCKATOO_PAGE: Record<CockatooLang, { title: string; tagline: strin
   'zh-Hant': {
     title: 'Cockatoo | AI 英文口說・發音矯正',
     tagline: '開口說英文，句子修正、發音逐字檢查',
-    lead: '沒有人可以練英文口說，也不知道自己的發音哪裡不對時，就用這個 App。按住按鈕用英文說話，AI 會回覆你，把不自然的句子改得更道地；跟著唸修正後的句子，會逐字指出唸錯的地方。錄音不會傳送給開發者或外部伺服器。',
+    lead: '沒有人可以練英文口說，也不知道自己的發音哪裡不對時，就用這個 App。按住按鈕用英文說話，AI 會回覆你，把不自然的句子改得更道地；跟著唸修正後的句子，會逐字指出唸錯的地方。',
     rows: [
       { shot: 'situations', label: '情境', title: '在 35 個情境用英文開口說', body: '點咖啡、職場閒聊、和客戶談判、英文面試、入境審查等情境，以及自由對話。按住按鈕說話，放開就轉成文字。', alt: '情境清單畫面' },
       { shot: 'chat', label: '對話', title: '不自然的句子，當場幫你改', body: '你說的話下面，會出現更自然的句子和一行中文說明。看不懂的地方點一下就能看中文翻譯。', alt: '使用者句子下方出現修正句的對話畫面' },
@@ -178,7 +178,7 @@ export const COCKATOO_PAGE: Record<CockatooLang, { title: string; tagline: strin
   de: {
     title: 'Cockatoo | Englisch sprechen, Aussprache mit KI üben',
     tagline: 'Sätze & Aussprache mit KI üben',
-    lead: 'Für alle, die niemanden zum Englischsprechen haben und nicht wissen, wo ihre Aussprache danebenliegt. Halte die Taste gedrückt und sprich Englisch: Die KI antwortet, macht holprige Sätze natürlich, und wenn du den verbesserten Satz vorliest, zeigt sie Wort für Wort, was du falsch aussprichst. Aufnahmen werden nie an den Entwickler oder an externe Server gesendet.',
+    lead: 'Für alle, die niemanden zum Englischsprechen haben und nicht wissen, wo ihre Aussprache danebenliegt. Halte die Taste gedrückt und sprich Englisch: Die KI antwortet, macht holprige Sätze natürlich, und wenn du den verbesserten Satz vorliest, zeigt sie Wort für Wort, was du falsch aussprichst.',
     rows: [
       { shot: 'situations', label: 'Situationen', title: 'Englisch sprechen in 35 Situationen', body: 'Bestellung im Café, Smalltalk im Büro, Verhandlungen mit Kunden, Vorstellungsgespräch, Passkontrolle und freies Gespräch. Sprich, solange du die Taste hältst; lass los, und es steht als Text da.', alt: 'Liste der Situationen' },
       { shot: 'chat', label: 'Gespräch', title: 'Holprige Sätze sofort verbessert', body: 'Unter deinem Satz steht eine natürlichere Version mit einer Zeile Erklärung auf Deutsch. Tippe auf Unbekanntes für die deutsche Übersetzung.', alt: 'Gespräch mit verbessertem Satz unter der eigenen Nachricht' },
@@ -191,7 +191,7 @@ export const COCKATOO_PAGE: Record<CockatooLang, { title: string; tagline: strin
   es: {
     title: 'Cockatoo | Habla inglés con IA y corrige tu pronunciación',
     tagline: 'Corrige frases y pronunciación',
-    lead: 'Para cuando no tienes con quién hablar inglés y no sabes en qué fallas al pronunciar. Mantén pulsado el botón y habla en inglés: la IA responde, convierte las frases raras en naturales y, cuando lees en voz alta la frase corregida, te marca palabra por palabra lo que pronunciaste mal. Las grabaciones nunca se envían al desarrollador ni a servidores externos.',
+    lead: 'Para cuando no tienes con quién hablar inglés y no sabes en qué fallas al pronunciar. Mantén pulsado el botón y habla en inglés: la IA responde, convierte las frases raras en naturales y, cuando lees en voz alta la frase corregida, te marca palabra por palabra lo que pronunciaste mal.',
     rows: [
       { shot: 'situations', label: 'Situaciones', title: 'Habla inglés en 35 situaciones', body: 'Pedir en una cafetería, charlar en el trabajo, negociar con un cliente, una entrevista de trabajo, el control de inmigración y conversación libre. Habla mientras mantienes pulsado el botón; al soltarlo, aparece el texto.', alt: 'Pantalla con la lista de situaciones' },
       { shot: 'chat', label: 'Conversación', title: 'Tus frases, corregidas al momento', body: 'Debajo de lo que dices aparece una frase más natural con una explicación de una línea en español. Toca lo que no entiendas para ver la traducción.', alt: 'Conversación con una frase corregida debajo del mensaje' },
@@ -204,7 +204,7 @@ export const COCKATOO_PAGE: Record<CockatooLang, { title: string; tagline: strin
   fr: {
     title: 'Cockatoo | Parler anglais avec l’IA et corriger sa prononciation',
     tagline: 'Corrigez votre prononciation',
-    lead: 'Pour quand vous n’avez personne avec qui parler anglais et ne savez pas où votre prononciation coince. Maintenez le bouton et parlez anglais : l’IA répond, rend vos phrases plus naturelles, et quand vous lisez la phrase corrigée à voix haute, elle signale mot par mot ce qui est mal prononcé. Les enregistrements ne sont jamais envoyés au développeur ni à un serveur externe.',
+    lead: 'Pour quand vous n’avez personne avec qui parler anglais et ne savez pas où votre prononciation coince. Maintenez le bouton et parlez anglais : l’IA répond, rend vos phrases plus naturelles, et quand vous lisez la phrase corrigée à voix haute, elle signale mot par mot ce qui est mal prononcé.',
     rows: [
       { shot: 'situations', label: 'Situations', title: 'Parlez anglais dans 35 situations', body: 'Commander au café, discuter entre collègues, négocier avec un client, un entretien d’embauche, le contrôle aux frontières et la conversation libre. Parlez en maintenant le bouton ; relâchez et le texte s’affiche.', alt: 'Écran de la liste des situations' },
       { shot: 'chat', label: 'Conversation', title: 'Vos phrases corrigées sur-le-champ', body: 'Sous ce que vous dites : une version plus naturelle et une ligne d’explication en français. Touchez ce que vous ne comprenez pas pour voir la traduction.', alt: 'Conversation avec une phrase corrigée sous le message' },
@@ -217,7 +217,7 @@ export const COCKATOO_PAGE: Record<CockatooLang, { title: string; tagline: strin
   'pt-BR': {
     title: 'Cockatoo | Fale inglês com IA e corrija a pronúncia',
     tagline: 'Corrige frases e pronúncia',
-    lead: 'Para quando você não tem com quem falar inglês e não sabe onde está errando na pronúncia. Segure o botão e fale em inglês: a IA responde, deixa as frases estranhas mais naturais e, quando você lê a frase corrigida em voz alta, mostra palavra por palavra o que saiu errado. As gravações nunca são enviadas ao desenvolvedor nem a servidores externos.',
+    lead: 'Para quando você não tem com quem falar inglês e não sabe onde está errando na pronúncia. Segure o botão e fale em inglês: a IA responde, deixa as frases estranhas mais naturais e, quando você lê a frase corrigida em voz alta, mostra palavra por palavra o que saiu errado.',
     rows: [
       { shot: 'situations', label: 'Situações', title: 'Fale inglês em 35 situações', body: 'Pedir num café, bater papo no trabalho, negociar com um cliente, entrevista de emprego, imigração no aeroporto e conversa livre. Fale enquanto segura o botão; ao soltar, vira texto.', alt: 'Tela com a lista de situações' },
       { shot: 'chat', label: 'Conversa', title: 'Suas frases corrigidas na hora', body: 'Embaixo do que você disse aparece uma frase mais natural com uma explicação de uma linha em português. Toque no que não entender para ver a tradução.', alt: 'Conversa com uma frase corrigida embaixo da mensagem' },
@@ -295,7 +295,7 @@ export const ui = {
       soon: 'App Store 출시 준비 중',
       cockatoo: {
         tagline: '말하면 고쳐 주고, 다시 말해 익히기',
-        lead: 'AI와 영어로 대화하면 어색한 문장은 자연스럽게 고쳐 주고, 고친 문장을 따라 말하면 틀린 발음을 단어별로 짚어 줍니다. 35개 상황에서 연습하고, 녹음은 기기 밖으로 나가지 않습니다.',
+        lead: 'AI와 영어로 대화하면 어색한 문장은 자연스럽게 고쳐 주고, 고친 문장을 따라 말하면 틀린 발음을 단어별로 짚어 줍니다. 35개 상황에서 연습합니다.',
       },
       harubox: {
         tagline: '종일 녹음·받아쓰기·요약',
@@ -326,7 +326,7 @@ export const ui = {
             intro: '큰 목표에 기한을 정하고, 오늘 할 일로 나눕니다.',
             rows: [
               { shot: 'goals', label: '전체 목표', title: '목표는 진행률로, 기다리는 날은 D-Day로.', body: '자격증, 다이어트, 포트폴리오처럼 큰 목표에 날짜를 붙이면 진행률과 남은 기간이 함께 보입니다. 여행, 시험일, 기념일처럼 날짜가 정해진 일은 D-Day로 띄워 둡니다.', alt: 'D-Day와 목표별 진행률이 있는 전체 목표 화면' },
-              { shot: 'goals-today', label: '오늘의 목표', title: '목표를 오늘 할 일로 나눠서.', body: '큰 목표를 오늘 할 작은 일로 나누고 하나씩 체크합니다. 매일의 작은 일이 쌓여 큰 목표를 완성합니다.', alt: '오늘의 목표 진행률과 작은 실천 목록' },
+              { shot: 'goals-today', label: '오늘의 목표', title: '목표를 오늘 할 일로 나눠서.', body: '큰 목표를 오늘 할 작은 일로 나누고 하나씩 체크합니다.', alt: '오늘의 목표 진행률과 작은 실천 목록' },
             ],
           },
           {
@@ -334,7 +334,7 @@ export const ui = {
             intro: '매일 하는 일과 마감이 있는 일을 나눠서.',
             rows: [
               { shot: 'routines', label: '매일 루틴', title: '정한 시간에 할 일, 아무 때나 할 일.', body: '기상이나 산책처럼 시간이 정해진 일은 시간별 루틴으로, 스트레칭처럼 하루 중 아무 때나 하면 되는 일은 언제나 루틴으로 나눕니다. 지난 7일과 이번 달에 하지 못한 횟수도 보여줍니다.', alt: '시간별 루틴과 언제나 루틴이 있는 매일 루틴 화면' },
-              { shot: 'todo', label: '해야 할 일', title: '마감이 가까운 일부터.', body: '마감이 있는 일을 오늘까지, 이번 주, 그 이후로 나눠 보여줍니다. 무엇부터 할지 바로 알 수 있습니다.', alt: '남은 시간별로 나뉜 해야 할 일 목록' },
+              { shot: 'todo', label: '해야 할 일', title: '마감이 가까운 일부터.', body: '마감이 있는 일을 오늘까지, 이번 주, 그 이후로 나눠 보여줍니다.', alt: '남은 시간별로 나뉜 해야 할 일 목록' },
             ],
           },
           {
@@ -421,7 +421,7 @@ export const ui = {
       soon: 'Coming soon to the App Store',
       cockatoo: {
         tagline: 'Conversation & pronunciation',
-        lead: 'Talk with an AI in English: it rewrites awkward sentences into natural ones, and when you read the corrected sentence aloud it marks mispronounced words one by one. 35 practice situations, and recordings never leave your iPhone.',
+        lead: 'Talk with an AI in English: it rewrites awkward sentences into natural ones, and when you read the corrected sentence aloud it marks mispronounced words one by one. 35 practice situations.',
       },
       harubox: {
         tagline: 'All-day recorder with on-device transcription',
@@ -452,7 +452,7 @@ export const ui = {
             intro: 'Give big goals a deadline, then split them into today\'s tasks.',
             rows: [
               { shot: 'goals', label: 'All goals', title: 'Goals as progress, waiting days as D-Days.', body: 'Give a big goal like a certification, a diet, or a portfolio a date, and you see its progress and the time left together. Things with a fixed date, like a trip, an exam day, or an anniversary, sit on screen as D-Days.', alt: 'All Goals screen with D-Days and progress per goal' },
-              { shot: 'goals-today', label: 'Today\'s goals', title: 'Turn a goal into today\'s tasks.', body: 'Split a big goal into small things to do today and check them off one by one. Small daily steps add up to the big goal.', alt: 'Today\'s Goals with progress and small actions' },
+              { shot: 'goals-today', label: 'Today\'s goals', title: 'Turn a goal into today\'s tasks.', body: 'Split a big goal into small things to do today and check them off one by one.', alt: 'Today\'s Goals with progress and small actions' },
             ],
           },
           {
@@ -460,7 +460,7 @@ export const ui = {
             intro: 'Daily habits and deadlines, kept apart.',
             rows: [
               { shot: 'routines', label: 'Daily routines', title: 'Things for a set time, and anytime.', body: 'Things with a set time, like waking up or a walk, go into timed routines. Things you can do anytime, like stretching, go into anytime routines. Peakly also shows how many you missed in the last 7 days and this month.', alt: 'Daily Routine screen with timed and anytime routines' },
-              { shot: 'todo', label: 'To-dos', title: 'Closest deadline first.', body: 'Tasks with deadlines are grouped into today, this week, and later, so you can see what to do first.', alt: 'Task list grouped by time left' },
+              { shot: 'todo', label: 'To-dos', title: 'Closest deadline first.', body: 'Tasks with deadlines are grouped into today, this week, and later.', alt: 'Task list grouped by time left' },
             ],
           },
           {
@@ -542,7 +542,7 @@ export const ui = {
       soon: 'App Store 公開準備中',
       cockatoo: {
         tagline: '話すと添削、言い直して身につく',
-        lead: 'AIと英語で会話すると、不自然な文は自然な英語に添削され、添削された文を読み上げると間違えた発音を単語ごとに示します。35の場面で練習でき、録音は端末の外に出ません。',
+        lead: 'AIと英語で会話すると、不自然な文は自然な英語に添削され、添削された文を読み上げると間違えた発音を単語ごとに示します。35の場面で練習できます。',
       },
       harubox: {
         tagline: '終日録音・文字起こし・要約',
@@ -573,7 +573,7 @@ export const ui = {
             intro: '大きな目標に期限を決めて、今日やることに分けます。',
             rows: [
               { shot: 'goals', label: '全体の目標', title: '目標は進捗で、待つ日はD-Dayで。', body: '資格、ダイエット、ポートフォリオのような大きな目標に日付をつけると、進捗率と残り期間が一緒に見えます。旅行、試験日、記念日のように日付が決まっていることは、D-Dayとして表示しておけます。', alt: 'D-Dayと目標ごとの進捗率が並ぶ全体の目標画面' },
-              { shot: 'goals-today', label: '今日の目標', title: '目標を今日やることに分けて。', body: '大きな目標を今日やる小さなことに分けて、ひとつずつチェックします。毎日の小さな積み重ねが大きな目標につながります。', alt: '今日の目標の進捗率と小さな実践の一覧' },
+              { shot: 'goals-today', label: '今日の目標', title: '目標を今日やることに分けて。', body: '大きな目標を今日やる小さなことに分けて、ひとつずつチェックします。', alt: '今日の目標の進捗率と小さな実践の一覧' },
             ],
           },
           {
@@ -581,7 +581,7 @@ export const ui = {
             intro: '毎日のことと締め切りのあることを分けて。',
             rows: [
               { shot: 'routines', label: '毎日のルーティン', title: '決まった時間のこと、いつでもいいこと。', body: '起床や散歩のように時間が決まっていることは時間別ルーティンに、ストレッチのように一日のうちいつでもいいことはいつでもルーティンに分けます。直近7日と今月にできなかった回数も表示します。', alt: '時間別ルーティンといつでもルーティンが並ぶ毎日のルーティン画面' },
-              { shot: 'todo', label: 'やること', title: '締め切りが近いものから。', body: '締め切りのあることを、今日まで・今週・それ以降に分けて表示します。何から始めればいいかがすぐわかります。', alt: '残り時間ごとに分かれたタスク一覧' },
+              { shot: 'todo', label: 'やること', title: '締め切りが近いものから。', body: '締め切りのあることを、今日まで・今週・それ以降に分けて表示します。', alt: '残り時間ごとに分かれたタスク一覧' },
             ],
           },
           {
@@ -663,7 +663,7 @@ export const ui = {
       soon: 'App Store 準備上架中',
       cockatoo: {
         tagline: '開口說英文，句子修正、發音逐字檢查',
-        lead: '用英文和 AI 對話，不自然的句子會改得更道地；跟著唸修正後的句子，會逐字指出唸錯的地方。35 種情境可練習，錄音不會離開手機。',
+        lead: '用英文和 AI 對話，不自然的句子會改得更道地；跟著唸修正後的句子，會逐字指出唸錯的地方。35 種情境可練習。',
       },
       harubox: {
         tagline: '全天錄音、逐字稿、摘要',
@@ -694,7 +694,7 @@ export const ui = {
             intro: '替大目標訂下期限，再拆成今天要做的事。',
             rows: [
               { shot: 'goals', label: '全部目標', title: '目標看進度，期待的日子看 D-Day。', body: '替證照、減重、作品集這類大目標訂下日期，就能同時看到進度與剩餘時間。旅行、考試日、紀念日這類日期固定的事，則以 D-Day 顯示在畫面上。', alt: '顯示 D-Day 與各目標進度的全部目標畫面' },
-              { shot: 'goals-today', label: '今日目標', title: '把目標拆成今天要做的事。', body: '把大目標拆成今天要做的小事，逐項勾選。每天的小步驟累積起來，就能完成大目標。', alt: '顯示進度與小行動清單的今日目標畫面' },
+              { shot: 'goals-today', label: '今日目標', title: '把目標拆成今天要做的事。', body: '把大目標拆成今天要做的小事，逐項勾選。', alt: '顯示進度與小行動清單的今日目標畫面' },
             ],
           },
           {
@@ -702,7 +702,7 @@ export const ui = {
             intro: '每天要做的事與有截止日的事，分開管理。',
             rows: [
               { shot: 'routines', label: '每日例行事項', title: '有固定時間的事，與隨時都能做的事。', body: '起床、散步這類有固定時間的事，歸在定時例行事項；伸展這類一天中隨時做都可以的事，歸在隨時例行事項。也會顯示過去 7 天與本月沒完成的次數。', alt: '有定時例行事項與隨時例行事項的每日例行事項畫面' },
-              { shot: 'todo', label: '待辦事項', title: '截止日最近的先做。', body: '有截止日的事會分成今天、本週與之後，讓你一眼看出該先做什麼。', alt: '依剩餘時間分組的待辦事項清單' },
+              { shot: 'todo', label: '待辦事項', title: '截止日最近的先做。', body: '有截止日的事會分成今天、本週與之後。', alt: '依剩餘時間分組的待辦事項清單' },
             ],
           },
           {
