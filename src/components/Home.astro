@@ -18,6 +18,8 @@ const peaklyShotLang = lang === 'zh-Hant' ? 'en' : lang;
 const peaklyDark = `public/assets/peakly/${peaklyShotLang}-chart-dark.webp`;
 const sheltieLang = lang === 'ko' ? 'ko' : 'en';
 const sheltieLinkSet = sheltieLinks(lang);
+// Harubox has Korean store captures only so far; other languages show the copy alone.
+const haruboxShot = existsSync(`public/assets/harubox/${lang}-transcript.webp`) ? `/assets/harubox/${lang}-transcript.webp` : undefined;
 ---
 
 <Base lang={lang} page="home" title={t.title} description={t.description}>
@@ -96,6 +98,15 @@ const sheltieLinkSet = sheltieLinks(lang);
           <p class="muted">{t.soon}</p>
           <a class="arrow-link" href={href('cockatoo', lang)}>{t.more}</a>
         </div>
+        <div class="feature-visual">
+          <AppShot src={`/assets/cockatoo/${lang}-chat.webp`} alt={t.cockatoo.tagline} lang={lang} />
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="wrap">
+      <div class="feature-row flip">
         <div class="feature-copy">
           <div class="product-name">
             <img class="app-icon" src="/assets/harubox-icon.webp" alt="" width="72" height="72" loading="lazy" />
@@ -108,6 +119,13 @@ const sheltieLinkSet = sheltieLinks(lang);
           <p class="muted">{t.soon}</p>
           <a class="arrow-link" href={haruboxHref('support', lang)}>{ui[lang].docs.support} →</a>
         </div>
+        {
+          haruboxShot && (
+            <div class="feature-visual">
+              <AppShot src={haruboxShot} alt={t.harubox.tagline} lang={lang} />
+            </div>
+          )
+        }
       </div>
     </div>
   </section>
