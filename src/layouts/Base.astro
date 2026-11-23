@@ -28,7 +28,6 @@ const t = isWide
 const isOther = product !== 'peakly';
 const productName = isHarubox ? haruboxName(lang as HaruboxLang) : isCockatoo ? cockatooName(lang as HaruboxLang) : product === 'peakly' ? t.appName : PRODUCT_NAME[product];
 // Sheltie documents exist in ko and en only; other languages link to the English ones.
-const sheltieLang = (SHELTIE_LANGS as readonly string[]).includes(lang) ? (lang as 'ko' | 'en') : 'en';
 const haruboxLangs: readonly HaruboxLang[] = HARUBOX_LANGS;
 const langs: readonly (Lang | HaruboxLang)[] = isWide ? haruboxLangs : isOther ? SHELTIE_LANGS : LANGS;
 const langLabel = (l: Lang | HaruboxLang) => (isWide ? HARUBOX_LANG_LABEL[l as HaruboxLang] : LANG_LABEL[l as Lang]);
@@ -185,28 +184,15 @@ const GA_ID = 'G-96T0GRTD1R';
             </nav>
           )
         }
-        <nav aria-label={isOther ? productName : t.appName}>
-          <p class="footer-head">{isOther ? productName : t.appName}</p>
-          <a href={pageHref('support', lang)}>{t.docs.support}</a>
-          <a href={pageHref('privacy', lang)}>{t.docs.privacy}</a>
-          {!isOther && <a href={href('terms', siteLang)}>{t.docs.terms}</a>}
-        </nav>
         {
-          !isOther && (
-            <nav aria-label="Sheltie">
-              <p class="footer-head">Sheltie</p>
-              <a href={sheltieHref('support', sheltieLang)}>{t.docs.support}</a>
-              <a href={sheltieHref('privacy', sheltieLang)}>{t.docs.privacy}</a>
-            </nav>
-          )
-        }
-        {
-          // Cockatoo pages exist in every site language: each page links to its own language.
-          !isOther && (
-            <nav aria-label={cockatooName(lang as Lang)}>
-              <p class="footer-head">{cockatooName(lang as Lang)}</p>
-              <a href={cockatooHref('support', lang as Lang)}>{t.docs.support}</a>
-              <a href={cockatooHref('privacy', lang as Lang)}>{t.docs.privacy}</a>
+          // Support, privacy and terms sit in the footer of each product's own pages only;
+          // the company home lists the products and links to their pages instead.
+          page !== 'home' && (
+            <nav aria-label={isOther ? productName : t.appName}>
+              <p class="footer-head">{isOther ? productName : t.appName}</p>
+              <a href={pageHref('support', lang)}>{t.docs.support}</a>
+              <a href={pageHref('privacy', lang)}>{t.docs.privacy}</a>
+              {!isOther && <a href={href('terms', siteLang)}>{t.docs.terms}</a>}
             </nav>
           )
         }
