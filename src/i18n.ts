@@ -516,9 +516,9 @@ export const ui = {
         more: 'Go to Peakly',
       },
       sheltie: {
-        title: 'Sheltie | Approve coding agents from your iPhone',
-        tagline: 'Approve coding agents from your iPhone',
-        lead: 'When a coding agent on your computer stops for a permission or a question, your iPhone gets a notification. Allow or deny right from the Lock Screen, read the conversation, and start new tasks from the app. The Android app is in closed testing. Free, with an open-source server.',
+        title: 'Sheltie | Approve coding agents from your phone',
+        tagline: 'Approve coding agents from your phone',
+        lead: 'When a coding agent on your computer stops for a permission or a question, your phone gets a notification. Allow or deny right from the Lock Screen, read the conversation, and start new tasks from the app. The Android app is in closed testing. Free, with an open-source server.',
         // Home card only (en): the Sheltie page keeps the lead above.
         cardLead: 'You leave Claude Code or Codex running, step away, and come back to find it stuck for 20 minutes on "Can I create this file?" With Sheltie, your phone buzzes the moment an agent stops. Tap Allow on the Lock Screen and it gets back to work. Try it the next time you leave an agent running.',
         cardNote: 'It\'s free, and the server on your computer is open source. Android is in closed testing.',
