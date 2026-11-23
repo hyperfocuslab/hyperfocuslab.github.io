@@ -370,8 +370,8 @@ export const ui = {
     docs: { privacy: '개인정보처리방침', terms: '서비스 이용약관', support: '고객지원' },
     footer: { products: '제품', language: '언어', legal: '© Hyperfocus Lab · 대표 이예준' },
     home: {
-      title: 'Hyperfocus Lab | 피클리 · Sheltie',
-      description: '피클리는 복용 시각을 기록하면 하루 동안의 예상 약효 곡선을 그려 주는 ADHD 복약 기록 앱입니다. Sheltie는 PC의 코딩 에이전트가 멈추면 iPhone 잠금화면에서 바로 허용하는 앱입니다.',
+      title: 'Hyperfocus Lab | 피클리 · Sheltie · 코카투 · 하루박스',
+      description: '피클리는 복용 시각을 기록하면 하루 동안의 예상 약효 곡선을 그려 주는 ADHD 복약 기록 앱입니다. Sheltie는 PC의 코딩 에이전트가 멈추면 폰 잠금화면에서 바로 허용하는 앱, 코카투는 영어로 말하면 문장을 고쳐 주고 발음을 단어별로 짚어 주는 앱, 하루박스는 하루 종일 녹음하고 받아쓰기와 요약을 iPhone 안에서 하는 앱입니다.',
       company: 'Hyperfocus Lab은 자체 소프트웨어 제품을 만들고 운영하는 스튜디오입니다.',
       more: '자세히 보기 →',
       peaklyTitle: '피클리 | ADHD 복약 기록 앱',
@@ -380,7 +380,7 @@ export const ui = {
         title: '제품',
         facts: [
           ['플랫폼', 'iPhone · iPad · Android'],
-          ['언어', '한국어 · English · 日本語'],
+          ['언어', '한국어 · English · 日本語 · 繁體中文'],
         ],
         more: '피클리 페이지로',
       },
@@ -404,7 +404,7 @@ export const ui = {
         ],
         agentsLabel: '지원 에이전트',
         agents: 'Claude Code · Codex · Gemini CLI · Qwen Code · OpenCode · Grok · GitHub Copilot CLI · Cursor Agent · Amp',
-        requirements: 'Claude Code나 Codex를 돌리는 Mac이나 Windows PC, 그리고 Tailscale만 있으면 돼요. 승인과 질문 답은 평소 쓰던 터미널 그대로. 실시간 터미널, 폰에서 메시지 보내기나 새 작업 시작, 다른 에이전트는 herdr로 돌릴 때 돼요. 설치는 명령 한 줄 붙여 넣고 QR 찍으면 끝나요.',
+        requirements: 'Claude Code나 Codex를 돌리는 Mac이나 Windows PC, 그리고 Tailscale만 있으면 돼요. 승인과 질문 답은 평소 쓰던 터미널 그대로. 실시간 터미널, 폰에서 메시지 보내기나 새 작업 시작, 다른 에이전트는 herdr-core로 돌릴 때 돼요. 설치는 명령 한 줄 붙여 넣고 QR 찍으면 끝나요.',
         android: {
           button: 'Android 테스트 참여',
           label: 'Android 비공개 테스트',
@@ -470,7 +470,7 @@ export const ui = {
             tab: '설정',
             intro: '언어와 화면, 백업까지 내게 맞게.',
             rows: [
-              { shot: 'settings', label: '내 방식대로', title: '언어와 화면을 내게 맞게.', body: '한국어, 영어, 일본어를 지원하고 다크·라이트 모드와 글꼴을 고를 수 있습니다. 목표 취침·기상 시간을 정해 두면 약효가 잠자리까지 이어질지 미리 알려줍니다.', alt: '언어, 디스플레이 모드, 글꼴, 목표 취침·기상 시간이 있는 설정 화면' },
+              { shot: 'settings', label: '내 방식대로', title: '언어와 화면을 내게 맞게.', body: '한국어, 영어, 일본어, 중국어(번체)를 지원하고 다크·라이트 모드와 글꼴을 고를 수 있습니다. 목표 취침·기상 시간을 정해 두면 약효가 잠자리까지 이어질지 미리 알려줍니다.', alt: '언어, 디스플레이 모드, 글꼴, 목표 취침·기상 시간이 있는 설정 화면' },
               { shot: 'backup', label: '백업·복구', title: '폰을 바꿔도 기록은 그대로.', body: '복약 기록과 건강 데이터는 외부 서버로 보내지 않고, 기기와 내 iCloud(Android는 Google Drive)에만 저장됩니다. 자동으로 백업하고, 필요할 때 지금 바로 백업하거나 파일로 내보낼 수 있습니다.', alt: 'iCloud 백업, 지금 백업, 데이터 내보내기와 가져오기가 있는 백업·복구 화면' },
             ],
           },
@@ -501,8 +501,8 @@ export const ui = {
     docs: { privacy: 'Privacy Policy', terms: 'Terms of Service', support: 'Support' },
     footer: { products: 'Products', language: 'Language', legal: '© Hyperfocus Lab · Representative: Yejun Lee' },
     home: {
-      title: 'Hyperfocus Lab | Peakly · Sheltie',
-      description: "Peakly is an ADHD medication tracker that draws the day's estimated effect curve from your dose times. Sheltie lets you approve coding agents on your computer from the iPhone Lock Screen.",
+      title: 'Hyperfocus Lab | Peakly · Sheltie · Cockatoo · Harubox',
+      description: "Peakly is an ADHD medication tracker that draws the day's estimated effect curve from your dose times. Sheltie lets you approve coding agents on your computer from your phone's Lock Screen. Cockatoo corrects the English you speak and checks your pronunciation word by word. Harubox records all day and transcribes and summarizes on your iPhone.",
       company: 'Hyperfocus Lab is a studio that builds and runs its own software products.',
       more: 'Learn more →',
       peaklyTitle: 'Peakly | ADHD medication tracker',
@@ -511,7 +511,7 @@ export const ui = {
         title: 'Products',
         facts: [
           ['Platforms', 'iPhone · iPad · Android'],
-          ['Languages', '한국어 · English · 日本語'],
+          ['Languages', '한국어 · English · 日本語 · 繁體中文'],
         ],
         more: 'Go to Peakly',
       },
@@ -535,7 +535,7 @@ export const ui = {
         ],
         agentsLabel: 'Supported agents',
         agents: 'Claude Code · Codex · Gemini CLI · Qwen Code · OpenCode · Grok · GitHub Copilot CLI · Cursor Agent · Amp',
-        requirements: 'A Mac or Windows PC running Claude Code or Codex, plus Tailscale. Approvals and questions work from any terminal; the live terminal, sending messages, new tasks from your phone and the other agents need herdr. Setup is one command on the computer and a QR scan.',
+        requirements: 'A Mac or Windows PC running Claude Code or Codex, plus Tailscale. Approvals and questions work from any terminal; the live terminal, sending messages, new tasks from your phone and the other agents need herdr-core. Setup is one command on the computer and a QR scan.',
         android: {
           button: 'Join the Android test',
           label: 'Android closed test',
@@ -601,7 +601,7 @@ export const ui = {
             tab: 'Settings',
             intro: 'Language, look, and backups, your way.',
             rows: [
-              { shot: 'settings', label: 'Make it yours', title: 'Language and look, your way.', body: 'Peakly is available in Korean, English, and Japanese, with dark and light modes and font options. Set your target bedtime and wake time, and Peakly warns you if the effect may last into the night.', alt: 'Settings screen with language, display mode, font, and target bedtime and wake time' },
+              { shot: 'settings', label: 'Make it yours', title: 'Language and look, your way.', body: 'Peakly is available in Korean, English, Japanese, and Traditional Chinese, with dark and light modes and font options. Set your target bedtime and wake time, and Peakly warns you if the effect may last into the night.', alt: 'Settings screen with language, display mode, font, and target bedtime and wake time' },
               { shot: 'backup', label: 'Backup and restore', title: 'New phone, same records.', body: 'Your dose records and health data never go to an outside server. They are stored only on your device and in your own iCloud (Google Drive on Android). Backups run automatically, and you can also back up now or export a file.', alt: 'Backup screen with iCloud backup, back up now, and data export and import' },
             ],
           },
@@ -632,8 +632,8 @@ export const ui = {
     docs: { privacy: 'プライバシーポリシー', terms: '利用規約', support: 'サポート' },
     footer: { products: 'プロダクト', language: '言語', legal: '© Hyperfocus Lab · 代表 Yejun Lee' },
     home: {
-      title: 'Hyperfocus Lab | ピークリー · Sheltie',
-      description: '服用時刻を記録すると、1日の作用の予測グラフを表示します。気分や目標、タスクも同じアプリで記録できます。iPhone・iPad・Android対応。',
+      title: 'Hyperfocus Lab | ピークリー · Sheltie · Cockatoo · Harubox',
+      description: 'ピークリーは服用時刻から1日の作用の予測グラフを描くADHDの服薬記録アプリです。SheltieはPCのコーディングエージェントが止まるとロック画面から許可できるアプリ、Cockatooは話した英語を添削し発音を単語ごとに示すアプリ、Haruboxは一日中録音して文字起こしと要約をiPhone内で行うアプリです。',
       company: 'Hyperfocus Labは、自社のソフトウェアプロダクトを開発・運営するスタジオです。',
       more: '詳しく見る →',
       peaklyTitle: 'ピークリー | ADHDの服薬記録アプリ',
@@ -642,7 +642,7 @@ export const ui = {
         title: 'プロダクト',
         facts: [
           ['対応OS', 'iPhone · iPad · Android'],
-          ['言語', '한국어 · English · 日本語'],
+          ['言語', '한국어 · English · 日本語 · 繁體中文'],
         ],
         more: 'ピークリーのページへ',
       },
@@ -663,7 +663,7 @@ export const ui = {
         ],
         agentsLabel: '対応エージェント',
         agents: 'Claude Code · Codex · Gemini CLI · Qwen Code · OpenCode · Grok · GitHub Copilot CLI · Cursor Agent · Amp',
-        requirements: 'Claude CodeかCodexを動かしているMacまたはWindows PCと、Tailscaleがあれば使えます。承認と質問への回答は、いつものターミナルのままで動きます。リアルタイムのターミナル、メッセージ送信、スマートフォンからの新しい作業、ほかのエージェントにはherdrが必要です。セットアップは、PCにコマンドを1行貼り付けてQRコードを読み取るだけです。',
+        requirements: 'Claude CodeかCodexを動かしているMacまたはWindows PCと、Tailscaleがあれば使えます。承認と質問への回答は、いつものターミナルのままで動きます。リアルタイムのターミナル、メッセージ送信、スマートフォンからの新しい作業、ほかのエージェントにはherdr-coreが必要です。セットアップは、PCにコマンドを1行貼り付けてQRコードを読み取るだけです。',
         android: {
           button: 'Androidテストに参加',
           label: 'Androidクローズドテスト',
@@ -727,7 +727,7 @@ export const ui = {
             tab: '設定',
             intro: '言語も画面もバックアップも、自分に合わせて。',
             rows: [
-              { shot: 'settings', label: '自分に合わせて', title: '言語も画面も、自分に合わせて。', body: '韓国語、英語、日本語で使えます。ダーク・ライトモードとフォントも選べます。目標の就寝・起床時間を決めておくと、作用が寝る時間まで続きそうなときに事前にお知らせします。', alt: '言語、ディスプレイモード、フォント、目標の就寝・起床時間がある設定画面' },
+              { shot: 'settings', label: '自分に合わせて', title: '言語も画面も、自分に合わせて。', body: '韓国語、英語、日本語、繁体字中国語で使えます。ダーク・ライトモードとフォントも選べます。目標の就寝・起床時間を決めておくと、作用が寝る時間まで続きそうなときに事前にお知らせします。', alt: '言語、ディスプレイモード、フォント、目標の就寝・起床時間がある設定画面' },
               { shot: 'backup', label: 'バックアップ・復元', title: '機種を変えても、記録はそのまま。', body: '服薬記録と健康データは外部のサーバーには送らず、端末と自分のiCloud（AndroidはGoogleドライブ）にだけ保存されます。自動でバックアップし、必要なときは今すぐバックアップしたりファイルに書き出したりできます。', alt: 'iCloudバックアップ、今すぐバックアップ、データの書き出しと読み込みがあるバックアップ画面' },
             ],
           },
@@ -758,8 +758,8 @@ export const ui = {
     docs: { privacy: '隱私權政策', terms: '服務條款', support: '客戶支援' },
     footer: { products: '產品', language: '語言', legal: '© Hyperfocus Lab · 代表 Yejun Lee' },
     home: {
-      title: 'Hyperfocus Lab | Peakly · Sheltie',
-      description: '記錄服藥時間，Peakly 就會畫出一天中的預估藥效曲線。心情、目標與待辦事項也能在同一個 App 裡記錄。支援 iPhone、iPad、Android。',
+      title: 'Hyperfocus Lab | Peakly · Sheltie · Cockatoo · Harubox',
+      description: 'Peakly 是 ADHD 服藥紀錄 App，依服藥時間畫出一天的預估藥效曲線。Sheltie 讓你在手機鎖定畫面核准電腦上的程式代理；Cockatoo 修正你說的英文並逐字檢查發音；Harubox 整天錄音，在 iPhone 上產生逐字稿與摘要。',
       company: 'Hyperfocus Lab 是一間開發並營運自家軟體產品的工作室。',
       more: '了解更多 →',
       peaklyTitle: 'Peakly | ADHD 服藥紀錄 App',
@@ -789,7 +789,7 @@ export const ui = {
         ],
         agentsLabel: '支援的代理',
         agents: 'Claude Code · Codex · Gemini CLI · Qwen Code · OpenCode · Grok · GitHub Copilot CLI · Cursor Agent · Amp',
-        requirements: '只要有執行 Claude Code 或 Codex 的 Mac 或 Windows PC，再加上 Tailscale 就能使用。核准與回答問題可直接在原本的終端機運作；即時終端機、傳送訊息、從手機開始新工作，以及其他代理，都需要 herdr。設定只要在電腦貼上一行指令，再掃描 QR 碼。',
+        requirements: '只要有執行 Claude Code 或 Codex 的 Mac 或 Windows PC，再加上 Tailscale 就能使用。核准與回答問題可直接在原本的終端機運作；即時終端機、傳送訊息、從手機開始新工作，以及其他代理，都需要 herdr-core。設定只要在電腦貼上一行指令，再掃描 QR 碼。',
         android: {
           button: '參加 Android 測試',
           label: 'Android 封閉測試',
