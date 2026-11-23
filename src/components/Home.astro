@@ -18,7 +18,7 @@ const peaklyShotLang = lang === 'zh-Hant' ? 'en' : lang;
 const peaklyDark = `public/assets/peakly/${peaklyShotLang}-chart-dark.webp`;
 const sheltieLang = lang === 'ko' ? 'ko' : 'en';
 const sheltieLinkSet = sheltieLinks(lang);
-// Harubox has Korean store captures only so far; other languages show the copy alone.
+// Harubox transcript capture per home language; a language without one shows the copy alone.
 const haruboxShot = existsSync(`public/assets/harubox/${lang}-transcript.webp`) ? `/assets/harubox/${lang}-transcript.webp` : undefined;
 ---
 
