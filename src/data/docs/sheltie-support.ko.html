@@ -16,10 +16,10 @@
         </ol>
         <p>설치 명령(맥 터미널):</p>
         <pre class="cmd"><code>curl -fsSL https://raw.githubusercontent.com/hyperfocuslab/sheltie/main/install.sh | sh</code></pre>
-        <p>필요한 것: macOS, python3, herdr-core(<code>hc</code>), Tailscale. QR을 다시 보려면 <code>python3 ~/.local/share/herdr-remote/herdr_remote.py pair</code>, 지우려면 같은 명령 끝을 <code>| sh -s -- --uninstall</code>로 바꿉니다. </p>
+        <p>필요한 것: macOS, python3, herdr-core(<code>hc</code>), Tailscale. QR을 다시 보려면 <code>python3 ~/.local/share/sheltie/sheltie.py pair</code>, 지우려면 같은 명령 끝을 <code>| sh -s -- --uninstall</code>로 바꿉니다. </p>
         <p>설치 명령(윈도우 PowerShell, 관리자 권한 아님):</p>
         <pre class="cmd"><code>irm https://raw.githubusercontent.com/hyperfocuslab/sheltie/main/install.ps1 | iex</code></pre>
-        <p>필요한 것: Windows, Python 3.9 이상, herdr-core(<code>hc</code>), Tailscale. 서버는 로그인할 때 작업 스케줄러로 자동 시작됩니다. QR을 다시 보려면 <code>python "$env:LOCALAPPDATA\herdr-remote\herdr_remote.py" pair</code>, 지우려면 <code>$env:HERDR_REMOTE_UNINSTALL=1; irm https://raw.githubusercontent.com/hyperfocuslab/sheltie/main/install.ps1 | iex</code>. 소스: <a href="https://github.com/hyperfocuslab/sheltie">github.com/hyperfocuslab/sheltie</a>(MIT).</p>
+        <p>필요한 것: Windows, Python 3.9 이상, herdr-core(<code>hc</code>), Tailscale. 서버는 로그인할 때 작업 스케줄러로 자동 시작됩니다. QR을 다시 보려면 <code>python "$env:LOCALAPPDATA\sheltie\sheltie.py" pair</code>, 지우려면 <code>$env:SHELTIE_UNINSTALL=1; irm https://raw.githubusercontent.com/hyperfocuslab/sheltie/main/install.ps1 | iex</code>. 소스: <a href="https://github.com/hyperfocuslab/sheltie">github.com/hyperfocuslab/sheltie</a>(MIT).</p>
       </section>
       <section aria-labelledby="faq">
         <h2 id="faq">자주 묻는 것</h2>
