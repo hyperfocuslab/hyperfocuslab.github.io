@@ -53,6 +53,18 @@ const links = cockatooLinks(lang);
         }
       </div>
 
+      <h3 class="label p-sub">{cockatoo.featuresTitle}</h3>
+      <ul class="feature-cards">
+        {
+          cockatoo.features.map((f) => (
+            <li>
+              <h4 class="h3">{f.title}</h4>
+              <p>{f.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+
     </div>
   </section>
 </Base>
