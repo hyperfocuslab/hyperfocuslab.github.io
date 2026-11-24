@@ -766,7 +766,7 @@ main > .section:first-child {
 
 .footer-grid {
   display: grid;
-  grid-template-columns: minmax(0, 2fr) repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 40px 24px;
 }
 
@@ -793,11 +793,6 @@ main > .section:first-child {
   color: var(--ink);
 }
 
-.footer-mark {
-  align-self: start;
-  color: var(--ink) !important;
-}
-
 .footer-bottom {
   margin-top: clamp(48px, 7vw, 72px);
   font-size: 0.8125rem;
@@ -819,9 +814,6 @@ main > .section:first-child {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .footer-mark {
-    grid-column: 1 / -1;
-  }
 }
 
 /* ── Small screens ────────────────────────────────────── */
@@ -1189,4 +1181,13 @@ main > .section:first-child {
   width: 100%;
   height: auto;
   border-radius: 10px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
