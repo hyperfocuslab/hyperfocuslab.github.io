@@ -140,7 +140,7 @@ export const COCKATOO_PAGE: Record<CockatooLang, { title: string; tagline: strin
       { shot: 'review', label: '복습', title: '고친 표현이 복습에 쌓여요', body: '고친 표현과 틀린 발음이 복습 목록에 쌓여요.', alt: '복습 목록 화면' },
       { shot: 'habit', label: '발음 버릇', title: '자주 틀리는 소리를 횟수로 봐요', body: '"발음 버릇"에서 th → d 12번처럼 자주 틀리는 소리를 횟수로 봐요.', alt: '발음 버릇 상세 화면' },
     ],
-    requirements: 'Apple Intelligence를 지원하는 iPhone, iOS 27 이상. 설명과 해석은 iPhone 언어로 나와요.',
+    requirements: 'Apple Intelligence를 지원하는 iPhone과 iOS 27 이상이 필요해요.',
   },
   en: {
     title: 'Cockatoo | AI English Speaking and Pronunciation',
@@ -153,7 +153,7 @@ export const COCKATOO_PAGE: Record<CockatooLang, { title: string; tagline: strin
       { shot: 'review', label: 'Review', title: 'Corrections collect for review', body: 'Corrected phrases and mispronounced words collect in your review list.', alt: 'Review list screen' },
       { shot: 'habit', label: 'Pronunciation habits', title: 'See the sounds you miss most', body: '“Pronunciation habits” counts the sounds you miss most, such as th → d, 12 times.', alt: 'Pronunciation habit detail screen' },
     ],
-    requirements: 'iPhone that supports Apple Intelligence, iOS 27 or later. Explanations follow your iPhone language.',
+    requirements: 'iPhone that supports Apple Intelligence, iOS 27 or later.',
   },
   ja: {
     title: 'Cockatoo | AI英会話・発音矯正',
@@ -166,7 +166,7 @@ export const COCKATOO_PAGE: Record<CockatooLang, { title: string; tagline: strin
       { shot: 'review', label: '復習', title: '添削された表現が復習にたまる', body: '添削された表現と間違えた発音が復習リストにたまります。', alt: '復習リストの画面' },
       { shot: 'habit', label: '発音のクセ', title: 'よく間違える音を回数で確認', body: '「発音のクセ」で、th → d が12回のように、よく間違える音を回数で確認できます。', alt: '発音のクセの詳細画面' },
     ],
-    requirements: 'Apple Intelligenceに対応したiPhone、iOS 27以降。説明と翻訳はiPhoneの言語で表示されます。',
+    requirements: 'Apple Intelligenceに対応したiPhone、iOS 27以降。',
   },
   'zh-Hant': {
     title: 'Cockatoo | AI 英文口說・發音矯正',
@@ -179,7 +179,7 @@ export const COCKATOO_PAGE: Record<CockatooLang, { title: string; tagline: strin
       { shot: 'review', label: '複習', title: '修正過的說法累積成複習', body: '修正過的說法和唸錯的發音會累積在複習清單。', alt: '複習清單畫面' },
       { shot: 'habit', label: '發音習慣', title: '用次數看最常唸錯的音', body: '在「發音習慣」用次數看你最常唸錯的音，例如 th → d 12 次。', alt: '發音習慣詳細畫面' },
     ],
-    requirements: '支援 Apple Intelligence 的 iPhone，iOS 27 或以上版本。說明與翻譯會以 iPhone 的語言顯示。',
+    requirements: '支援 Apple Intelligence 的 iPhone，iOS 27 或以上版本。',
   },
   de: {
     title: 'Cockatoo | Englisch sprechen, Aussprache mit KI üben',
@@ -192,7 +192,7 @@ export const COCKATOO_PAGE: Record<CockatooLang, { title: string; tagline: strin
       { shot: 'review', label: 'Wiederholen', title: 'Verbessertes landet im Wiederholen', body: 'Verbesserte Ausdrücke und falsch ausgesprochene Wörter landen in deiner Wiederholungsliste.', alt: 'Wiederholungsliste' },
       { shot: 'habit', label: 'Aussprache-Gewohnheiten', title: 'Sieh, welche Laute du oft verfehlst', body: 'Unter „Aussprache-Gewohnheiten“ siehst du, welche Laute du wie oft verfehlst, etwa th → d, 12-mal.', alt: 'Detailansicht einer Aussprachegewohnheit' },
     ],
-    requirements: 'iPhone mit Apple Intelligence, iOS 27 oder neuer. Erklärungen erscheinen in der Sprache deines iPhone.',
+    requirements: 'iPhone mit Apple Intelligence, iOS 27 oder neuer.',
   },
   es: {
     title: 'Cockatoo | Habla inglés con IA y corrige tu pronunciación',
@@ -205,7 +205,7 @@ export const COCKATOO_PAGE: Record<CockatooLang, { title: string; tagline: strin
       { shot: 'review', label: 'Repaso', title: 'Lo corregido se guarda para repasar', body: 'Las expresiones corregidas y las palabras mal pronunciadas se guardan en tu lista de repaso.', alt: 'Pantalla de la lista de repaso' },
       { shot: 'habit', label: 'Hábitos de pronunciación', title: 'Los sonidos que más fallas, contados', body: 'En “Hábitos de pronunciación” ves cuántas veces fallas cada sonido, por ejemplo th → d, 12 veces.', alt: 'Detalle de un hábito de pronunciación' },
     ],
-    requirements: 'iPhone compatible con Apple Intelligence, iOS 27 o posterior. Las explicaciones salen en el idioma de tu iPhone.',
+    requirements: 'iPhone compatible con Apple Intelligence, iOS 27 o posterior.',
   },
   fr: {
     title: 'Cockatoo | Parler anglais avec l’IA et corriger sa prononciation',
@@ -218,7 +218,7 @@ export const COCKATOO_PAGE: Record<CockatooLang, { title: string; tagline: strin
       { shot: 'review', label: 'Révision', title: 'Les corrections s’ajoutent à la révision', body: 'Les tournures corrigées et les mots mal prononcés s’ajoutent à votre liste de révision.', alt: 'Écran de la liste de révision' },
       { shot: 'habit', label: 'Habitudes de prononciation', title: 'Les sons que vous ratez le plus, comptés', body: '« Habitudes de prononciation » compte les sons que vous ratez le plus, par exemple th → d, 12 fois.', alt: 'Détail d’une habitude de prononciation' },
     ],
-    requirements: 'iPhone compatible avec Apple Intelligence, iOS 27 ou version ultérieure. Les explications s’affichent dans la langue de votre iPhone.',
+    requirements: 'iPhone compatible avec Apple Intelligence, iOS 27 ou version ultérieure.',
   },
   'pt-BR': {
     title: 'Cockatoo | Fale inglês com IA e corrija a pronúncia',
@@ -231,7 +231,7 @@ export const COCKATOO_PAGE: Record<CockatooLang, { title: string; tagline: strin
       { shot: 'review', label: 'Revisão', title: 'O que foi corrigido vira revisão', body: 'Expressões corrigidas e palavras pronunciadas errado vão para a sua lista de revisão.', alt: 'Tela da lista de revisão' },
       { shot: 'habit', label: 'Hábitos de pronúncia', title: 'Os sons que você mais erra, contados', body: 'Em “Hábitos de pronúncia” você vê quantas vezes erra cada som, por exemplo th → d, 12 vezes.', alt: 'Detalhe de um hábito de pronúncia' },
     ],
-    requirements: 'iPhone compatível com a Apple Intelligence, iOS 27 ou posterior. As explicações aparecem no idioma do seu iPhone.',
+    requirements: 'iPhone compatível com a Apple Intelligence, iOS 27 ou posterior.',
   },
 };
 
