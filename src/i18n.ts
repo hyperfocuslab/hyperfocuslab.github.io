@@ -594,14 +594,14 @@ export const ui = {
             tab: 'History',
             intro: 'Past days, and how each one felt.',
             rows: [
-              { shot: 'calendar', label: 'Calendar', title: 'Your past days at a glance.', body: 'Each date shows dots for your doses, goals, and tasks. Tap a day to see the medication you took and the goals and tasks you finished, or search to find older records. Your mood and notes for the day help you explain how things have been at your appointment.', alt: 'Calendar with dots for doses, goals, and tasks' },
+              { shot: 'calendar', label: 'Calendar', title: 'Every past day on one calendar.', body: 'Each date shows dots for your doses, goals, and tasks. Tap a day to see the medication you took and the goals and tasks you finished, or search to find older records. Your mood and notes for the day help you explain how things have been at your appointment.', alt: 'Calendar with dots for doses, goals, and tasks' },
             ],
           },
           {
             tab: 'Settings',
-            intro: 'Language, look, and backups, your way.',
+            intro: 'Language, theme, fonts and backups.',
             rows: [
-              { shot: 'settings', label: 'Make it yours', title: 'Language and look, your way.', body: 'Peakly is available in Korean, English, Japanese, and Traditional Chinese, with dark and light modes and font options. Set your target bedtime and wake time, and Peakly warns you if the effect may last into the night.', alt: 'Settings screen with language, display mode, font, and target bedtime and wake time' },
+              { shot: 'settings', label: 'Language and display', title: 'Pick your language, theme and font.', body: 'Peakly is available in Korean, English, Japanese, and Traditional Chinese, with dark and light modes and font options. Set your target bedtime and wake time, and Peakly warns you if the effect may last into the night.', alt: 'Settings screen with language, display mode, font, and target bedtime and wake time' },
               { shot: 'backup', label: 'Backup and restore', title: 'New phone, same records.', body: 'Your dose records and health data never go to an outside server. They are stored only on your device and in your own iCloud (Google Drive on Android). Backups run automatically, and you can also back up now or export a file.', alt: 'Backup screen with iCloud backup, back up now, and data export and import' },
             ],
           },
@@ -617,7 +617,7 @@ export const ui = {
         features: [
           { title: 'Apple Watch', platforms: ['iOS'], body: 'Heart rate, movement, sleep, and workouts recorded by Apple Watch come in through Apple Health and show up alongside your medication. The time left is also shown in the watch Smart Stack.' },
           { title: 'Phase notifications', platforms: ['iOS', 'Android'], body: 'Get notified when the effect starts rising, when it reaches its peak, and when it starts wearing off. Turn each one on or off.' },
-          { title: 'Heart-rate response', platforms: ['iOS'], body: 'Compares your heart rate after a dose with your usual, and estimates whether a rise reflects the medication\'s effect or the effect of activity.' },
+          { title: 'Heart-rate response', platforms: ['iOS'], body: 'Compares your heart rate after a dose with your usual, and estimates whether a rise comes from the medication or from activity.' },
           { title: 'Your own medications', platforms: ['iOS', 'Android'], body: 'Add medications that aren\'t on the supported list, with your own photo, and keep logging them.' },
           { title: 'Log from Control Center', platforms: ['iOS'], body: 'Log a dose from Control Center or a Lock Screen button without opening the app.' },
           { title: 'iPad support', platforms: ['iPadOS'], body: 'On iPad, records sync with your iPhone on the same Apple Account.' },
