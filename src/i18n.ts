@@ -114,14 +114,14 @@ export function haruboxHomeLang(lang: HaruboxLang): Lang {
   return (LANGS as readonly string[]).includes(lang) ? (lang as Lang) : 'en';
 }
 export const HARUBOX_UI: Record<HaruboxLang, { nav: { contact: string; language: string; main: string }; docs: { privacy: string; support: string }; legal: string }> = {
-  ko: { nav: { contact: '문의', language: '언어 선택', main: '주요 메뉴' }, docs: { privacy: '개인정보처리방침', support: '고객지원' }, legal: '© Hyperfocus Lab · 대표 이예준' },
-  en: { nav: { contact: 'Contact', language: 'Language', main: 'Main' }, docs: { privacy: 'Privacy Policy', support: 'Support' }, legal: '© Hyperfocus Lab · Representative: Yejun Lee' },
-  ja: { nav: { contact: 'お問い合わせ', language: '言語', main: 'メインメニュー' }, docs: { privacy: 'プライバシーポリシー', support: 'サポート' }, legal: '© Hyperfocus Lab · 代表 Yejun Lee' },
-  'zh-Hant': { nav: { contact: '聯絡我們', language: '選擇語言', main: '主要選單' }, docs: { privacy: '隱私權政策', support: '客戶支援' }, legal: '© Hyperfocus Lab · 代表 Yejun Lee' },
-  de: { nav: { contact: 'Kontakt', language: 'Sprache', main: 'Hauptmenü' }, docs: { privacy: 'Datenschutzerklärung', support: 'Support' }, legal: '© Hyperfocus Lab · Vertreter: Yejun Lee' },
-  es: { nav: { contact: 'Contacto', language: 'Idioma', main: 'Menú principal' }, docs: { privacy: 'Política de privacidad', support: 'Soporte' }, legal: '© Hyperfocus Lab · Representante: Yejun Lee' },
-  fr: { nav: { contact: 'Contact', language: 'Langue', main: 'Menu principal' }, docs: { privacy: 'Politique de confidentialité', support: 'Assistance' }, legal: '© Hyperfocus Lab · Représentant : Yejun Lee' },
-  'pt-BR': { nav: { contact: 'Contato', language: 'Idioma', main: 'Menu principal' }, docs: { privacy: 'Política de Privacidade', support: 'Suporte' }, legal: '© Hyperfocus Lab · Representante: Yejun Lee' },
+  ko: { nav: { contact: '문의', language: '언어 선택', main: '주요 메뉴' }, docs: { privacy: '개인정보처리방침', support: '고객지원' }, legal: '© Hyperfocus Lab' },
+  en: { nav: { contact: 'Contact', language: 'Language', main: 'Main' }, docs: { privacy: 'Privacy Policy', support: 'Support' }, legal: '© Hyperfocus Lab' },
+  ja: { nav: { contact: 'お問い合わせ', language: '言語', main: 'メインメニュー' }, docs: { privacy: 'プライバシーポリシー', support: 'サポート' }, legal: '© Hyperfocus Lab' },
+  'zh-Hant': { nav: { contact: '聯絡我們', language: '選擇語言', main: '主要選單' }, docs: { privacy: '隱私權政策', support: '客戶支援' }, legal: '© Hyperfocus Lab' },
+  de: { nav: { contact: 'Kontakt', language: 'Sprache', main: 'Hauptmenü' }, docs: { privacy: 'Datenschutzerklärung', support: 'Support' }, legal: '© Hyperfocus Lab' },
+  es: { nav: { contact: 'Contacto', language: 'Idioma', main: 'Menú principal' }, docs: { privacy: 'Política de privacidad', support: 'Soporte' }, legal: '© Hyperfocus Lab' },
+  fr: { nav: { contact: 'Contact', language: 'Langue', main: 'Menu principal' }, docs: { privacy: 'Politique de confidentialité', support: 'Assistance' }, legal: '© Hyperfocus Lab' },
+  'pt-BR': { nav: { contact: 'Contato', language: 'Idioma', main: 'Menu principal' }, docs: { privacy: 'Política de Privacidade', support: 'Suporte' }, legal: '© Hyperfocus Lab' },
 };
 
 // Cockatoo product page copy, one entry per Cockatoo language. Row titles match the App Store
@@ -368,7 +368,7 @@ export const ui = {
     appName: '피클리',
     nav: { contact: '문의', language: '언어 선택', main: '주요 메뉴' },
     docs: { privacy: '개인정보처리방침', terms: '서비스 이용약관', support: '고객지원' },
-    footer: { products: '제품', language: '언어', legal: '© Hyperfocus Lab · 대표 이예준' },
+    footer: { products: '제품', language: '언어', legal: '© Hyperfocus Lab' },
     home: {
       title: 'Hyperfocus Lab | 피클리 · Sheltie · 코카투 · 하루박스',
       description: '피클리는 복용 시각을 기록하면 하루 동안의 예상 약효 곡선을 그려 주는 ADHD 복약 기록 앱입니다. Sheltie는 PC의 코딩 에이전트가 멈추면 폰 잠금화면에서 바로 허용하는 앱, 코카투는 영어로 말하면 문장을 고쳐 주고 발음을 단어별로 짚어 주는 앱, 하루박스는 하루 종일 녹음하고 받아쓰기와 요약을 iPhone 안에서 하는 앱입니다.',
@@ -499,7 +499,7 @@ export const ui = {
     appName: 'Peakly',
     nav: { contact: 'Contact', language: 'Language', main: 'Main' },
     docs: { privacy: 'Privacy Policy', terms: 'Terms of Service', support: 'Support' },
-    footer: { products: 'Products', language: 'Language', legal: '© Hyperfocus Lab · Representative: Yejun Lee' },
+    footer: { products: 'Products', language: 'Language', legal: '© Hyperfocus Lab' },
     home: {
       title: 'Hyperfocus Lab | Peakly · Sheltie · Cockatoo · Harubox',
       description: "Peakly is an ADHD medication tracker that draws the day's estimated effect curve from your dose times. Sheltie lets you approve coding agents on your computer from your phone's Lock Screen. Cockatoo corrects the English you speak and checks your pronunciation word by word. Harubox records all day and transcribes and summarizes on your iPhone.",
@@ -630,7 +630,7 @@ export const ui = {
     appName: 'ピークリー',
     nav: { contact: 'お問い合わせ', language: '言語', main: 'メインメニュー' },
     docs: { privacy: 'プライバシーポリシー', terms: '利用規約', support: 'サポート' },
-    footer: { products: 'プロダクト', language: '言語', legal: '© Hyperfocus Lab · 代表 Yejun Lee' },
+    footer: { products: 'プロダクト', language: '言語', legal: '© Hyperfocus Lab' },
     home: {
       title: 'Hyperfocus Lab | ピークリー · Sheltie · Cockatoo · Harubox',
       description: 'ピークリーは服用時刻から1日の作用の予測グラフを描くADHDの服薬記録アプリです。SheltieはPCのコーディングエージェントが止まるとロック画面から許可できるアプリ、Cockatooは話した英語を添削し発音を単語ごとに示すアプリ、Haruboxは一日中録音して文字起こしと要約をiPhone内で行うアプリです。',
@@ -756,7 +756,7 @@ export const ui = {
     appName: 'Peakly',
     nav: { contact: '聯絡我們', language: '選擇語言', main: '主要選單' },
     docs: { privacy: '隱私權政策', terms: '服務條款', support: '客戶支援' },
-    footer: { products: '產品', language: '語言', legal: '© Hyperfocus Lab · 代表 Yejun Lee' },
+    footer: { products: '產品', language: '語言', legal: '© Hyperfocus Lab' },
     home: {
       title: 'Hyperfocus Lab | Peakly · Sheltie · Cockatoo · Harubox',
       description: 'Peakly 是 ADHD 服藥紀錄 App，依服藥時間畫出一天的預估藥效曲線。Sheltie 讓你在手機鎖定畫面核准電腦上的程式代理；Cockatoo 修正你說的英文並逐字檢查發音；Harubox 整天錄音，在 iPhone 上產生逐字稿與摘要。',
