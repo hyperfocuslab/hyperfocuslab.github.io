@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css';
 import Logo from '../components/Logo.astro';
-import { EMAIL, GAME_URL, HARUBOX_LANGS, HARUBOX_LANG_CODE, HARUBOX_LANG_LABEL, HARUBOX_UI, LANGS, LANG_CODE, LANG_LABEL, PRODUCT_NAME, SHELTIE_LANGS, SITE, cockatooHref, cockatooName, haruboxHomeLang, haruboxHref, haruboxName, href, sheltieHref, ui, type HaruboxLang, type Lang, type Page, type Product } from '../i18n';
+import { EMAIL, HARUBOX_LANGS, HARUBOX_LANG_CODE, HARUBOX_LANG_LABEL, HARUBOX_UI, LANGS, LANG_CODE, LANG_LABEL, PRODUCT_NAME, SHELTIE_LANGS, SITE, cockatooHref, cockatooName, haruboxHomeLang, haruboxHref, haruboxName, href, sheltieHref, ui, type HaruboxLang, type Lang, type Page, type Product } from '../i18n';
 
 interface Props {
   // Harubox and Cockatoo pages use eight languages, four more than the rest of the site.
@@ -180,7 +180,6 @@ const GA_ID = 'G-96T0GRTD1R';
               <a href={href('sheltie', siteLang)}>Sheltie</a>
               <a href={cockatooHref('product', siteLang)}>{cockatooName(siteLang)}</a>
               <a href={haruboxHref('product', siteLang)}>{haruboxName(siteLang)}</a>
-              <a href={GAME_URL} target="_blank" rel="noreferrer">DEAD DISTRICT</a>
             </nav>
           )
         }

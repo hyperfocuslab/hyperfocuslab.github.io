@@ -3,7 +3,7 @@ import { existsSync } from 'node:fs';
 import Base from '../layouts/Base.astro';
 import AppShot from './AppShot.astro';
 import StoreBadges from './StoreBadges.astro';
-import { GAME_URL, haruboxHref, haruboxName, href, sheltieLinks, ui, type Lang } from '../i18n';
+import { haruboxHref, haruboxName, href, sheltieLinks, ui, type Lang } from '../i18n';
 
 interface Props {
   lang: Lang;
@@ -131,30 +131,6 @@ const haruboxShot = existsSync(`public/assets/harubox/${lang}-transcript.webp`) 
             </div>
           )
         }
-      </div>
-    </div>
-  </section>
-  <section class="section">
-    <div class="wrap">
-      <div class="feature-row">
-        <div class="feature-copy">
-          <div class="product-name">
-            <img class="app-icon" src="/assets/dead-district/icon.webp" alt="" width="72" height="72" loading="lazy" />
-            <div>
-              <h2 class="h2">DEAD DISTRICT</h2>
-              <p class="muted">{t.game.tagline}</p>
-            </div>
-          </div>
-          <p class="lead">{t.game.lead}</p>
-          <div class="actions store">
-            <a class="btn" href={GAME_URL} target="_blank" rel="noreferrer">{t.game.play}</a>
-          </div>
-        </div>
-        <div class="feature-visual">
-          <a class="game-shot" href={GAME_URL} target="_blank" rel="noreferrer">
-            <img src="/assets/dead-district/home.webp" alt={t.game.alt} width="1600" height="900" loading="lazy" decoding="async" />
-          </a>
-        </div>
       </div>
     </div>
   </section>
