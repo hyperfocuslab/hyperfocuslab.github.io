@@ -26,6 +26,8 @@ const t = isWide
   : ui[lang as Lang];
 // Every product other than Peakly has its own languages, name and links.
 const isOther = product !== 'peakly';
+// Cockatoo and Harubox have eight languages; keep the visitor's language when it is one of them.
+const otherLang = (HARUBOX_LANGS as readonly string[]).includes(lang) ? (lang as HaruboxLang) : siteLang;
 const productName = isHarubox ? haruboxName(lang as HaruboxLang) : isCockatoo ? cockatooName(lang as HaruboxLang) : product === 'peakly' ? t.appName : PRODUCT_NAME[product];
 // Sheltie pages exist in the four site languages (SHELTIE_LANGS).
 const haruboxLangs: readonly HaruboxLang[] = HARUBOX_LANGS;
@@ -168,17 +170,13 @@ const GA_ID = 'G-96T0GRTD1R';
 
     <footer class="site-footer">
       <div class="wrap footer-grid">
-        {
-          !isOther && (
-            <nav aria-label={t.footer.products}>
-              <p class="footer-head">{t.footer.products}</p>
-              <a href={href('peakly', siteLang)}>{t.appName}</a>
-              <a href={href('sheltie', siteLang)}>Sheltie</a>
-              <a href={cockatooHref('product', siteLang)}>{cockatooName(siteLang)}</a>
-              <a href={haruboxHref('product', siteLang)}>{haruboxName(siteLang)}</a>
-            </nav>
-          )
-        }
+        <nav aria-label={t.footer.products}>
+          <p class="footer-head">{t.footer.products}</p>
+          <a href={href('peakly', siteLang)} aria-current={page !== 'home' && product === 'peakly' ? 'page' : undefined}>{t.appName}</a>
+          <a href={href('sheltie', siteLang)} aria-current={page !== 'home' && product === 'sheltie' ? 'page' : undefined}>Sheltie</a>
+          <a href={cockatooHref('product', otherLang)} aria-current={page !== 'home' && product === 'cockatoo' ? 'page' : undefined}>{cockatooName(otherLang)}</a>
+          <a href={haruboxHref('product', otherLang)} aria-current={page !== 'home' && product === 'harubox' ? 'page' : undefined}>{haruboxName(otherLang)}</a>
+        </nav>
         {
           // Support, privacy and terms sit in the footer of each product's own pages only;
           // the company home lists the products and links to their pages instead.
