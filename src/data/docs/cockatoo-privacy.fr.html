@@ -1,4 +1,6 @@
-<p class="muted">Date d'entrée en vigueur : 23/11/2026 · Développeur : Hyperfocus Lab</p>
+<p class="muted">Date d'entrée en vigueur : 26/11/2026 · Développeur : Hyperfocus Lab</p>
+
+      <p>Cette politique s'applique à l'app iOS comme à l'app Android. Ce qui fonctionne autrement sur Android figure dans la section « App Android » ; les autres sections décrivent l'app iOS. « Informations collectées » et « Demandes envoyées depuis l'app » valent pour les deux.</p>
 
       <h2>Informations collectées</h2>
       <p>Cockatoo ne collecte aucune information personnelle, hormis ce que vous envoyez vous-même via le formulaire de demande de l'app (voir « Demandes envoyées depuis l'app » plus bas). Il n'y a pas de compte, ni outil d'analyse ni SDK publicitaire. Le développeur ne peut pas voir vos enregistrements ni vos conversations.</p>
@@ -40,6 +42,17 @@
         <li>Où cela va : les données passent par un serveur Google Apps Script, sont enregistrées dans une feuille de calcul Google gérée par Hyperfocus Lab et transmises par e-mail à support@hyperfocuslab.app.</li>
         <li>Usage : uniquement pour répondre à votre demande.</li>
         <li>Suppression : écrivez à support@hyperfocuslab.app et nous supprimerons votre demande.</li>
+      </ul>
+
+      <h2>App Android</h2>
+      <p>L'app Android (com.hyperfocuslab.cockatoo) traite aussi l'IA de conversation sur le téléphone. Ce qui concerne Apple Intelligence, Private Cloud Compute et la sauvegarde iCloud ne vaut que pour l'app iOS.</p>
+      <ul>
+        <li>IA de conversation : Google Gemini Nano s'exécute sur le téléphone (Android AICore). Le texte des conversations et les corrections ne quittent pas le téléphone. Sur les téléphones qui ne prennent pas en charge Nano, la conversation et les corrections sont indisponibles ; seuls la répétition et l'évaluation de la prononciation fonctionnent.</li>
+        <li>Transcription, évaluation de la prononciation et lecture à voix haute : la transcription (basée sur Whisper), l'évaluation de la prononciation et la voix Android qui lit les réponses s'exécutent sur le téléphone. Les enregistrements restent uniquement sur le téléphone et ne sont envoyés ni au développeur ni à un serveur externe.</li>
+        <li>Téléchargement des modèles : les modèles de transcription et de prononciation (environ 600 Mo) sont téléchargés par Google Play juste après l'installation de l'app (Play Asset Delivery). Le développeur ne reçoit aucune information lors de ce processus.</li>
+        <li>Sauvegarde automatique Android : la sauvegarde dans le cloud du compte Google contient l'historique des conversations (texte) et les réglages. Elle est stockée dans votre propre Google Drive et vous pouvez la désactiver dans les paramètres Android. Les fichiers d'enregistrement sont exclus de la sauvegarde cloud et ne sont inclus que dans le transfert direct d'appareil à appareil lors du passage à un nouveau téléphone.</li>
+        <li>Google ML Kit : ML Kit peut envoyer à Google des mesures d'utilisation de l'API et de performance (pas le contenu des conversations). Voir les <a href="https://developers.google.com/ml-kit/terms">conditions de ML Kit</a>. Il n'y a ni SDK publicitaire ni SDK d'analyse.</li>
+        <li>Demandes : ce qui est décrit dans « Demandes envoyées depuis l'app » vaut aussi pour l'app Android.</li>
       </ul>
 
       <h2>Modifications</h2>

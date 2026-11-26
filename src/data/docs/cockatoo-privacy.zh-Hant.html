@@ -1,4 +1,6 @@
-<p class="muted">生效日期：2026 年 11 月 23 日 · 開發者：Hyperfocus Lab</p>
+<p class="muted">生效日期：2026 年 11 月 26 日 · 開發者：Hyperfocus Lab</p>
+
+      <p>本政策同時適用於 iOS App 與 Android App。Android App 處理方式不同的部分，列在「Android App」一節；其他各節以 iOS App 為準。我們蒐集的資訊與從 App 內送出的詢問，兩者皆適用。</p>
 
       <h2>我們蒐集的資訊</h2>
       <p>Cockatoo 除了您自行從 App 內送出的詢問（見下方「從 App 內送出的詢問」）外，不蒐集個人資料。沒有帳號，也不使用分析工具或廣告 SDK。開發者無法看到您的錄音或對話。</p>
@@ -40,6 +42,17 @@
         <li>儲存位置：經由 Google Apps Script 伺服器，儲存在 Hyperfocus Lab 管理的 Google 試算表，並以電子郵件轉寄至 support@hyperfocuslab.app。</li>
         <li>用途：僅用於回覆您的詢問。</li>
         <li>刪除：寄信至 support@hyperfocuslab.app 提出要求，我們會刪除您送出的詢問。</li>
+      </ul>
+
+      <h2>Android App</h2>
+      <p>Android App（com.hyperfocuslab.cockatoo）連對話 AI 也在手機上處理。關於 Apple Intelligence、Private Cloud Compute 與 iCloud 備份的說明，只適用於 iOS App。</p>
+      <ul>
+        <li>對話 AI：Google Gemini Nano 在手機上（Android AICore）執行。對話文字與修正內容不會傳出手機。不支援 Nano 的手機無法使用對話與修正，只能使用跟讀與發音評分。</li>
+        <li>語音轉文字、發音評分與朗讀：語音轉文字（以 Whisper 為基礎）、發音評分，以及朗讀 AI 回覆的 Android 裝置語音，全部在手機上處理。錄音只儲存在手機，不會傳送給開發者或任何外部伺服器。</li>
+        <li>模型下載：語音轉文字與發音模型（約 600 MB）會在 App 安裝後，由 Google Play 立即下載（Play Asset Delivery）。這個過程不會有任何資訊傳到開發者。</li>
+        <li>Android 自動備份：Google 帳號的雲端備份包含對話紀錄（文字）與設定，儲存在您自己的 Google 雲端硬碟，可在 Android 設定中關閉。錄音檔不會進入雲端備份，只會在直接換到新手機的裝置間傳輸時一併轉移。</li>
+        <li>Google ML Kit：ML Kit 可能將 API 使用狀況與效能指標（不含對話內容）傳送給 Google。詳情請見 <a href="https://developers.google.com/ml-kit/terms">ML Kit 條款</a>。本 App 沒有廣告或分析 SDK。</li>
+        <li>聯絡我們：「從 App 內送出的詢問」中的說明同樣適用於 Android App。</li>
       </ul>
 
       <h2>變更</h2>

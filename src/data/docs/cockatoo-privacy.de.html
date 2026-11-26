@@ -1,4 +1,6 @@
-<p class="muted">Gültig ab: 23.11.2026 · Entwickler: Hyperfocus Lab</p>
+<p class="muted">Gültig ab: 26.11.2026 · Entwickler: Hyperfocus Lab</p>
+
+      <p>Diese Erklärung gilt für die iOS-App und die Android-App. Was unter Android anders läuft, steht im Abschnitt „Android-App“; die übrigen Abschnitte beschreiben die iOS-App. „Welche Daten wir erheben“ und „Anfragen aus der App“ gelten für beide.</p>
 
       <h2>Welche Daten wir erheben</h2>
       <p>Cockatoo erhebt keine personenbezogenen Daten, außer dem, was du selbst über das Anfrageformular in der App sendest (siehe „Anfragen aus der App“ unten). Es gibt kein Konto und weder Analyse-Tools noch Werbe-SDKs. Der Entwickler kann deine Aufnahmen und Gespräche nicht einsehen.</p>
@@ -40,6 +42,17 @@
         <li>Wohin es geht: Die Daten laufen über einen Google-Apps-Script-Server, werden in einer von Hyperfocus Lab verwalteten Google-Tabelle gespeichert und per E-Mail an support@hyperfocuslab.app weitergeleitet.</li>
         <li>Wofür sie genutzt werden: nur, um deine Anfrage zu beantworten.</li>
         <li>Löschen: Schreib an support@hyperfocuslab.app, dann löschen wir deine Anfrage.</li>
+      </ul>
+
+      <h2>Android-App</h2>
+      <p>Die Android-App (com.hyperfocuslab.cockatoo) verarbeitet auch die Gesprächs-KI auf dem Smartphone. Die Angaben zu Apple Intelligence, Private Cloud Compute und iCloud-Backup gelten nur für die iOS-App.</p>
+      <ul>
+        <li>Gesprächs-KI: Google Gemini Nano läuft auf dem Smartphone (Android AICore). Gesprächstext und Korrekturen verlassen das Smartphone nicht. Auf Geräten ohne Nano-Unterstützung sind Gespräch und Korrekturen nicht nutzbar; es funktionieren nur Nachsprechen und Aussprachebewertung.</li>
+        <li>Transkription, Aussprachebewertung und Vorlesen: Die Transkription (auf Basis von Whisper), die Aussprachebewertung und die Android-Systemstimme, die Antworten vorliest, laufen auf dem Smartphone. Aufnahmen werden nur auf dem Smartphone gespeichert und weder an den Entwickler noch an externe Server gesendet.</li>
+        <li>Modell-Download: Die Modelle für Transkription und Aussprache (etwa 600 MB) lädt Google Play direkt nach der Installation der App herunter (Play Asset Delivery). Dabei erhält der Entwickler keine Informationen.</li>
+        <li>Automatische Android-Sicherung: Die Cloud-Sicherung des Google-Kontos enthält den Gesprächsverlauf (Text) und die Einstellungen. Sie liegt in deinem eigenen Google Drive und lässt sich in den Android-Einstellungen ausschalten. Aufnahmedateien sind von der Cloud-Sicherung ausgenommen und werden nur bei der direkten Geräteübertragung auf ein neues Smartphone mitgenommen.</li>
+        <li>Google ML Kit: ML Kit kann Nutzungs- und Leistungsdaten der API (keine Gesprächsinhalte) an Google senden. Einzelheiten stehen in den <a href="https://developers.google.com/ml-kit/terms">ML-Kit-Bedingungen</a>. Es gibt kein Werbe- oder Analyse-SDK.</li>
+        <li>Anfragen: Was unter „Anfragen aus der App“ steht, gilt genauso für die Android-App.</li>
       </ul>
 
       <h2>Änderungen</h2>

@@ -1,4 +1,6 @@
-<p class="muted">Effective date: November 23, 2026 · Developer: Hyperfocus Lab</p>
+<p class="muted">Effective date: November 26, 2026 · Developer: Hyperfocus Lab</p>
+
+      <p>This policy covers both the iOS app and the Android app. What works differently on Android is described in the “Android app” section; the other sections describe the iOS app. Information we collect and inquiries sent from the app apply to both.</p>
 
       <h2>Information we collect</h2>
       <p>Cockatoo does not collect personal information other than what you send yourself through the in-app inquiry form (see “Inquiries sent from the app” below). There is no account, and no analytics tool or advertising SDK. The developer cannot see your recordings or conversations.</p>
@@ -40,6 +42,17 @@
         <li>Where it goes: it passes through a Google Apps Script server, is stored in a Google spreadsheet managed by Hyperfocus Lab, and is forwarded by email to support@hyperfocuslab.app.</li>
         <li>What it is used for: only to answer your inquiry.</li>
         <li>Deleting it: email support@hyperfocuslab.app and we will delete your inquiry.</li>
+      </ul>
+
+      <h2>Android app</h2>
+      <p>The Android app (com.hyperfocuslab.cockatoo) runs the conversation AI on the phone as well. The parts about Apple Intelligence, Private Cloud Compute and iCloud backup apply to the iOS app only.</p>
+      <ul>
+        <li>Conversation AI: Google Gemini Nano runs on the phone (Android AICore). Your conversation text and corrections are not sent off the phone. On phones that do not support Nano, conversation and corrections are unavailable; only repeat-after-me and pronunciation scoring work.</li>
+        <li>Transcription, pronunciation scoring and read-aloud: transcription (based on Whisper), pronunciation scoring and the Android system voice that reads replies aloud all run on the phone. Recordings are stored only on the phone and are never sent to the developer or any outside server.</li>
+        <li>Model download: the transcription and pronunciation models (about 600 MB) are downloaded by Google Play right after the app is installed (Play Asset Delivery). The developer receives no information from this.</li>
+        <li>Android auto backup: Google account cloud backup includes your conversation history (text) and settings. It is stored in your own Google Drive and you can turn it off in Android settings. Recording files are excluded from cloud backup and are included only in a device-to-device transfer when you move directly to a new phone.</li>
+        <li>Google ML Kit: ML Kit may send API usage and performance metrics (not conversation content) to Google. See the <a href="https://developers.google.com/ml-kit/terms">ML Kit terms</a> for details. There is no advertising or analytics SDK.</li>
+        <li>Inquiries: what is described under “Inquiries sent from the app” applies to the Android app as well.</li>
       </ul>
 
       <h2>Changes</h2>
