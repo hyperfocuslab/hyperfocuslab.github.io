@@ -45,7 +45,6 @@ const rows = sections.flatMap((section) => section.rows);
           sections.map((section) => (
             <div class="feature-group">
               <header class="group-head">
-                <p class="label">{String(sections.indexOf(section) + 1).padStart(2, '0')}</p>
                 <h3 class="group-title">{section.tab}</h3>
                 <p class="lead">{section.intro}</p>
               </header>
@@ -54,7 +53,6 @@ const rows = sections.flatMap((section) => section.rows);
                 return (
                   <div class:list={['feature-row', { flip: index % 2 === 1 }]}>
                     <div class="feature-copy">
-                      <p class="label">{row.label}</p>
                       <h3 class="h2">{row.title}</h3>
                       <p class="lead">{row.body}</p>
                       {row.note && <p class="row-note">{row.note}</p>}
@@ -75,7 +73,7 @@ const rows = sections.flatMap((section) => section.rows);
         }
       </div>
 
-      <h3 class="label p-sub">{t.peakly.featuresTitle}</h3>
+      <h3 class="h2 p-sub">{t.peakly.featuresTitle}</h3>
       <ul class="feature-cards">
         {
           t.peakly.features.map((f) => (

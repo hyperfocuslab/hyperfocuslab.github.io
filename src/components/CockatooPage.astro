@@ -41,7 +41,6 @@ const links = cockatooLinks(lang);
           rows.map((row, index) => (
             <div class:list={['feature-row', { flip: index % 2 === 1 }]}>
               <div class="feature-copy">
-                <p class="label">{row.label}</p>
                 <h3 class="h2">{row.title}</h3>
                 <p class="lead">{row.body}</p>
               </div>
@@ -53,7 +52,7 @@ const links = cockatooLinks(lang);
         }
       </div>
 
-      <h3 class="label p-sub">{cockatoo.featuresTitle}</h3>
+      <h3 class="h2 p-sub">{cockatoo.featuresTitle}</h3>
       <ul class="feature-cards">
         {
           cockatoo.features.map((f) => (

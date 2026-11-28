@@ -41,7 +41,6 @@ const links = haruboxLinks(lang);
           rows.map((row, index) => (
             <div class:list={['feature-row', { flip: index % 2 === 1 }]}>
               <div class="feature-copy">
-                <p class="label">{row.label}</p>
                 <h3 class="h2">{row.title}</h3>
                 <p class="lead">{row.body}</p>
               </div>

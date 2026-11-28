@@ -40,7 +40,6 @@ const sheltieLinkSet = sheltieLinks(lang);
           sheltieRows.map((row, index) => (
             <div class:list={['feature-row', { flip: index % 2 === 1 }]}>
               <div class="feature-copy">
-                <p class="label">{row.label}</p>
                 <h3 class="h2">{row.title}</h3>
                 <p class="lead">{row.body}</p>
               </div>
@@ -52,11 +51,11 @@ const sheltieLinkSet = sheltieLinks(lang);
         }
       </div>
 
-      <h3 class="label p-sub">{sheltie.agentsLabel}</h3>
+      <h3 class="h2 p-sub">{sheltie.agentsLabel}</h3>
       <p class="lead">{sheltie.agents}</p>
       <p class="row-note p-req">{sheltie.requirements}</p>
 
-      <h3 class="label p-sub" id="android">{sheltie.android.label}</h3>
+      <h3 class="h2 p-sub" id="android">{sheltie.android.label}</h3>
       <ol class="lead steps">
         <li>1. <a href={sheltieLinkSet.testerGroup} target="_blank" rel="noreferrer">{sheltie.android.steps[0]} ↗</a></li>
         <li>2. <a href={sheltieLinkSet.testerOptIn} target="_blank" rel="noreferrer">{sheltie.android.steps[1]} ↗</a></li>
